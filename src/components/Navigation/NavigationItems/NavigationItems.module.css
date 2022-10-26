@@ -1,0 +1,7 @@
+.navigation-items {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  padding-left: 7rem;
+  height: 100%;
+}

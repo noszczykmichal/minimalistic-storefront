@@ -1,0 +1,39 @@
+.switcher {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.switcher__actions {
+  display: flex;
+  align-items: baseline;
+  position: relative;
+  padding: 0.75rem 1.5rem;
+}
+
+.switcher__action {
+  margin-right: 0.5rem;
+}
+
+.switcher__options {
+  position: fixed;
+  top: 4rem;
+}
+
+.switcher__option {
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 1.8rem 0.75rem 1.2rem;
+}
+
+.switcher__option:hover,
+.switcher__option:focus,
+.switcher__option:active {
+  background-color: #eeeeee;
+}
+
+.option__symbol {
+  margin-right: 0.25rem;
+}
