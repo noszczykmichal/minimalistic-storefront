@@ -13,17 +13,25 @@ class Backdrop extends Component {
   }
 
   render() {
-    const { show, clicked } = this.props;
+    const { show, transparent, clicked } = this.props;
+    const attachedClasses = {
+      enter: "",
+      enterActive: classes["transparent--open"],
+      exit: "",
+      exitActive: classes["transparent--closed"],
+    };
 
     return (
       <CSSTransition
         in={show}
-        timeout={200}
+        timeout={300}
         nodeRef={this.backdropRef}
-        classNames={{ enter: "", enterActive: "", exit: "", exitActive: "" }}
+        classNames={attachedClasses}
+        mountOnEnter
+        unmountOnExit
       >
         <div
-          className={classes["backdrop--transparent"]}
+          className={transparent ? classes["backdrop--transparent"] : null}
           onClick={clicked}
           ref={this.backdropRef}
         />
@@ -34,6 +42,7 @@ class Backdrop extends Component {
 
 Backdrop.propTypes = {
   show: PropTypes.bool.isRequired,
+  transparent: PropTypes.bool.isRequired,
   clicked: PropTypes.func.isRequired,
 };
 
