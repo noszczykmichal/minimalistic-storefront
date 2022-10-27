@@ -12,5 +12,7 @@
 .cart-actions {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding-right: 6rem;
+  width: 13rem;
 }

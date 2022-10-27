@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Component } from "react";
 import PropTypes from "prop-types";
+import { createPortal } from "react-dom";
 
 import classes from "./CurrencySwitcher.module.css";
 import Backdrop from "../../../UI/Backdrop";
@@ -13,6 +14,7 @@ class CurrencySwitcher extends Component {
     this.state = {
       switcherIsOpen: false,
       currency: "$",
+      isBackdropTransparent: true,
     };
   }
 
@@ -24,10 +26,11 @@ class CurrencySwitcher extends Component {
 
   onCurrencyChange = (event) => {
     this.setState({ currency: event.target.ariaLabel });
+    this.currencySwitcherToggler();
   };
 
   render() {
-    const { switcherIsOpen, currency } = this.state;
+    const { switcherIsOpen, currency, isBackdropTransparent } = this.state;
     const { currencies } = this.props;
     let classesOptions = [classes.switcher__options];
     let classesArrow = classes.button__arrow;
@@ -43,11 +46,14 @@ class CurrencySwitcher extends Component {
 
     return (
       <>
-        <Backdrop
-          show={switcherIsOpen}
-          variant="transparent"
-          clicked={this.currencySwitcherToggler}
-        />
+        {createPortal(
+          <Backdrop
+            show={switcherIsOpen}
+            transparent={isBackdropTransparent}
+            clicked={this.currencySwitcherToggler}
+          />,
+          document.getElementById("backdrop-root"),
+        )}
         <div className={classes.switcher}>
           <button
             type="button"

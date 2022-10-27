@@ -1,15 +1,33 @@
 .backdrop--transparent {
-  height: 100vh;
   width: 100vw;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
 }
 
-.backdrop--transparent--open {
-  display: block;
+.transparent--open {
+  animation: transparentOpen 0.3s ease-out forwards;
 }
 
-.backdrop--transparent--closed {
-  display: none;
+.transparent--closed {
+  animation: transparentClosed 0.3s ease-out forwards;
+}
+
+@keyframes transparentOpen {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes transparentClosed {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
