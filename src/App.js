@@ -1,21 +1,39 @@
 import { Component } from "react";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+import { Routes, Route } from "react-router-dom";
 
 import Layout from "./components/Layout/Layout";
+import PLP from "./pages/PLP";
 
-const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
-  cache: new InMemoryCache(),
-});
+// const categories = [];
 
 class App extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     categories: [],
+  //   };
+  // }
+
   render() {
+    const { data } = this.props;
+    console.log(data);
     return (
-      <ApolloProvider client={client}>
-        <Layout />
-      </ApolloProvider>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<PLP path="/" />} />
+        </Routes>
+      </Layout>
     );
   }
 }
 
 export default App;
+
+// {categories.map((el) => (
+//   <Route
+//     path={el === "all" ? "/" : el}
+//     exact={el === "all"}
+//     element={<PLP path={el} />}
+//   />
+// ))}
