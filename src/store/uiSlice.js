@@ -1,13 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { categories: [] };
+const initialState = { categories: [], currencies: [] };
 
 const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    saveCategories(state, action) {
-      return { categories: state.categories.concat(action.payload) };
+    saveCategoriesAndCurrencies(state, action) {
+      return {
+        ...state,
+        categories: action.payload.categories,
+        currencies: action.payload.currencies,
+      };
     },
   },
 });

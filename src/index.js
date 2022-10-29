@@ -7,10 +7,11 @@ import {
   InMemoryCache,
   gql,
 } from "@apollo/client";
+import { Provider } from "react-redux";
 import { Query } from "@apollo/client/react/components";
-
 import "./index.css";
 import App from "./App";
+import store from "./store/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -19,10 +20,15 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const categoriesQuery = gql`
+const categoriesAndCurrenciesQuery = gql`
   query {
     categories {
       name
+    }
+
+    currencies {
+      label
+      symbol
     }
   }
 `;
@@ -31,22 +37,29 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ApolloProvider client={client}>
-        <Query query={categoriesQuery}>
-          {(props) => {
-            const { data, error } = props;
+        <Provider store={store}>
+          <Query query={categoriesAndCurrenciesQuery}>
+            {(props) => {
+              const { data } = props;
+              let content;
 
-            return data ? (
-              <App data={data} />
-            ) : error ? (
-              <p>Something went wrong</p>
-            ) : null;
-          }}
-        </Query>
+              if (data && data.categories && data.currencies) {
+                const fetchedCategories = data.categories.map(
+                  (category) => category.name,
+                );
+
+                content = (
+                  <App
+                    categories={fetchedCategories}
+                    currencies={data.currencies}
+                  />
+                );
+              }
+              return content;
+            }}
+          </Query>
+        </Provider>
       </ApolloProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

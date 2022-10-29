@@ -1,39 +1,61 @@
 import { Component } from "react";
-
+import { connect } from "react-redux";
 import { Routes, Route } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import Layout from "./components/Layout/Layout";
 import PLP from "./pages/PLP";
 
-// const categories = [];
-
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     categories: [],
-  //   };
-  // }
+  constructor(props) {
+    super(props);
+    const { categories, currencies, saveCategoriesAndCurrencies } = this.props;
+    this.saveCategoriesAndCurrencies = saveCategoriesAndCurrencies;
+    this.categories = categories;
+    this.currencies = currencies;
+  }
+
+  componentDidMount() {
+    this.saveCategoriesAndCurrencies(this.categories, this.currencies);
+  }
 
   render() {
-    const { data } = this.props;
-    console.log(data);
     return (
       <Layout>
         <Routes>
-          <Route path="/" element={<PLP path="/" />} />
+          {this.categories.map((category) => (
+            <Route
+              key={category}
+              path={category === "all" ? "/" : category}
+              exact={category === "all"}
+              element={<PLP path={category} />}
+            />
+          ))}
         </Routes>
       </Layout>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveCategoriesAndCurrencies: (categories, currencies) =>
+      dispatch({
+        type: "ui/saveCategoriesAndCurrencies",
+        payload: { categories, currencies },
+      }),
+  };
+};
+App.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencies: PropTypes.arrayOf(
+    PropTypes.shape({
+      __typename: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      symbol: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  saveCategoriesAndCurrencies: PropTypes.func.isRequired,
+};
 
-// {categories.map((el) => (
-//   <Route
-//     path={el === "all" ? "/" : el}
-//     exact={el === "all"}
-//     element={<PLP path={el} />}
-//   />
-// ))}
+export default connect(null, mapDispatchToProps)(App);
