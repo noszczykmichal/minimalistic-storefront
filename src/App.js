@@ -1,21 +1,61 @@
 import { Component } from "react";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { connect } from "react-redux";
+import { Routes, Route } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import Layout from "./components/Layout/Layout";
-
-const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
-  cache: new InMemoryCache(),
-});
+import PLP from "./pages/PLP";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    const { categories, currencies, saveCategoriesAndCurrencies } = this.props;
+    this.saveCategoriesAndCurrencies = saveCategoriesAndCurrencies;
+    this.categories = categories;
+    this.currencies = currencies;
+  }
+
+  componentDidMount() {
+    this.saveCategoriesAndCurrencies(this.categories, this.currencies);
+  }
+
   render() {
     return (
-      <ApolloProvider client={client}>
-        <Layout />
-      </ApolloProvider>
+      <Layout>
+        <Routes>
+          {this.categories.map((category) => (
+            <Route
+              key={category}
+              path={category === "all" ? "/" : category}
+              exact={category === "all"}
+              element={<PLP path={category} />}
+            />
+          ))}
+        </Routes>
+      </Layout>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveCategoriesAndCurrencies: (categories, currencies) =>
+      dispatch({
+        type: "ui/saveCategoriesAndCurrencies",
+        payload: { categories, currencies },
+      }),
+  };
+};
+App.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencies: PropTypes.arrayOf(
+    PropTypes.shape({
+      __typename: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      symbol: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  saveCategoriesAndCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(App);

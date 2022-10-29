@@ -13,11 +13,11 @@ class NavigationItems extends Component {
         {categories.map((category) => {
           return (
             <NavigationItem
-              key={category.name}
-              link={category.name === "all" ? "/" : `/${category.name}`}
-              end={category.name === "all"}
+              key={category}
+              link={category === "all" ? "/" : `/${category}`}
+              end={category === "all"}
             >
-              {category.name}
+              {category}
             </NavigationItem>
           );
         })}
@@ -27,12 +27,7 @@ class NavigationItems extends Component {
 }
 
 NavigationItems.propTypes = {
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      __typename: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default NavigationItems;
