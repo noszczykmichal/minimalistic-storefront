@@ -1,6 +1,7 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
 
+import classes from "./Layout.module.css";
 import Toolbar from "../Navigation/Toolbar/Toolbar";
 
 class Layout extends Component {
@@ -9,7 +10,7 @@ class Layout extends Component {
     return (
       <>
         <Toolbar />
-        <main>{children}</main>
+        <main className={classes.main}>{children}</main>
       </>
     );
   }

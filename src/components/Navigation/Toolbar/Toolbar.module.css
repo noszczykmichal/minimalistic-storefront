@@ -7,6 +7,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #fff;
+  z-index: 200;
+}
+
+.toolbar__nav {
+  height: 100%;
 }
 
 .cart-actions {

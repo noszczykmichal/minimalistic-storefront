@@ -28,7 +28,7 @@ class App extends Component {
               key={category}
               path={category === "all" ? "/" : category}
               exact={category === "all"}
-              element={<PLP path={category} />}
+              element={<PLP page={category} />}
             />
           ))}
         </Routes>

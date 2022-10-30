@@ -21,14 +21,14 @@ class Toolbar extends Component {
     }
 
     return (
-      <div className={classes.toolbar}>
-        {navigationItems}
+      <header className={classes.toolbar}>
+        <nav className={classes.toolbar__nav}>{navigationItems}</nav>
         <Logo />
         <div className={classes["cart-actions"]}>
           {currencySwitcher}
           <CartIcon />
         </div>
-      </div>
+      </header>
     );
   }
 }
