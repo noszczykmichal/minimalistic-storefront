@@ -15,7 +15,7 @@ class NavigationItems extends Component {
             <NavigationItem
               key={category}
               link={category === "all" ? "/" : `/${category}`}
-              end={category === "all"}
+              exact={category === "all"}
             >
               {category}
             </NavigationItem>

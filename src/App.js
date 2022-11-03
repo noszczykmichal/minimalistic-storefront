@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { Routes, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import Layout from "./components/Layout/Layout";
@@ -23,16 +23,16 @@ class App extends Component {
     const { categories } = this.props;
     return (
       <Layout>
-        <Routes>
+        <Switch>
           {categories.map((category) => (
             <Route
               key={category}
-              path={category === "all" ? "/" : category}
+              path={category === "all" ? "/" : `/${category}`}
               exact={category === "all"}
-              element={<PLP page={category} />}
+              component={PLP}
             />
           ))}
-        </Routes>
+        </Switch>
       </Layout>
     );
   }
@@ -59,4 +59,4 @@ App.propTypes = {
   saveCategoriesAndCurrencies: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default withRouter(connect(null, mapDispatchToProps)(App));
