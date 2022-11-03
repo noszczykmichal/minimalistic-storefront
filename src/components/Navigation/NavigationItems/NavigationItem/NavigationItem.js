@@ -6,11 +6,11 @@ import classes from "./NavigationItem.module.css";
 
 class NavigationItem extends Component {
   render() {
-    const { link, end, children } = this.props;
+    const { link, exact, children } = this.props;
 
     return (
       <li className={classes["navigation-item"]}>
-        <NavLink to={link} end={end}>
+        <NavLink to={link} exact={exact}>
           {children}
         </NavLink>
       </li>
@@ -20,7 +20,7 @@ class NavigationItem extends Component {
 
 NavigationItem.propTypes = {
   link: PropTypes.string.isRequired,
-  end: PropTypes.bool.isRequired,
+  exact: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
 };
 

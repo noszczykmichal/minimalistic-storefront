@@ -9,7 +9,9 @@ import ProductList from "../components/Products/ProductList/ProductList";
 
 class PLP extends Component {
   render() {
-    const { page, billingCurrency } = this.props;
+    const { history, billingCurrency } = this.props;
+    const { pathname } = history.location;
+    const searchedCategory = pathname === "/" ? "all" : pathname.substring(1);
     const productsQuery = gql`
       query ($category: String!) {
         category(input: { title: $category }) {
@@ -33,8 +35,8 @@ class PLP extends Component {
 
     return (
       <section className={classes.main}>
-        <h1 className={classes.title}>{page}</h1>
-        <Query query={productsQuery} variables={{ category: page }}>
+        <h1 className={classes.title}>{searchedCategory}</h1>
+        <Query query={productsQuery} variables={{ category: searchedCategory }}>
           {(props) => {
             const { data } = props;
             let content;
@@ -63,7 +65,11 @@ const mapStateToProps = (state) => {
 };
 
 PLP.propTypes = {
-  page: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
   billingCurrency: PropTypes.string.isRequired,
 };
 
