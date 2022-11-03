@@ -3,6 +3,7 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
+import { connect } from "react-redux";
 
 import classes from "./CurrencySwitcher.module.css";
 import Backdrop from "../../../UI/Backdrop";
@@ -10,10 +11,11 @@ import Backdrop from "../../../UI/Backdrop";
 class CurrencySwitcher extends Component {
   constructor(props) {
     super(props);
+    const { onCurrencyChange } = this.props;
+    this.currencyChangeHandler = onCurrencyChange;
 
     this.state = {
       switcherIsOpen: false,
-      currency: "$",
       isBackdropTransparent: true,
     };
   }
@@ -25,13 +27,13 @@ class CurrencySwitcher extends Component {
   };
 
   onCurrencyChange = (event) => {
-    this.setState({ currency: event.target.ariaLabel });
+    this.currencyChangeHandler(event.target.ariaLabel);
     this.currencySwitcherToggler();
   };
 
   render() {
-    const { switcherIsOpen, currency, isBackdropTransparent } = this.state;
-    const { currencies } = this.props;
+    const { switcherIsOpen, isBackdropTransparent } = this.state;
+    const { currencies, billingCurrency } = this.props;
     let classesOptions = [classes.switcher__options];
     let classesArrow = classes.button__arrow;
 
@@ -60,7 +62,7 @@ class CurrencySwitcher extends Component {
             className={classes.switcher__button}
             onClick={this.currencySwitcherToggler}
           >
-            <span className={classes.button__content}>{currency}</span>
+            <span className={classes.button__content}>{billingCurrency}</span>
             <svg
               width="8"
               height="4"
@@ -99,7 +101,22 @@ class CurrencySwitcher extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    billingCurrency: state.products.billingCurrency,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onCurrencyChange: (currency) =>
+      dispatch({ type: "products/onCurrencyChange", payload: currency }),
+  };
+};
+
 CurrencySwitcher.propTypes = {
+  onCurrencyChange: PropTypes.func.isRequired,
+  billingCurrency: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(
     PropTypes.shape({
       __typename: PropTypes.string.isRequired,
@@ -109,4 +126,4 @@ CurrencySwitcher.propTypes = {
   ).isRequired,
 };
 
-export default CurrencySwitcher;
+export default connect(mapStateToProps, mapDispatchToProps)(CurrencySwitcher);
