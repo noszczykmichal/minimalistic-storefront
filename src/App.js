@@ -20,10 +20,11 @@ class App extends Component {
   }
 
   render() {
+    const { categories } = this.props;
     return (
       <Layout>
         <Routes>
-          {this.categories.map((category) => (
+          {categories.map((category) => (
             <Route
               key={category}
               path={category === "all" ? "/" : category}

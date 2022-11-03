@@ -7,8 +7,7 @@ import Product from "./Product/Product";
 class ProductList extends Component {
   render() {
     const { products } = this.props;
-
-    console.log(products);
+    // console.log(products);
     return (
       <ul className={classes["product-list"]}>
         {products.map((product) => (
@@ -20,3 +19,7 @@ class ProductList extends Component {
 }
 
 export default ProductList;
+
+// product.prices.filter(
+//   (price) => price.currency.label === "USD",
+// ),

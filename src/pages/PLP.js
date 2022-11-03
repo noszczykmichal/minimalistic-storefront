@@ -2,13 +2,14 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 import { gql } from "@apollo/client";
 import { Query } from "@apollo/client/react/components";
+import { connect } from "react-redux";
 
 import classes from "./PLP.module.css";
 import ProductList from "../components/Products/ProductList/ProductList";
 
 class PLP extends Component {
   render() {
-    const { page } = this.props;
+    const { page, billingCurrency } = this.props;
     const productsQuery = gql`
       query ($category: String!) {
         category(input: { title: $category }) {
@@ -38,7 +39,14 @@ class PLP extends Component {
             const { data } = props;
             let content;
             if (data) {
-              content = <ProductList products={data.category.products} />;
+              const updatedProducts = data.category.products.map((product) => ({
+                ...product,
+                prices: product.prices.filter(
+                  (price) => price.currency.symbol === billingCurrency,
+                ),
+              }));
+
+              content = <ProductList products={updatedProducts} />;
             }
             return content;
           }}
@@ -48,8 +56,15 @@ class PLP extends Component {
   }
 }
 
-PLP.propTypes = {
-  page: PropTypes.string.isRequired,
+const mapStateToProps = (state) => {
+  return {
+    billingCurrency: state.products.billingCurrency,
+  };
 };
 
-export default PLP;
+PLP.propTypes = {
+  page: PropTypes.string.isRequired,
+  billingCurrency: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps)(PLP);

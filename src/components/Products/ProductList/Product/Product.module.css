@@ -19,6 +19,19 @@
   background-size: cover;
 }
 
+.product-card__button--add-to-cart {
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  bottom: -1.65rem;
+  right: 1rem;
+  display: none;
+}
+
+.product-card:hover .product-card__button--add-to-cart {
+  display: block;
+}
+
 .image__overlay {
   position: absolute;
   top: 0;
