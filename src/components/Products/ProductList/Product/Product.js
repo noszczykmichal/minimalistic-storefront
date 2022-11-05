@@ -1,39 +1,35 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/prop-types */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+
 import { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import classes from "./Product.module.css";
 
 class Product extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: this.props.productDetails.id,
-    };
-  }
-
   onProductClick = (inStock) => {
+    const { productDetails, history, onCurrentPDPChange } = this.props;
+    // console.log(history);
     if (inStock) {
-      const currentPath = this.props.history.location.pathname;
+      const currentPath = history.location.pathname;
       const newPath =
         currentPath === "/"
-          ? `${currentPath}all/${this.state.id}`
-          : `${currentPath}/${this.state.id}`;
+          ? `${currentPath}all/${productDetails.id}`
+          : `${currentPath}/${productDetails.id}`;
 
-      this.props.onCurrentPDPChange(this.state.id);
-      this.props.history.push({ pathname: newPath });
+      onCurrentPDPChange(productDetails.id);
+      history.push({ pathname: newPath });
     }
   };
 
   onAddToCartClick = (event) => {
     event.stopPropagation();
-    // eslint-disable-next-line
-    console.log("add to cart: ", this.state.id);
+    const { productDetails } = this.props;
+    // eslint-disable-next-line no-console
+    console.log("add to cart: ", productDetails.id);
   };
 
   render() {
@@ -113,6 +109,31 @@ const mapDispatchToProps = (dispatch) => {
     onCurrentPDPChange: (id) =>
       dispatch({ type: "products/onCurrentPDPChange", payload: id }),
   };
+};
+
+Product.propTypes = {
+  productDetails: PropTypes.shape({
+    brand: PropTypes.string.isRequired,
+    gallery: PropTypes.arrayOf(PropTypes.string).isRequired,
+    id: PropTypes.string.isRequired,
+    inStock: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
+    prices: PropTypes.arrayOf(
+      PropTypes.shape({
+        amount: PropTypes.number.isRequired,
+        currency: PropTypes.shape({
+          symbol: PropTypes.string.isRequired,
+        }),
+      }),
+    ).isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  onCurrentPDPChange: PropTypes.func.isRequired,
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(Product));
