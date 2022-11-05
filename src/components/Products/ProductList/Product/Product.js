@@ -1,17 +1,57 @@
-/* eslint-disable no-lone-blocks */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/prop-types */
 import { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 import classes from "./Product.module.css";
 
 class Product extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: this.props.productDetails.id,
+    };
+  }
+
+  onProductClick = (inStock) => {
+    if (inStock) {
+      const currentPath = this.props.history.location.pathname;
+      const newPath =
+        currentPath === "/"
+          ? `${currentPath}all/${this.state.id}`
+          : `${currentPath}/${this.state.id}`;
+
+      this.props.onCurrentPDPChange(this.state.id);
+      this.props.history.push({ pathname: newPath });
+    }
+  };
+
+  onAddToCartClick = (event) => {
+    event.stopPropagation();
+    // eslint-disable-next-line
+    console.log("add to cart: ", this.state.id);
+  };
+
   render() {
     const { productDetails } = this.props;
+    let classesProdCardImage = [
+      classes["product-card__image"],
+      classes["product-card__image--clickable"],
+    ];
 
-    const addToCart = (
+    if (!productDetails.inStock) {
+      classesProdCardImage = [classes["product-card__image"]];
+    }
+
+    const addToCartButton = (
       <button
         type="button"
         className={classes["product-card__button--add-to-cart"]}
+        onClick={this.onAddToCartClick}
       >
         <svg
           width="52"
@@ -42,14 +82,15 @@ class Product extends Component {
         <div
           style={{ backgroundImage: `url(${productDetails.gallery[0]})` }}
           alt={productDetails.id}
-          className={classes["product-card__image"]}
+          className={classesProdCardImage.join(" ")}
+          onClick={() => this.onProductClick(productDetails.inStock)}
         >
           {!productDetails.inStock ? (
             <div className={classes.image__overlay}>
               <p>OUT OF STOCK</p>
             </div>
           ) : null}
-          {productDetails.inStock ? addToCart : null}
+          {productDetails.inStock ? addToCartButton : null}
         </div>
 
         <div className={classes["product-details"]}>
@@ -67,4 +108,11 @@ class Product extends Component {
   }
 }
 
-export default Product;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onCurrentPDPChange: (id) =>
+      dispatch({ type: "products/onCurrentPDPChange", payload: id }),
+  };
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(Product));

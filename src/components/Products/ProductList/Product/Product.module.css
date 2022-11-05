@@ -19,6 +19,10 @@
   background-size: cover;
 }
 
+.product-card__image--clickable {
+  cursor: pointer;
+}
+
 .product-card__button--add-to-cart {
   position: absolute;
   border: none;
@@ -26,6 +30,7 @@
   bottom: -1.65rem;
   right: 1rem;
   display: none;
+  cursor: pointer;
 }
 
 .product-card:hover .product-card__button--add-to-cart {
