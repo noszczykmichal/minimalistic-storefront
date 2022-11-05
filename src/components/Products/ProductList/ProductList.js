@@ -19,7 +19,3 @@ class ProductList extends Component {
 }
 
 export default ProductList;
-
-// product.prices.filter(
-//   (price) => price.currency.label === "USD",
-// ),
