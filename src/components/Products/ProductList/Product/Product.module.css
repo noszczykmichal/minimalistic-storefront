@@ -19,10 +19,6 @@
   background-size: cover;
 }
 
-.product-card__image--clickable {
-  cursor: pointer;
-}
-
 .product-card__button--add-to-cart {
   position: absolute;
   border: none;

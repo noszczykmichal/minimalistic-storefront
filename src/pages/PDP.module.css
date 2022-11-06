@@ -1,0 +1,10 @@
+.section {
+  display: flex;
+}
+
+.thumbnails-wrapper__thumbnail {
+  width: 5rem;
+  height: 5rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
