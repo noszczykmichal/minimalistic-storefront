@@ -10,19 +10,17 @@ import PropTypes from "prop-types";
 import classes from "./Product.module.css";
 
 class Product extends Component {
-  onProductClick = (inStock) => {
+  onProductClick = () => {
     const { productDetails, history, onCurrentPDPChange } = this.props;
     // console.log(history);
-    if (inStock) {
-      const currentPath = history.location.pathname;
-      const newPath =
-        currentPath === "/"
-          ? `${currentPath}all/${productDetails.id}`
-          : `${currentPath}/${productDetails.id}`;
+    const currentPath = history.location.pathname;
+    const newPath =
+      currentPath === "/"
+        ? `${currentPath}all/${productDetails.id}`
+        : `${currentPath}/${productDetails.id}`;
 
-      onCurrentPDPChange(productDetails.id);
-      history.push({ pathname: newPath });
-    }
+    onCurrentPDPChange(productDetails);
+    history.push({ pathname: newPath });
   };
 
   onAddToCartClick = (event) => {
@@ -34,14 +32,6 @@ class Product extends Component {
 
   render() {
     const { productDetails } = this.props;
-    let classesProdCardImage = [
-      classes["product-card__image"],
-      classes["product-card__image--clickable"],
-    ];
-
-    if (!productDetails.inStock) {
-      classesProdCardImage = [classes["product-card__image"]];
-    }
 
     const addToCartButton = (
       <button
@@ -78,8 +68,8 @@ class Product extends Component {
         <div
           style={{ backgroundImage: `url(${productDetails.gallery[0]})` }}
           alt={productDetails.id}
-          className={classesProdCardImage.join(" ")}
-          onClick={() => this.onProductClick(productDetails.inStock)}
+          className={classes["product-card__image"]}
+          onClick={this.onProductClick}
         >
           {!productDetails.inStock ? (
             <div className={classes.image__overlay}>
