@@ -56,8 +56,12 @@ class PDP extends Component {
   };
 
   render() {
-    const { displayedProduct } = this.props;
+    const { displayedProduct, billingCurrency } = this.props;
     const { mainImageURL } = this.state;
+
+    const currentPrice = [...displayedProduct.prices].filter(
+      (price) => price.currency.symbol === billingCurrency,
+    );
 
     return (
       <section className={classes.section}>
@@ -139,8 +143,8 @@ class PDP extends Component {
             <div className={classes["product-price"]}>
               <h3 className={classes["product-price__label"]}>Price:</h3>
               <p className={classes["product-price__value"]}>
-                {displayedProduct.prices[0].currency.symbol}
-                {displayedProduct.prices[0].amount}
+                {currentPrice[0].currency.symbol}
+                {currentPrice[0].amount}
               </p>
             </div>
           </div>
@@ -163,6 +167,7 @@ class PDP extends Component {
 const mapStateToProps = (state) => {
   return {
     displayedProduct: state.products.currentPDP,
+    billingCurrency: state.products.billingCurrency,
   };
 };
 
@@ -182,6 +187,7 @@ PDP.propTypes = {
       }),
     ).isRequired,
   }).isRequired,
+  billingCurrency: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(PDP);
