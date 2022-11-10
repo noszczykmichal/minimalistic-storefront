@@ -31,8 +31,10 @@ class Product extends Component {
   };
 
   render() {
-    const { productDetails } = this.props;
-
+    const { productDetails, billingCurrency } = this.props;
+    const currentPrice = [...productDetails.prices].filter(
+      (price) => price.currency.symbol === billingCurrency,
+    );
     const addToCartButton = (
       <button
         type="button"
@@ -85,14 +87,20 @@ class Product extends Component {
             <span>{productDetails.name}</span>
           </p>
           <p className={classes["product-details__price"]}>
-            {productDetails.prices[0].currency.symbol}
-            {productDetails.prices[0].amount.toFixed(2)}
+            {currentPrice[0].currency.symbol}
+            {currentPrice[0].amount.toFixed(2)}
           </p>
         </div>
       </li>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    billingCurrency: state.products.billingCurrency,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -123,7 +131,10 @@ Product.propTypes = {
     }).isRequired,
     push: PropTypes.func.isRequired,
   }).isRequired,
+  billingCurrency: PropTypes.string.isRequired,
   onCurrentPDPChange: PropTypes.func.isRequired,
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(Product));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Product),
+);
