@@ -21,6 +21,14 @@ class PLP extends Component {
             brand
             inStock
             gallery
+            description
+            attributes {
+              name
+              items {
+                displayValue
+                value
+              }
+            }
             prices {
               currency {
                 label
