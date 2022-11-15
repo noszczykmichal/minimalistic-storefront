@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { categories: [], currencies: [] };
+const initialState = {
+  categories: [],
+  currencies: [],
+  isBackdropOpen: false,
+};
 
 const uiSlice = createSlice({
   name: "ui",
@@ -11,6 +15,12 @@ const uiSlice = createSlice({
         ...state,
         categories: action.payload.categories,
         currencies: action.payload.currencies,
+      };
+    },
+    backdropToggle(state) {
+      return {
+        ...state,
+        isBackdropOpen: !state.isBackdropOpen,
       };
     },
   },

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Component, createRef } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
 
@@ -13,7 +14,7 @@ class Backdrop extends Component {
   }
 
   render() {
-    const { show, transparent, clicked } = this.props;
+    const { transparent, clicked, isBackdropOpen } = this.props;
     const attachedClasses = {
       enter: "",
       enterActive: classes["transparent--open"],
@@ -23,7 +24,7 @@ class Backdrop extends Component {
 
     return (
       <CSSTransition
-        in={show}
+        in={isBackdropOpen}
         timeout={300}
         nodeRef={this.backdropRef}
         classNames={attachedClasses}
@@ -40,10 +41,16 @@ class Backdrop extends Component {
   }
 }
 
-Backdrop.propTypes = {
-  show: PropTypes.bool.isRequired,
-  transparent: PropTypes.bool.isRequired,
-  clicked: PropTypes.func.isRequired,
+const mapStateToProps = (state) => {
+  return {
+    isBackdropOpen: state.ui.isBackdropOpen,
+  };
 };
 
-export default Backdrop;
+Backdrop.propTypes = {
+  transparent: PropTypes.bool.isRequired,
+  clicked: PropTypes.func.isRequired,
+  isBackdropOpen: PropTypes.bool.isRequired,
+};
+
+export default connect(mapStateToProps)(Backdrop);

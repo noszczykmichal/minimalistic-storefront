@@ -11,8 +11,9 @@ import Backdrop from "../../../UI/Backdrop";
 class CurrencySwitcher extends Component {
   constructor(props) {
     super(props);
-    const { onCurrencyChange } = this.props;
+    const { onCurrencyChange, backdropToggle } = this.props;
     this.currencyChangeHandler = onCurrencyChange;
+    this.backdropToggleHandler = backdropToggle;
 
     this.state = {
       switcherIsOpen: false,
@@ -24,6 +25,7 @@ class CurrencySwitcher extends Component {
     this.setState((prevState) => ({
       switcherIsOpen: !prevState.switcherIsOpen,
     }));
+    this.backdropToggleHandler();
   };
 
   onCurrencyChange = (event) => {
@@ -50,7 +52,6 @@ class CurrencySwitcher extends Component {
       <>
         {createPortal(
           <Backdrop
-            show={switcherIsOpen}
             transparent={isBackdropTransparent}
             clicked={this.currencySwitcherToggler}
           />,
@@ -111,11 +112,13 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCurrencyChange: (currency) =>
       dispatch({ type: "products/onCurrencyChange", payload: currency }),
+    backdropToggle: () => dispatch({ type: "ui/backdropToggle" }),
   };
 };
 
 CurrencySwitcher.propTypes = {
   onCurrencyChange: PropTypes.func.isRequired,
+  backdropToggle: PropTypes.func.isRequired,
   billingCurrency: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(
     PropTypes.shape({
