@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Component } from "react";
@@ -7,6 +6,7 @@ import PropTypes from "prop-types";
 import { Markup } from "interweave";
 
 import classes from "./PDP.module.css";
+import Button from "../components/UI/Button";
 
 class PDP extends Component {
   constructor(props) {
@@ -148,13 +148,7 @@ class PDP extends Component {
               </p>
             </div>
           </div>
-          <button
-            type="button"
-            className={classes["button--add-to-cart"]}
-            disabled={!displayedProduct.inStock}
-          >
-            Add to cart
-          </button>
+          <Button isDisabled={!displayedProduct.inStock}>Add to cart</Button>
           <div className={classes.description}>
             <Markup content={displayedProduct.description} />
           </div>
@@ -186,6 +180,17 @@ PDP.propTypes = {
         }),
       }),
     ).isRequired,
+    attributes: PropTypes.arrayOf(
+      PropTypes.shape({
+        items: PropTypes.arrayOf(
+          PropTypes.shape({
+            displayValue: PropTypes.string.isRequired,
+            value: PropTypes.string.isRequired,
+          }),
+        ),
+      }),
+    ).isRequired,
+    description: PropTypes.string.isRequired,
   }).isRequired,
   billingCurrency: PropTypes.string.isRequired,
 };

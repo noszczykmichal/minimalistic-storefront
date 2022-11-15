@@ -1,0 +1,27 @@
+.button {
+  width: 100%;
+  max-width: 18rem;
+  text-transform: uppercase;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  color: #fff;
+  background: #5ece7b;
+  border: none;
+  padding: 1rem 2rem;
+  margin-top: 1.25rem;
+  border: 1px solid transparent;
+}
+
+.button:hover:not(:disabled),
+.button:active:not(:disabled),
+.button:focus:not(:disabled) {
+  background-color: #fff;
+  color: #5ece7b;
+  border: 1px solid #5ece7b;
+}
+
+.button:disabled {
+  filter: grayscale(1);
+}
