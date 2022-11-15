@@ -1,0 +1,24 @@
+.cart-icon {
+  position: relative;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+}
+
+.counter {
+  position: absolute;
+  margin: 0;
+  top: -0.6rem;
+  right: -0.8rem;
+  height: 1.25rem;
+  width: 1.25rem;
+  background-color: #1d1f22;
+  border-radius: 60px;
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

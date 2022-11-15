@@ -23,11 +23,26 @@ class Product extends Component {
     history.push({ pathname: newPath });
   };
 
-  onAddToCartClick = (event) => {
+  addProductWithDefaults = (event) => {
     event.stopPropagation();
-    const { productDetails } = this.props;
-    // eslint-disable-next-line no-console
-    console.log("add to cart: ", productDetails.id);
+    const { productDetails, billingCurrency, addProdWithDefaultAttribs } =
+      this.props;
+    const updatedAttributes = productDetails.attributes.map((attribute) => {
+      const updatedItems = [attribute.items[0]];
+
+      return { ...attribute, items: updatedItems };
+    });
+    const updatedPrices = productDetails.prices.filter(
+      (price) => price.currency.symbol === billingCurrency,
+    );
+
+    const updatedProduct = {
+      ...productDetails,
+      attributes: updatedAttributes,
+      prices: updatedPrices,
+    };
+
+    addProdWithDefaultAttribs(updatedProduct);
   };
 
   render() {
@@ -39,7 +54,7 @@ class Product extends Component {
       <button
         type="button"
         className={classes["product-card__button--add-to-cart"]}
-        onClick={this.onAddToCartClick}
+        onClick={this.addProductWithDefaults}
       >
         <svg
           width="52"
@@ -106,6 +121,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCurrentPDPChange: (id) =>
       dispatch({ type: "products/onCurrentPDPChange", payload: id }),
+    addProdWithDefaultAttribs: (product) =>
+      dispatch({ type: "cart/addProdWithDefaultAttribs", payload: product }),
   };
 };
 
@@ -124,6 +141,16 @@ Product.propTypes = {
         }),
       }),
     ).isRequired,
+    attributes: PropTypes.arrayOf(
+      PropTypes.shape({
+        items: PropTypes.arrayOf(
+          PropTypes.shape({
+            displayValue: PropTypes.string.isRequired,
+            value: PropTypes.string.isRequired,
+          }),
+        ),
+      }),
+    ).isRequired,
   }).isRequired,
   history: PropTypes.shape({
     location: PropTypes.shape({
@@ -133,6 +160,7 @@ Product.propTypes = {
   }).isRequired,
   billingCurrency: PropTypes.string.isRequired,
   onCurrentPDPChange: PropTypes.func.isRequired,
+  addProdWithDefaultAttribs: PropTypes.func.isRequired,
 };
 
 export default withRouter(
