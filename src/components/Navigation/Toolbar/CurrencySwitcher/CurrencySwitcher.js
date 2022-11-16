@@ -11,30 +11,40 @@ import Backdrop from "../../../UI/Backdrop";
 class CurrencySwitcher extends Component {
   constructor(props) {
     super(props);
-    const { onCurrencyChange, backdropToggle } = this.props;
+    const { onCurrencyChange, backdropVisibilityToggle, backdropTypeToggle } =
+      this.props;
     this.currencyChangeHandler = onCurrencyChange;
-    this.backdropToggleHandler = backdropToggle;
+    this.backdropVisibilityToggle = backdropVisibilityToggle;
+    this.backdropTypeToggleHandler = backdropTypeToggle;
 
     this.state = {
       switcherIsOpen: false,
-      isBackdropTransparent: true,
     };
   }
 
-  currencySwitcherToggler = () => {
-    this.setState((prevState) => ({
-      switcherIsOpen: !prevState.switcherIsOpen,
-    }));
-    this.backdropToggleHandler();
+  currencySwitcherOpen = () => {
+    this.setState({ switcherIsOpen: true });
+    this.backdropTypeToggleHandler();
+    this.backdropVisibilityToggle(true);
+  };
+
+  currencySwitcherClosed = () => {
+    this.setState({ switcherIsOpen: false });
   };
 
   onCurrencyChange = (event) => {
+    this.currencySwitcherClosed();
     this.currencyChangeHandler(event.target.ariaLabel);
-    this.currencySwitcherToggler();
+    this.backdropVisibilityToggle(false);
+  };
+
+  onBackdropClick = () => {
+    this.currencySwitcherClosed();
+    this.backdropVisibilityToggle(false);
   };
 
   render() {
-    const { switcherIsOpen, isBackdropTransparent } = this.state;
+    const { switcherIsOpen } = this.state;
     const { currencies, billingCurrency } = this.props;
     let classesOptions = [classes.switcher__options];
     let classesArrow = classes.button__arrow;
@@ -51,17 +61,14 @@ class CurrencySwitcher extends Component {
     return (
       <>
         {createPortal(
-          <Backdrop
-            transparent={isBackdropTransparent}
-            clicked={this.currencySwitcherToggler}
-          />,
+          <Backdrop clicked={this.onBackdropClick} />,
           document.getElementById("backdrop-root"),
         )}
         <div className={classes.switcher}>
           <button
             type="button"
             className={classes.switcher__button}
-            onClick={this.currencySwitcherToggler}
+            onClick={this.currencySwitcherOpen}
           >
             <span className={classes.button__content}>{billingCurrency}</span>
             <svg
@@ -112,13 +119,17 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCurrencyChange: (currency) =>
       dispatch({ type: "products/onCurrencyChange", payload: currency }),
-    backdropToggle: () => dispatch({ type: "ui/backdropToggle" }),
+    backdropVisibilityToggle: (isOpen) =>
+      dispatch({ type: "ui/backdropVisibilityToggle", payload: isOpen }),
+    backdropTypeToggle: () =>
+      dispatch({ type: "ui/backdropTypeToggle", payload: true }),
   };
 };
 
 CurrencySwitcher.propTypes = {
   onCurrencyChange: PropTypes.func.isRequired,
-  backdropToggle: PropTypes.func.isRequired,
+  backdropVisibilityToggle: PropTypes.func.isRequired,
+  backdropTypeToggle: PropTypes.func.isRequired,
   billingCurrency: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(
     PropTypes.shape({

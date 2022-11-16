@@ -1,14 +1,34 @@
+/* eslint-disable no-unused-vars */
 import { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { createPortal } from "react-dom";
 
 import classes from "./CartIcon.module.css";
+import Backdrop from "../../../UI/Backdrop";
 
 class CartIcon extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isBackdropTransparent: false,
+    };
+  }
+
+  // minicartToggle = () => {
+  //   this.backdropToggleHandler();
+  // };
+
   render() {
-    const { productsTotal } = this.props;
+    const { isBackdropTransparent } = this.state;
+    const { productsTotal, backdropOpen, backdropClosed } = this.props;
     return (
-      <button type="button" className={classes["cart-icon"]}>
+      <button
+        type="button"
+        className={classes["cart-icon"]}
+        onClick={backdropOpen}
+      >
         <svg
           width="20"
           height="20"
@@ -43,8 +63,17 @@ const mapStateToProps = (state) => {
   };
 };
 
-CartIcon.propTypes = {
-  productsTotal: PropTypes.number.isRequired,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    backdropOpen: () => dispatch({ type: "ui/backdropOpen" }),
+    backdropClosed: () => dispatch({ type: "ui/backdropClosed" }),
+  };
 };
 
-export default connect(mapStateToProps)(CartIcon);
+CartIcon.propTypes = {
+  productsTotal: PropTypes.number.isRequired,
+  backdropOpen: PropTypes.func.isRequired,
+  backdropClosed: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);

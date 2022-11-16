@@ -14,7 +14,7 @@ class Backdrop extends Component {
   }
 
   render() {
-    const { transparent, clicked, isBackdropOpen } = this.props;
+    const { isBackdropTransparent, clicked, isBackdropOpen } = this.props;
     const attachedClasses = {
       enter: "",
       enterActive: classes["transparent--open"],
@@ -32,7 +32,9 @@ class Backdrop extends Component {
         unmountOnExit
       >
         <div
-          className={transparent ? classes["backdrop--transparent"] : null}
+          className={
+            isBackdropTransparent ? classes["backdrop--transparent"] : null
+          }
           onClick={clicked}
           ref={this.backdropRef}
         />
@@ -44,13 +46,14 @@ class Backdrop extends Component {
 const mapStateToProps = (state) => {
   return {
     isBackdropOpen: state.ui.isBackdropOpen,
+    isBackdropTransparent: state.ui.isBackdropTransparent,
   };
 };
 
 Backdrop.propTypes = {
-  transparent: PropTypes.bool.isRequired,
   clicked: PropTypes.func.isRequired,
   isBackdropOpen: PropTypes.bool.isRequired,
+  isBackdropTransparent: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(Backdrop);

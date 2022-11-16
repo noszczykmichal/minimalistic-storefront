@@ -4,6 +4,7 @@ const initialState = {
   categories: [],
   currencies: [],
   isBackdropOpen: false,
+  isBackdropTransparent: false,
 };
 
 const uiSlice = createSlice({
@@ -17,11 +18,14 @@ const uiSlice = createSlice({
         currencies: action.payload.currencies,
       };
     },
-    backdropToggle(state) {
+    backdropVisibilityToggle(state, action) {
       return {
         ...state,
-        isBackdropOpen: !state.isBackdropOpen,
+        isBackdropOpen: action.payload,
       };
+    },
+    backdropTypeToggle(state, action) {
+      return { ...state, isBackdropTransparent: action.payload };
     },
   },
 });
