@@ -1,33 +1,29 @@
-/* eslint-disable no-unused-vars */
 import { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { createPortal } from "react-dom";
 
 import classes from "./CartIcon.module.css";
-import Backdrop from "../../../UI/Backdrop";
 
 class CartIcon extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isBackdropTransparent: false,
-    };
+    const { backdropVisibilityToggle, backdropTypeToggle } = this.props;
+    this.backdropVisibilityToggle = backdropVisibilityToggle;
+    this.backdropTypeToggle = backdropTypeToggle;
   }
 
-  // minicartToggle = () => {
-  //   this.backdropToggleHandler();
-  // };
+  minicartToggle = () => {
+    this.backdropVisibilityToggle(true);
+    this.backdropTypeToggle(false);
+  };
 
   render() {
-    const { isBackdropTransparent } = this.state;
-    const { productsTotal, backdropOpen, backdropClosed } = this.props;
+    const { productsTotal } = this.props;
     return (
       <button
         type="button"
         className={classes["cart-icon"]}
-        onClick={backdropOpen}
+        onClick={this.minicartToggle}
       >
         <svg
           width="20"
@@ -65,15 +61,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    backdropOpen: () => dispatch({ type: "ui/backdropOpen" }),
-    backdropClosed: () => dispatch({ type: "ui/backdropClosed" }),
+    backdropVisibilityToggle: (isOpen) =>
+      dispatch({ type: "ui/backdropVisibilityToggle", payload: isOpen }),
+    backdropTypeToggle: (isTransparent) =>
+      dispatch({ type: "ui/backdropTypeToggle", payload: isTransparent }),
   };
 };
 
 CartIcon.propTypes = {
   productsTotal: PropTypes.number.isRequired,
-  backdropOpen: PropTypes.func.isRequired,
-  backdropClosed: PropTypes.func.isRequired,
+  backdropVisibilityToggle: PropTypes.func.isRequired,
+  backdropTypeToggle: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);

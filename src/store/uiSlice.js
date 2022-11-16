@@ -5,6 +5,7 @@ const initialState = {
   currencies: [],
   isBackdropOpen: false,
   isBackdropTransparent: false,
+  isCurrencySwitcherOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -26,6 +27,9 @@ const uiSlice = createSlice({
     },
     backdropTypeToggle(state, action) {
       return { ...state, isBackdropTransparent: action.payload };
+    },
+    currencySwitcherVisibToggle(state, action) {
+      return { ...state, isCurrencySwitcherOpen: action.payload };
     },
   },
 });

@@ -1,20 +1,25 @@
-.backdrop--transparent {
+.backdrop {
   width: 100vw;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
 }
 
-.transparent--open {
-  animation: transparentOpen 0.3s ease-out forwards;
+.backdrop--grey {
+  background-color: rgba(57, 55, 72, 0.22);
 }
 
-.transparent--closed {
-  animation: transparentClosed 0.3s ease-out forwards;
+.backdrop--open {
+  animation: backdropOpen 0.5s ease-out forwards;
 }
 
-@keyframes transparentOpen {
+.backdrop--closed {
+  animation: backdropClosed 0.5s ease-out forwards;
+}
+
+@keyframes backdropOpen {
   0% {
     opacity: 0;
   }
@@ -23,7 +28,7 @@
   }
 }
 
-@keyframes transparentClosed {
+@keyframes backdropClosed {
   0% {
     opacity: 1;
   }

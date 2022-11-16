@@ -11,31 +11,41 @@ class Backdrop extends Component {
   constructor(props) {
     super(props);
     this.backdropRef = createRef();
+    const { currencySwitcherVisibToggle, backdropVisibilityToggle } =
+      this.props;
+    this.backdropVisibilityToggle = backdropVisibilityToggle;
+    this.currencySwitcherVisibToggle = currencySwitcherVisibToggle;
   }
 
+  onBackdropClick = () => {
+    this.currencySwitcherVisibToggle(false);
+    this.backdropVisibilityToggle(false);
+  };
+
   render() {
-    const { isBackdropTransparent, clicked, isBackdropOpen } = this.props;
-    const attachedClasses = {
-      enter: "",
-      enterActive: classes["transparent--open"],
-      exit: "",
-      exitActive: classes["transparent--closed"],
-    };
+    const { isBackdropTransparent, isBackdropOpen } = this.props;
 
     return (
       <CSSTransition
         in={isBackdropOpen}
-        timeout={300}
+        timeout={500}
         nodeRef={this.backdropRef}
-        classNames={attachedClasses}
+        classNames={{
+          enter: "",
+          enterActive: classes["backdrop--open"],
+          exit: "",
+          exitActive: classes["backdrop--closed"],
+        }}
         mountOnEnter
         unmountOnExit
       >
         <div
           className={
-            isBackdropTransparent ? classes["backdrop--transparent"] : null
+            isBackdropTransparent
+              ? classes.backdrop
+              : [classes.backdrop, classes["backdrop--grey"]].join(" ")
           }
-          onClick={clicked}
+          onClick={this.onBackdropClick}
           ref={this.backdropRef}
         />
       </CSSTransition>
@@ -50,10 +60,20 @@ const mapStateToProps = (state) => {
   };
 };
 
-Backdrop.propTypes = {
-  clicked: PropTypes.func.isRequired,
-  isBackdropOpen: PropTypes.bool.isRequired,
-  isBackdropTransparent: PropTypes.bool.isRequired,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    backdropVisibilityToggle: (isOpen) =>
+      dispatch({ type: "ui/backdropVisibilityToggle", payload: isOpen }),
+    currencySwitcherVisibToggle: (isOpen) =>
+      dispatch({ type: "ui/currencySwitcherVisibToggle", payload: isOpen }),
+  };
 };
 
-export default connect(mapStateToProps)(Backdrop);
+Backdrop.propTypes = {
+  isBackdropOpen: PropTypes.bool.isRequired,
+  isBackdropTransparent: PropTypes.bool.isRequired,
+  backdropVisibilityToggle: PropTypes.func.isRequired,
+  currencySwitcherVisibToggle: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Backdrop);
