@@ -5,10 +5,26 @@ import PropTypes from "prop-types";
 import classes from "./CartIcon.module.css";
 
 class CartIcon extends Component {
+  constructor(props) {
+    super(props);
+    const { backdropVisibilityToggle, backdropTypeToggle } = this.props;
+    this.backdropVisibilityToggle = backdropVisibilityToggle;
+    this.backdropTypeToggle = backdropTypeToggle;
+  }
+
+  minicartToggle = () => {
+    this.backdropVisibilityToggle(true);
+    this.backdropTypeToggle(false);
+  };
+
   render() {
     const { productsTotal } = this.props;
     return (
-      <button type="button" className={classes["cart-icon"]}>
+      <button
+        type="button"
+        className={classes["cart-icon"]}
+        onClick={this.minicartToggle}
+      >
         <svg
           width="20"
           height="20"
@@ -43,8 +59,19 @@ const mapStateToProps = (state) => {
   };
 };
 
-CartIcon.propTypes = {
-  productsTotal: PropTypes.number.isRequired,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    backdropVisibilityToggle: (isOpen) =>
+      dispatch({ type: "ui/backdropVisibilityToggle", payload: isOpen }),
+    backdropTypeToggle: (isTransparent) =>
+      dispatch({ type: "ui/backdropTypeToggle", payload: isTransparent }),
+  };
 };
 
-export default connect(mapStateToProps)(CartIcon);
+CartIcon.propTypes = {
+  productsTotal: PropTypes.number.isRequired,
+  backdropVisibilityToggle: PropTypes.func.isRequired,
+  backdropTypeToggle: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);

@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
+import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 
 import NavigationItems from "../NavigationItems/NavigationItems";
@@ -7,6 +8,7 @@ import classes from "./Toolbar.module.css";
 import Logo from "./Logo/Logo";
 import CartIcon from "./CartIcon/CartIcon";
 import CurrencySwitcher from "./CurrencySwitcher/CurrencySwitcher";
+import Backdrop from "../../UI/Backdrop";
 
 class Toolbar extends Component {
   render() {
@@ -28,6 +30,10 @@ class Toolbar extends Component {
           {currencySwitcher}
           <CartIcon />
         </div>
+        {createPortal(
+          <Backdrop clicked={this.onBackdropClick} />,
+          document.getElementById("backdrop-root"),
+        )}
       </header>
     );
   }
