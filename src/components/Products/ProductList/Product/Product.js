@@ -27,11 +27,19 @@ class Product extends Component {
     event.stopPropagation();
     const { productDetails, billingCurrency, addProdWithDefaultAttribs } =
       this.props;
+
     const updatedAttributes = productDetails.attributes.map((attribute) => {
-      const updatedItems = [attribute.items[0]];
+      const extensibleAttribItem = JSON.parse(
+        JSON.stringify(attribute.items[0]),
+      );
+      extensibleAttribItem.selected = true;
+      const updatedItems = [...attribute.items];
+      updatedItems.shift();
+      updatedItems.unshift(extensibleAttribItem);
 
       return { ...attribute, items: updatedItems };
     });
+
     const updatedPrices = productDetails.prices.filter(
       (price) => price.currency.symbol === billingCurrency,
     );
@@ -41,7 +49,6 @@ class Product extends Component {
       attributes: updatedAttributes,
       prices: updatedPrices,
     };
-
     addProdWithDefaultAttribs(updatedProduct);
   };
 
