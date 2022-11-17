@@ -6,6 +6,7 @@ const initialState = {
   isBackdropOpen: false,
   isBackdropTransparent: false,
   isCurrencySwitcherOpen: false,
+  isMiniCartOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -30,6 +31,9 @@ const uiSlice = createSlice({
     },
     currencySwitcherVisibToggle(state, action) {
       return { ...state, isCurrencySwitcherOpen: action.payload };
+    },
+    miniCartVisibilityToggle(state, action) {
+      return { ...state, isMiniCartOpen: action.payload };
     },
   },
 });

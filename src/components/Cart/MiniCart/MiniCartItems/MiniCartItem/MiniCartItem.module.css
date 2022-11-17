@@ -1,0 +1,15 @@
+.product-details__title {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.6rem;
+  margin: 0;
+}
+
+.title__item {
+  display: block;
+}
+
+.product-details__price {
+  font-weight: 500;
+  margin: 0.25rem 0;
+}

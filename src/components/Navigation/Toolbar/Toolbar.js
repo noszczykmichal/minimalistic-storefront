@@ -9,17 +9,23 @@ import Logo from "./Logo/Logo";
 import CartIcon from "./CartIcon/CartIcon";
 import CurrencySwitcher from "./CurrencySwitcher/CurrencySwitcher";
 import Backdrop from "../../UI/Backdrop";
+import MiniCart from "../../Cart/MiniCart/Minicart";
 
 class Toolbar extends Component {
   render() {
-    const { categories, currencies } = this.props;
+    const { categories, currencies, isMiniCartOpen } = this.props;
     let navigationItems;
     let currencySwitcher;
+    let minicart;
     if (categories) {
       navigationItems = <NavigationItems categories={categories} />;
     }
     if (currencies) {
       currencySwitcher = <CurrencySwitcher currencies={currencies} />;
+    }
+
+    if (isMiniCartOpen) {
+      minicart = <MiniCart />;
     }
 
     return (
@@ -29,7 +35,9 @@ class Toolbar extends Component {
         <div className={classes["cart-actions"]}>
           {currencySwitcher}
           <CartIcon />
+          {minicart}
         </div>
+
         {createPortal(
           <Backdrop clicked={this.onBackdropClick} />,
           document.getElementById("backdrop-root"),
@@ -43,6 +51,7 @@ const mapStateToProps = (state) => {
   return {
     categories: state.ui.categories,
     currencies: state.ui.currencies,
+    isMiniCartOpen: state.ui.isMiniCartOpen,
   };
 };
 
@@ -50,11 +59,11 @@ Toolbar.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
   currencies: PropTypes.arrayOf(
     PropTypes.shape({
-      __typename: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       symbol: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  isMiniCartOpen: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(Toolbar);
