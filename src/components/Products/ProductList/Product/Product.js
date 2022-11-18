@@ -25,13 +25,20 @@ class Product extends Component {
 
   addProductWithDefaults = (event) => {
     event.stopPropagation();
-    const { productDetails, billingCurrency, addProdWithDefaultAttribs } =
-      this.props;
+    const { productDetails, billingCurrency, addProductToCart } = this.props;
+
     const updatedAttributes = productDetails.attributes.map((attribute) => {
-      const updatedItems = [attribute.items[0]];
+      const extensibleAttribItem = JSON.parse(
+        JSON.stringify(attribute.items[0]),
+      );
+      extensibleAttribItem.selected = true;
+      const updatedItems = [...attribute.items];
+      updatedItems.shift();
+      updatedItems.unshift(extensibleAttribItem);
 
       return { ...attribute, items: updatedItems };
     });
+
     const updatedPrices = productDetails.prices.filter(
       (price) => price.currency.symbol === billingCurrency,
     );
@@ -41,8 +48,7 @@ class Product extends Component {
       attributes: updatedAttributes,
       prices: updatedPrices,
     };
-
-    addProdWithDefaultAttribs(updatedProduct);
+    addProductToCart(updatedProduct);
   };
 
   render() {
@@ -121,8 +127,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCurrentPDPChange: (id) =>
       dispatch({ type: "products/onCurrentPDPChange", payload: id }),
-    addProdWithDefaultAttribs: (product) =>
-      dispatch({ type: "cart/addProdWithDefaultAttribs", payload: product }),
+    addProductToCart: (product) =>
+      dispatch({ type: "cart/addProductToCart", payload: product }),
   };
 };
 
@@ -160,7 +166,7 @@ Product.propTypes = {
   }).isRequired,
   billingCurrency: PropTypes.string.isRequired,
   onCurrentPDPChange: PropTypes.func.isRequired,
-  addProdWithDefaultAttribs: PropTypes.func.isRequired,
+  addProductToCart: PropTypes.func.isRequired,
 };
 
 export default withRouter(

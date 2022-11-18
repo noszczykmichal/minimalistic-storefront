@@ -1,0 +1,19 @@
+.mini-cart {
+  width: 20rem;
+  height: auto;
+  position: fixed;
+  top: 5rem;
+  right: 4.5rem;
+  background-color: #fff;
+  padding: 2rem 1rem;
+}
+
+.mini-cart__title {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.6rem;
+}
+
+.title__items-count {
+  font-weight: 500;
+}

@@ -1,14 +1,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Component } from "react";
+import { Component, createRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { CSSTransition } from "react-transition-group";
 
 import classes from "./CurrencySwitcher.module.css";
 
 class CurrencySwitcher extends Component {
   constructor(props) {
     super(props);
+    this.switcherOptionsRef = createRef();
     const {
       onCurrencyChange,
       backdropVisibilityToggle,
@@ -35,15 +37,9 @@ class CurrencySwitcher extends Component {
 
   render() {
     const { isCurrencySwitcherOpen, currencies, billingCurrency } = this.props;
-    let classesOptions = [classes.switcher__options];
     let classesArrow = classes.button__arrow;
 
     if (isCurrencySwitcherOpen) {
-      classesOptions = [
-        classes.switcher__options,
-        classes["switcher__options--open"],
-      ];
-
       classesArrow = classes["button__arrow--rotate"];
     }
 
@@ -72,19 +68,38 @@ class CurrencySwitcher extends Component {
           </svg>
         </button>
 
-        <div className={classesOptions.join(" ")}>
-          {currencies.map((currency) => (
-            <div
-              key={currency.label}
-              aria-label={currency.symbol}
-              className={classes.switcher__option}
-              onClick={this.currencyChangeHandler}
-            >
-              <span className={classes.option__symbol}>{currency.symbol}</span>
-              <span className={classes.option__label}>{currency.label}</span>
-            </div>
-          ))}
-        </div>
+        <CSSTransition
+          in={isCurrencySwitcherOpen}
+          timeout={300}
+          classNames={{
+            enter: "",
+            enterActive: classes["switcher__options--open"],
+            exit: "",
+            exitActive: classes["switcher__options--closed"],
+          }}
+          nodeRef={this.switcherOptionsRef}
+          mountOnEnter
+          unmountOnExit
+        >
+          <div
+            className={classes.switcher__options}
+            ref={this.switcherOptionsRef}
+          >
+            {currencies.map((currency) => (
+              <div
+                key={currency.label}
+                aria-label={currency.symbol}
+                className={classes.switcher__option}
+                onClick={this.currencyChangeHandler}
+              >
+                <span className={classes.option__symbol}>
+                  {currency.symbol}
+                </span>
+                <span className={classes.option__label}>{currency.label}</span>
+              </div>
+            ))}
+          </div>
+        </CSSTransition>
       </div>
     );
   }

@@ -11,15 +11,20 @@ class Backdrop extends Component {
   constructor(props) {
     super(props);
     this.backdropRef = createRef();
-    const { currencySwitcherVisibToggle, backdropVisibilityToggle } =
-      this.props;
+    const {
+      currencySwitcherVisibToggle,
+      backdropVisibilityToggle,
+      miniCartVisibilityToggle,
+    } = this.props;
     this.backdropVisibilityToggle = backdropVisibilityToggle;
     this.currencySwitcherVisibToggle = currencySwitcherVisibToggle;
+    this.miniCartVisibilityToggle = miniCartVisibilityToggle;
   }
 
   onBackdropClick = () => {
     this.currencySwitcherVisibToggle(false);
     this.backdropVisibilityToggle(false);
+    this.miniCartVisibilityToggle(false);
   };
 
   render() {
@@ -66,6 +71,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: "ui/backdropVisibilityToggle", payload: isOpen }),
     currencySwitcherVisibToggle: (isOpen) =>
       dispatch({ type: "ui/currencySwitcherVisibToggle", payload: isOpen }),
+    miniCartVisibilityToggle: (isOpen) =>
+      dispatch({ type: "ui/miniCartVisibilityToggle", payload: isOpen }),
   };
 };
 
@@ -74,6 +81,7 @@ Backdrop.propTypes = {
   isBackdropTransparent: PropTypes.bool.isRequired,
   backdropVisibilityToggle: PropTypes.func.isRequired,
   currencySwitcherVisibToggle: PropTypes.func.isRequired,
+  miniCartVisibilityToggle: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Backdrop);
