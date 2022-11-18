@@ -11,10 +11,12 @@ import Button from "../components/UI/Button";
 class PDP extends Component {
   constructor(props) {
     super(props);
-    const { displayedProduct } = this.props;
+    const { displayedProduct, addProductToCart } = this.props;
+    this.addProductToCart = addProductToCart;
 
     this.state = {
       mainImageURL: displayedProduct.gallery[0],
+      product: displayedProduct,
     };
   }
 
@@ -37,22 +39,58 @@ class PDP extends Component {
   };
 
   onAttributeValueSelect = (event) => {
-    const attributeValues = event.target.parentElement;
-    const attributeValuesType = attributeValues.getAttribute("attributeType");
+    const parentEl = event.target.parentElement;
+    const attributeType = parentEl.getAttribute("attributeType");
+    const { product } = this.state;
+    const productAttributes = product.attributes;
+    const searchedAttribItem = event.target.innerText;
 
-    if (attributeValuesType !== "Color") {
+    if (attributeType !== "Color") {
       this.classNameToggler(
         "product-attribute__value--selected",
-        attributeValues,
+        parentEl,
         event,
       );
     } else {
       this.classNameToggler(
         "product-attribute__value--color-selected",
-        attributeValues,
+        parentEl,
         event,
       );
     }
+
+    const updatedProductAttributes = productAttributes.map((attribute) => {
+      let updatedItems = attribute.items;
+      if (attribute.name === attributeType) {
+        const attributeItems = JSON.parse(JSON.stringify(attribute.items));
+        const clearedOfSelected = attributeItems.map((item) => {
+          const updatedItem = { ...item };
+          if (item.selected) {
+            delete updatedItem.selected;
+          }
+          return updatedItem;
+        });
+        const filteredItem = clearedOfSelected.filter(
+          (item) => item.displayValue === searchedAttribItem,
+        );
+        filteredItem[0].selected = true;
+        const withoutFilteredItem = clearedOfSelected.filter(
+          (item) => item.displayValue !== searchedAttribItem,
+        );
+        updatedItems = withoutFilteredItem.concat(filteredItem);
+      }
+
+      return { ...attribute, items: updatedItems };
+    });
+
+    this.setState((prevState) => ({
+      product: { ...prevState.product, attributes: updatedProductAttributes },
+    }));
+  };
+
+  onAddProductToCart = () => {
+    const { product } = this.state;
+    this.addProductToCart(product);
   };
 
   render() {
@@ -148,7 +186,12 @@ class PDP extends Component {
               </p>
             </div>
           </div>
-          <Button isDisabled={!displayedProduct.inStock}>Add to cart</Button>
+          <Button
+            isDisabled={!displayedProduct.inStock}
+            clicked={this.onAddProductToCart}
+          >
+            Add to cart
+          </Button>
           <div className={classes.description}>
             <Markup content={displayedProduct.description} />
           </div>
@@ -162,6 +205,13 @@ const mapStateToProps = (state) => {
   return {
     displayedProduct: state.products.currentPDP,
     billingCurrency: state.products.billingCurrency,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProductToCart: (product) =>
+      dispatch({ type: "cart/addProductToCart", payload: product }),
   };
 };
 
@@ -193,6 +243,7 @@ PDP.propTypes = {
     description: PropTypes.string.isRequired,
   }).isRequired,
   billingCurrency: PropTypes.string.isRequired,
+  addProductToCart: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(PDP);
+export default connect(mapStateToProps, mapDispatchToProps)(PDP);

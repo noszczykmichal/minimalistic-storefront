@@ -6,7 +6,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addProdWithDefaultAttribs(state, action) {
+    addProductToCart(state, action) {
       const updatedCart = [...state.cart].concat(action.payload);
       const updatedProductsTotal = updatedCart.length;
       return {

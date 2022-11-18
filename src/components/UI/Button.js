@@ -5,10 +5,15 @@ import classes from "./Button.module.css";
 
 class Button extends Component {
   render() {
-    const { isDisabled, children } = this.props;
+    const { isDisabled, clicked, children } = this.props;
 
     return (
-      <button type="button" className={classes.button} disabled={isDisabled}>
+      <button
+        type="button"
+        className={classes.button}
+        onClick={clicked}
+        disabled={isDisabled}
+      >
         {children}
       </button>
     );
@@ -17,6 +22,7 @@ class Button extends Component {
 
 Button.propTypes = {
   isDisabled: PropTypes.bool.isRequired,
+  clicked: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 
