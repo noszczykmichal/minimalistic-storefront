@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = { cart: [], productsTotal: 0 };
 
@@ -8,64 +7,47 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addProductToCart(state, action) {
-      const cart = [...state.cart];
-      let updatedCart = [];
-      const incomingProduct = JSON.parse(JSON.stringify(action.payload));
-      // console.log("incoming: ", incomingProduct);
-      if (cart.length > 0) {
-        /* checking whether the product with given id is already in the cart */
-        const filteredCart = cart.filter(
-          (product) => product.id === incomingProduct.id,
+      const incomingProduct = { ...action.payload };
+      const cart = JSON.parse(JSON.stringify(state.cart));
+      const selectedAttributesVal = incomingProduct.attributes
+        .map((attribute) =>
+          attribute.items.map((item) => item.selected && item.value),
+        )
+        .flat(1)
+        .join("")
+        .toLowerCase();
+      /* calculating 'internalID' - to differentiate products from each other in terms of id or different attributes that they have  */
+      const internalID = `${incomingProduct.id}${selectedAttributesVal}`;
+      let updatedProduct = { ...incomingProduct };
+      updatedProduct.quantity = 1;
+      updatedProduct.internalID = internalID;
+      let updatedCart = [...cart];
+      updatedCart.push(updatedProduct);
+      const filteredCart = cart.filter(
+        (product) => product.internalID === internalID,
+      );
+      let updatedProductsTotal = 0;
+
+      if (filteredCart.length > 0) {
+        updatedProduct = { ...filteredCart[0] };
+        updatedProduct.quantity += 1;
+
+        const cartWithOutUpdatedProduct = cart.filter(
+          (product) => product.internalID !== internalID,
         );
-
-        if (filteredCart.length > 0) {
-          const isEqual = filteredCart.map((product) => {
-            return product.attributes.map((attribute, index) => {
-              const incomProdSingleAttribute =
-                incomingProduct.attributes[index];
-
-              return attribute.items.every((attributeItem) => {
-                return incomProdSingleAttribute.items.some(
-                  (incomingProdOption) => {
-                    console.log(
-                      "[JSON.stringify(incomingProdOption)] :",
-                      JSON.stringify(incomingProdOption),
-                      "[ JSON.stringify(attributeItem)]: ",
-                      JSON.stringify(attributeItem),
-                    );
-
-                    return (
-                      JSON.stringify(incomingProdOption) ===
-                      JSON.stringify(attributeItem)
-                    );
-                  },
-                );
-              });
-            });
-          });
-          console.log("isEqual: ", isEqual);
-          updatedCart = [...cart];
-        } else {
-          /* cart is not empty, no other products with given id; product can be added without attributes checking */
-          incomingProduct.quantity = 1;
-          updatedCart = [...cart];
-          updatedCart.push(incomingProduct);
-        }
-      } else {
-        /* cart empty, a new product can be safely added to the cart */
-        incomingProduct.quantity = 1;
-        updatedCart.push(incomingProduct);
+        cartWithOutUpdatedProduct.push(updatedProduct);
+        updatedCart = cartWithOutUpdatedProduct;
       }
+      updatedProductsTotal = Object.keys(updatedCart).reduce(
+        (acc, index) => acc + updatedCart[index].quantity,
+        0,
+      );
 
-      return { ...state, cart: updatedCart, productsTotal: updatedCart.length };
-
-      // const updatedCart = [...state.cart].concat(action.payload);
-      // const updatedProductsTotal = updatedCart.length;
-      // return {
-      //   ...state,
-      //   cart: updatedCart,
-      //   productsTotal: updatedProductsTotal,
-      // };
+      return {
+        ...state,
+        cart: updatedCart,
+        productsTotal: updatedProductsTotal,
+      };
     },
   },
 });
