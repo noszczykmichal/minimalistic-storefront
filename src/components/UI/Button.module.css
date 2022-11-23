@@ -15,8 +15,7 @@
 }
 
 .button:hover:not(:disabled),
-.button:active:not(:disabled),
-.button:focus:not(:disabled) {
+.button:active:not(:disabled) {
   background-color: #fff;
   color: #5ece7b;
   border: 1px solid #5ece7b;

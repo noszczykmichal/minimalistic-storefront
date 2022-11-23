@@ -40,12 +40,12 @@ class PDP extends Component {
 
   onAttributeValueSelect = (event) => {
     const parentEl = event.target.parentElement;
-    const attributeType = parentEl.getAttribute("attributeType");
+    const searchedAttributeType = parentEl.getAttribute("attributeType");
     const { product } = this.state;
     const productAttributes = product.attributes;
     const searchedAttribItem = event.target.innerText;
 
-    if (attributeType !== "Color") {
+    if (searchedAttributeType !== "Color") {
       this.classNameToggler(
         "product-attribute__value--selected",
         parentEl,
@@ -61,7 +61,8 @@ class PDP extends Component {
 
     const updatedProductAttributes = productAttributes.map((attribute) => {
       let updatedItems = attribute.items;
-      if (attribute.name === attributeType) {
+
+      if (attribute.name === searchedAttributeType) {
         const attributeItems = JSON.parse(JSON.stringify(attribute.items));
         const clearedOfSelected = attributeItems.map((item) => {
           const updatedItem = { ...item };
@@ -70,14 +71,12 @@ class PDP extends Component {
           }
           return updatedItem;
         });
-        const filteredItem = clearedOfSelected.filter(
-          (item) => item.displayValue === searchedAttribItem,
+
+        updatedItems = clearedOfSelected.map((attributeItem) =>
+          attributeItem.value === searchedAttribItem
+            ? { ...attributeItem, selected: true }
+            : attributeItem,
         );
-        filteredItem[0].selected = true;
-        const withoutFilteredItem = clearedOfSelected.filter(
-          (item) => item.displayValue !== searchedAttribItem,
-        );
-        updatedItems = withoutFilteredItem.concat(filteredItem);
       }
 
       return { ...attribute, items: updatedItems };
@@ -168,7 +167,7 @@ class PDP extends Component {
                           }}
                           onClick={this.onAttributeValueSelect}
                         >
-                          {attributeItem.displayValue}
+                          {attributeItem.value}
                         </button>
                       );
                     }
