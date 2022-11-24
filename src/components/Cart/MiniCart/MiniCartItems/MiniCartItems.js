@@ -20,7 +20,7 @@ class MiniCartItems extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.cart.cart,
+    cart: state.products.cart,
   };
 };
 

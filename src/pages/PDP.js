@@ -211,7 +211,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addProductToCart: (product) =>
-      dispatch({ type: "cart/addProductToCart", payload: product }),
+      dispatch({ type: "products/addProductToCart", payload: product }),
   };
 };
 
