@@ -11,7 +11,7 @@ class MiniCartItems extends Component {
     return (
       <ul className={classes["cart-items"]}>
         {cart.map((cartItem) => (
-          <MiniCartItem key={cartItem.id} itemDetails={cartItem} />
+          <MiniCartItem key={cartItem.internalID} itemDetails={cartItem} />
         ))}
       </ul>
     );

@@ -30,6 +30,7 @@ class CartIcon extends Component {
         type="button"
         className={classes["cart-icon"]}
         onClick={this.minicartToggle}
+        disabled={!productsTotal}
       >
         <svg
           width="20"

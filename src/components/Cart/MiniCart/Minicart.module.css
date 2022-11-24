@@ -1,11 +1,12 @@
 .mini-cart {
-  width: 20rem;
-  height: auto;
+  width: 21rem;
+  max-height: 42rem;
   position: fixed;
   top: 5rem;
   right: 4.5rem;
   background-color: #fff;
   padding: 2rem 1rem;
+  overflow-y: auto;
 }
 
 .mini-cart__title {
@@ -16,4 +17,55 @@
 
 .title__items-count {
   font-weight: 500;
+}
+
+.mini-cart__total-price {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+}
+
+.total-price__text {
+  font-weight: 500;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.total-price__price {
+  font-weight: 700;
+}
+
+.mini-cart__actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions__button {
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.actions__button--transparent {
+  border: 1px solid #1d1f22;
+  color: #1d1f22;
+  background-color: transparent;
+}
+
+.actions__button--transparent:hover {
+  color: #fff;
+  background-color: #1d1f22;
+  border: 1px solid transparent;
+}
+
+.actions__button--green {
+  color: #fff;
+  background-color: #5ece7b;
+  border: 1px solid transparent;
+}
+
+.actions__button--green:hover {
+  background-color: transparent;
+  color: #5ece7b;
+  border: 1px solid #5ece7b;
 }
