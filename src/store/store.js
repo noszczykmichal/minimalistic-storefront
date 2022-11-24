@@ -5,12 +5,10 @@ import thunk from "redux-thunk";
 
 import uiSlice from "./uiSlice";
 import productsSlice from "./productsSlice";
-import cartSlice from "./cartSlice";
 
 const rootReducer = combineReducers({
   ui: uiSlice.reducer,
   products: productsSlice.reducer,
-  cart: cartSlice.reducer,
 });
 
 const persistConfig = {

@@ -62,7 +62,7 @@ class CartIcon extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    productsTotal: state.cart.productsTotal,
+    productsTotal: state.products.productsTotal,
   };
 };
 

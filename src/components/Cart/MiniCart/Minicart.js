@@ -57,8 +57,8 @@ class MiniCart extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    productsTotal: state.cart.productsTotal,
-    totalPrice: state.cart.totalPrice,
+    productsTotal: state.products.productsTotal,
+    totalPrice: state.products.totalPrice,
     billingCurrency: state.products.billingCurrency,
   };
 };

@@ -145,9 +145,9 @@ MiniCartItem.propTypes = {
 const mapDispatchToProps = (dispatch) => {
   return {
     increaseQuantity: (internalID) =>
-      dispatch({ type: "cart/increaseQuantity", payload: internalID }),
+      dispatch({ type: "products/increaseQuantity", payload: internalID }),
     decreaseQuantity: (internalID) =>
-      dispatch({ type: "cart/decreaseQuantity", payload: internalID }),
+      dispatch({ type: "products/decreaseQuantity", payload: internalID }),
   };
 };
 MiniCartItem.propTypes = {

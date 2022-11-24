@@ -128,7 +128,7 @@ const mapDispatchToProps = (dispatch) => {
     onCurrentPDPChange: (id) =>
       dispatch({ type: "products/onCurrentPDPChange", payload: id }),
     addProductToCart: (product) =>
-      dispatch({ type: "cart/addProductToCart", payload: product }),
+      dispatch({ type: "products/addProductToCart", payload: product }),
   };
 };
 
