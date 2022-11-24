@@ -123,6 +123,25 @@
   line-height: 1.1rem;
 }
 
+.cart-actions__button {
+  width: 100%;
+  font-size: 1rem;
+  color: #fff;
+  background: #5ece7b;
+  border: 1px solid transparent;
+}
+
+.cart-actions__button:hover:not(:disabled),
+.cart-actions__button:active:not(:disabled) {
+  background-color: #fff;
+  color: #5ece7b;
+  border: 1px solid #5ece7b;
+}
+
+.cart-actions__button:disabled {
+  filter: grayscale(1);
+}
+
 .description {
   margin-top: 2.5rem;
   font-family: "Roboto Condensed", sans-serif;

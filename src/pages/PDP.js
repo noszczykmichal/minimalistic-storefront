@@ -188,6 +188,7 @@ class PDP extends Component {
           <Button
             isDisabled={!displayedProduct.inStock}
             clicked={this.onAddProductToCart}
+            customClass={classes["cart-actions__button"]}
           >
             Add to cart
           </Button>

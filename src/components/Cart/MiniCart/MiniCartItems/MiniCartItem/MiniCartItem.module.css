@@ -1,3 +1,18 @@
+.cart-item {
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.column-wrapper--big {
+  width: 152px;
+  display: inline-block;
+  height: 100%;
+  overflow: visible;
+}
+
 .product-details__title {
   font-size: 1rem;
   font-weight: 300;
@@ -12,4 +27,85 @@
 .product-details__price {
   font-weight: 500;
   margin: 0.25rem 0;
+}
+
+.product-attribute__label {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  margin: 0.5rem 0;
+}
+
+.product-attribute__values {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.product-attribute__value {
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #1d1f22;
+  letter-spacing: 0.05rem;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.7rem;
+  line-height: 1.4rem;
+  background-color: transparent;
+}
+
+.product-attribute__value--selected {
+  background-color: #1d1f22;
+  color: #fff;
+}
+
+.product-attribute__value--color {
+  position: relative;
+  height: 1.5rem;
+  width: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: transparent;
+  border: none;
+}
+
+.product-attribute__value--color::after {
+  position: absolute;
+  height: 1.75rem;
+  width: 1.75rem;
+  content: "";
+}
+
+.product-attribute__value--color-selected::after {
+  border: 1px solid #5ece7b;
+}
+
+.column-wrapper--cart-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-actions__button {
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 1px solid #1d1f22;
+  background-color: transparent;
+}
+
+.cart-actions__quantity {
+  font-weight: 500;
+}
+
+.image-container {
+  height: auto;
+  width: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }

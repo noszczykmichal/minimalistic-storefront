@@ -5,12 +5,12 @@ import classes from "./Button.module.css";
 
 class Button extends Component {
   render() {
-    const { isDisabled, clicked, children } = this.props;
+    const { isDisabled, clicked, customClass, children } = this.props;
 
     return (
       <button
         type="button"
-        className={classes.button}
+        className={[classes.button, customClass].join(" ")}
         onClick={clicked}
         disabled={isDisabled}
       >
@@ -21,9 +21,14 @@ class Button extends Component {
 }
 
 Button.propTypes = {
-  isDisabled: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool,
   clicked: PropTypes.func.isRequired,
+  customClass: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+};
+
+Button.defaultProps = {
+  isDisabled: false,
 };
 
 export default Button;

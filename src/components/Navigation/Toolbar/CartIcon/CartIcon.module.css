@@ -6,6 +6,10 @@
   cursor: pointer;
 }
 
+.cart-icon:disabled {
+  cursor: unset;
+}
+
 .counter {
   position: absolute;
   margin: 0;
