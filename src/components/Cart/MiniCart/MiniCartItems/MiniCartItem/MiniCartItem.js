@@ -6,7 +6,7 @@ import classes from "./MiniCartItem.module.css";
 
 class MiniCartItem extends Component {
   render() {
-    const { itemDetails, increaseQuantity, decreaseQuantity } = this.props;
+    const { itemDetails, changeQuantity } = this.props;
     return (
       <li className={classes["cart-item"]}>
         <div className={classes["column-wrapper--big"]}>
@@ -88,7 +88,7 @@ class MiniCartItem extends Component {
           <button
             type="button"
             className={classes["cart-actions__button"]}
-            onClick={() => increaseQuantity(itemDetails.internalID)}
+            onClick={() => changeQuantity(itemDetails.internalID, "addition")}
           >
             +
           </button>
@@ -98,7 +98,9 @@ class MiniCartItem extends Component {
           <button
             type="button"
             className={classes["cart-actions__button"]}
-            onClick={() => decreaseQuantity(itemDetails.internalID)}
+            onClick={() =>
+              changeQuantity(itemDetails.internalID, "subtraction")
+            }
           >
             -
           </button>
@@ -144,15 +146,15 @@ MiniCartItem.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    increaseQuantity: (internalID) =>
-      dispatch({ type: "products/increaseQuantity", payload: internalID }),
-    decreaseQuantity: (internalID) =>
-      dispatch({ type: "products/decreaseQuantity", payload: internalID }),
+    changeQuantity: (internalID, operationType) =>
+      dispatch({
+        type: "products/changeQuantity",
+        payload: { internalID, operationType },
+      }),
   };
 };
 MiniCartItem.propTypes = {
-  increaseQuantity: PropTypes.func.isRequired,
-  decreaseQuantity: PropTypes.func.isRequired,
+  changeQuantity: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(MiniCartItem);
