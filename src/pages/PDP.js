@@ -2,21 +2,33 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Component } from "react";
 import { connect } from "react-redux";
+import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import { Markup } from "interweave";
 
 import classes from "./PDP.module.css";
 import Button from "../components/UI/Button";
+import Modal from "../components/UI/Modal";
 
 class PDP extends Component {
   constructor(props) {
     super(props);
-    const { displayedProduct, addProductToCart } = this.props;
+    const {
+      displayedProduct,
+      addProductToCart,
+      backdropVisibilityToggle,
+      backdropTypeToggle,
+      modalToggle,
+    } = this.props;
     this.addProductToCart = addProductToCart;
+    this.backdropVisibilityToggle = backdropVisibilityToggle;
+    this.backdropTypeToggle = backdropTypeToggle;
+    this.modalToggle = modalToggle;
 
     this.state = {
       mainImageURL: displayedProduct.gallery[0],
       product: displayedProduct,
+      notSelected: [],
     };
   }
 
@@ -89,12 +101,30 @@ class PDP extends Component {
 
   onAddProductToCart = () => {
     const { product } = this.state;
-    this.addProductToCart(product);
+
+    const checkNotSelected = product.attributes
+      .map((attribute) => {
+        const attributeItems = attribute.items;
+        const isSelected = attributeItems.some((item) => item.selected);
+
+        return !isSelected && attribute.name;
+      })
+      .filter((element) => typeof element === "string");
+
+    this.setState({ notSelected: checkNotSelected });
+
+    if (checkNotSelected.length > 0) {
+      this.modalToggle(true);
+      this.backdropVisibilityToggle(true);
+      this.backdropTypeToggle(false);
+    } else {
+      this.addProductToCart(product);
+    }
   };
 
   render() {
     const { displayedProduct, billingCurrency } = this.props;
-    const { mainImageURL } = this.state;
+    const { mainImageURL, notSelected } = this.state;
 
     const currentPrice = [...displayedProduct.prices].filter(
       (price) => price.currency.symbol === billingCurrency,
@@ -102,6 +132,10 @@ class PDP extends Component {
 
     return (
       <section className={classes.section}>
+        {createPortal(
+          <Modal notSelected={notSelected} />,
+          document.getElementById("modals-root"),
+        )}
         {/* 1st column */}
         <div className={classes["thumbnails-wrapper"]}>
           {displayedProduct.gallery.map((imageURL) => (
@@ -212,6 +246,15 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addProductToCart: (product) =>
       dispatch({ type: "products/addProductToCart", payload: product }),
+    backdropVisibilityToggle: (isOpen) =>
+      dispatch({ type: "ui/backdropVisibilityToggle", payload: isOpen }),
+    backdropTypeToggle: (isBackdropTransparent) =>
+      dispatch({
+        type: "ui/isBackdropTransparent",
+        payload: isBackdropTransparent,
+      }),
+    modalToggle: (isOpen) =>
+      dispatch({ type: "ui/modalToggle", payload: isOpen }),
   };
 };
 
@@ -244,6 +287,9 @@ PDP.propTypes = {
   }).isRequired,
   billingCurrency: PropTypes.string.isRequired,
   addProductToCart: PropTypes.func.isRequired,
+  backdropVisibilityToggle: PropTypes.func.isRequired,
+  backdropTypeToggle: PropTypes.func.isRequired,
+  modalToggle: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PDP);

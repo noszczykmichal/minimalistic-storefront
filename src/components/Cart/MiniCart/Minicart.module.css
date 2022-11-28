@@ -40,9 +40,9 @@
 }
 
 .actions__button {
-  height: 2.5rem;
   display: flex;
   align-items: center;
+  height: 2.5rem;
   font-size: 0.875rem;
 }
 
