@@ -40,7 +40,7 @@ class Toolbar extends Component {
 
         {createPortal(
           <Backdrop clicked={this.onBackdropClick} />,
-          document.getElementById("backdrop-root"),
+          document.getElementById("modals-root"),
         )}
       </header>
     );
