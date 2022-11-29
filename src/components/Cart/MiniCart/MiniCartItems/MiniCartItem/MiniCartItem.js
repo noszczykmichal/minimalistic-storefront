@@ -9,7 +9,7 @@ class MiniCartItem extends Component {
     const { itemDetails, changeQuantity } = this.props;
     return (
       <li className={classes["cart-item"]}>
-        <div className={classes["column-wrapper--big"]}>
+        <div className={classes["column-wrapper"]}>
           <div className={classes["cart-item__product-details"]}>
             <h3 className={classes["product-details__title"]}>
               <span className={classes.title__item}>{itemDetails.brand}</span>
@@ -114,6 +114,16 @@ class MiniCartItem extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeQuantity: (internalID, operationType) =>
+      dispatch({
+        type: "products/changeQuantity",
+        payload: { internalID, operationType },
+      }),
+  };
+};
+
 MiniCartItem.propTypes = {
   itemDetails: PropTypes.shape({
     brand: PropTypes.string.isRequired,
@@ -142,18 +152,6 @@ MiniCartItem.propTypes = {
     quantity: PropTypes.number.isRequired,
     internalID: PropTypes.string.isRequired,
   }).isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    changeQuantity: (internalID, operationType) =>
-      dispatch({
-        type: "products/changeQuantity",
-        payload: { internalID, operationType },
-      }),
-  };
-};
-MiniCartItem.propTypes = {
   changeQuantity: PropTypes.func.isRequired,
 };
 

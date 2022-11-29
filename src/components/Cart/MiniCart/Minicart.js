@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
 import classes from "./Minicart.module.css";
 import MiniCartItems from "./MiniCartItems/MiniCartItems";
@@ -8,7 +9,11 @@ import Button from "../../UI/Button";
 
 class MiniCart extends Component {
   clickHandler = () => {
-    console.log(this, "hey");
+    const { history, backdropVisibilityToggle, miniCartVisibilityToggle } =
+      this.props;
+    backdropVisibilityToggle(false);
+    miniCartVisibilityToggle(false);
+    history.push({ pathname: "/cart" });
   };
 
   render() {
@@ -63,10 +68,27 @@ const mapStateToProps = (state) => {
   };
 };
 
-MiniCart.propTypes = {
-  productsTotal: PropTypes.number.isRequired,
-  totalPrice: PropTypes.string.isRequired,
-  billingCurrency: PropTypes.string.isRequired,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    backdropVisibilityToggle: (isOpen) =>
+      dispatch({ type: "ui/backdropVisibilityToggle", payload: isOpen }),
+    miniCartVisibilityToggle: (isOpen) => {
+      dispatch({ type: "ui/miniCartVisibilityToggle", payload: isOpen });
+    },
+  };
 };
 
-export default connect(mapStateToProps)(MiniCart);
+MiniCart.propTypes = {
+  productsTotal: PropTypes.number.isRequired,
+  totalPrice: PropTypes.number.isRequired,
+  billingCurrency: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  backdropVisibilityToggle: PropTypes.func.isRequired,
+  miniCartVisibilityToggle: PropTypes.func.isRequired,
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(MiniCart),
+);
