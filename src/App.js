@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Layout from "./components/Layout/Layout";
 import PLP from "./pages/PLP";
 import PDP from "./pages/PDP";
+import Cart from "./pages/Cart";
 
 class App extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class App extends Component {
               component={PLP}
             />
           ))}
+          <Route path="/cart" component={Cart} />
           <Route path="*" component={PDP} />
         </Switch>
       </Layout>
