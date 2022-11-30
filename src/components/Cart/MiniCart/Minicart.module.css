@@ -9,6 +9,38 @@
   overflow-y: auto;
 }
 
+.mini-cart--open {
+  animation: MiniCartOpen 0.3s ease-out forwards;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mini-cart--closed {
+  animation: MiniCartClosed 0.3s ease-out forwards;
+}
+
+@keyframes MiniCartOpen {
+  0% {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes MiniCartClosed {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+}
+
 .mini-cart__title {
   font-weight: 700;
   font-size: 1rem;

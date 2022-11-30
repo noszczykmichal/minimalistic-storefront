@@ -9,23 +9,19 @@ import Logo from "./Logo/Logo";
 import CartIcon from "./CartIcon/CartIcon";
 import CurrencySwitcher from "./CurrencySwitcher/CurrencySwitcher";
 import Backdrop from "../../UI/Backdrop";
-import MiniCart from "../../Cart/MiniCart/Minicart";
+import MiniCart from "../../Cart/MiniCart/MiniCart";
 
 class Toolbar extends Component {
   render() {
-    const { categories, currencies, isMiniCartOpen } = this.props;
+    const { categories, currencies } = this.props;
     let navigationItems;
     let currencySwitcher;
-    let minicart;
+
     if (categories) {
       navigationItems = <NavigationItems categories={categories} />;
     }
     if (currencies) {
       currencySwitcher = <CurrencySwitcher currencies={currencies} />;
-    }
-
-    if (isMiniCartOpen) {
-      minicart = <MiniCart />;
     }
 
     return (
@@ -35,7 +31,7 @@ class Toolbar extends Component {
         <div className={classes["cart-actions"]}>
           {currencySwitcher}
           <CartIcon />
-          {minicart}
+          <MiniCart />
         </div>
 
         {createPortal(
@@ -51,7 +47,6 @@ const mapStateToProps = (state) => {
   return {
     categories: state.ui.categories,
     currencies: state.ui.currencies,
-    isMiniCartOpen: state.ui.isMiniCartOpen,
   };
 };
 
@@ -63,7 +58,6 @@ Toolbar.propTypes = {
       symbol: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  isMiniCartOpen: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(Toolbar);
