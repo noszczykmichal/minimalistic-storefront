@@ -115,8 +115,8 @@ class PDP extends Component {
 
     if (checkNotSelected.length > 0) {
       this.modalToggle(true);
-      this.backdropVisibilityToggle(true);
       this.backdropTypeToggle(false);
+      this.backdropVisibilityToggle(true);
     } else {
       this.addProductToCart(product);
     }
@@ -250,7 +250,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: "ui/backdropVisibilityToggle", payload: isOpen }),
     backdropTypeToggle: (isBackdropTransparent) =>
       dispatch({
-        type: "ui/isBackdropTransparent",
+        type: "ui/backdropTypeToggle",
         payload: isBackdropTransparent,
       }),
     modalToggle: (isOpen) =>

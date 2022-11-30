@@ -94,7 +94,7 @@ const productsSlice = createSlice({
         0,
       );
 
-      const updatedTotalPrice = Object.keys(updatedCart)
+      const updatedTotalPrice = +Object.keys(updatedCart)
         .reduce(
           (acc, index) =>
             acc +

@@ -104,6 +104,9 @@
   width: 2.8rem;
   border: 1px solid #1d1f22;
   background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cart-actions__quantity {
@@ -130,4 +133,8 @@
   right: 1rem;
   display: flex;
   gap: 0.5rem;
+}
+
+.button__svg-y-axis {
+  position: absolute;
 }

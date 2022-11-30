@@ -22,13 +22,14 @@ class Button extends Component {
 
 Button.propTypes = {
   isDisabled: PropTypes.bool,
-  clicked: PropTypes.func.isRequired,
+  clicked: PropTypes.func,
   customClass: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 
 Button.defaultProps = {
   isDisabled: false,
+  clicked: () => {},
 };
 
 export default Button;

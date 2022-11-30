@@ -72,7 +72,6 @@ class MiniCart extends Component {
                 classes.actions__button,
                 classes["actions__button--green"],
               ].join(" ")}
-              clicked={this.clickHandler}
             >
               Check out
             </Button>
