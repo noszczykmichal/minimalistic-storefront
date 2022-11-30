@@ -8,10 +8,6 @@ import Hr from "../components/UI/Hr";
 import Button from "../components/UI/Button";
 
 class Cart extends Component {
-  orderHandler = () => {
-    console.log(this);
-  };
-
   render() {
     const { cart, billingCurrency, productsTotal, totalPrice } = this.props;
     return (
@@ -48,12 +44,7 @@ class Cart extends Component {
             </p>
           </div>
         </div>
-        <Button
-          clicked={this.orderHandler}
-          customClass={classes.summery__button}
-        >
-          Order
-        </Button>
+        <Button customClass={classes.summery__button}>Order</Button>
       </section>
     );
   }
