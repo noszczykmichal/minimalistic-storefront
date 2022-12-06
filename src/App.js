@@ -1,12 +1,13 @@
-import { Component } from "react";
+import React, { Suspense, Component } from "react";
 import { connect } from "react-redux";
 import { Switch, Route, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import Layout from "./components/Layout/Layout";
-import PLP from "./pages/PLP";
-import PDP from "./pages/PDP";
-import Cart from "./pages/Cart";
+
+const PLP = React.lazy(() => import("./pages/PLP"));
+const PDP = React.lazy(() => import("./pages/PDP"));
+const Cart = React.lazy(() => import("./pages/Cart"));
 
 class App extends Component {
   constructor(props) {
@@ -25,18 +26,20 @@ class App extends Component {
     const { categories } = this.props;
     return (
       <Layout>
-        <Switch>
-          {categories.map((category) => (
-            <Route
-              key={category}
-              path={category === "all" ? "/" : `/${category}`}
-              exact
-              component={PLP}
-            />
-          ))}
-          <Route path="/cart" component={Cart} />
-          <Route path="*" component={PDP} />
-        </Switch>
+        <Suspense fallback={<p>Loading...</p>}>
+          <Switch>
+            {categories.map((category) => (
+              <Route
+                key={category}
+                path={category === "all" ? "/" : `/${category}`}
+                exact
+                component={PLP}
+              />
+            ))}
+            <Route path="/cart" component={Cart} />
+            <Route path="*" component={PDP} />
+          </Switch>
+        </Suspense>
       </Layout>
     );
   }
