@@ -1,0 +1,29 @@
+.button {
+  background: rgba(0, 0, 0, 0.73);
+  border: none;
+  height: 1.5rem;
+  width: 1.5rem;
+  cursor: pointer;
+}
+
+.button:active {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.73);
+}
+
+.button--right {
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.button--left {
+  /* the dummy class added only to differentiate between the right and left arrow */
+  border: none;
+}
+
+.button svg {
+  pointer-events: none;
+}
+
+.button:active svg {
+  fill: rgba(0, 0, 0, 0.73);
+}

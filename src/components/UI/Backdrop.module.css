@@ -1,0 +1,38 @@
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.backdrop--grey {
+  background-color: rgba(57, 55, 72, 0.22);
+}
+
+.backdrop--open {
+  animation: backdropOpen 0.5s ease-out forwards;
+}
+
+.backdrop--closed {
+  animation: backdropClosed 0.5s ease-out forwards;
+}
+
+@keyframes backdropOpen {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes backdropClosed {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

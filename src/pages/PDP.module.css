@@ -1,0 +1,153 @@
+.section {
+  display: grid;
+  grid-template-columns: 10% 50% 40%;
+  column-gap: 2rem;
+}
+
+.thumbnails-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.thumbnails-wrapper__thumbnail {
+  width: 5rem;
+  height: 5rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.main-image {
+  width: auto;
+  max-height: 32rem;
+  max-width: 100%;
+}
+
+.cart-actions {
+  padding: 0 2rem;
+}
+
+.cart-actions__title {
+  font-size: 2rem;
+  line-height: 1.7rem;
+  margin: 0;
+  margin-bottom: 2.7rem;
+}
+
+.title__brand,
+.title__name {
+  margin-bottom: 1rem;
+}
+
+.title__brand {
+  display: block;
+  font-weight: 600;
+}
+
+.title__name {
+  font-weight: 400;
+}
+
+.product-attribute {
+  margin: 1.5rem 0;
+}
+
+.product-attribute__label,
+.product-price__label {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.product-attribute__values {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.product-attribute__value {
+  height: 2.8rem;
+  width: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #1d1f22;
+  cursor: pointer;
+  letter-spacing: 0.05rem;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.1rem;
+  background-color: transparent;
+}
+
+.product-attribute__value--selected {
+  background-color: #1d1f22;
+  color: #fff;
+}
+
+.product-attribute__value--color {
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: transparent;
+  border: none;
+}
+
+.product-attribute__value--color::after {
+  position: absolute;
+  height: 2.25rem;
+  width: 2.25rem;
+  content: "";
+}
+
+.product-attribute__value--color-selected::after {
+  border: 1px solid #5ece7b;
+}
+
+.product-price__label {
+  margin: 2.25rem 0 0.6rem;
+}
+
+.product-price__value {
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.1rem;
+}
+
+.cart-actions__button {
+  width: 100%;
+  font-size: 1rem;
+  color: #fff;
+  background: #5ece7b;
+  border: 1px solid transparent;
+}
+
+.cart-actions__button:hover:not(:disabled),
+.cart-actions__button:active:not(:disabled) {
+  background-color: #fff;
+  color: #5ece7b;
+  border: 1px solid #5ece7b;
+}
+
+.cart-actions__button:disabled {
+  filter: grayscale(1);
+}
+
+.description {
+  margin-top: 2.5rem;
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 400;
+  line-height: 1.6rem;
+  width: 100%;
+  max-width: 18rem;
+  text-align: justify;
+}
