@@ -63,10 +63,6 @@ $npm install
 $npm start
 ```
 
-## Please note that this project uses GraphQL endpoint that is NOT part of this repo, yet it has to run locally in order for the project to work correctly.
-
-> Code of the endpoint and how to run it locally can be found [here](https://github.com/scandiweb/junior-react-endpoint).
-
 ## Room for Improvement
 
 Room for improvement:
@@ -75,7 +71,7 @@ Room for improvement:
 
 ## Acknowledgements
 
-- Design and endpoint by [Scandiweb](https://github.com/scandiweb).
+- Design and endpoint by [Scandiweb](https://github.com/scandiweb). The repo of the endpoint can be found [here](https://github.com/scandiweb/junior-react-endpoint).
 
 ## Contact
 
