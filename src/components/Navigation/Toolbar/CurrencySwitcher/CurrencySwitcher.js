@@ -31,7 +31,7 @@ class CurrencySwitcher extends Component {
 
   currencyChangeHandler = (event) => {
     this.currencySwitcherVisibToggle(false);
-    this.onCurrencyChange(event.target.ariaLabel);
+    this.onCurrencyChange(event.target.getAttribute("aria-label"));
     this.backdropVisibilityToggle(false);
   };
 
