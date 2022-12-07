@@ -1,6 +1,6 @@
 # Minimalistic-storefront
 
-> A mock-up page of an imaginary online shop, fetching data from the GraphQL endpoint.
+> A mock-up page of an imaginary online shop, fetching data from the GraphQL endpoint.  
 > You can check live demo [_here_](https://minimalistic-storefront.web.app/).
 
 ## Table of Contents
