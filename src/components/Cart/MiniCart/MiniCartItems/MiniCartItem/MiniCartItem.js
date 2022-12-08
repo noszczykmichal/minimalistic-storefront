@@ -6,7 +6,11 @@ import classes from "./MiniCartItem.module.css";
 
 class MiniCartItem extends Component {
   render() {
-    const { itemDetails, changeQuantity } = this.props;
+    const { itemDetails, changeQuantity, billingCurrency } = this.props;
+    const filteredPrices = itemDetails.prices.filter(
+      (price) => price.currency.symbol === billingCurrency,
+    );
+    const [currentPrice] = filteredPrices;
     return (
       <li className={classes["cart-item"]}>
         <div className={classes["column-wrapper"]}>
@@ -16,8 +20,8 @@ class MiniCartItem extends Component {
               <span className={classes.title__item}>{itemDetails.name}</span>
             </h3>
             <p className={classes["product-details__price"]}>
-              {itemDetails.prices[0].currency.symbol}
-              {itemDetails.prices[0].amount}
+              {billingCurrency}
+              {currentPrice.amount}
             </p>
           </div>
 
@@ -114,6 +118,10 @@ class MiniCartItem extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return { billingCurrency: state.products.billingCurrency };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     changeQuantity: (internalID, operationType) =>
@@ -153,6 +161,7 @@ MiniCartItem.propTypes = {
     internalID: PropTypes.string.isRequired,
   }).isRequired,
   changeQuantity: PropTypes.func.isRequired,
+  billingCurrency: PropTypes.string.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(MiniCartItem);
+export default connect(mapStateToProps, mapDispatchToProps)(MiniCartItem);
