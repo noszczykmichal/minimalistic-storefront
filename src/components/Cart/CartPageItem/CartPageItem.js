@@ -50,8 +50,12 @@ class CartPageItem extends Component {
 
   render() {
     const { currentThumbnail } = this.state;
-    const { itemDetails, changeQuantity } = this.props;
+    const { itemDetails, changeQuantity, billingCurrency } = this.props;
     const { gallery } = itemDetails;
+    const filteredPrices = itemDetails.prices.filter(
+      (price) => price.currency.symbol === billingCurrency,
+    );
+    const [currentPrice] = filteredPrices;
 
     return (
       <>
@@ -76,8 +80,8 @@ class CartPageItem extends Component {
                 </span>
               </h3>
               <p className={classes["product-details__price"]}>
-                {itemDetails.prices[0].currency.symbol}
-                {itemDetails.prices[0].amount}
+                {billingCurrency}
+                {currentPrice.amount}
               </p>
             </div>
 
@@ -232,6 +236,12 @@ class CartPageItem extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    billingCurrency: state.products.billingCurrency,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     changeQuantity: (internalID, operationType) =>
@@ -271,6 +281,7 @@ CartPageItem.propTypes = {
     internalID: PropTypes.string.isRequired,
   }).isRequired,
   changeQuantity: PropTypes.func.isRequired,
+  billingCurrency: PropTypes.string.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(CartPageItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CartPageItem);

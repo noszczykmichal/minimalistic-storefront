@@ -54,7 +54,7 @@ class MiniCart extends Component {
             <p className={classes["total-price__text"]}>Total</p>
             <p className={classes["total-price__price"]}>
               {billingCurrency}
-              {totalPrice}
+              {totalPrice.toFixed(2)}
             </p>
           </div>
           <div className={classes["mini-cart__actions"]}>

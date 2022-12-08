@@ -13,7 +13,20 @@ const productsSlice = createSlice({
   initialState,
   reducers: {
     onCurrencyChange(state, action) {
-      return { ...state, billingCurrency: action.payload };
+      const { cart } = state;
+      const updatedTotalPrice = Object.keys(cart).reduce((acc, index) => {
+        const filteredPrices = cart[index].prices.filter(
+          (price) => price.currency.symbol === action.payload,
+        );
+        const [currentPrice] = filteredPrices;
+        return acc + cart[index].quantity * currentPrice.amount;
+      }, 0);
+
+      return {
+        ...state,
+        billingCurrency: action.payload,
+        totalPrice: updatedTotalPrice,
+      };
     },
     onCurrentPDPChange(state, action) {
       return { ...state, currentPDP: action.payload };
@@ -56,14 +69,13 @@ const productsSlice = createSlice({
         0,
       );
 
-      updatedTotalPrice = +Object.keys(updatedCart)
-        .reduce(
-          (acc, index) =>
-            acc +
-            updatedCart[index].quantity * updatedCart[index].prices[0].amount,
-          0,
-        )
-        .toFixed(2);
+      updatedTotalPrice = Object.keys(updatedCart).reduce((acc, index) => {
+        const filteredPrices = updatedCart[index].prices.filter(
+          (price) => price.currency.symbol === state.billingCurrency,
+        );
+        const [currentPrice] = filteredPrices;
+        return acc + updatedCart[index].quantity * currentPrice.amount;
+      }, 0);
 
       return {
         ...state,
@@ -94,14 +106,16 @@ const productsSlice = createSlice({
         0,
       );
 
-      const updatedTotalPrice = +Object.keys(updatedCart)
-        .reduce(
-          (acc, index) =>
-            acc +
-            updatedCart[index].quantity * updatedCart[index].prices[0].amount,
-          0,
-        )
-        .toFixed(2);
+      const updatedTotalPrice = Object.keys(updatedCart).reduce(
+        (acc, index) => {
+          const filteredPrices = updatedCart[index].prices.filter(
+            (price) => price.currency.symbol === state.billingCurrency,
+          );
+          const [currentPrice] = filteredPrices;
+          return acc + updatedCart[index].quantity * currentPrice.amount;
+        },
+        0,
+      );
 
       return {
         ...state,

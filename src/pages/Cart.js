@@ -40,7 +40,7 @@ class Cart extends Component {
             <p className={classes.values__item}>{productsTotal}</p>
             <p className={classes.values__item}>
               {billingCurrency}
-              {totalPrice}
+              {totalPrice.toFixed(2)}
             </p>
           </div>
         </div>
