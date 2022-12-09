@@ -10,10 +10,11 @@ import {
 import { Provider } from "react-redux";
 import { Query } from "@apollo/client/react/components";
 import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "./store/store";
 
 import "./index.css";
 import App from "./App";
-import { persistor, store } from "./store/store";
+import Loader from "./components/UI/Loader";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -43,8 +44,12 @@ root.render(
           <PersistGate loading={null} persistor={persistor}>
             <Query query={categoriesAndCurrenciesQuery}>
               {(props) => {
-                const { data } = props;
+                const { data, loading } = props;
                 let content;
+
+                if (loading) {
+                  content = <Loader />;
+                }
 
                 if (data && data.categories && data.currencies) {
                   const fetchedCategories = data.categories.map(

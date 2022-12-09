@@ -4,6 +4,7 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import Layout from "./components/Layout/Layout";
+import Loader from "./components/UI/Loader";
 
 const PLP = React.lazy(() => import("./pages/PLP"));
 const PDP = React.lazy(() => import("./pages/PDP"));
@@ -26,7 +27,7 @@ class App extends Component {
     const { categories } = this.props;
     return (
       <Layout>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<Loader />}>
           <Switch>
             {categories.map((category) => (
               <Route

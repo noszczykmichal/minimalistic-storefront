@@ -1,0 +1,58 @@
+.loader-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 0.25rem solid #fff;
+  opacity: 1;
+  border-radius: 50%;
+  background-color: #5ece7b;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 4.5rem;
+    left: 4.5rem;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  4.9% {
+    top: 4.5rem;
+    left: 4.5rem;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  5% {
+    top: 4.5rem;
+    left: 4.5rem;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0rem;
+    left: 0rem;
+    width: 9rem;
+    height: 9rem;
+    opacity: 0;
+  }
+}
