@@ -107,6 +107,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .cart-actions__quantity {
