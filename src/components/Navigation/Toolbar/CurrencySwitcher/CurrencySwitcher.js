@@ -16,17 +16,20 @@ class CurrencySwitcher extends Component {
       backdropVisibilityToggle,
       backdropTypeToggle,
       currencySwitcherVisibToggle,
+      miniCartVisibilityToggle,
     } = this.props;
     this.onCurrencyChange = onCurrencyChange;
     this.backdropVisibilityToggle = backdropVisibilityToggle;
     this.backdropTypeToggle = backdropTypeToggle;
     this.currencySwitcherVisibToggle = currencySwitcherVisibToggle;
+    this.miniCartVisibilityToggle = miniCartVisibilityToggle;
   }
 
   currencySwitcherOpen = () => {
     this.currencySwitcherVisibToggle(true);
     this.backdropTypeToggle();
     this.backdropVisibilityToggle(true);
+    this.miniCartVisibilityToggle(false);
   };
 
   currencyChangeHandler = (event) => {
@@ -122,6 +125,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: "ui/backdropTypeToggle", payload: true }),
     currencySwitcherVisibToggle: (isOpen) =>
       dispatch({ type: "ui/currencySwitcherVisibToggle", payload: isOpen }),
+    miniCartVisibilityToggle: (isOpen) =>
+      dispatch({ type: "ui/miniCartVisibilityToggle", payload: isOpen }),
   };
 };
 
@@ -139,6 +144,7 @@ CurrencySwitcher.propTypes = {
       symbol: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  miniCartVisibilityToggle: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrencySwitcher);

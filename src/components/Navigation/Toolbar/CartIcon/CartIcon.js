@@ -5,22 +5,17 @@ import PropTypes from "prop-types";
 import classes from "./CartIcon.module.css";
 
 class CartIcon extends Component {
-  constructor(props) {
-    super(props);
+  minicartToggle = () => {
     const {
       backdropVisibilityToggle,
       backdropTypeToggle,
       miniCartVisibilityToggle,
+      currencySwitcherVisibToggle,
     } = this.props;
-    this.backdropVisibilityToggle = backdropVisibilityToggle;
-    this.backdropTypeToggle = backdropTypeToggle;
-    this.miniCartVisibilityToggle = miniCartVisibilityToggle;
-  }
-
-  minicartToggle = () => {
-    this.backdropVisibilityToggle(true);
-    this.backdropTypeToggle(false);
-    this.miniCartVisibilityToggle(true);
+    backdropVisibilityToggle(true);
+    backdropTypeToggle(false);
+    miniCartVisibilityToggle(true);
+    currencySwitcherVisibToggle(false);
   };
 
   render() {
@@ -74,6 +69,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: "ui/backdropTypeToggle", payload: isTransparent }),
     miniCartVisibilityToggle: (isOpen) =>
       dispatch({ type: "ui/miniCartVisibilityToggle", payload: isOpen }),
+    currencySwitcherVisibToggle: (isOpen) =>
+      dispatch({ type: "ui/currencySwitcherVisibToggle", payload: isOpen }),
   };
 };
 
@@ -82,6 +79,7 @@ CartIcon.propTypes = {
   backdropVisibilityToggle: PropTypes.func.isRequired,
   backdropTypeToggle: PropTypes.func.isRequired,
   miniCartVisibilityToggle: PropTypes.func.isRequired,
+  currencySwitcherVisibToggle: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
