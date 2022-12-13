@@ -61,6 +61,15 @@
   text-transform: uppercase;
 }
 
+.modal__attributes {
+  margin: 0;
+  text-align: left;
+}
+
+.modal__attribute {
+  line-height: 1.5rem;
+}
+
 .modal__button {
   display: flex;
   align-items: center;
@@ -69,13 +78,11 @@
   border: none;
   color: #fff;
   height: 2rem;
+  border: 1px solid transparent;
 }
 
-.modal__attributes {
-  margin: 0;
-  text-align: left;
-}
-
-.modal__attribute {
-  line-height: 1.5rem;
+.modal__button:hover {
+  border: 1px solid #5ece7b;
+  color: #5ece7b;
+  background-color: #fff;
 }
