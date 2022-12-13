@@ -18,6 +18,10 @@
   background-repeat: no-repeat;
 }
 
+.thumbnails-wrapper__thumbnail:hover {
+  cursor: pointer;
+}
+
 .main-image {
   width: auto;
   max-height: 32rem;
