@@ -1,0 +1,29 @@
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  position: fixed;
+  top: 20%;
+  border: 1px solid #ccc7c9;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: center;
+  background-color: rgb(248, 216, 219);
+  border-color: rgb(245, 194, 199);
+  line-height: 1.5;
+}
+
+.error,
+.error__details {
+  color: rgb(132, 32, 41);
+}
+
+.error__details {
+  font-weight: 700;
+}

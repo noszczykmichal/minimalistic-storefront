@@ -15,6 +15,7 @@ import { persistor, store } from "./store/store";
 import "./index.css";
 import App from "./App";
 import Loader from "./components/UI/Loader";
+import ErrorModal from "./components/UI/ErrorModal";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -41,10 +42,10 @@ root.render(
     <BrowserRouter>
       <ApolloProvider client={client}>
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
+          <PersistGate loading={<Loader />} persistor={persistor}>
             <Query query={categoriesAndCurrenciesQuery}>
               {(props) => {
-                const { data, loading } = props;
+                const { data, loading, error } = props;
                 let content;
 
                 if (loading) {
@@ -62,6 +63,10 @@ root.render(
                       currencies={data.currencies}
                     />
                   );
+                }
+
+                if (error) {
+                  content = <ErrorModal errorDetails={error} />;
                 }
                 return content;
               }}
