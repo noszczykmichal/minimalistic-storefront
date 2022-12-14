@@ -4,6 +4,7 @@
   position: sticky;
   top: 0;
   left: 0;
+  padding: 0 1.5rem 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -11,14 +12,27 @@
   z-index: 200;
 }
 
-.toolbar__nav {
-  height: 100%;
+.toolbar__desktop-nav {
+  display: none;
 }
 
 .cart-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-right: 6rem;
-  width: 13rem;
+}
+
+@media (min-width: 768px) {
+  .toolbar {
+    padding: 0;
+  }
+  .toolbar__desktop-nav {
+    display: unset;
+    height: 100%;
+  }
+
+  .cart-actions {
+    width: 13rem;
+    padding-right: 6rem;
+  }
 }

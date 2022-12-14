@@ -103,10 +103,12 @@
   font-weight: 500;
 }
 
-.image-container {
-  height: auto;
-  width: 100px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+@media (min-width: 360px) {
+  .image-container {
+    height: auto;
+    width: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 }
