@@ -14,8 +14,8 @@
 
 .product-card__image {
   position: relative;
-  height: 20rem;
-  width: 22rem;
+  height: 14.6rem;
+  width: 16rem;
   background-size: cover;
   cursor: pointer;
 }
@@ -53,7 +53,7 @@
 
 .product-details {
   margin-top: 1.5rem;
-  width: 22rem;
+  width: 16rem;
 }
 
 .product-details__name {
@@ -67,4 +67,16 @@
 .product-details__name,
 .product-details__price {
   margin: 0;
+}
+
+@media (min-width: 360px) {
+  .product-card__image {
+    height: 20rem;
+    width: 22rem;
+    cursor: pointer;
+  }
+
+  .product-details {
+    width: 22rem;
+  }
 }
