@@ -11,23 +11,21 @@ class Backdrop extends Component {
   constructor(props) {
     super(props);
     this.backdropRef = createRef();
+  }
+
+  onBackdropClick = () => {
     const {
       currencySwitcherVisibToggle,
       backdropVisibilityToggle,
       miniCartVisibilityToggle,
       modalToggle,
+      mobileNavVisibilityToggle,
     } = this.props;
-    this.backdropVisibilityToggle = backdropVisibilityToggle;
-    this.currencySwitcherVisibToggle = currencySwitcherVisibToggle;
-    this.miniCartVisibilityToggle = miniCartVisibilityToggle;
-    this.modalToggle = modalToggle;
-  }
-
-  onBackdropClick = () => {
-    this.currencySwitcherVisibToggle(false);
-    this.backdropVisibilityToggle(false);
-    this.miniCartVisibilityToggle(false);
-    this.modalToggle(false);
+    currencySwitcherVisibToggle(false);
+    backdropVisibilityToggle(false);
+    miniCartVisibilityToggle(false);
+    modalToggle(false);
+    mobileNavVisibilityToggle(false);
   };
 
   render() {
@@ -78,6 +76,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: "ui/miniCartVisibilityToggle", payload: isOpen }),
     modalToggle: (isOpen) =>
       dispatch({ type: "ui/modalToggle", payload: isOpen }),
+    mobileNavVisibilityToggle: (isOpen) =>
+      dispatch({ type: "ui/mobileNavVisibilityToggle", payload: isOpen }),
   };
 };
 
@@ -88,6 +88,7 @@ Backdrop.propTypes = {
   currencySwitcherVisibToggle: PropTypes.func.isRequired,
   miniCartVisibilityToggle: PropTypes.func.isRequired,
   modalToggle: PropTypes.func.isRequired,
+  mobileNavVisibilityToggle: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Backdrop);
