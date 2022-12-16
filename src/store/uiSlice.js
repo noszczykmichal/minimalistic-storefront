@@ -8,6 +8,7 @@ const initialState = {
   isCurrencySwitcherOpen: false,
   isMiniCartOpen: false,
   isModalOpen: false,
+  isMobileNavOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -38,6 +39,9 @@ const uiSlice = createSlice({
     },
     modalToggle(state, action) {
       return { ...state, isModalOpen: action.payload };
+    },
+    mobileNavVisibilityToggle(state, action) {
+      return { ...state, isMobileNavOpen: action.payload };
     },
   },
 });

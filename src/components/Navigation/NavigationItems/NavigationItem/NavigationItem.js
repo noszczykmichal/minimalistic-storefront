@@ -11,10 +11,12 @@ class NavigationItem extends Component {
       backdropVisibilityToggle,
       currencySwitcherVisibToggle,
       miniCartVisibilityToggle,
+      mobileNavVisibilityToggle,
     } = this.props;
     backdropVisibilityToggle(false);
     currencySwitcherVisibToggle(false);
     miniCartVisibilityToggle(false);
+    mobileNavVisibilityToggle(false);
   };
 
   render() {
@@ -38,6 +40,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: "ui/currencySwitcherVisibToggle", payload: isOpen }),
     miniCartVisibilityToggle: (isOpen) =>
       dispatch({ type: "ui/miniCartVisibilityToggle", payload: isOpen }),
+    mobileNavVisibilityToggle: (isOpen) =>
+      dispatch({ type: "ui/mobileNavVisibilityToggle", payload: isOpen }),
   };
 };
 
@@ -48,6 +52,7 @@ NavigationItem.propTypes = {
   backdropVisibilityToggle: PropTypes.func.isRequired,
   currencySwitcherVisibToggle: PropTypes.func.isRequired,
   miniCartVisibilityToggle: PropTypes.func.isRequired,
+  mobileNavVisibilityToggle: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(NavigationItem);

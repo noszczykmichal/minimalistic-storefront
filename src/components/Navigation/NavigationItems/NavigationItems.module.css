@@ -1,7 +1,18 @@
 .navigation-items {
   list-style: none;
   margin: 0;
+  padding-left: 2rem;
   display: flex;
-  padding-left: 7rem;
-  height: 100%;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 20%;
+}
+
+@media (min-width: 768px) {
+  .navigation-items {
+    padding-left: 7rem;
+    flex-direction: row;
+    justify-content: unset;
+    height: 100%;
+  }
 }
