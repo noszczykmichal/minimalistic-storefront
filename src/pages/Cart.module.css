@@ -1,3 +1,9 @@
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .title {
   margin-bottom: 3.44rem;
   font-weight: 700;
@@ -13,8 +19,10 @@
 
 .summery {
   margin-top: 2rem;
-  width: 25%;
+  width: 100%;
+  max-width: 18rem;
   display: flex;
+  justify-content: flex-start;
   gap: 0.5rem;
   font-weight: 400;
   font-size: 1.5rem;
@@ -53,4 +61,10 @@
   border: 1px solid #5ece7b;
   background-color: #fff;
   color: #5ece7b;
+}
+
+@media (min-width: 550px) {
+  section {
+    display: block;
+  }
 }
