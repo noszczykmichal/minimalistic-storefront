@@ -26,12 +26,8 @@
   background-color: transparent;
   bottom: -1.65rem;
   right: 1rem;
-  display: none;
-  cursor: pointer;
-}
-
-.product-card:hover .product-card__button--add-to-cart {
   display: block;
+  cursor: pointer;
 }
 
 .image__overlay {
@@ -78,5 +74,15 @@
 
   .product-details {
     width: 22rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .product-card__button--add-to-cart {
+    display: none;
+  }
+
+  .product-card:hover .product-card__button--add-to-cart {
+    display: block;
   }
 }
