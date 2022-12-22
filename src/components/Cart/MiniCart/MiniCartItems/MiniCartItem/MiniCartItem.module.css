@@ -97,6 +97,10 @@
   border: 1px solid #1d1f22;
   background-color: transparent;
   cursor: pointer;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cart-actions__quantity {
