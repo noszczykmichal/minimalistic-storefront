@@ -9,7 +9,6 @@
 - [Technologies Used](#technologies-used)
 - [Features](#features)
 - [Setup](#setup)
-- [Room for Improvement](#room-for-improvement)
 - [Acknowledgements](#acknowledgements)
 - [Contact](#contact)
 
@@ -55,7 +54,7 @@ To run this project locally:
 
 ```
 #Clone this repository
-$git clone https://github.com/noszczykmichal/minimalistic-storefront
+$git clone https://github.com/noszczykmichal/minimalistic-storefront__ext__endpoint
 #Go into the repository
 $cd minimalistic-storefront
 #Install dependencies
@@ -63,12 +62,6 @@ $npm install
 #Run the app
 $npm start
 ```
-
-## Room for Improvement
-
-Room for improvement:
-
-- RWD for all screen sizes (this was not part of original design).
 
 ## Acknowledgements
 
