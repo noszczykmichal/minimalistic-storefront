@@ -81,7 +81,7 @@ class CartPageItem extends Component {
               </h3>
               <p className={classes["product-details__price"]}>
                 {billingCurrency}
-                {currentPrice.amount}
+                {currentPrice.amount.toFixed(2)}
               </p>
             </div>
 
