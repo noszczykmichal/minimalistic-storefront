@@ -10,10 +10,7 @@ import CartIcon from "./CartIcon/CartIcon";
 import CurrencySwitcher from "./CurrencySwitcher/CurrencySwitcher";
 import Backdrop from "../../UI/Backdrop";
 import MiniCart from "../../Cart/MiniCart/MiniCart";
-<<<<<<< HEAD
-=======
 import ToggleButton from "../MobileNavigation/ToggleButton/ToggleButton";
->>>>>>> minimalistic-storefront__ext__endpoint/main
 
 class Toolbar extends Component {
   render() {
@@ -30,20 +27,13 @@ class Toolbar extends Component {
 
     return (
       <header className={classes.toolbar}>
-<<<<<<< HEAD
-        <nav className={classes.toolbar__nav}>{navigationItems}</nav>
-=======
         <nav className={classes["toolbar__desktop-nav"]}>{navigationItems}</nav>
->>>>>>> minimalistic-storefront__ext__endpoint/main
         <Logo />
         <div className={classes["cart-actions"]}>
           {currencySwitcher}
           <CartIcon />
           <MiniCart />
-<<<<<<< HEAD
-=======
           <ToggleButton />
->>>>>>> minimalistic-storefront__ext__endpoint/main
         </div>
 
         {createPortal(

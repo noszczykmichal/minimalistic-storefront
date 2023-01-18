@@ -16,38 +16,25 @@ class CurrencySwitcher extends Component {
       backdropVisibilityToggle,
       backdropTypeToggle,
       currencySwitcherVisibToggle,
-<<<<<<< HEAD
-=======
       miniCartVisibilityToggle,
->>>>>>> minimalistic-storefront__ext__endpoint/main
     } = this.props;
     this.onCurrencyChange = onCurrencyChange;
     this.backdropVisibilityToggle = backdropVisibilityToggle;
     this.backdropTypeToggle = backdropTypeToggle;
     this.currencySwitcherVisibToggle = currencySwitcherVisibToggle;
-<<<<<<< HEAD
-=======
     this.miniCartVisibilityToggle = miniCartVisibilityToggle;
->>>>>>> minimalistic-storefront__ext__endpoint/main
   }
 
   currencySwitcherOpen = () => {
     this.currencySwitcherVisibToggle(true);
     this.backdropTypeToggle();
     this.backdropVisibilityToggle(true);
-<<<<<<< HEAD
-=======
     this.miniCartVisibilityToggle(false);
->>>>>>> minimalistic-storefront__ext__endpoint/main
   };
 
   currencyChangeHandler = (event) => {
     this.currencySwitcherVisibToggle(false);
-<<<<<<< HEAD
-    this.onCurrencyChange(event.target.ariaLabel);
-=======
     this.onCurrencyChange(event.target.getAttribute("aria-label"));
->>>>>>> minimalistic-storefront__ext__endpoint/main
     this.backdropVisibilityToggle(false);
   };
 
@@ -138,11 +125,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: "ui/backdropTypeToggle", payload: true }),
     currencySwitcherVisibToggle: (isOpen) =>
       dispatch({ type: "ui/currencySwitcherVisibToggle", payload: isOpen }),
-<<<<<<< HEAD
-=======
     miniCartVisibilityToggle: (isOpen) =>
       dispatch({ type: "ui/miniCartVisibilityToggle", payload: isOpen }),
->>>>>>> minimalistic-storefront__ext__endpoint/main
   };
 };
 
@@ -160,10 +144,7 @@ CurrencySwitcher.propTypes = {
       symbol: PropTypes.string.isRequired,
     }),
   ).isRequired,
-<<<<<<< HEAD
-=======
   miniCartVisibilityToggle: PropTypes.func.isRequired,
->>>>>>> minimalistic-storefront__ext__endpoint/main
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrencySwitcher);

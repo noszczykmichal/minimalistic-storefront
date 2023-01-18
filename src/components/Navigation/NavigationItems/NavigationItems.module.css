@@ -1,11 +1,6 @@
 .navigation-items {
   list-style: none;
   margin: 0;
-<<<<<<< HEAD
-  display: flex;
-  padding-left: 7rem;
-  height: 100%;
-=======
   padding-left: 2rem;
   display: flex;
   flex-direction: column;
@@ -20,5 +15,4 @@
     justify-content: unset;
     height: 100%;
   }
->>>>>>> minimalistic-storefront__ext__endpoint/main
 }

@@ -97,27 +97,16 @@
   border: 1px solid #1d1f22;
   background-color: transparent;
   cursor: pointer;
-<<<<<<< HEAD
-=======
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
->>>>>>> minimalistic-storefront__ext__endpoint/main
 }
 
 .cart-actions__quantity {
   font-weight: 500;
 }
 
-<<<<<<< HEAD
-.image-container {
-  height: auto;
-  width: 100px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-=======
 @media (min-width: 360px) {
   .image-container {
     height: auto;
@@ -126,5 +115,4 @@
     background-repeat: no-repeat;
     background-position: center;
   }
->>>>>>> minimalistic-storefront__ext__endpoint/main
 }
