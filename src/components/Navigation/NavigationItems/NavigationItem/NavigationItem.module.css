@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-.navigation-item {
-  margin-left: 1rem;
-}
-
-.navigation-item a {
-  height: 100%;
-  width: 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  box-sizing: content-box;
-  color: #1d1f22;
-  font-weight: 400;
-  line-height: 1.2rem;
-=======
 .navigation-item a {
   display: block;
   text-decoration: none;
@@ -24,7 +6,6 @@
   font-weight: 400;
   line-height: 1.2rem;
   height: 2rem;
->>>>>>> minimalistic-storefront__ext__endpoint/main
 }
 
 .navigation-item a:hover,
@@ -33,8 +14,6 @@
   font-weight: 600;
   color: #5ece7b;
 }
-<<<<<<< HEAD
-=======
 
 @media (min-width: 768px) {
   .navigation-item {
@@ -56,4 +35,3 @@
     color: #5ece7b;
   }
 }
->>>>>>> minimalistic-storefront__ext__endpoint/main

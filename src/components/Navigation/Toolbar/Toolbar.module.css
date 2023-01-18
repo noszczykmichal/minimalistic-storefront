@@ -4,10 +4,7 @@
   position: sticky;
   top: 0;
   left: 0;
-<<<<<<< HEAD
-=======
   padding: 0 1.5rem 0 1.5rem;
->>>>>>> minimalistic-storefront__ext__endpoint/main
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -15,23 +12,14 @@
   z-index: 200;
 }
 
-<<<<<<< HEAD
-.toolbar__nav {
-  height: 100%;
-=======
 .toolbar__desktop-nav {
   display: none;
->>>>>>> minimalistic-storefront__ext__endpoint/main
 }
 
 .cart-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
-<<<<<<< HEAD
-  padding-right: 6rem;
-  width: 13rem;
-=======
 }
 
 @media (min-width: 768px) {
@@ -47,5 +35,4 @@
     width: 13rem;
     padding-right: 6rem;
   }
->>>>>>> minimalistic-storefront__ext__endpoint/main
 }
