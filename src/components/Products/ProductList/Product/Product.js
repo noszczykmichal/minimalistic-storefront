@@ -25,7 +25,7 @@ class Product extends Component {
 
   addProductWithDefaults = (event) => {
     event.stopPropagation();
-    const { productDetails, billingCurrency, addProductToCart } = this.props;
+    const { productDetails, addProductToCart } = this.props;
 
     const updatedAttributes = productDetails.attributes.map((attribute) => {
       const extensibleAttribItem = JSON.parse(
@@ -39,14 +39,9 @@ class Product extends Component {
       return { ...attribute, items: updatedItems };
     });
 
-    const updatedPrices = productDetails.prices.filter(
-      (price) => price.currency.symbol === billingCurrency,
-    );
-
     const updatedProduct = {
       ...productDetails,
       attributes: updatedAttributes,
-      prices: updatedPrices,
     };
     addProductToCart(updatedProduct);
   };

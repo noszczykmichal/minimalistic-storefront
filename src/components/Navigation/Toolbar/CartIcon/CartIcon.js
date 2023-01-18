@@ -5,12 +5,17 @@ import PropTypes from "prop-types";
 import classes from "./CartIcon.module.css";
 
 class CartIcon extends Component {
+<<<<<<< HEAD
   constructor(props) {
     super(props);
+=======
+  minicartToggle = () => {
+>>>>>>> minimalistic-storefront__ext__endpoint/main
     const {
       backdropVisibilityToggle,
       backdropTypeToggle,
       miniCartVisibilityToggle,
+<<<<<<< HEAD
     } = this.props;
     this.backdropVisibilityToggle = backdropVisibilityToggle;
     this.backdropTypeToggle = backdropTypeToggle;
@@ -21,6 +26,14 @@ class CartIcon extends Component {
     this.backdropVisibilityToggle(true);
     this.backdropTypeToggle(false);
     this.miniCartVisibilityToggle(true);
+=======
+      currencySwitcherVisibToggle,
+    } = this.props;
+    backdropVisibilityToggle(true);
+    backdropTypeToggle(false);
+    miniCartVisibilityToggle(true);
+    currencySwitcherVisibToggle(false);
+>>>>>>> minimalistic-storefront__ext__endpoint/main
   };
 
   render() {
@@ -74,6 +87,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: "ui/backdropTypeToggle", payload: isTransparent }),
     miniCartVisibilityToggle: (isOpen) =>
       dispatch({ type: "ui/miniCartVisibilityToggle", payload: isOpen }),
+<<<<<<< HEAD
+=======
+    currencySwitcherVisibToggle: (isOpen) =>
+      dispatch({ type: "ui/currencySwitcherVisibToggle", payload: isOpen }),
+>>>>>>> minimalistic-storefront__ext__endpoint/main
   };
 };
 
@@ -82,6 +100,10 @@ CartIcon.propTypes = {
   backdropVisibilityToggle: PropTypes.func.isRequired,
   backdropTypeToggle: PropTypes.func.isRequired,
   miniCartVisibilityToggle: PropTypes.func.isRequired,
+<<<<<<< HEAD
+=======
+  currencySwitcherVisibToggle: PropTypes.func.isRequired,
+>>>>>>> minimalistic-storefront__ext__endpoint/main
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);

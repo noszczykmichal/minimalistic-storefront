@@ -10,10 +10,12 @@ import {
 import { Provider } from "react-redux";
 import { Query } from "@apollo/client/react/components";
 import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "./store/store";
 
 import "./index.css";
 import App from "./App";
-import { persistor, store } from "./store/store";
+import Loader from "./components/UI/Loader";
+import ErrorModal from "./components/UI/ErrorModal";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -40,11 +42,15 @@ root.render(
     <BrowserRouter>
       <ApolloProvider client={client}>
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
+          <PersistGate loading={<Loader />} persistor={persistor}>
             <Query query={categoriesAndCurrenciesQuery}>
               {(props) => {
-                const { data } = props;
+                const { data, loading, error } = props;
                 let content;
+
+                if (loading) {
+                  content = <Loader />;
+                }
 
                 if (data && data.categories && data.currencies) {
                   const fetchedCategories = data.categories.map(
@@ -57,6 +63,10 @@ root.render(
                       currencies={data.currencies}
                     />
                   );
+                }
+
+                if (error) {
+                  content = <ErrorModal errorDetails={error} />;
                 }
                 return content;
               }}

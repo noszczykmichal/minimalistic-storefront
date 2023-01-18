@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import classes from "./Layout.module.css";
 import Toolbar from "../Navigation/Toolbar/Toolbar";
+import MobileNavigation from "../Navigation/MobileNavigation/MobileNavigation";
 
 class Layout extends Component {
   render() {
@@ -10,6 +11,7 @@ class Layout extends Component {
     return (
       <>
         <Toolbar />
+        <MobileNavigation />
         <main className={classes.main}>{children}</main>
       </>
     );

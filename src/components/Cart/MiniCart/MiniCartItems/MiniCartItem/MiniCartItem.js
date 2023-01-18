@@ -6,7 +6,15 @@ import classes from "./MiniCartItem.module.css";
 
 class MiniCartItem extends Component {
   render() {
+<<<<<<< HEAD
     const { itemDetails, changeQuantity } = this.props;
+=======
+    const { itemDetails, changeQuantity, billingCurrency } = this.props;
+    const filteredPrices = itemDetails.prices.filter(
+      (price) => price.currency.symbol === billingCurrency,
+    );
+    const [currentPrice] = filteredPrices;
+>>>>>>> minimalistic-storefront__ext__endpoint/main
     return (
       <li className={classes["cart-item"]}>
         <div className={classes["column-wrapper"]}>
@@ -16,8 +24,13 @@ class MiniCartItem extends Component {
               <span className={classes.title__item}>{itemDetails.name}</span>
             </h3>
             <p className={classes["product-details__price"]}>
+<<<<<<< HEAD
               {itemDetails.prices[0].currency.symbol}
               {itemDetails.prices[0].amount}
+=======
+              {billingCurrency}
+              {currentPrice.amount.toFixed(2)}
+>>>>>>> minimalistic-storefront__ext__endpoint/main
             </p>
           </div>
 
@@ -114,6 +127,13 @@ class MiniCartItem extends Component {
   }
 }
 
+<<<<<<< HEAD
+=======
+const mapStateToProps = (state) => {
+  return { billingCurrency: state.products.billingCurrency };
+};
+
+>>>>>>> minimalistic-storefront__ext__endpoint/main
 const mapDispatchToProps = (dispatch) => {
   return {
     changeQuantity: (internalID, operationType) =>
@@ -153,6 +173,13 @@ MiniCartItem.propTypes = {
     internalID: PropTypes.string.isRequired,
   }).isRequired,
   changeQuantity: PropTypes.func.isRequired,
+<<<<<<< HEAD
 };
 
 export default connect(null, mapDispatchToProps)(MiniCartItem);
+=======
+  billingCurrency: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MiniCartItem);
+>>>>>>> minimalistic-storefront__ext__endpoint/main

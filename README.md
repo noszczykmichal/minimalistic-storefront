@@ -1,6 +1,7 @@
 # Minimalistic-storefront
 
-> A mock-up page of imaginary online shop fetching data from the GraphQL endpoint.
+> A mock-up page of an imaginary online shop, fetching data from the GraphQL endpoint.  
+> You can check live demo [_here_](https://minimalistic-storefront.web.app/).
 
 ## Table of Contents
 
@@ -8,7 +9,6 @@
 - [Technologies Used](#technologies-used)
 - [Features](#features)
 - [Setup](#setup)
-- [Room for Improvement](#room-for-improvement)
 - [Acknowledgements](#acknowledgements)
 - [Contact](#contact)
 
@@ -23,8 +23,7 @@
 
 ## Technologies Used
 
-- [React 18](https://reactjs.org/blog/2022/03/29/react-v18.html)
-- [React-DOM](https://www.npmjs.com/package/react-dom)
+- [React](https://reactjs.org/blog/2022/03/29/react-v18.html)
 - [React-Router](https://github.com/remix-run/react-router)
 - [PropTypes](https://www.npmjs.com/package/prop-types)
 - [Apollo Client](https://www.apollographql.com/docs/react/)
@@ -54,7 +53,7 @@ To run this project locally:
 
 ```
 #Clone this repository
-$git clone https://github.com/noszczykmichal/minimalistic-storefront
+$git clone https://github.com/noszczykmichal/minimalistic-storefront__ext__endpoint
 #Go into the repository
 $cd minimalistic-storefront
 #Install dependencies
@@ -67,15 +66,9 @@ $npm start
 
 > Code of the endpoint and how to run it locally can be found [here](https://github.com/scandiweb/junior-react-endpoint).
 
-## Room for Improvement
-
-Room for improvement:
-
-- RWD for all screen sizes (this was not part of original design).
-
 ## Acknowledgements
 
-- Design and endpoint by [Scandiweb](https://github.com/scandiweb).
+- Design and endpoint by [Scandiweb](https://github.com/scandiweb). The repo of the endpoint can be found [here](https://github.com/scandiweb/junior-react-endpoint).
 
 ## Contact
 
