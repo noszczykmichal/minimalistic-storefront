@@ -20,7 +20,7 @@ import ErrorModal from "./components/UI/ErrorModal";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://storefront-endpoint.herokuapp.com/graphql",
   cache: new InMemoryCache(),
 });
 
