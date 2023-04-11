@@ -51,15 +51,28 @@
 
 To run this project locally:
 
+1. Clone this repository
+
 ```
-#Clone this repository
-$git clone https://github.com/noszczykmichal/minimalistic-storefront__ext__endpoint
-#Go into the repository
-$cd minimalistic-storefront
-#Install dependencies
-$npm install
-#Run the app
-$npm start
+  $git clone https://github.com/noszczykmichal/minimalistic-storefront
+```
+
+2. Go into the repository
+
+```
+  $cd minimalistic-storefront
+```
+
+3. Install dependencies
+
+```
+  $npm install
+```
+
+4. Run the app
+
+```
+  $npm start
 ```
 
 ## Acknowledgements
@@ -68,4 +81,4 @@ $npm start
 
 ## Contact
 
-Created by [@noszczykmichal](https://www.linkedin.com/in/michal-noszczyk/) - feel free to contact me!
+Created by [@noszczykmichal](https://michalnoszczyk.com/) - feel free to contact me!
