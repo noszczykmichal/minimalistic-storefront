@@ -1,256 +1,206 @@
-import { Component } from "react";
-import { connect } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 import classes from "./CartPageItem.module.css";
 import Hr from "../../UI/Hr";
 import Arrow from "../../UI/Arrow";
+import useChangeQuantity from "../../../hooks/useChangeQuantity";
 
-class CartPageItem extends Component {
-  constructor(props) {
-    super(props);
-    const { itemDetails } = this.props;
-    const { gallery } = itemDetails;
-    this.state = {
-      currentIndex: 0,
-      currentThumbnail: gallery[0],
-    };
-  }
+function CartPageItem({ itemDetails }) {
+  const { internalID, name, brand, gallery, quantity } = itemDetails;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const billingCurrency = useSelector(
+    (state) => state.products.billingCurrency,
+  );
 
-  scrollingArrowsHandler = (event) => {
-    const { itemDetails } = this.props;
-    const { gallery } = itemDetails;
+  const filteredPrices = itemDetails.prices.filter(
+    (price) => price.currency.symbol === billingCurrency,
+  );
+  const [currentPrice] = filteredPrices;
+
+  const scrollingArrowsHandler = (event) => {
     const regex = /right/;
     const attachedClass = [...event.target.classList].join(" ");
     const isRightArrow = regex.test(attachedClass);
     if (isRightArrow) {
-      this.setState((prevState) => {
-        const updatedIndex =
-          prevState.currentIndex === gallery.length - 1
-            ? 0
-            : prevState.currentIndex + 1;
-        return {
-          currentIndex: updatedIndex,
-          currentThumbnail: gallery[updatedIndex],
-        };
-      });
+      setCurrentIndex((prevIndex) =>
+        prevIndex === gallery.length - 1 ? 0 : prevIndex + 1,
+      );
     } else {
-      this.setState((prevState) => {
-        const updatedIndex =
-          prevState.currentIndex === 0
-            ? gallery.length - 1
-            : prevState.currentIndex - 1;
-        return {
-          currentIndex: updatedIndex,
-          currentThumbnail: gallery[updatedIndex],
-        };
-      });
+      setCurrentIndex((prevIndex) =>
+        prevIndex === 0 ? gallery.length - 1 : prevIndex - 1,
+      );
     }
   };
 
-  render() {
-    const { currentThumbnail } = this.state;
-    const { itemDetails, changeQuantity, billingCurrency } = this.props;
-    const { gallery } = itemDetails;
-    const filteredPrices = itemDetails.prices.filter(
-      (price) => price.currency.symbol === billingCurrency,
-    );
-    const [currentPrice] = filteredPrices;
+  const increaseQuantityHandler = useChangeQuantity(internalID, "addition");
+  const decreaseQuantityHandler = useChangeQuantity(internalID, "subtraction");
 
-    return (
-      <>
-        <Hr />
-        <li className={classes["cart-page__item"]}>
-          <div className={classes["column-wrapper"]}>
-            <div className={classes["cart-item__product-details"]}>
-              <h3 className={classes["product-details__title"]}>
-                <span
-                  className={[classes.title__brand, classes.title__item].join(
-                    " ",
-                  )}
-                >
-                  {itemDetails.brand}
-                </span>
-                <span
-                  className={[classes.title__name, classes.title__item].join(
-                    " ",
-                  )}
-                >
-                  {itemDetails.name}
-                </span>
-              </h3>
-              <p className={classes["product-details__price"]}>
-                {billingCurrency}
-                {currentPrice.amount.toFixed(2)}
-              </p>
-            </div>
+  return (
+    <>
+      <Hr />
+      <li className={classes["cart-page__item"]}>
+        <div className={classes["column-wrapper"]}>
+          <div className={classes["cart-item__product-details"]}>
+            <h3 className={classes["product-details__title"]}>
+              <span
+                className={[classes.title__brand, classes.title__item].join(
+                  " ",
+                )}
+              >
+                {brand}
+              </span>
+              <span
+                className={[classes.title__name, classes.title__item].join(" ")}
+              >
+                {name}
+              </span>
+            </h3>
+            <p className={classes["product-details__price"]}>
+              {billingCurrency}
+              {currentPrice.amount.toFixed(2)}
+            </p>
+          </div>
 
-            <div className={classes["cart-item__product-attributes"]}>
-              {itemDetails.attributes.map((attribute) => (
+          <div className={classes["cart-item__product-attributes"]}>
+            {itemDetails.attributes.map((attribute) => (
+              <div
+                key={attribute.name}
+                className={classes["product-attribute"]}
+              >
+                <h3 className={classes["product-attribute__label"]}>
+                  {attribute.name}:
+                </h3>
                 <div
-                  key={attribute.name}
-                  className={classes["product-attribute"]}
+                  attributeType={attribute.name}
+                  className={classes["product-attribute__values"]}
                 >
-                  <h3 className={classes["product-attribute__label"]}>
-                    {attribute.name}:
-                  </h3>
-                  <div
-                    attributeType={attribute.name}
-                    className={classes["product-attribute__values"]}
-                  >
-                    {attribute.items.map((attributeItem) => {
-                      const textAttributeClasses = attributeItem.selected
-                        ? [
-                            classes["product-attribute__value"],
-                            classes["product-attribute__value--selected"],
-                          ]
-                        : [classes["product-attribute__value"]];
+                  {attribute.items.map((attributeItem) => {
+                    const textAttributeClasses = attributeItem.selected
+                      ? [
+                          classes["product-attribute__value"],
+                          classes["product-attribute__value--selected"],
+                        ]
+                      : [classes["product-attribute__value"]];
 
-                      let content = (
+                    let content = (
+                      <button
+                        type="button"
+                        key={attributeItem.displayValue}
+                        className={textAttributeClasses.join(" ")}
+                      >
+                        {attributeItem.value}
+                      </button>
+                    );
+
+                    if (attribute.name === "Color") {
+                      const colourAttributeClasses = attributeItem.selected
+                        ? [
+                            classes["product-attribute__value--color"],
+                            classes["product-attribute__value--color-selected"],
+                          ]
+                        : [classes["product-attribute__value--color"]];
+                      content = (
                         <button
                           type="button"
                           key={attributeItem.displayValue}
-                          className={textAttributeClasses.join(" ")}
+                          className={colourAttributeClasses.join(" ")}
+                          style={{
+                            backgroundColor:
+                              attributeItem.value === "#FFFFFF"
+                                ? "#F0F0F0"
+                                : `${attributeItem.value}`,
+                          }}
                         >
-                          {attributeItem.value}
+                          {attributeItem.displayValue}
                         </button>
                       );
+                    }
 
-                      if (attribute.name === "Color") {
-                        const colourAttributeClasses = attributeItem.selected
-                          ? [
-                              classes["product-attribute__value--color"],
-                              classes[
-                                "product-attribute__value--color-selected"
-                              ],
-                            ]
-                          : [classes["product-attribute__value--color"]];
-                        content = (
-                          <button
-                            type="button"
-                            key={attributeItem.displayValue}
-                            className={colourAttributeClasses.join(" ")}
-                            style={{
-                              backgroundColor:
-                                attributeItem.value === "#FFFFFF"
-                                  ? "#F0F0F0"
-                                  : `${attributeItem.value}`,
-                            }}
-                          >
-                            {attributeItem.displayValue}
-                          </button>
-                        );
-                      }
-
-                      return content;
-                    })}
-                  </div>
+                    return content;
+                  })}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-          <div className={classes["column-wrapper--cart-actions"]}>
-            <div className={classes["cart-actions"]}>
-              <button
-                type="button"
-                className={classes["cart-actions__button"]}
-                onClick={() =>
-                  changeQuantity(itemDetails.internalID, "addition")
-                }
+        </div>
+        <div className={classes["column-wrapper--cart-actions"]}>
+          <div className={classes["cart-actions"]}>
+            <button
+              type="button"
+              className={classes["cart-actions__button"]}
+              onClick={increaseQuantityHandler}
+            >
+              <svg
+                width="15"
+                height="1"
+                viewBox="0 0 15 1"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  width="15"
-                  height="1"
-                  viewBox="0 0 15 1"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 0.5H16"
-                    stroke="#1D1F22"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <svg
-                  className={classes["button__svg-y-axis"]}
-                  width="1"
-                  height="15"
-                  viewBox="0 0 1 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0.5 1V16"
-                    stroke="#1D1F22"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <p className={classes["cart-actions__quantity"]}>
-                {itemDetails.quantity}
-              </p>
-              <button
-                type="button"
-                className={classes["cart-actions__button"]}
-                onClick={() =>
-                  changeQuantity(itemDetails.internalID, "subtraction")
-                }
+                <path
+                  d="M1 0.5H16"
+                  stroke="#1D1F22"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <svg
+                className={classes["button__svg-y-axis"]}
+                width="1"
+                height="15"
+                viewBox="0 0 1 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  width="17"
-                  height="1"
-                  viewBox="0 0 17 1"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 0.5H16"
-                    stroke="#1D1F22"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className={classes["image-container"]}>
-              <div
-                className={classes["image-container__image"]}
-                style={{ backgroundImage: `url(${currentThumbnail})` }}
-              />
-              {gallery.length > 1 ? (
-                <div className={classes["image-container__scrolling-arrows"]}>
-                  <Arrow variant="left" clicked={this.scrollingArrowsHandler} />
-                  <Arrow
-                    variant="right"
-                    clicked={this.scrollingArrowsHandler}
-                  />
-                </div>
-              ) : null}
-            </div>
+                <path
+                  d="M0.5 1V16"
+                  stroke="#1D1F22"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <p className={classes["cart-actions__quantity"]}>{quantity}</p>
+            <button
+              type="button"
+              className={classes["cart-actions__button"]}
+              onClick={decreaseQuantityHandler}
+            >
+              <svg
+                width="17"
+                height="1"
+                viewBox="0 0 17 1"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 0.5H16"
+                  stroke="#1D1F22"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
-        </li>
-      </>
-    );
-  }
+          <div className={classes["image-container"]}>
+            <div
+              className={classes["image-container__image"]}
+              style={{ backgroundImage: `url(${gallery[currentIndex]})` }}
+            />
+            {gallery.length > 1 ? (
+              <div className={classes["image-container__scrolling-arrows"]}>
+                <Arrow variant="left" clicked={scrollingArrowsHandler} />
+                <Arrow variant="right" clicked={scrollingArrowsHandler} />
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </li>
+    </>
+  );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    billingCurrency: state.products.billingCurrency,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    changeQuantity: (internalID, operationType) =>
-      dispatch({
-        type: "products/changeQuantity",
-        payload: { internalID, operationType },
-      }),
-  };
-};
 
 CartPageItem.propTypes = {
   itemDetails: PropTypes.shape({
@@ -280,8 +230,6 @@ CartPageItem.propTypes = {
     quantity: PropTypes.number.isRequired,
     internalID: PropTypes.string.isRequired,
   }).isRequired,
-  changeQuantity: PropTypes.func.isRequired,
-  billingCurrency: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartPageItem);
+export default CartPageItem;
