@@ -12,20 +12,14 @@ function MiniCart() {
   const miniCartRef = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const productsTotal = useSelector((state) => state.products.productsTotal);
-  const totalPrice = useSelector((state) => state.products.totalPrice);
-  const billingCurrency = useSelector(
-    (state) => state.products.billingCurrency,
+  const { productsTotal, totalPrice, billingCurrency } = useSelector(
+    (state) => state.products,
   );
   const isMiniCartOpen = useSelector((state) => state.ui.isMiniCartOpen);
 
   const clickHandler = () => {
-    // const {  backdropVisibilityToggle, miniCartVisibilityToggle } =
-    //   this.props;
     dispatch(uiActions.backdropVisibilityToggle(false));
     dispatch(uiActions.miniCartVisibilityToggle(false));
-    // backdropVisibilityToggle(false);
-    // miniCartVisibilityToggle(false);
     navigate("/cart");
   };
 
@@ -82,24 +76,5 @@ function MiniCart() {
     </CSSTransition>
   );
 }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     productsTotal: state.products.productsTotal,
-//     totalPrice: state.products.totalPrice,
-//     billingCurrency: state.products.billingCurrency,
-//     isMiniCartOpen: state.ui.isMiniCartOpen,
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     backdropVisibilityToggle: (isOpen) =>
-//       dispatch({ type: "ui/backdropVisibilityToggle", payload: isOpen }),
-//     miniCartVisibilityToggle: (isOpen) => {
-//       dispatch({ type: "ui/miniCartVisibilityToggle", payload: isOpen });
-//     },
-//   };
-// };
 
 export default MiniCart;

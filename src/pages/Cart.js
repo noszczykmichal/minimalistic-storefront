@@ -6,12 +6,9 @@ import Hr from "../components/UI/Hr";
 import Button from "../components/UI/Button";
 
 function Cart() {
-  const billingCurrency = useSelector(
-    (state) => state.products.billingCurrency,
+  const { billingCurrency, cart, productsTotal, totalPrice } = useSelector(
+    (state) => state.products,
   );
-  const cart = useSelector((state) => state.products.cart);
-  const productsTotal = useSelector((state) => state.products.productsTotal);
-  const totalPrice = useSelector((state) => state.products.totalPrice);
 
   return (
     <section>

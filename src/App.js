@@ -1,25 +1,20 @@
-import React, { Suspense, useEffect, useRef } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import { Routes, Route } from "react-router";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import Layout from "./components/Layout/Layout";
 import Loader from "./components/UI/Loader";
 import { uiActions } from "./store/uiSlice";
+import PLP from "./pages/PLP";
 
-const PLP = React.lazy(() => import("./pages/PLP"));
-const PDP = React.lazy(() => import("./pages/PDP"));
-const Cart = React.lazy(() => import("./pages/Cart"));
+const PDP = lazy(() => import("./pages/PDP"));
+const Cart = lazy(() => import("./pages/Cart"));
 
 function App({ categories, currencies }) {
   const dispatch = useDispatch();
-  const dispatchRef = useRef(dispatch);
 
-  useEffect(() => {
-    dispatchRef.current(
-      uiActions.saveCategoriesAndCurrencies({ categories, currencies }),
-    );
-  }, [categories, currencies]);
+  dispatch(uiActions.saveCategoriesAndCurrencies({ categories, currencies }));
 
   return (
     <Layout>
@@ -29,12 +24,12 @@ function App({ categories, currencies }) {
             <Route
               key={category}
               path={category === "all" ? "/" : `/${category}`}
-              element={PLP}
               exact
+              element={<PLP />}
             />
           ))}
-          <Route path="/cart" element={Cart} />
-          <Route path="*" element={PDP} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<PDP />} />
         </Routes>
       </Suspense>
     </Layout>

@@ -11,8 +11,7 @@ import MiniCart from "../../Cart/MiniCart/MiniCart";
 import ToggleButton from "../MobileNavigation/ToggleButton/ToggleButton";
 
 function Toolbar() {
-  const categories = useSelector((state) => state.ui.categories);
-  const currencies = useSelector((state) => state.ui.currencies);
+  const { categories, currencies } = useSelector((state) => state.ui);
 
   let navigationItems;
   let currencySwitcher;

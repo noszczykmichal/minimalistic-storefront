@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 import { gql, useQuery } from "@apollo/client";
 
 import classes from "./PLP.module.css";
@@ -7,12 +6,13 @@ import ProductList from "../components/Products/ProductList/ProductList";
 import Loader from "../components/UI/Loader";
 
 function PLP() {
-  const { location } = useLocation();
-  const pathname = location.history;
+  const location = useLocation();
+  const { pathname } = location;
   const searchedCategory = pathname === "/" ? "all" : pathname.substring(1);
+
   const productsQuery = gql`
-    query ($category: String!) {
-      category(input: { title: $category }) {
+    query ($searchedCategory: String!) {
+      category(input: { title: $searchedCategory }) {
         products {
           id
           name
@@ -40,7 +40,7 @@ function PLP() {
   `;
 
   const { loading, data } = useQuery(productsQuery, {
-    category: searchedCategory,
+    variables: { searchedCategory },
   });
   let content;
   if (loading) {
@@ -58,13 +58,5 @@ function PLP() {
     </section>
   );
 }
-
-PLP.propTypes = {
-  history: PropTypes.shape({
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
 
 export default PLP;

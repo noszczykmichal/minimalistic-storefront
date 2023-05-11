@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-
-// import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -19,13 +17,6 @@ function Product({ productDetails }) {
   const navigate = useNavigate();
 
   const onProductClick = () => {
-    // const {
-    //   // productDetails,
-
-    //   history,
-    //   // onCurrentPDPChange,
-    // } = this.props;
-    // console.log(history);
     const currentPath = location.pathname;
     const newPath =
       currentPath === "/"
@@ -33,16 +24,12 @@ function Product({ productDetails }) {
         : `${currentPath}/${productDetails.id}`;
 
     dispatch(productActions.onCurrentPDPChange(productDetails));
-    // onCurrentPDPChange(productDetails);
+
     navigate(newPath);
   };
 
   const addProductWithDefaults = (event) => {
     event.stopPropagation();
-    // const {
-    // productDetails,
-    // addProductToCart,
-    // } = this.props;
 
     const updatedAttributes = productDetails.attributes.map((attribute) => {
       const extensibleAttribItem = JSON.parse(
@@ -61,14 +48,8 @@ function Product({ productDetails }) {
       attributes: updatedAttributes,
     };
     dispatch(productActions.addProductToCart(updatedProduct));
-    // addProductToCart(updatedProduct);
   };
 
-  // const {
-  // productDetails,
-
-  // billingCurrency,
-  // } = this.props;
   const currentPrice = [...productDetails.prices].filter(
     (price) => price.currency.symbol === billingCurrency,
   );
@@ -132,21 +113,6 @@ function Product({ productDetails }) {
   );
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     billingCurrency: state.products.billingCurrency,
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onCurrentPDPChange: (id) =>
-//       dispatch({ type: "products/onCurrentPDPChange", payload: id }),
-//     addProductToCart: (product) =>
-//       dispatch({ type: "products/addProductToCart", payload: product }),
-//   };
-// };
-
 Product.propTypes = {
   productDetails: PropTypes.shape({
     brand: PropTypes.string.isRequired,
@@ -173,15 +139,6 @@ Product.propTypes = {
       }),
     ).isRequired,
   }).isRequired,
-  history: PropTypes.shape({
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-    }).isRequired,
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  // billingCurrency: PropTypes.string.isRequired,
-  // onCurrentPDPChange: PropTypes.func.isRequired,
-  // addProductToCart: PropTypes.func.isRequired,
 };
 
 export default Product;
