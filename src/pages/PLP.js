@@ -1,69 +1,62 @@
-import { Component } from "react";
-import PropTypes from "prop-types";
-import { gql } from "@apollo/client";
-import { Query } from "@apollo/client/react/components";
+import { useLocation } from "react-router-dom";
+import { gql, useQuery } from "@apollo/client";
 
 import classes from "./PLP.module.css";
 import ProductList from "../components/Products/ProductList/ProductList";
+import Loader from "../components/UI/Loader";
 
-class PLP extends Component {
-  render() {
-    const { history } = this.props;
-    const { pathname } = history.location;
-    const searchedCategory = pathname === "/" ? "all" : pathname.substring(1);
-    const productsQuery = gql`
-      query ($category: String!) {
-        category(input: { title: $category }) {
-          products {
-            id
+function PLP() {
+  const location = useLocation();
+  const { pathname } = location;
+  const searchedCategory = pathname === "/" ? "all" : pathname.substring(1);
+
+  const productsQuery = gql`
+    query ($searchedCategory: String!) {
+      category(input: { title: $searchedCategory }) {
+        products {
+          id
+          name
+          brand
+          inStock
+          gallery
+          description
+          attributes {
             name
-            brand
-            inStock
-            gallery
-            description
-            attributes {
-              name
-              items {
-                displayValue
-                value
-              }
+            items {
+              displayValue
+              value
             }
-            prices {
-              currency {
-                label
-                symbol
-              }
-              amount
+          }
+          prices {
+            currency {
+              label
+              symbol
             }
+            amount
           }
         }
       }
-    `;
+    }
+  `;
 
-    return (
-      <section className={classes.main}>
-        <h1 className={classes.title}>{searchedCategory}</h1>
-        <Query query={productsQuery} variables={{ category: searchedCategory }}>
-          {(props) => {
-            const { data } = props;
-            let content;
-            if (data) {
-              content = <ProductList products={data.category.products} />;
-            }
-            return content;
-          }}
-        </Query>
-      </section>
-    );
+  const { loading, data } = useQuery(productsQuery, {
+    variables: { searchedCategory },
+  });
+  let content;
+  if (loading) {
+    content = <Loader />;
   }
-}
 
-PLP.propTypes = {
-  history: PropTypes.shape({
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
+  if (data) {
+    content = <ProductList products={data.category.products} />;
+  }
+
+  return (
+    <section className={classes.main}>
+      <h1 className={classes.title}>{searchedCategory}</h1>
+      {content}
+    </section>
+  );
+}
 
 export default PLP;

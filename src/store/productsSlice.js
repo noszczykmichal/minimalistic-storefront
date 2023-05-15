@@ -127,4 +127,6 @@ const productsSlice = createSlice({
   },
 });
 
+export const productActions = productsSlice.actions;
+
 export default productsSlice;

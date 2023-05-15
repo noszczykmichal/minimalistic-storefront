@@ -1,94 +1,60 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Component, createRef } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 
 import classes from "./Backdrop.module.css";
+import { uiActions } from "../../store/uiSlice";
 
-class Backdrop extends Component {
-  constructor(props) {
-    super(props);
-    this.backdropRef = createRef();
-  }
+function Backdrop() {
+  const backdropRef = useRef();
+  const dispatch = useDispatch();
+  const {
+    currencySwitcherVisibToggle,
+    backdropVisibilityToggle,
+    miniCartVisibilityToggle,
+    modalToggle,
+    mobileNavVisibilityToggle,
+  } = uiActions;
 
-  onBackdropClick = () => {
-    const {
-      currencySwitcherVisibToggle,
-      backdropVisibilityToggle,
-      miniCartVisibilityToggle,
-      modalToggle,
-      mobileNavVisibilityToggle,
-    } = this.props;
-    currencySwitcherVisibToggle(false);
-    backdropVisibilityToggle(false);
-    miniCartVisibilityToggle(false);
-    modalToggle(false);
-    mobileNavVisibilityToggle(false);
+  const onBackdropClick = () => {
+    dispatch(currencySwitcherVisibToggle(false));
+    dispatch(backdropVisibilityToggle(false));
+    dispatch(miniCartVisibilityToggle(false));
+    dispatch(modalToggle(false));
+    dispatch(mobileNavVisibilityToggle(false));
   };
 
-  render() {
-    const { isBackdropTransparent, isBackdropOpen } = this.props;
+  const { isBackdropTransparent, isBackdropOpen } = useSelector(
+    (state) => state.ui,
+  );
 
-    return (
-      <CSSTransition
-        in={isBackdropOpen}
-        timeout={500}
-        nodeRef={this.backdropRef}
-        classNames={{
-          enter: "",
-          enterActive: classes["backdrop--open"],
-          exit: "",
-          exitActive: classes["backdrop--closed"],
-        }}
-        mountOnEnter
-        unmountOnExit
-      >
-        <div
-          className={
-            isBackdropTransparent
-              ? classes.backdrop
-              : [classes.backdrop, classes["backdrop--grey"]].join(" ")
-          }
-          onClick={this.onBackdropClick}
-          ref={this.backdropRef}
-        />
-      </CSSTransition>
-    );
-  }
+  return (
+    <CSSTransition
+      in={isBackdropOpen}
+      timeout={500}
+      nodeRef={backdropRef}
+      classNames={{
+        enter: "",
+        enterActive: classes["backdrop--open"],
+        exit: "",
+        exitActive: classes["backdrop--closed"],
+      }}
+      mountOnEnter
+      unmountOnExit
+    >
+      <div
+        className={
+          isBackdropTransparent
+            ? classes.backdrop
+            : [classes.backdrop, classes["backdrop--grey"]].join(" ")
+        }
+        onClick={onBackdropClick}
+        ref={backdropRef}
+      />
+    </CSSTransition>
+  );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    isBackdropOpen: state.ui.isBackdropOpen,
-    isBackdropTransparent: state.ui.isBackdropTransparent,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    backdropVisibilityToggle: (isOpen) =>
-      dispatch({ type: "ui/backdropVisibilityToggle", payload: isOpen }),
-    currencySwitcherVisibToggle: (isOpen) =>
-      dispatch({ type: "ui/currencySwitcherVisibToggle", payload: isOpen }),
-    miniCartVisibilityToggle: (isOpen) =>
-      dispatch({ type: "ui/miniCartVisibilityToggle", payload: isOpen }),
-    modalToggle: (isOpen) =>
-      dispatch({ type: "ui/modalToggle", payload: isOpen }),
-    mobileNavVisibilityToggle: (isOpen) =>
-      dispatch({ type: "ui/mobileNavVisibilityToggle", payload: isOpen }),
-  };
-};
-
-Backdrop.propTypes = {
-  isBackdropOpen: PropTypes.bool.isRequired,
-  isBackdropTransparent: PropTypes.bool.isRequired,
-  backdropVisibilityToggle: PropTypes.func.isRequired,
-  currencySwitcherVisibToggle: PropTypes.func.isRequired,
-  miniCartVisibilityToggle: PropTypes.func.isRequired,
-  modalToggle: PropTypes.func.isRequired,
-  mobileNavVisibilityToggle: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Backdrop);
+export default Backdrop;
