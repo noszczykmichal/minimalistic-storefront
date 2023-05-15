@@ -6,8 +6,7 @@ import classes from "./MobileNavigation.module.css";
 import NavigationItems from "../NavigationItems/NavigationItems";
 
 function MobileNavigation() {
-  const categories = useSelector((state) => state.ui.categories);
-  const isMobileNavOpen = useSelector((state) => state.ui.isMobileNavOpen);
+  const { categories, isMobileNavOpen } = useSelector((state) => state.ui);
   const nodeRef = useRef();
 
   return (

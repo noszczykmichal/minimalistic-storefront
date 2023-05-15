@@ -9,9 +9,8 @@ import classes from "./Product.module.css";
 import { productActions } from "../../../../store/productsSlice";
 
 function Product({ productDetails }) {
-  const billingCurrency = useSelector(
-    (state) => state.products.billingCurrency,
-  );
+  const { billingCurrency } = useSelector((state) => state.products);
+  const { onCurrentPDPChange, addProductToCart } = productActions;
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ function Product({ productDetails }) {
         ? `${currentPath}all/${productDetails.id}`
         : `${currentPath}/${productDetails.id}`;
 
-    dispatch(productActions.onCurrentPDPChange(productDetails));
+    dispatch(onCurrentPDPChange(productDetails));
 
     navigate(newPath);
   };
@@ -47,7 +46,7 @@ function Product({ productDetails }) {
       ...productDetails,
       attributes: updatedAttributes,
     };
-    dispatch(productActions.addProductToCart(updatedProduct));
+    dispatch(addProductToCart(updatedProduct));
   };
 
   const currentPrice = [...productDetails.prices].filter(

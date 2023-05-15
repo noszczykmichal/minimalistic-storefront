@@ -16,10 +16,11 @@ function MiniCart() {
     (state) => state.products,
   );
   const isMiniCartOpen = useSelector((state) => state.ui.isMiniCartOpen);
+  const { backdropVisibilityToggle, miniCartVisibilityToggle } = uiActions;
 
   const clickHandler = () => {
-    dispatch(uiActions.backdropVisibilityToggle(false));
-    dispatch(uiActions.miniCartVisibilityToggle(false));
+    dispatch(backdropVisibilityToggle(false));
+    dispatch(miniCartVisibilityToggle(false));
     navigate("/cart");
   };
 

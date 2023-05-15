@@ -12,6 +12,7 @@ function ToggleButton() {
     miniCartVisibilityToggle,
     mobileNavVisibilityToggle,
   } = uiActions;
+
   const onToggleButtonClick = () => {
     dispatch(backdropVisibilityToggle(true));
     dispatch(backdropTypeToggle(false));

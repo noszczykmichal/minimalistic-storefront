@@ -13,8 +13,9 @@ const Cart = lazy(() => import("./pages/Cart"));
 
 function App({ categories, currencies }) {
   const dispatch = useDispatch();
+  const { saveCategoriesAndCurrencies } = uiActions;
 
-  dispatch(uiActions.saveCategoriesAndCurrencies({ categories, currencies }));
+  dispatch(saveCategoriesAndCurrencies({ categories, currencies }));
 
   return (
     <Layout>

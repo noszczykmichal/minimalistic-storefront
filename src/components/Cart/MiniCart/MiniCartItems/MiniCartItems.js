@@ -4,7 +4,7 @@ import MiniCartItem from "./MiniCartItem/MiniCartItem";
 import classes from "./MiniCartItems.module.css";
 
 function MiniCartItems() {
-  const cart = useSelector((state) => state.products.cart);
+  const { cart } = useSelector((state) => state.products);
 
   return (
     <ul className={classes["cart-items"]}>

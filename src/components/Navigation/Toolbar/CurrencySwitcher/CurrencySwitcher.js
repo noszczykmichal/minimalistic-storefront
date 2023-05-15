@@ -12,12 +12,8 @@ import { uiActions } from "../../../../store/uiSlice";
 function CurrencySwitcher({ currencies }) {
   const switcherOptionsRef = useRef();
   const dispatch = useDispatch();
-  const isCurrencySwitcherOpen = useSelector(
-    (state) => state.ui.isCurrencySwitcherOpen,
-  );
-  const billingCurrency = useSelector(
-    (state) => state.products.billingCurrency,
-  );
+  const { isCurrencySwitcherOpen } = useSelector((state) => state.ui);
+  const { billingCurrency } = useSelector((state) => state.products);
   const { onCurrencyChange } = productActions;
   const {
     backdropVisibilityToggle,
@@ -28,7 +24,7 @@ function CurrencySwitcher({ currencies }) {
 
   const currencySwitcherOpen = () => {
     dispatch(currencySwitcherVisibToggle(true));
-    dispatch(backdropTypeToggle());
+    dispatch(backdropTypeToggle(true));
     dispatch(backdropVisibilityToggle(true));
     dispatch(miniCartVisibilityToggle(false));
   };

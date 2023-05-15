@@ -6,9 +6,7 @@ import useChangeQuantity from "../../../../../hooks/useChangeQuantity";
 
 function MiniCartItem({ itemDetails }) {
   const { internalID, quantity, gallery } = itemDetails;
-  const billingCurrency = useSelector(
-    (state) => state.products.billingCurrency,
-  );
+  const { billingCurrency } = useSelector((state) => state.products);
 
   const filteredPrices = itemDetails.prices.filter(
     (price) => price.currency.symbol === billingCurrency,

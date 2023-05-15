@@ -5,7 +5,7 @@ import { uiActions } from "../../../../store/uiSlice";
 
 function CartIcon() {
   const dispatch = useDispatch();
-  const productsTotal = useSelector((state) => state.products.productsTotal);
+  const { productsTotal } = useSelector((state) => state.products);
   const {
     backdropVisibilityToggle,
     backdropTypeToggle,
