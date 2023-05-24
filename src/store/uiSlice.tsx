@@ -1,6 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+import { Currency } from "../models/productSlice.models";
+
+const initialState: {
+  categories: string[];
+  currencies: Currency[];
+  isBackdropOpen: boolean;
+  isBackdropTransparent: boolean;
+  isCurrencySwitcherOpen: boolean;
+  isMiniCartOpen: boolean;
+  isModalOpen: boolean;
+  isMobileNavOpen: boolean;
+} = {
   categories: [],
   currencies: [],
   isBackdropOpen: false,

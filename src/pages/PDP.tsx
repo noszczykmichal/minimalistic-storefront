@@ -17,6 +17,8 @@ function PDP() {
     (state) => state.products,
   );
 
+  // console.log(displayedProduct);
+
   const { addProductToCart } = productActions;
   const { backdropVisibilityToggle, backdropTypeToggle, modalToggle } =
     uiActions;

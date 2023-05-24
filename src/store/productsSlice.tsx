@@ -1,8 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+import {
+  CurrentPDP,
+  CartItem,
+  CartItemAttribute,
+  Price,
+} from "../models/productSlice.models";
+
+const initialState: {
+  billingCurrency: string;
+  currentPDP: null | CurrentPDP;
+  cart: CartItem[];
+  productsTotal: number;
+  totalPrice: number;
+} = {
   billingCurrency: "$",
-  currentPDP: "",
+  currentPDP: null,
   cart: [],
   productsTotal: 0,
   totalPrice: 0,
@@ -15,11 +28,11 @@ const productsSlice = createSlice({
     onCurrencyChange(state, action) {
       const { cart } = state;
       const updatedTotalPrice = Object.keys(cart).reduce((acc, index) => {
-        const filteredPrices = cart[index].prices.filter(
+        const filteredPrices = cart[+index].prices.filter(
           (price) => price.currency.symbol === action.payload,
         );
         const [currentPrice] = filteredPrices;
-        return acc + cart[index].quantity * currentPrice.amount;
+        return acc + cart[+index].quantity * currentPrice.amount;
       }, 0);
 
       return {
@@ -35,7 +48,7 @@ const productsSlice = createSlice({
       const incomingProduct = { ...action.payload };
       const cart = JSON.parse(JSON.stringify(state.cart));
       const selectedAttributesVal = incomingProduct.attributes
-        .map((attribute) =>
+        .map((attribute: CartItemAttribute) =>
           attribute.items.map((item) => item.selected && item.value),
         )
         .flat(1)
@@ -49,7 +62,7 @@ const productsSlice = createSlice({
       let updatedCart = [...cart];
       updatedCart.push(updatedProduct);
       const filteredCart = cart.filter(
-        (product) => product.internalID === internalID,
+        (product: CartItem) => product.internalID === internalID,
       );
       let updatedProductsTotal = 0;
       let updatedTotalPrice = 0;
@@ -59,22 +72,22 @@ const productsSlice = createSlice({
         updatedProduct.quantity += 1;
 
         const cartWithOutUpdatedProduct = cart.filter(
-          (product) => product.internalID !== internalID,
+          (product: CartItem) => product.internalID !== internalID,
         );
         cartWithOutUpdatedProduct.push(updatedProduct);
         updatedCart = cartWithOutUpdatedProduct;
       }
       updatedProductsTotal = Object.keys(updatedCart).reduce(
-        (acc, index) => acc + updatedCart[index].quantity,
+        (acc, index) => acc + updatedCart[+index].quantity,
         0,
       );
 
       updatedTotalPrice = Object.keys(updatedCart).reduce((acc, index) => {
-        const filteredPrices = updatedCart[index].prices.filter(
-          (price) => price.currency.symbol === state.billingCurrency,
+        const filteredPrices = updatedCart[+index].prices.filter(
+          (price: Price) => price.currency.symbol === state.billingCurrency,
         );
         const [currentPrice] = filteredPrices;
-        return acc + updatedCart[index].quantity * currentPrice.amount;
+        return acc + updatedCart[+index].quantity * currentPrice.amount;
       }, 0);
 
       return {
@@ -87,7 +100,7 @@ const productsSlice = createSlice({
     changeQuantity(state, action) {
       const updatedCart = JSON.parse(JSON.stringify(state.cart));
       const updatedProductIndex = updatedCart.findIndex(
-        (product) => product.internalID === action.payload.internalID,
+        (product: CartItem) => product.internalID === action.payload.internalID,
       );
       if (action.payload.operationType === "addition") {
         const updatedQuantity = updatedCart[updatedProductIndex].quantity + 1;
@@ -109,7 +122,7 @@ const productsSlice = createSlice({
       const updatedTotalPrice = Object.keys(updatedCart).reduce(
         (acc, index) => {
           const filteredPrices = updatedCart[index].prices.filter(
-            (price) => price.currency.symbol === state.billingCurrency,
+            (price: Price) => price.currency.symbol === state.billingCurrency,
           );
           const [currentPrice] = filteredPrices;
           return acc + updatedCart[index].quantity * currentPrice.amount;
