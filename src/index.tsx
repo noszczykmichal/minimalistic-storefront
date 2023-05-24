@@ -17,7 +17,9 @@ import App from "./App";
 import Loader from "./components/UI/Loader";
 import ErrorModal from "./components/UI/ErrorModal";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement,
+);
 
 const client = new ApolloClient({
   uri: "https://storefront-endpoint.herokuapp.com/graphql",
