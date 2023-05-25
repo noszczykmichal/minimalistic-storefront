@@ -1,11 +1,8 @@
-export interface AttributeItem {
+export type AttributeItem = {
   displayValue: string;
   value: string;
-}
-
-export interface AttributeItemSelectable extends AttributeItem {
   selected?: boolean;
-}
+};
 
 export type Currency = {
   label: string;
@@ -22,12 +19,8 @@ export type ProductAttribute = {
   name: string;
 };
 
-export type CartItemAttribute = {
-  items: AttributeItemSelectable[];
-  name: string;
-};
-
 export interface Product {
+  attributes: ProductAttribute[];
   brand: string;
   description: string;
   gallery: string[];
@@ -37,12 +30,7 @@ export interface Product {
   prices: Price[];
 }
 
-export interface CurrentPDP extends Product {
-  attributes: ProductAttribute[];
-}
-
 export interface CartItem extends Product {
-  attributes: CartItemAttribute[];
   quantity: number;
   internalID: string;
 }

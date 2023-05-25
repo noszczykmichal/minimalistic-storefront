@@ -10,10 +10,14 @@ import Button from "../components/UI/Button";
 import Modal from "../components/UI/Modal";
 import { productActions } from "../store/productsSlice";
 import { uiActions } from "../store/uiSlice";
+import { Product, AttributeItem } from "../models/productSlice.models";
 
 function PDP() {
   const dispatch = useDispatch();
-  const { currentPDP: displayedProduct, billingCurrency } = useSelector(
+  const {
+    currentPDP: displayedProduct,
+    billingCurrency,
+  }: { currentPDP: Product; billingCurrency: string } = useSelector(
     (state) => state.products,
   );
 
@@ -24,39 +28,48 @@ function PDP() {
     uiActions;
   const [mainUrl, setMainUrl] = useState(displayedProduct.gallery[0]);
   const [product, setProduct] = useState(displayedProduct);
-  const [notSelected, setNotSelected] = useState([]);
+  const [notSelected, setNotSelected] = useState<string[]>([]);
 
-  const imageToggle = (imageURL) => {
+  const imageToggle = (imageURL: string) => {
     setMainUrl(imageURL);
   };
 
-  const classNameToggler = (className, parentElement, event) => {
-    const childrenOfParent = [...parentElement.children];
+  const classNameToggler = (
+    className: string,
+    parentElement: HTMLElement,
+    eventTarget: HTMLElement,
+  ) => {
+    const childrenOfParent = Array.from(parentElement.children);
 
     childrenOfParent.forEach((element) =>
       element.classList.remove(classes[`${className}`]),
     );
 
     childrenOfParent.forEach((element) =>
-      element === event.target
+      element === eventTarget
         ? element.classList.add(classes[`${className}`])
         : null,
     );
   };
 
-  const onAttributeValueSelect = (event) => {
-    const parentEl = event.target.parentElement;
-    const searchedAttributeType = parentEl.getAttribute("attributeType");
+  const onAttributeValueSelect = (event: React.MouseEvent) => {
+    const eventTarget = event.target as HTMLElement;
+    const parentEl = eventTarget.parentElement as HTMLElement;
+    const searchedAttributeType = parentEl?.getAttribute("id");
     const productAttributes = product.attributes;
-    const searchedAttribItem = event.target.innerText;
+    const searchedAttribItem = eventTarget.innerText;
 
     if (searchedAttributeType !== "Color") {
-      classNameToggler("product-attribute__value--selected", parentEl, event);
+      classNameToggler(
+        "product-attribute__value--selected",
+        parentEl,
+        eventTarget,
+      );
     } else {
       classNameToggler(
         "product-attribute__value--color-selected",
         parentEl,
-        event,
+        eventTarget,
       );
     }
 
@@ -65,7 +78,7 @@ function PDP() {
 
       if (attribute.name === searchedAttributeType) {
         const attributeItems = JSON.parse(JSON.stringify(attribute.items));
-        const clearedOfSelected = attributeItems.map((item) => {
+        const clearedOfSelected = attributeItems.map((item: AttributeItem) => {
           const updatedItem = { ...item };
           if (item.selected) {
             delete updatedItem.selected;
@@ -73,7 +86,7 @@ function PDP() {
           return updatedItem;
         });
 
-        updatedItems = clearedOfSelected.map((attributeItem) =>
+        updatedItems = clearedOfSelected.map((attributeItem: AttributeItem) =>
           attributeItem.value === searchedAttribItem
             ? { ...attributeItem, selected: true }
             : attributeItem,
@@ -90,7 +103,7 @@ function PDP() {
   };
 
   const onAddProductToCart = () => {
-    const checkNotSelected = product.attributes
+    const notSelectedAttributes = product.attributes
       .map((attribute) => {
         const attributeItems = attribute.items;
         const isSelected = attributeItems.some((item) => item.selected);
@@ -99,9 +112,9 @@ function PDP() {
       })
       .filter((element) => typeof element === "string");
 
-    setNotSelected(checkNotSelected);
+    setNotSelected(notSelectedAttributes);
 
-    if (checkNotSelected.length > 0) {
+    if (notSelectedAttributes.length > 0) {
       dispatch(modalToggle(true));
       dispatch(backdropTypeToggle(false));
       dispatch(backdropVisibilityToggle(true));
@@ -118,7 +131,7 @@ function PDP() {
     <section className={classes.section}>
       {createPortal(
         <Modal notSelected={notSelected} />,
-        document.getElementById("modals-root"),
+        document.getElementById("modals-root") as HTMLDivElement,
       )}
       {/* 1st column */}
       <div className={classes["thumbnails-wrapper"]}>
@@ -151,7 +164,7 @@ function PDP() {
                 {attribute.name}:
               </h3>
               <div
-                attributeType={attribute.name}
+                id={attribute.name}
                 className={classes["product-attribute__values"]}
               >
                 {attribute.items.map((attributeItem) => {

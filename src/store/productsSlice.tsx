@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import {
-  CurrentPDP,
   CartItem,
-  CartItemAttribute,
   Price,
+  Product,
+  ProductAttribute,
 } from "../models/productSlice.models";
 
 const initialState: {
   billingCurrency: string;
-  currentPDP: null | CurrentPDP;
+  currentPDP: null | Product;
   cart: CartItem[];
   productsTotal: number;
   totalPrice: number;
@@ -48,7 +48,7 @@ const productsSlice = createSlice({
       const incomingProduct = { ...action.payload };
       const cart = JSON.parse(JSON.stringify(state.cart));
       const selectedAttributesVal = incomingProduct.attributes
-        .map((attribute: CartItemAttribute) =>
+        .map((attribute: ProductAttribute) =>
           attribute.items.map((item) => item.selected && item.value),
         )
         .flat(1)
