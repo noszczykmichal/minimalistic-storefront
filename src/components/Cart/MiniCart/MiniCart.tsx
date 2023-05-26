@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { CSSTransition } from "react-transition-group";
 
@@ -7,15 +6,16 @@ import classes from "./MiniCart.module.css";
 import MiniCartItems from "./MiniCartItems/MiniCartItems";
 import Button from "../../UI/Button";
 import { uiActions } from "../../../store/uiSlice";
+import { useAppSelector, useAppDispatch } from "../../../hooks/reduxHooks";
 
 function MiniCart() {
-  const miniCartRef = useRef();
+  const miniCartRef = useRef(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { productsTotal, totalPrice, billingCurrency } = useSelector(
+  const dispatch = useAppDispatch();
+  const { productsTotal, totalPrice, billingCurrency } = useAppSelector(
     (state) => state.products,
   );
-  const isMiniCartOpen = useSelector((state) => state.ui.isMiniCartOpen);
+  const { isMiniCartOpen } = useAppSelector((state) => state.ui);
   const { backdropVisibilityToggle, miniCartVisibilityToggle } = uiActions;
 
   const clickHandler = () => {

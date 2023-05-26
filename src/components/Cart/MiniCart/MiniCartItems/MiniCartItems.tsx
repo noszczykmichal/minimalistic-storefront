@@ -1,10 +1,9 @@
-import { useSelector } from "react-redux";
-
 import MiniCartItem from "./MiniCartItem/MiniCartItem";
 import classes from "./MiniCartItems.module.css";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
 
 function MiniCartItems() {
-  const { cart } = useSelector((state) => state.products);
+  const { cart } = useAppSelector((state) => state.products);
 
   return (
     <ul className={classes["cart-items"]}>

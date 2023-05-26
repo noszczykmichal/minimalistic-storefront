@@ -1,12 +1,18 @@
 import { NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import { ReactNode } from "react";
 
 import classes from "./NavigationItem.module.css";
 import { uiActions } from "../../../../store/uiSlice";
+import { useAppDispatch } from "../../../../hooks/reduxHooks";
 
-function NavigationItem({ link, exact, children }) {
-  const dispatch = useDispatch();
+function NavigationItem({
+  link,
+  children,
+}: {
+  link: string;
+  children: ReactNode;
+}) {
+  const dispatch = useAppDispatch();
   const {
     backdropVisibilityToggle,
     currencySwitcherVisibToggle,
@@ -23,17 +29,11 @@ function NavigationItem({ link, exact, children }) {
 
   return (
     <li className={classes["navigation-item"]}>
-      <NavLink to={link} exact={`${exact}`} onClick={onNavLinkClickHandler}>
+      <NavLink to={link} onClick={onNavLinkClickHandler}>
         {children}
       </NavLink>
     </li>
   );
 }
-
-NavigationItem.propTypes = {
-  link: PropTypes.string.isRequired,
-  exact: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
 export default NavigationItem;

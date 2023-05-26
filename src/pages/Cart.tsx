@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux";
-
 import CartPageItem from "../components/Cart/CartPageItem/CartPageItem";
 import classes from "./Cart.module.css";
 import Hr from "../components/UI/Hr";
 import Button from "../components/UI/Button";
+import { useAppSelector } from "../hooks/reduxHooks";
+import { CartItem } from "../models/productSlice.models";
 
 function Cart() {
-  const { billingCurrency, cart, productsTotal, totalPrice } = useSelector(
+  const { billingCurrency, cart, productsTotal, totalPrice } = useAppSelector(
     (state) => state.products,
   );
 
@@ -14,7 +14,7 @@ function Cart() {
     <section>
       <h1 className={classes.title}>Cart</h1>
       <ul className={classes["items-list"]}>
-        {cart.map((cartItem) => (
+        {cart.map((cartItem: CartItem) => (
           <CartPageItem key={cartItem.internalID} itemDetails={cartItem} />
         ))}
       </ul>

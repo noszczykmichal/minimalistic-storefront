@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
 
 import classes from "./CartPageItem.module.css";
 import Hr from "../../UI/Hr";
 import Arrow from "../../UI/Arrow";
 import useChangeQuantity from "../../../hooks/useChangeQuantity";
+import { CartItem } from "../../../models/productSlice.models";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 
-function CartPageItem({ itemDetails }) {
+function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
   const { internalID, name, brand, gallery, quantity } = itemDetails;
   const [currentIndex, setCurrentIndex] = useState(0);
-  const billingCurrency = useSelector(
+  const billingCurrency = useAppSelector(
     (state) => state.products.billingCurrency,
   );
 
@@ -19,9 +19,10 @@ function CartPageItem({ itemDetails }) {
   );
   const [currentPrice] = filteredPrices;
 
-  const scrollingArrowsHandler = (event) => {
+  const scrollingArrowsHandler = (event: React.MouseEvent) => {
     const regex = /right/;
-    const attachedClass = [...event.target.classList].join(" ");
+    const eventTarget = event.target as HTMLButtonElement;
+    const attachedClass = Array.from(eventTarget.classList).join(" ");
     const isRightArrow = regex.test(attachedClass);
     if (isRightArrow) {
       setCurrentIndex((prevIndex) =>
@@ -72,10 +73,7 @@ function CartPageItem({ itemDetails }) {
                 <h3 className={classes["product-attribute__label"]}>
                   {attribute.name}:
                 </h3>
-                <div
-                  attributeType={attribute.name}
-                  className={classes["product-attribute__values"]}
-                >
+                <div className={classes["product-attribute__values"]}>
                   {attribute.items.map((attributeItem) => {
                     const textAttributeClasses = attributeItem.selected
                       ? [
@@ -201,35 +199,5 @@ function CartPageItem({ itemDetails }) {
     </>
   );
 }
-
-CartPageItem.propTypes = {
-  itemDetails: PropTypes.shape({
-    brand: PropTypes.string.isRequired,
-    gallery: PropTypes.arrayOf(PropTypes.string).isRequired,
-    id: PropTypes.string.isRequired,
-    inStock: PropTypes.bool.isRequired,
-    name: PropTypes.string.isRequired,
-    prices: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        currency: PropTypes.shape({
-          symbol: PropTypes.string.isRequired,
-        }),
-      }),
-    ).isRequired,
-    attributes: PropTypes.arrayOf(
-      PropTypes.shape({
-        items: PropTypes.arrayOf(
-          PropTypes.shape({
-            displayValue: PropTypes.string.isRequired,
-            value: PropTypes.string.isRequired,
-          }),
-        ),
-      }),
-    ).isRequired,
-    quantity: PropTypes.number.isRequired,
-    internalID: PropTypes.string.isRequired,
-  }).isRequired,
-};
 
 export default CartPageItem;

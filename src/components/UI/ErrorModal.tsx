@@ -1,8 +1,10 @@
-import PropTypes from "prop-types";
-
 import classes from "./ErrorModal.module.css";
 
-function ErrorModal({ errorDetails }) {
+type ErrorDetails = {
+  message: string;
+};
+
+function ErrorModal({ errorDetails }: { errorDetails: ErrorDetails }) {
   return (
     <div className={classes.container}>
       <p className={classes.error}>
@@ -15,11 +17,5 @@ function ErrorModal({ errorDetails }) {
     </div>
   );
 }
-
-ErrorModal.propTypes = {
-  errorDetails: PropTypes.shape({
-    message: PropTypes.string.isRequired,
-  }).isRequired,
-};
 
 export default ErrorModal;

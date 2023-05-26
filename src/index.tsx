@@ -6,6 +6,8 @@ import {
   ApolloProvider,
   InMemoryCache,
   gql,
+  QueryResult,
+  OperationVariables,
 } from "@apollo/client";
 import { Provider } from "react-redux";
 import { Query } from "@apollo/client/react/components";
@@ -46,9 +48,9 @@ root.render(
         <Provider store={store}>
           <PersistGate loading={<Loader />} persistor={persistor}>
             <Query query={categoriesAndCurrenciesQuery}>
-              {(props) => {
+              {(props: QueryResult<any, OperationVariables>) => {
                 const { data, loading, error } = props;
-                let content;
+                let content = null;
 
                 if (loading) {
                   content = <Loader />;
@@ -56,7 +58,7 @@ root.render(
 
                 if (data && data.categories && data.currencies) {
                   const fetchedCategories = data.categories.map(
-                    (category) => category.name,
+                    (category: { name: string }) => category.name,
                   );
 
                   content = (

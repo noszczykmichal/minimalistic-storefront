@@ -1,11 +1,10 @@
-import { useSelector, useDispatch } from "react-redux";
-
 import classes from "./CartIcon.module.css";
 import { uiActions } from "../../../../store/uiSlice";
+import { useAppSelector, useAppDispatch } from "../../../../hooks/reduxHooks";
 
 function CartIcon() {
-  const dispatch = useDispatch();
-  const { productsTotal } = useSelector((state) => state.products);
+  const dispatch = useAppDispatch();
+  const { productsTotal } = useAppSelector((state) => state.products);
   const {
     backdropVisibilityToggle,
     backdropTypeToggle,

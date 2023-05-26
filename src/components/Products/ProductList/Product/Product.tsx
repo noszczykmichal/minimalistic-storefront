@@ -1,17 +1,17 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 
 import classes from "./Product.module.css";
 import { productActions } from "../../../../store/productsSlice";
+import { useAppSelector, useAppDispatch } from "../../../../hooks/reduxHooks";
+import { ProductType } from "../../../../models/productSlice.models";
 
-function Product({ productDetails }) {
-  const { billingCurrency } = useSelector((state) => state.products);
+function Product({ productDetails }: { productDetails: ProductType }) {
+  const { billingCurrency } = useAppSelector((state) => state.products);
   const { onCurrentPDPChange, addProductToCart } = productActions;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ function Product({ productDetails }) {
     navigate(newPath);
   };
 
-  const addProductWithDefaults = (event) => {
+  const addProductWithDefaults = (event: React.MouseEvent) => {
     event.stopPropagation();
 
     const updatedAttributes = productDetails.attributes.map((attribute) => {
@@ -86,7 +86,7 @@ function Product({ productDetails }) {
     <li className={classes["product-card"]}>
       <div
         style={{ backgroundImage: `url(${productDetails.gallery[0]})` }}
-        alt={productDetails.id}
+        aria-label={productDetails.id}
         className={classes["product-card__image"]}
         onClick={onProductClick}
       >
@@ -111,33 +111,5 @@ function Product({ productDetails }) {
     </li>
   );
 }
-
-Product.propTypes = {
-  productDetails: PropTypes.shape({
-    brand: PropTypes.string.isRequired,
-    gallery: PropTypes.arrayOf(PropTypes.string).isRequired,
-    id: PropTypes.string.isRequired,
-    inStock: PropTypes.bool.isRequired,
-    name: PropTypes.string.isRequired,
-    prices: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        currency: PropTypes.shape({
-          symbol: PropTypes.string.isRequired,
-        }),
-      }),
-    ).isRequired,
-    attributes: PropTypes.arrayOf(
-      PropTypes.shape({
-        items: PropTypes.arrayOf(
-          PropTypes.shape({
-            displayValue: PropTypes.string.isRequired,
-            value: PropTypes.string.isRequired,
-          }),
-        ),
-      }),
-    ).isRequired,
-  }).isRequired,
-};
 
 export default Product;

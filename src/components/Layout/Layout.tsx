@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
+import { ReactNode } from "react";
 
 import classes from "./Layout.module.css";
 import Toolbar from "../Navigation/Toolbar/Toolbar";
 import MobileNavigation from "../Navigation/MobileNavigation/MobileNavigation";
 
-function Layout({ children }) {
+function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       <Toolbar />
@@ -13,9 +13,5 @@ function Layout({ children }) {
     </>
   );
 }
-
-Layout.propTypes = {
-  children: PropTypes.element.isRequired,
-};
 
 export default Layout;

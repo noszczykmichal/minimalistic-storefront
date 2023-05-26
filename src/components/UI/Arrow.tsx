@@ -1,8 +1,12 @@
-import PropTypes from "prop-types";
-
 import classes from "./Arrow.module.css";
 
-function Arrow({ variant, clicked }) {
+function Arrow({
+  variant,
+  clicked,
+}: {
+  variant: string;
+  clicked: (event: React.MouseEvent) => void;
+}) {
   const attachedClass =
     variant === "left" ? classes["button--left"] : classes["button--right"];
   return (
@@ -29,10 +33,5 @@ function Arrow({ variant, clicked }) {
     </button>
   );
 }
-
-Arrow.propTypes = {
-  variant: PropTypes.string.isRequired,
-  clicked: PropTypes.func.isRequired,
-};
 
 export default Arrow;

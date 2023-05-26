@@ -1,9 +1,8 @@
-import { useDispatch } from "react-redux";
-
 import { productActions } from "../store/productsSlice";
+import { useAppDispatch } from "./reduxHooks";
 
-function useChangeQuantity(internalID, operationType) {
-  const dispatch = useDispatch();
+function useChangeQuantity(internalID: string, operationType: string) {
+  const dispatch = useAppDispatch();
 
   return () =>
     dispatch(
