@@ -19,7 +19,7 @@ export type ProductAttribute = {
   name: string;
 };
 
-export interface Product {
+export interface ProductType {
   attributes: ProductAttribute[];
   brand: string;
   description: string;
@@ -30,7 +30,7 @@ export interface Product {
   prices: Price[];
 }
 
-export interface CartItem extends Product {
+export interface CartItem extends ProductType {
   quantity: number;
   internalID: string;
 }

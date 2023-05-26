@@ -1,13 +1,12 @@
-import { useSelector } from "react-redux";
-
 import CartPageItem from "../components/Cart/CartPageItem/CartPageItem";
 import classes from "./Cart.module.css";
 import Hr from "../components/UI/Hr";
 import Button from "../components/UI/Button";
+import { useAppSelector } from "../hooks/reduxHooks";
 import { CartItem } from "../models/productSlice.models";
 
 function Cart() {
-  const { billingCurrency, cart, productsTotal, totalPrice } = useSelector(
+  const { billingCurrency, cart, productsTotal, totalPrice } = useAppSelector(
     (state) => state.products,
   );
 

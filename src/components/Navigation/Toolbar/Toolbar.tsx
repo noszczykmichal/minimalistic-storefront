@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { createPortal } from "react-dom";
 
 import NavigationItems from "../NavigationItems/NavigationItems";
@@ -9,9 +8,10 @@ import CurrencySwitcher from "./CurrencySwitcher/CurrencySwitcher";
 import Backdrop from "../../UI/Backdrop";
 import MiniCart from "../../Cart/MiniCart/MiniCart";
 import ToggleButton from "../MobileNavigation/ToggleButton/ToggleButton";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 
 function Toolbar() {
-  const { categories, currencies } = useSelector((state) => state.ui);
+  const { categories, currencies } = useAppSelector((state) => state.ui);
 
   let navigationItems;
   let currencySwitcher;
@@ -34,7 +34,10 @@ function Toolbar() {
         <ToggleButton />
       </div>
 
-      {createPortal(<Backdrop />, document.getElementById("modals-root"))}
+      {createPortal(
+        <Backdrop />,
+        document.getElementById("modals-root") as HTMLDivElement,
+      )}
     </header>
   );
 }

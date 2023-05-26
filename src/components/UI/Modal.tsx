@@ -1,16 +1,15 @@
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
-import { useSelector, useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 
 import classes from "./Modal.module.css";
 import Button from "./Button";
 import { uiActions } from "../../store/uiSlice";
+import { useAppSelector, useAppDispatch } from "../../hooks/reduxHooks";
 
-function Modal({ notSelected }) {
-  const modalRef = useRef();
-  const dispatch = useDispatch();
-  const { isModalOpen } = useSelector((state) => state.ui);
+function Modal({ notSelected }: { notSelected: (string | null)[] }) {
+  const modalRef = useRef(null);
+  const dispatch = useAppDispatch();
+  const { isModalOpen } = useAppSelector((state) => state.ui);
   const { modalToggle, backdropVisibilityToggle } = uiActions;
 
   const modalHandler = () => {
@@ -49,9 +48,5 @@ function Modal({ notSelected }) {
     </CSSTransition>
   );
 }
-
-Modal.propTypes = {
-  notSelected: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
 
 export default Modal;

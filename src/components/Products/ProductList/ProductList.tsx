@@ -1,9 +1,8 @@
-import PropTypes from "prop-types";
-
 import classes from "./ProductList.module.css";
 import Product from "./Product/Product";
+import { ProductType } from "../../../models/productSlice.models";
 
-function ProductList({ products }) {
+function ProductList({ products }: { products: ProductType[] }) {
   return (
     <ul className={classes["product-list"]}>
       {products.map((product) => (
@@ -12,25 +11,5 @@ function ProductList({ products }) {
     </ul>
   );
 }
-
-ProductList.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      brand: PropTypes.string.isRequired,
-      gallery: PropTypes.arrayOf(PropTypes.string).isRequired,
-      id: PropTypes.string.isRequired,
-      inStock: PropTypes.bool.isRequired,
-      name: PropTypes.string.isRequired,
-      prices: PropTypes.arrayOf(
-        PropTypes.shape({
-          amount: PropTypes.number.isRequired,
-          currency: PropTypes.shape({
-            symbol: PropTypes.string.isRequired,
-          }),
-        }),
-      ).isRequired,
-    }),
-  ).isRequired,
-};
 
 export default ProductList;

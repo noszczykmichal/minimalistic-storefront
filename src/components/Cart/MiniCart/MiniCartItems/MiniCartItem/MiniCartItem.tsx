@@ -1,12 +1,11 @@
-import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
-
 import classes from "./MiniCartItem.module.css";
 import useChangeQuantity from "../../../../../hooks/useChangeQuantity";
+import { useAppSelector } from "../../../../../hooks/reduxHooks";
+import { CartItem } from "../../../../../models/productSlice.models";
 
-function MiniCartItem({ itemDetails }) {
+function MiniCartItem({ itemDetails }: { itemDetails: CartItem }) {
   const { internalID, quantity, gallery } = itemDetails;
-  const { billingCurrency } = useSelector((state) => state.products);
+  const { billingCurrency } = useAppSelector((state) => state.products);
 
   const filteredPrices = itemDetails.prices.filter(
     (price) => price.currency.symbol === billingCurrency,
@@ -36,10 +35,7 @@ function MiniCartItem({ itemDetails }) {
               <h3 className={classes["product-attribute__label"]}>
                 {attribute.name}:
               </h3>
-              <div
-                attributeType={attribute.name}
-                className={classes["product-attribute__values"]}
-              >
+              <div className={classes["product-attribute__values"]}>
                 {attribute.items.map((attributeItem) => {
                   const textAttributeClasses = attributeItem.selected
                     ? [
@@ -114,35 +110,5 @@ function MiniCartItem({ itemDetails }) {
     </li>
   );
 }
-
-MiniCartItem.propTypes = {
-  itemDetails: PropTypes.shape({
-    brand: PropTypes.string.isRequired,
-    gallery: PropTypes.arrayOf(PropTypes.string).isRequired,
-    id: PropTypes.string.isRequired,
-    inStock: PropTypes.bool.isRequired,
-    name: PropTypes.string.isRequired,
-    prices: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        currency: PropTypes.shape({
-          symbol: PropTypes.string.isRequired,
-        }),
-      }),
-    ).isRequired,
-    attributes: PropTypes.arrayOf(
-      PropTypes.shape({
-        items: PropTypes.arrayOf(
-          PropTypes.shape({
-            displayValue: PropTypes.string.isRequired,
-            value: PropTypes.string.isRequired,
-          }),
-        ),
-      }),
-    ).isRequired,
-    quantity: PropTypes.number.isRequired,
-    internalID: PropTypes.string.isRequired,
-  }).isRequired,
-};
 
 export default MiniCartItem;

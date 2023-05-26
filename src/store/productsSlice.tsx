@@ -3,13 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   CartItem,
   Price,
-  Product,
+  ProductType,
   ProductAttribute,
 } from "../models/productSlice.models";
 
 const initialState: {
   billingCurrency: string;
-  currentPDP: null | Product;
+  currentPDP: null | ProductType;
   cart: CartItem[];
   productsTotal: number;
   totalPrice: number;

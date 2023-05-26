@@ -1,8 +1,18 @@
-import PropTypes from "prop-types";
+import { ReactNode } from "react";
 
 import classes from "./Button.module.css";
 
-function Button({ isDisabled, clicked, customClass, children }) {
+function Button({
+  isDisabled = false,
+  clicked,
+  customClass,
+  children,
+}: {
+  isDisabled?: boolean;
+  clicked?: () => void;
+  customClass: string;
+  children: ReactNode;
+}) {
   return (
     <button
       type="button"
@@ -14,13 +24,6 @@ function Button({ isDisabled, clicked, customClass, children }) {
     </button>
   );
 }
-
-Button.propTypes = {
-  isDisabled: PropTypes.bool,
-  clicked: PropTypes.func,
-  customClass: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
 Button.defaultProps = {
   isDisabled: false,

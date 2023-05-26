@@ -1,10 +1,9 @@
-import { useDispatch } from "react-redux";
-
 import classes from "./ToggleButton.module.css";
 import { uiActions } from "../../../../store/uiSlice";
+import { useAppDispatch } from "../../../../hooks/reduxHooks";
 
 function ToggleButton() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     backdropVisibilityToggle,

@@ -1,9 +1,7 @@
-import PropTypes from "prop-types";
-
 import NavigationItem from "./NavigationItem/NavigationItem";
 import classes from "./NavigationItems.module.css";
 
-function NavigationItems({ categories }) {
+function NavigationItems({ categories }: { categories: string[] }) {
   return (
     <ul className={classes["navigation-items"]}>
       {categories.map((category) => {
@@ -11,7 +9,6 @@ function NavigationItems({ categories }) {
           <NavigationItem
             key={category}
             link={category === "all" ? "/" : `/${category}`}
-            exact={category === "all"}
           >
             {category}
           </NavigationItem>
@@ -20,9 +17,5 @@ function NavigationItems({ categories }) {
     </ul>
   );
 }
-
-NavigationItems.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
 
 export default NavigationItems;

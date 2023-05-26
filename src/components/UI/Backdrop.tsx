@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 
 import classes from "./Backdrop.module.css";
 import { uiActions } from "../../store/uiSlice";
+import { useAppSelector, useAppDispatch } from "../../hooks/reduxHooks";
 
 function Backdrop() {
-  const backdropRef = useRef();
-  const dispatch = useDispatch();
+  const backdropRef = useRef(null);
+  const dispatch = useAppDispatch();
   const {
     currencySwitcherVisibToggle,
     backdropVisibilityToggle,
@@ -26,7 +26,7 @@ function Backdrop() {
     dispatch(mobileNavVisibilityToggle(false));
   };
 
-  const { isBackdropTransparent, isBackdropOpen } = useSelector(
+  const { isBackdropTransparent, isBackdropOpen } = useAppSelector(
     (state) => state.ui,
   );
 

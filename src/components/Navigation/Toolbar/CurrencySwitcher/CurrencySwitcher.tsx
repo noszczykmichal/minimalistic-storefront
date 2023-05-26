@@ -1,19 +1,19 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useRef } from "react";
-import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 
 import classes from "./CurrencySwitcher.module.css";
 import { productActions } from "../../../../store/productsSlice";
 import { uiActions } from "../../../../store/uiSlice";
+import { useAppSelector, useAppDispatch } from "../../../../hooks/reduxHooks";
+import { Currency } from "../../../../models/productSlice.models";
 
-function CurrencySwitcher({ currencies }) {
-  const switcherOptionsRef = useRef();
-  const dispatch = useDispatch();
-  const { isCurrencySwitcherOpen } = useSelector((state) => state.ui);
-  const { billingCurrency } = useSelector((state) => state.products);
+function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
+  const switcherOptionsRef = useRef(null);
+  const dispatch = useAppDispatch();
+  const { isCurrencySwitcherOpen } = useAppSelector((state) => state.ui);
+  const { billingCurrency } = useAppSelector((state) => state.products);
   const { onCurrencyChange } = productActions;
   const {
     backdropVisibilityToggle,
@@ -29,9 +29,10 @@ function CurrencySwitcher({ currencies }) {
     dispatch(miniCartVisibilityToggle(false));
   };
 
-  const currencyChangeHandler = (event) => {
+  const currencyChangeHandler = (event: React.MouseEvent) => {
+    const eventTarget = event.target as HTMLButtonElement;
     dispatch(currencySwitcherVisibToggle(false));
-    dispatch(onCurrencyChange(event.target.getAttribute("aria-label")));
+    dispatch(onCurrencyChange(eventTarget.getAttribute("aria-label")));
     dispatch(backdropVisibilityToggle(false));
   };
 
@@ -96,15 +97,5 @@ function CurrencySwitcher({ currencies }) {
     </div>
   );
 }
-
-CurrencySwitcher.propTypes = {
-  currencies: PropTypes.arrayOf(
-    PropTypes.shape({
-      __typename: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      symbol: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-};
 
 export default CurrencySwitcher;
