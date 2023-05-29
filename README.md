@@ -25,7 +25,7 @@
 
 - [React](https://reactjs.org/blog/2022/03/29/react-v18.html)
 - [React-Router](https://github.com/remix-run/react-router)
-- [PropTypes](https://www.npmjs.com/package/prop-types)
+- [Typescript](https://www.typescriptlang.org/)
 - [Apollo Client](https://www.apollographql.com/docs/react/)
 - [React Transition Group](https://reactcommunity.org/react-transition-group/)
 - [Redux](https://redux.js.org/)
@@ -81,4 +81,4 @@ To run this project locally:
 
 ## Contact
 
-Created by [@noszczykmichal](https://michalnoszczyk.com/) - feel free to contact me!
+Built by [@noszczykmichal](https://michalnoszczyk.com/) - feel free to contact me!
