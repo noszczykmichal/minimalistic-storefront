@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import classes from "./CartPageItem.module.css";
 import Hr from "../../UI/Hr";
-import Arrow from "../../UI/Arrow";
+import ThumbnailArrow from "../../UI/ThumbnailArrow";
 import useChangeQuantity from "../../../hooks/useChangeQuantity";
 import { CartItem } from "../../../models/productSlice.models";
 import { useAppSelector } from "../../../hooks/reduxHooks";
@@ -189,8 +189,14 @@ function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
             />
             {gallery.length > 1 ? (
               <div className={classes["image-container__scrolling-arrows"]}>
-                <Arrow variant="left" clicked={scrollingArrowsHandler} />
-                <Arrow variant="right" clicked={scrollingArrowsHandler} />
+                <ThumbnailArrow
+                  variant="left"
+                  clicked={scrollingArrowsHandler}
+                />
+                <ThumbnailArrow
+                  variant="right"
+                  clicked={scrollingArrowsHandler}
+                />
               </div>
             ) : null}
           </div>

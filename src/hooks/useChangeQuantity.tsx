@@ -1,7 +1,11 @@
 import { productActions } from "../store/productsSlice";
 import { useAppDispatch } from "./reduxHooks";
+import { ChangeQuantityVariants } from "../models/ui-and-hooks";
 
-function useChangeQuantity(internalID: string, operationType: string) {
+function useChangeQuantity(
+  internalID: string,
+  operationType: ChangeQuantityVariants,
+) {
   const dispatch = useAppDispatch();
 
   return () =>

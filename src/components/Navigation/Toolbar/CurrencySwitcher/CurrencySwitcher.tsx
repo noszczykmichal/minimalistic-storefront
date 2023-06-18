@@ -10,7 +10,7 @@ import { useAppSelector, useAppDispatch } from "../../../../hooks/reduxHooks";
 import { Currency } from "../../../../models/productSlice.models";
 
 function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
-  const switcherOptionsRef = useRef(null);
+  const switcherOptionsRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const { isCurrencySwitcherOpen } = useAppSelector((state) => state.ui);
   const { billingCurrency } = useAppSelector((state) => state.products);

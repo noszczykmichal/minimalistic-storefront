@@ -1,10 +1,11 @@
-import classes from "./Arrow.module.css";
+import classes from "./ThumbnailArrow.module.css";
+import { ThumbnailArrowVariant } from "../../models/ui-and-hooks";
 
-function Arrow({
+function ThumbnailArrow({
   variant,
   clicked,
 }: {
-  variant: string;
+  variant: ThumbnailArrowVariant;
   clicked: (event: React.MouseEvent) => void;
 }) {
   const attachedClass =
@@ -34,4 +35,4 @@ function Arrow({
   );
 }
 
-export default Arrow;
+export default ThumbnailArrow;
