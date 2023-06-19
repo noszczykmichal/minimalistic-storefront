@@ -1,28 +1,22 @@
 import { useRef } from "react";
-import { useNavigate } from "react-router";
 import { CSSTransition } from "react-transition-group";
 
 import classes from "./MiniCart.module.css";
 import MiniCartItems from "./MiniCartItems/MiniCartItems";
 import Button from "../../UI/Button";
-import { uiActions } from "../../../store/uiSlice";
-import { useAppSelector, useAppDispatch } from "../../../hooks/reduxHooks";
+import { useAppSelector } from "../../../hooks/reduxHooks";
+import useRedirect from "../../../hooks/useRedirect";
 
 function MiniCart() {
   const miniCartRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const redirect = useRedirect();
   const { productsTotal, totalPrice, billingCurrency } = useAppSelector(
     (state) => state.products,
   );
   const { isMiniCartOpen } = useAppSelector((state) => state.ui);
-  const { backdropVisibilityToggle, miniCartVisibilityToggle } = uiActions;
 
-  const clickHandler = () => {
-    dispatch(backdropVisibilityToggle(false));
-    dispatch(miniCartVisibilityToggle(false));
-    navigate("/cart");
-  };
+  const onProceedToCartHandler = () => redirect("/cart");
+  const onProceedToCheckOutHandler = () => redirect("/cart");
 
   return (
     <CSSTransition
@@ -60,7 +54,7 @@ function MiniCart() {
               classes.actions__button,
               classes["actions__button--transparent"],
             ].join(" ")}
-            clicked={clickHandler}
+            clicked={onProceedToCartHandler}
           >
             View Bag
           </Button>
@@ -69,6 +63,7 @@ function MiniCart() {
               classes.actions__button,
               classes["actions__button--green"],
             ].join(" ")}
+            clicked={onProceedToCheckOutHandler}
           >
             Check out
           </Button>
