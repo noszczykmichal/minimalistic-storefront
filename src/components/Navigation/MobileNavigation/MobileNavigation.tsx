@@ -7,7 +7,7 @@ import { useAppSelector } from "../../../hooks/reduxHooks";
 
 function MobileNavigation() {
   const { categories, isMobileNavOpen } = useAppSelector((state) => state.ui);
-  const nodeRef = useRef(null);
+  const nodeRef = useRef<HTMLElement>(null);
 
   return (
     <CSSTransition

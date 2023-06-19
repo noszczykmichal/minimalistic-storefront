@@ -9,7 +9,7 @@ import { uiActions } from "../../../store/uiSlice";
 import { useAppSelector, useAppDispatch } from "../../../hooks/reduxHooks";
 
 function MiniCart() {
-  const miniCartRef = useRef(null);
+  const miniCartRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { productsTotal, totalPrice, billingCurrency } = useAppSelector(

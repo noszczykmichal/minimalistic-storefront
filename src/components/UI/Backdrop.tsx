@@ -8,7 +8,7 @@ import { uiActions } from "../../store/uiSlice";
 import { useAppSelector, useAppDispatch } from "../../hooks/reduxHooks";
 
 function Backdrop() {
-  const backdropRef = useRef(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const {
     currencySwitcherVisibToggle,

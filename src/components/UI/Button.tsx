@@ -3,15 +3,15 @@ import { ReactNode } from "react";
 import classes from "./Button.module.css";
 
 function Button({
-  isDisabled = false,
-  clicked,
   customClass,
   children,
+  isDisabled,
+  clicked,
 }: {
-  isDisabled?: boolean;
-  clicked?: () => void;
   customClass: string;
   children: ReactNode;
+  isDisabled?: boolean;
+  clicked?: () => void;
 }) {
   return (
     <button

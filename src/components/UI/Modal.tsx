@@ -7,7 +7,7 @@ import { uiActions } from "../../store/uiSlice";
 import { useAppSelector, useAppDispatch } from "../../hooks/reduxHooks";
 
 function Modal({ notSelected }: { notSelected: (string | null)[] }) {
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const { isModalOpen } = useAppSelector((state) => state.ui);
   const { modalToggle, backdropVisibilityToggle } = uiActions;
