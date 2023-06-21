@@ -4,11 +4,15 @@ import Hr from "../components/UI/Hr";
 import Button from "../components/UI/Button";
 import { useAppSelector } from "../hooks/reduxHooks";
 import { CartItem } from "../models/productSlice.models";
+import useRedirect from "../hooks/useRedirect";
 
 function Cart() {
   const { billingCurrency, cart, productsTotal, totalPrice } = useAppSelector(
     (state) => state.products,
   );
+  const redirect = useRedirect();
+
+  const onOrderHandler = () => redirect("/shipping");
 
   return (
     <section>
@@ -44,7 +48,9 @@ function Cart() {
           </p>
         </div>
       </div>
-      <Button customClass={classes.summery__button}>Order</Button>
+      <Button customClass={classes.summery__button} clicked={onOrderHandler}>
+        Order
+      </Button>
     </section>
   );
 }
