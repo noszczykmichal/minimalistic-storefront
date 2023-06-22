@@ -1,8 +1,9 @@
 import classes from "./Shipping.module.css";
 import { useAppSelector } from "../hooks/reduxHooks";
+import OrderSummaryItem from "../components/OrderSummary/OrderSummaryItem/OrderSummaryItem";
 
 function Shipping() {
-  const { cart, billingCurrency } = useAppSelector((state) => state.products);
+  const { cart } = useAppSelector((state) => state.products);
 
   return (
     <section className={classes.section}>
@@ -70,50 +71,9 @@ function Shipping() {
       <div className={classes["order-summary"]}>
         <p>Order Summary</p>
         <ul className={classes["cart-items"]}>
-          {cart.map((cartItem) => {
-            return (
-              <li key={cartItem.internalID} className={classes["cart-item"]}>
-                {/* first column */}
-                <div className={classes["cart-item__image-wrapper"]}>
-                  <p className={classes["cart-item__product-quantity"]}>
-                    {cartItem.quantity} x
-                  </p>
-                  <div
-                    className={classes["cart-item__thumbnail"]}
-                    style={{ backgroundImage: `url(${cartItem.gallery[0]})` }}
-                  />
-                </div>
-                {/* second column */}
-                <div className={classes["cart-item__description"]}>
-                  <p>
-                    {cartItem.brand} {cartItem.name}
-                    {cartItem.attributes.map((attribute) => (
-                      <span
-                        key={attribute.name}
-                        className={classes["cart-item__attribute"]}
-                      >
-                        {" "}
-                        {attribute.name}{" "}
-                        {attribute.items.map((attributeItem) =>
-                          attributeItem.selected
-                            ? ` ${attributeItem.displayValue}`
-                            : null,
-                        )}
-                      </span>
-                    ))}
-                  </p>
-                </div>
-                <p className={classes["cart-item__price-tag"]}>
-                  {billingCurrency}
-                  {cartItem.prices.map((price) =>
-                    price.currency.symbol === billingCurrency
-                      ? price.amount.toFixed(2)
-                      : null,
-                  )}
-                </p>
-              </li>
-            );
-          })}
+          {cart.map((item) => (
+            <OrderSummaryItem key={item.internalID} cartItem={item} />
+          ))}
         </ul>
       </div>
     </section>
