@@ -23,20 +23,20 @@ function Cart() {
         ))}
       </ul>
       <Hr />
-      <div className={classes.summery}>
-        <div className={classes["summery-wrapper__labels"]}>
-          <p className={classes["summery-wrapper__label"]}>Tax 21%: </p>
-          <p className={classes["summery-wrapper__label"]}>Quantity: </p>
+      <div className={classes.summary}>
+        <div className={classes["summary-wrapper__labels"]}>
+          <p className={classes["summary-wrapper__label"]}>Tax 21%: </p>
+          <p className={classes["summary-wrapper__label"]}>Quantity: </p>
           <p
             className={[
-              classes["summery-wrapper__label"],
-              classes["summery-wrapper__label--bold"],
+              classes["summary-wrapper__label"],
+              classes["summary-wrapper__label--bold"],
             ].join(" ")}
           >
             Total:
           </p>
         </div>
-        <div className={classes["summery-wrapper__values"]}>
+        <div className={classes["summary-wrapper__values"]}>
           <p className={classes.values__item}>
             {billingCurrency}
             {(totalPrice * 0.21).toFixed(2)}
@@ -48,7 +48,7 @@ function Cart() {
           </p>
         </div>
       </div>
-      <Button customClass={classes.summery__button} clicked={onOrderHandler}>
+      <Button customClass={classes.summary__button} clicked={onOrderHandler}>
         Order
       </Button>
     </section>
