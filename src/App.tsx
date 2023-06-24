@@ -10,6 +10,7 @@ import { Currency } from "./models/productSlice.models";
 
 const PDP = lazy(() => import("./pages/PDP"));
 const Cart = lazy(() => import("./pages/Cart"));
+const Shipping = lazy(() => import("./pages/Shipping"));
 
 function App({
   categories,
@@ -35,6 +36,7 @@ function App({
             />
           ))}
           <Route path="/cart" element={<Cart />} />
+          <Route path="/shipping" element={<Shipping />} />
           <Route path="*" element={<PDP />} />
         </Routes>
       </Suspense>
