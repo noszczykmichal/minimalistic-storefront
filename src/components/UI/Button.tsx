@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, FormEvent } from "react";
 
 import classes from "./Button.module.css";
 
@@ -11,7 +11,7 @@ function Button({
   customClass: string;
   children: ReactNode;
   isDisabled?: boolean;
-  clicked?: () => void;
+  clicked?: (event: FormEvent) => void;
 }) {
   return (
     <button

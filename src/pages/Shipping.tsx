@@ -1,3 +1,5 @@
+import { FormEvent } from "react";
+
 import classes from "./Shipping.module.css";
 import { useAppSelector } from "../hooks/reduxHooks";
 import OrderSummaryItem from "../components/OrderSummary/OrderSummaryItem/OrderSummaryItem";
@@ -9,7 +11,10 @@ function Shipping() {
     (state) => state.products,
   );
 
-  const onOrderHandler = () => {};
+  const onProceedToBilling = (event: FormEvent) => {
+    event.preventDefault();
+    console.log("hey");
+  };
 
   return (
     <section className={classes.section}>
@@ -71,6 +76,12 @@ function Shipping() {
               <input type="email" name="email" />
             </label>
           </div>
+          <Button
+            customClass={classes.form__button}
+            clicked={onProceedToBilling}
+          >
+            PROCEED TO BILLING
+          </Button>
         </form>
       </div>
 
@@ -107,9 +118,6 @@ function Shipping() {
             </p>
           </div>
         </div>
-        <Button customClass={classes.summary__button} clicked={onOrderHandler}>
-          Order
-        </Button>
       </div>
     </section>
   );

@@ -22,6 +22,7 @@
 .cart-item__thumbnail {
   height: 100px;
   width: 100px;
+  min-width: 45px;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
