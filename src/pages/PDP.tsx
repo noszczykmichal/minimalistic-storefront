@@ -10,7 +10,7 @@ import Modal from "../components/UI/Modal";
 import { productActions } from "../store/productsSlice";
 import { uiActions } from "../store/uiSlice";
 import { AttributeItem, ProductType } from "../models/productSlice.models";
-import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../hooks/useReduxHooks";
 
 function PDP() {
   const dispatch = useAppDispatch();

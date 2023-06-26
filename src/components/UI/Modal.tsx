@@ -4,7 +4,7 @@ import { CSSTransition } from "react-transition-group";
 import classes from "./Modal.module.css";
 import Button from "./Button";
 import { uiActions } from "../../store/uiSlice";
-import { useAppSelector, useAppDispatch } from "../../hooks/reduxHooks";
+import { useAppSelector, useAppDispatch } from "../../hooks/useReduxHooks";
 
 function Modal({ notSelected }: { notSelected: (string | null)[] }) {
   const modalRef = useRef<HTMLDivElement>(null);

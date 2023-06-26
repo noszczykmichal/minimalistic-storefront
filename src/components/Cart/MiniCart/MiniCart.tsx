@@ -4,7 +4,7 @@ import { CSSTransition } from "react-transition-group";
 import classes from "./MiniCart.module.css";
 import MiniCartItems from "./MiniCartItems/MiniCartItems";
 import Button from "../../UI/Button";
-import { useAppSelector } from "../../../hooks/reduxHooks";
+import { useAppSelector } from "../../../hooks/useReduxHooks";
 import useRedirect from "../../../hooks/useRedirect";
 
 function MiniCart() {

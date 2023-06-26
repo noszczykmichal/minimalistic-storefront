@@ -1,6 +1,6 @@
 import classes from "./MiniCartItem.module.css";
 import useChangeQuantity from "../../../../../hooks/useChangeQuantity";
-import { useAppSelector } from "../../../../../hooks/reduxHooks";
+import { useAppSelector } from "../../../../../hooks/useReduxHooks";
 import { CartItem } from "../../../../../models/productSlice.models";
 
 function MiniCartItem({ itemDetails }: { itemDetails: CartItem }) {

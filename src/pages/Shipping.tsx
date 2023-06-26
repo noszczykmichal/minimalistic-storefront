@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 
 import classes from "./Shipping.module.css";
-import { useAppSelector } from "../hooks/reduxHooks";
+import { useAppSelector } from "../hooks/useReduxHooks";
 import OrderSummaryItem from "../components/OrderSummary/OrderSummaryItem/OrderSummaryItem";
 import Hr from "../components/UI/Hr";
 import Button from "../components/UI/Button";
