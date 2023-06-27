@@ -2,7 +2,7 @@ import CartPageItem from "../components/Cart/CartPageItem/CartPageItem";
 import classes from "./Cart.module.css";
 import Hr from "../components/UI/Hr";
 import Button from "../components/UI/Button";
-import { useAppSelector } from "../hooks/reduxHooks";
+import { useAppSelector } from "../hooks/useReduxHooks";
 import { CartItem } from "../models/productSlice.models";
 import useRedirect from "../hooks/useRedirect";
 

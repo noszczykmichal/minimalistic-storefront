@@ -8,7 +8,7 @@ import CurrencySwitcher from "./CurrencySwitcher/CurrencySwitcher";
 import Backdrop from "../../UI/Backdrop";
 import MiniCart from "../../Cart/MiniCart/MiniCart";
 import ToggleButton from "../MobileNavigation/ToggleButton/ToggleButton";
-import { useAppSelector } from "../../../hooks/reduxHooks";
+import { useAppSelector } from "../../../hooks/useReduxHooks";
 
 function Toolbar() {
   const { categories, currencies } = useAppSelector((state) => state.ui);

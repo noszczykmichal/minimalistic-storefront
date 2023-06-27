@@ -5,7 +5,7 @@ import Hr from "../../UI/Hr";
 import ThumbnailArrow from "../../UI/ThumbnailArrow";
 import useChangeQuantity from "../../../hooks/useChangeQuantity";
 import { CartItem } from "../../../models/productSlice.models";
-import { useAppSelector } from "../../../hooks/reduxHooks";
+import { useAppSelector } from "../../../hooks/useReduxHooks";
 
 function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
   const { internalID, name, brand, gallery, quantity } = itemDetails;

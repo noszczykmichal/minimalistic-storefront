@@ -3,7 +3,7 @@ import { CSSTransition } from "react-transition-group";
 
 import classes from "./MobileNavigation.module.css";
 import NavigationItems from "../NavigationItems/NavigationItems";
-import { useAppSelector } from "../../../hooks/reduxHooks";
+import { useAppSelector } from "../../../hooks/useReduxHooks";
 
 function MobileNavigation() {
   const { categories, isMobileNavOpen } = useAppSelector((state) => state.ui);

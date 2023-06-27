@@ -5,7 +5,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import classes from "./Product.module.css";
 import { productActions } from "../../../../store/productsSlice";
-import { useAppSelector, useAppDispatch } from "../../../../hooks/reduxHooks";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../../../hooks/useReduxHooks";
 import { ProductType } from "../../../../models/productSlice.models";
 
 function Product({ productDetails }: { productDetails: ProductType }) {

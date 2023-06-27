@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 import classes from "./NavigationItem.module.css";
 import { uiActions } from "../../../../store/uiSlice";
-import { useAppDispatch } from "../../../../hooks/reduxHooks";
+import { useAppDispatch } from "../../../../hooks/useReduxHooks";
 
 function NavigationItem({
   link,

@@ -1,6 +1,6 @@
 import MiniCartItem from "./MiniCartItem/MiniCartItem";
 import classes from "./MiniCartItems.module.css";
-import { useAppSelector } from "../../../../hooks/reduxHooks";
+import { useAppSelector } from "../../../../hooks/useReduxHooks";
 
 function MiniCartItems() {
   const { cart } = useAppSelector((state) => state.products);

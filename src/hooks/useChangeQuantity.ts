@@ -1,5 +1,5 @@
 import { productActions } from "../store/productsSlice";
-import { useAppDispatch } from "./reduxHooks";
+import { useAppDispatch } from "./useReduxHooks";
 import { ChangeQuantityVariants } from "../models/ui-and-hooks";
 
 function useChangeQuantity(
