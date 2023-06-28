@@ -5,15 +5,31 @@ import { useAppSelector } from "../hooks/useReduxHooks";
 import OrderSummaryItem from "../components/OrderSummary/OrderSummaryItem/OrderSummaryItem";
 import Hr from "../components/UI/Hr";
 import Button from "../components/UI/Button";
+import useInput from "../hooks/useInput";
 
 function Shipping() {
   const { cart, billingCurrency, totalPrice, productsTotal } = useAppSelector(
     (state) => state.products,
   );
 
+  const stringValidator = (text: string) => text.length > 4;
+
+  const {
+    enteredValue: enteredFirstName,
+    // isTouched: isFNameTouched,
+    isValid: isFNameValid,
+    hasError: hasFNameError,
+    inputChangeHandler: firstNameChangeHandler,
+    inputBlurHandler: fNameBlurHandler,
+    inputResetHandler: fNameResetHandler,
+  } = useInput(stringValidator);
+
   const onProceedToBilling = (event: FormEvent) => {
     event.preventDefault();
-    console.log("hey");
+    if (isFNameValid) {
+      console.log(enteredFirstName);
+      fNameResetHandler();
+    }
   };
 
   return (
@@ -25,8 +41,15 @@ function Shipping() {
           <div className={classes["form-control"]}>
             <label htmlFor="fName">
               First Name:
-              <input type="text" name="fName" />
+              <input
+                type="text"
+                name="fName"
+                value={enteredFirstName}
+                onChange={firstNameChangeHandler}
+                onBlur={fNameBlurHandler}
+              />
             </label>
+            {hasFNameError && <p>This value should be valid</p>}
           </div>
           <div className={classes["form-control"]}>
             <label htmlFor="lName">
