@@ -1,22 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { FormEvent } from "react";
 
 interface Input {
-  name: {
-    value: string;
-    isTouched: boolean;
-    isValid: boolean;
-    hasError: boolean;
-  };
+  value: string;
+  isTouched: boolean;
+  isValid: boolean;
+  hasError: boolean;
 }
 
-// const reg=[{name: {value, isTouch, isValid, hasError} } ]
-
 const initialState: {
-  registeredInputs: { [key: string]: Input };
+  inputs: { [key: string]: Input };
   isFormValid: boolean;
 } = {
-  registeredInputs: {},
+  inputs: {},
   isFormValid: false,
 };
 
@@ -25,14 +20,37 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     registerInput(state, action) {
-      const registeredInput: Input = {
+      const inputToBeRegistered: Input = {
         value: "",
         isTouched: false,
         isValid: false,
         hasError: false,
       };
 
-      return { ...state };
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [action.payload]: inputToBeRegistered,
+        },
+      };
+    },
+    inputChangeHandler(state, action) {
+      const { value, name, validator } = action.payload;
+      const isValid = validator(value);
+      const isTouched = true;
+      const hasError = false;
+      const updatedInput = {
+        value,
+        isTouched,
+        isValid,
+        hasError,
+      };
+
+      return {
+        ...state,
+        inputs: { ...state.inputs, [name]: updatedInput },
+      };
     },
   },
 });
