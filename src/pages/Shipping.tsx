@@ -5,31 +5,33 @@ import { useAppSelector } from "../hooks/useReduxHooks";
 import OrderSummaryItem from "../components/OrderSummary/OrderSummaryItem/OrderSummaryItem";
 import Hr from "../components/UI/Hr";
 import Button from "../components/UI/Button";
-import useInput from "../hooks/useInput";
+// import useInput from "../hooks/useInput";
+import formInputs from "../utils/config";
+import Input from "../components/Input/Input";
 
 function Shipping() {
   const { cart, billingCurrency, totalPrice, productsTotal } = useAppSelector(
     (state) => state.products,
   );
 
-  const stringValidator = (text: string) => text.length > 4;
+  // const stringValidator = (text: string) => text.length > 4;
 
-  const {
-    enteredValue: enteredFirstName,
-    // isTouched: isFNameTouched,
-    isValid: isFNameValid,
-    hasError: hasFNameError,
-    inputChangeHandler: firstNameChangeHandler,
-    inputBlurHandler: fNameBlurHandler,
-    inputResetHandler: fNameResetHandler,
-  } = useInput(stringValidator);
+  // const {
+  //   enteredValue: enteredFirstName,
+  //   // isTouched: isFNameTouched,
+  //   isValid: isFNameValid,
+  //   hasError: hasFNameError,
+  //   inputChangeHandler: firstNameChangeHandler,
+  //   inputBlurHandler: fNameBlurHandler,
+  //   inputResetHandler: fNameResetHandler,
+  // } = useInput(stringValidator);
 
   const onProceedToBilling = (event: FormEvent) => {
     event.preventDefault();
-    if (isFNameValid) {
-      console.log(enteredFirstName);
-      fNameResetHandler();
-    }
+    // if (isFNameValid) {
+    //   console.log(enteredFirstName);
+    //   fNameResetHandler();
+    // }
   };
 
   return (
@@ -38,67 +40,9 @@ function Shipping() {
         <h1>Shipping</h1>
         <p>Type in the shipping address</p>
         <form className={classes.form}>
-          <div className={classes["form-control"]}>
-            <label htmlFor="fName">
-              First Name:
-              <input
-                type="text"
-                name="fName"
-                value={enteredFirstName}
-                onChange={firstNameChangeHandler}
-                onBlur={fNameBlurHandler}
-              />
-            </label>
-            {hasFNameError && <p>This value should be valid</p>}
-          </div>
-          <div className={classes["form-control"]}>
-            <label htmlFor="lName">
-              Last Name:
-              <input type="text" name="lName" />
-            </label>
-          </div>
-          <div className={classes["form-control"]}>
-            <label htmlFor="address_1">
-              Address Line 1:
-              <input type="text" name="address_1" />
-            </label>
-          </div>
-          <div className={classes["form-control"]}>
-            <label htmlFor="address_2">
-              Address Line 2:
-              <input type="text" name="address_2" />
-            </label>
-          </div>
-          <div className={classes["form-control"]}>
-            <label htmlFor="city">
-              City:
-              <input type="text" name="city" />
-            </label>
-          </div>
-          <div className={classes["form-control"]}>
-            <label htmlFor="postal_code">
-              Postal Code:
-              <input type="text" name="postal_code" />
-            </label>
-          </div>
-          <div className={classes["form-control"]}>
-            <label htmlFor="country">
-              Country:
-              <input type="text" name="country" />
-            </label>
-          </div>
-          <div className={classes["form-control"]}>
-            <label htmlFor="phone">
-              Phone:
-              <input type="tel" name="phone" />
-            </label>
-          </div>
-          <div className={classes["form-control"]}>
-            <label htmlFor="email">
-              E-mail:
-              <input type="email" name="email" />
-            </label>
-          </div>
+          {formInputs.map((input) => (
+            <Input key={input.name} inputDetails={input} />
+          ))}
           <Button
             customClass={classes.form__button}
             clicked={onProceedToBilling}
