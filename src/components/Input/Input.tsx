@@ -8,13 +8,13 @@ interface InputProps {
   label: string;
   name: string;
   type: string;
+  errorMessage: string;
   validator: (length: string) => boolean;
 }
 
 function Input({ inputDetails }: { inputDetails: InputProps }) {
-  // hasFNameError && <p>This value should be valid</p> to do pociągnięcia z reduxa
-  const { label, name, type } = inputDetails;
-  const { registerInput, inputChangeHandler } = formActions;
+  const { label, name, type, errorMessage, validator } = inputDetails;
+  const { registerInput, inputChangeHandler, inputBlurHandler } = formActions;
   const { inputs } = useAppSelector((state) => state.form);
   const dispatch = useAppDispatch();
   const currentValue = inputs[name] ? inputs[name].value : "";
@@ -28,11 +28,24 @@ function Input({ inputDetails }: { inputDetails: InputProps }) {
       inputChangeHandler({
         value: event.currentTarget.value,
         name,
-        validator: inputDetails.validator,
+        validator,
       }),
     );
   };
 
+  const onBlurHandler = (event: FormEvent<HTMLInputElement>) => {
+    dispatch(
+      inputBlurHandler({
+        value: event.currentTarget.value,
+        name,
+        validator,
+      }),
+    );
+  };
+
+  const attachedClasses = inputs[name].hasError
+    ? [classes["form-control__input"], classes["form-control__input--hasError"]]
+    : [classes["form-control__input"]];
   return (
     <div className={classes["form-control"]}>
       <label htmlFor={name}>
@@ -40,10 +53,15 @@ function Input({ inputDetails }: { inputDetails: InputProps }) {
         <input
           type={type}
           name={name}
+          className={attachedClasses.join(" ")}
           onChange={onChangeHandler}
+          onBlur={onBlurHandler}
           value={currentValue}
         />
       </label>
+      {inputs[name].hasError && (
+        <p className={classes["form-control__message"]}>{errorMessage}</p>
+      )}
     </div>
   );
 }

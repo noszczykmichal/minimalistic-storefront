@@ -3,7 +3,7 @@
   padding: 0.25rem 0;
 }
 
-.form-control input {
+.form-control__input {
   display: block;
   width: 50%;
   min-width: 200px;
@@ -11,7 +11,18 @@
   margin-top: 5px;
 }
 
-.form-control input:focus {
+.form-control__input:focus {
   outline: none;
   border: 1px solid #5ece7b;
+}
+
+.form-control__input--hasError {
+  outline: none;
+  border: 1px solid red;
+}
+
+.form-control__message {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: red;
 }

@@ -52,6 +52,24 @@ const formSlice = createSlice({
         inputs: { ...state.inputs, [name]: updatedInput },
       };
     },
+
+    inputBlurHandler(state, action) {
+      const { value, name, validator } = action.payload;
+      const isValid = validator(value);
+      const isTouched = true;
+      const hasError = !isValid && isTouched;
+      const updatedInput = {
+        value,
+        isTouched,
+        isValid,
+        hasError,
+      };
+
+      return {
+        ...state,
+        inputs: { ...state.inputs, [name]: updatedInput },
+      };
+    },
   },
 });
 
