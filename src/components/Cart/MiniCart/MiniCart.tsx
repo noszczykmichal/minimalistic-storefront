@@ -16,7 +16,7 @@ function MiniCart() {
   const { isMiniCartOpen } = useAppSelector((state) => state.ui);
 
   const onProceedToCartHandler = () => redirect("/cart");
-  const onProceedToCheckOutHandler = () => redirect("/shipping");
+  const onProceedToCheckOutHandler = () => redirect("/address");
 
   return (
     <CSSTransition

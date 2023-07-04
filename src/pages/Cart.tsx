@@ -12,7 +12,7 @@ function Cart() {
   );
   const redirect = useRedirect();
 
-  const onOrderHandler = () => redirect("/shipping");
+  const onOrderHandler = () => redirect("/address");
 
   return (
     <section>
