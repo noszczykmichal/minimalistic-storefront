@@ -17,7 +17,8 @@ function Input({ inputDetails }: { inputDetails: InputProps }) {
   const { registerInput, inputChangeHandler, inputBlurHandler } = formActions;
   const { inputs } = useAppSelector((state) => state.form);
   const dispatch = useAppDispatch();
-  const currentValue = inputs[name] ? inputs[name].value : "";
+  const currentInput = inputs[name];
+  const currentValue = currentInput ? currentInput.value : "";
 
   useEffect(() => {
     dispatch(registerInput(name));
@@ -43,7 +44,7 @@ function Input({ inputDetails }: { inputDetails: InputProps }) {
     );
   };
 
-  const attachedClasses = inputs[name].hasError
+  const attachedClasses = currentInput?.hasError
     ? [classes["form-control__input"], classes["form-control__input--hasError"]]
     : [classes["form-control__input"]];
   return (
@@ -59,7 +60,7 @@ function Input({ inputDetails }: { inputDetails: InputProps }) {
           value={currentValue}
         />
       </label>
-      {inputs[name].hasError && (
+      {currentInput?.hasError && (
         <p className={classes["form-control__message"]}>{errorMessage}</p>
       )}
     </div>

@@ -5,7 +5,6 @@ import { useAppSelector } from "../hooks/useReduxHooks";
 import OrderSummaryItem from "../components/OrderSummary/OrderSummaryItem/OrderSummaryItem";
 import Hr from "../components/UI/Hr";
 import Button from "../components/UI/Button";
-// import useInput from "../hooks/useInput";
 import formInputs from "../utils/config";
 import Input from "../components/Input/Input";
 
@@ -14,17 +13,7 @@ function Shipping() {
     (state) => state.products,
   );
 
-  // const stringValidator = (text: string) => text.length > 4;
-
-  // const {
-  //   enteredValue: enteredFirstName,
-  //   // isTouched: isFNameTouched,
-  //   isValid: isFNameValid,
-  //   hasError: hasFNameError,
-  //   inputChangeHandler: firstNameChangeHandler,
-  //   inputBlurHandler: fNameBlurHandler,
-  //   inputResetHandler: fNameResetHandler,
-  // } = useInput(stringValidator);
+  const { isFormValid } = useAppSelector((state) => state.form);
 
   const onProceedToBilling = (event: FormEvent) => {
     event.preventDefault();
@@ -32,6 +21,8 @@ function Shipping() {
     //   console.log(enteredFirstName);
     //   fNameResetHandler();
     // }
+
+    console.log("hey");
   };
 
   return (
@@ -46,6 +37,7 @@ function Shipping() {
           <Button
             customClass={classes.form__button}
             clicked={onProceedToBilling}
+            isDisabled={!isFormValid}
           >
             PROCEED TO BILLING
           </Button>

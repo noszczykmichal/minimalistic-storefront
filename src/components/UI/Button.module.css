@@ -8,3 +8,8 @@
   margin-top: 1.25rem;
   cursor: pointer;
 }
+
+.button:disabled {
+  filter: grayscale(1);
+  pointer-events: none;
+}

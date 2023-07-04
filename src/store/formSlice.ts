@@ -33,6 +33,7 @@ const formSlice = createSlice({
           ...state.inputs,
           [action.payload]: inputToBeRegistered,
         },
+        isFormValid: false,
       };
     },
     inputChangeHandler(state, action) {
@@ -47,9 +48,14 @@ const formSlice = createSlice({
         hasError,
       };
 
+      const isFormValid = Object.keys(state.inputs).every(
+        (input) => state.inputs[input].isValid === true,
+      );
+
       return {
         ...state,
         inputs: { ...state.inputs, [name]: updatedInput },
+        isFormValid,
       };
     },
 
@@ -65,9 +71,14 @@ const formSlice = createSlice({
         hasError,
       };
 
+      const isFormValid = Object.keys(state.inputs).every(
+        (input) => state.inputs[input].isValid === true,
+      );
+
       return {
         ...state,
         inputs: { ...state.inputs, [name]: updatedInput },
+        isFormValid,
       };
     },
   },
