@@ -1,17 +1,20 @@
 const validators = {
   stringValidator: (text: string) => {
-    return text.length >= 4;
+    return text.trim().length >= 4;
+  },
+  phoneValidator: (text: string) => {
+    return text.trim().length >= 9;
   },
   emailValidator: (text: string) => {
-    return text.includes("@");
+    return text.trim().includes("@");
   },
 };
 
 const errorMessages = {
-  lengthErrorMessage: "Enter at least for 4 characters.",
-  telErrorMessage: "Enter a correct phone number.",
-  emailErrorMessage:
-    "Invalid value in the field. Please enter a value in the format: example@domain.com",
+  lengthErrorMessage: "Please enter at least for 4 characters.",
+  telErrorMessage:
+    "A correct phone number should consist of at least 9 digits.",
+  emailErrorMessage: "Please enter a value in the format: example@domain.com.",
 };
 
 const formInputs = [
@@ -69,7 +72,7 @@ const formInputs = [
     name: "phone",
     type: "tel",
     errorMessage: errorMessages.telErrorMessage,
-    validator: validators.stringValidator,
+    validator: validators.phoneValidator,
   },
   {
     label: "E-mail:",
