@@ -1,19 +1,28 @@
+import { useNavigate } from "react-router";
+
 import classes from "./ShippingAndPayment.module.css";
+import ShippingMethod from "../components/Forms/ShippingMethod/ShippingMethod";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
 import Button from "../components/UI/Button";
 
 function ShippingAndPayment() {
+  const navigate = useNavigate();
+
   return (
     <section className={classes.section}>
-      <div className={classes["shipping-form__wrapper"]}>
-        <h1>Shipping</h1>
-        <p>Choose a shipping method</p>
+      <div className={classes["form-wrapper"]}>
+        <h1>Shipping and Payment</h1>
         <form className={classes.form}>
-          <label htmlFor="name">
-            <input type="radio" value="dsdsd" />
-            dsdsds
-          </label>
-          <Button customClass={classes.form__button}>PROCEED TO BILLING</Button>
+          <ShippingMethod />
+          <div className={classes["actions-wrapper"]}>
+            <Button
+              customClass={classes.form__button}
+              clicked={() => navigate(-1)}
+            >
+              Back
+            </Button>
+            <Button customClass={classes.form__button}>Next</Button>
+          </div>
         </form>
       </div>
 

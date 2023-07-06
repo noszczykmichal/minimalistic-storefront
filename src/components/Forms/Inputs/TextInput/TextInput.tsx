@@ -1,10 +1,13 @@
 import { useEffect, FormEvent } from "react";
 
-import classes from "./Input.module.css";
-import { formActions } from "../../store/formSlice";
-import { useAppSelector, useAppDispatch } from "../../hooks/useReduxHooks";
+import classes from "./TextInput.module.css";
+import { formActions } from "../../../../store/formSlice";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../../../hooks/useReduxHooks";
 
-interface InputProps {
+interface TextInputProps {
   label: string;
   name: string;
   type: string;
@@ -12,7 +15,7 @@ interface InputProps {
   validator: (length: string) => boolean;
 }
 
-function Input({ inputDetails }: { inputDetails: InputProps }) {
+function TextInput({ inputDetails }: { inputDetails: TextInputProps }) {
   const { label, name, type, errorMessage, validator } = inputDetails;
   const { registerInput, inputChangeHandler, inputBlurHandler } = formActions;
   const { inputs } = useAppSelector((state) => state.form);
@@ -67,4 +70,4 @@ function Input({ inputDetails }: { inputDetails: InputProps }) {
   );
 }
 
-export default Input;
+export default TextInput;

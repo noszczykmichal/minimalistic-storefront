@@ -15,7 +15,7 @@ function OrderSummary() {
           <OrderSummaryItem key={item.internalID} cartItem={item} />
         ))}
       </ul>
-      <Hr />
+      <Hr customClass={classes["order-summary__hr"]} />
       <div className={classes["order-summary__summary-wrapper"]}>
         <div className={classes["summary-wrapper__labels"]}>
           <p className={classes["summary-wrapper__label"]}>Tax 21%: </p>

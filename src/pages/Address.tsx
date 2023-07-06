@@ -4,8 +4,8 @@ import classes from "./Address.module.css";
 import { useAppSelector } from "../hooks/useReduxHooks";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
 import Button from "../components/UI/Button";
-import formInputs from "../utils/config";
-import Input from "../components/Input/Input";
+import { shippingAddressInputs } from "../utils/config";
+import TextInput from "../components/Forms/Inputs/TextInput/TextInput";
 import useRedirect from "../hooks/useRedirect";
 
 function Address() {
@@ -25,8 +25,8 @@ function Address() {
         <h1>My contact data</h1>
         <p>Type in your address</p>
         <form className={classes.form}>
-          {formInputs.map((input) => (
-            <Input key={input.name} inputDetails={input} />
+          {shippingAddressInputs.map((input) => (
+            <TextInput key={input.name} inputDetails={input} />
           ))}
           <Button
             customClass={classes.form__button}

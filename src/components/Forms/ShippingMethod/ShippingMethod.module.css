@@ -1,0 +1,14 @@
+.fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fieldset__legend {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.fieldset__hr {
+  margin: 10px 0;
+}

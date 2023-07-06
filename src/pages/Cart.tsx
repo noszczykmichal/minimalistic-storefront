@@ -22,7 +22,7 @@ function Cart() {
           <CartPageItem key={cartItem.internalID} itemDetails={cartItem} />
         ))}
       </ul>
-      <Hr />
+      <Hr customClass={classes.cart__hr} />
       <div className={classes.summary}>
         <div className={classes["summary-wrapper__labels"]}>
           <p className={classes["summary-wrapper__label"]}>Tax 21%: </p>

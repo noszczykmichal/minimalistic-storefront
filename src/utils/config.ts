@@ -17,7 +17,7 @@ const errorMessages = {
   emailErrorMessage: "Please enter a value in the format: example@domain.com.",
 };
 
-const formInputs = [
+export const shippingAddressInputs = [
   {
     label: "First Name:",
     name: "fName",
@@ -83,4 +83,14 @@ const formInputs = [
   },
 ];
 
-export default formInputs;
+export const shippingOptions = [
+  {
+    label: "Carrier method: <b>Flat Rate</b> <br>Rate: <b>Fixed-US$5.00</b>",
+    name: "flatRate",
+  },
+  {
+    label:
+      "Carrier method: <b>Best Way</b> <br>Rate: <b>Table Rate-US$10.00</b>",
+    name: "bestWay",
+  },
+];

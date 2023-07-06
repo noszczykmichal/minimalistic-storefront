@@ -1,3 +1,7 @@
+.cart-page__hr {
+  margin: 32px 0 24px 0;
+}
+
 .cart-page__item {
   display: flex;
   flex-direction: column;
