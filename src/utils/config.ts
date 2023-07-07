@@ -87,10 +87,24 @@ export const shippingOptions = [
   {
     label: "Carrier method: <b>Flat Rate</b> <br>Rate: <b>Fixed-US$5.00</b>",
     name: "flatRate",
+    shipping: [
+      { amount: 5.0, currency: { label: "USD", symbol: "$" } },
+      { amount: 3.59, currency: { label: "GBP", symbol: "£" } },
+      { amount: 6.49, currency: { label: "AUD", symbol: "A$" } },
+      { amount: 539.95, currency: { label: "JPY", symbol: "¥" } },
+      { amount: 378.89, currency: { label: "RUB", symbol: "₽" } },
+    ],
   },
   {
     label:
       "Carrier method: <b>Best Way</b> <br>Rate: <b>Table Rate-US$10.00</b>",
     name: "bestWay",
+    shipping: [
+      { amount: 10.0, currency: { label: "USD", symbol: "$" } },
+      { amount: 7.19, currency: { label: "GBP", symbol: "£" } },
+      { amount: 12.9, currency: { label: "AUD", symbol: "A$" } },
+      { amount: 1079.95, currency: { label: "JPY", symbol: "¥" } },
+      { amount: 756.29, currency: { label: "RUB", symbol: "₽" } },
+    ],
   },
 ];
