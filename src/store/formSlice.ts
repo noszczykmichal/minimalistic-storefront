@@ -20,20 +20,28 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     registerInput(state, action) {
-      const inputToBeRegistered: Input = {
-        value: "",
-        isTouched: false,
-        isValid: false,
-        hasError: false,
-      };
+      const inputName = action.payload;
+      let inputState = state.inputs[inputName];
+      const isFormValid = Object.keys(state.inputs).every(
+        (input) => state.inputs[input].isValid === true,
+      );
+
+      if (!state.inputs[inputName]) {
+        inputState = {
+          value: "",
+          isTouched: false,
+          isValid: false,
+          hasError: false,
+        };
+      }
 
       return {
         ...state,
         inputs: {
           ...state.inputs,
-          [action.payload]: inputToBeRegistered,
+          [inputName]: inputState,
         },
-        isFormValid: false,
+        isFormValid,
       };
     },
     inputChangeHandler(state, action) {

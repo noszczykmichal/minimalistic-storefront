@@ -1,0 +1,42 @@
+.order-summary {
+  align-self: flex-start;
+}
+
+.order-summary__heading {
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin-top: 0;
+}
+
+.order-summary__cart-items {
+  list-style: none;
+  padding: 0;
+}
+
+.order-summary__hr {
+  margin: 32px 0 24px 0;
+}
+
+.order-summary__summary-wrapper {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-weight: 400;
+  line-height: 1.75rem;
+}
+
+.summary-wrapper__label,
+.summary-wrapper__label--bold,
+.values__item {
+  margin: 0 0 0.5rem 0;
+}
+
+.summary-wrapper__label--bold {
+  font-weight: 500;
+}
+
+.values__item {
+  font-weight: 700;
+}

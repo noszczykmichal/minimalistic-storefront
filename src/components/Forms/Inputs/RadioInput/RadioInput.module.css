@@ -1,0 +1,16 @@
+.form-control__label {
+  /* width: 80%; */
+  padding: 4px 0;
+  display: grid;
+  grid-template-columns: 10% auto;
+  gap: 4px;
+}
+
+/* .form-control__input {
+  color: red;
+  background-color: red;
+} */
+
+.form-control__label {
+  line-height: 1.5;
+}

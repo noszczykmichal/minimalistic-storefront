@@ -40,7 +40,7 @@ function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
 
   return (
     <>
-      <Hr />
+      <Hr customClass={classes["cart-page__hr"]} />
       <li className={classes["cart-page__item"]}>
         <div className={classes["column-wrapper"]}>
           <div className={classes["cart-item__product-details"]}>

@@ -17,6 +17,10 @@ section {
   padding: 0;
 }
 
+.cart__hr {
+  margin: 32px 0 24px 0;
+}
+
 .summary {
   margin-top: 2rem;
   width: 100%;
