@@ -1,13 +1,15 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FormEvent } from "react";
 import { Markup } from "interweave";
+import { useAppSelector } from "../../../../hooks/useReduxHooks";
 
 import classes from "./RadioInput.module.css";
+import { Price } from "../../../../models/productSlice.models";
 
 interface RadioInputProps {
   label: string;
   name: string;
-  // id: string;
+  shippingCosts: Price[];
 }
 
 function RadioInput({
@@ -19,7 +21,16 @@ function RadioInput({
   onClick: (event: FormEvent<HTMLInputElement>) => void;
   checkedInput: string | null;
 }) {
-  const { label, name } = inputDetails;
+  const { label, name, shippingCosts } = inputDetails;
+  const { billingCurrency } = useAppSelector((state) => state.products);
+
+  const shippingPrice = shippingCosts.find(
+    (shippingCost) => shippingCost.currency.symbol === billingCurrency,
+  )!.amount;
+
+  const updatedLabel = `${label}<b>${
+    billingCurrency + shippingPrice.toFixed(2)
+  }</b>`;
 
   return (
     <div className={classes["form-control"]}>
@@ -33,7 +44,7 @@ function RadioInput({
           onChange={onClick}
           checked={name === checkedInput}
         />
-        <Markup content={label} />
+        <Markup content={updatedLabel} />
       </label>
     </div>
   );
