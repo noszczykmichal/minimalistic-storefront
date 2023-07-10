@@ -129,3 +129,39 @@ export const shippingOptions = [
     ],
   },
 ];
+
+export const paymentOptions = [
+  {
+    label: "<b>Credit card - </b>",
+    name: "credit_card",
+    costs: [
+      { amount: 0, currency: { label: "USD", symbol: "$" } },
+      { amount: 0, currency: { label: "GBP", symbol: "£" } },
+      { amount: 0, currency: { label: "AUD", symbol: "A$" } },
+      { amount: 0, currency: { label: "JPY", symbol: "¥" } },
+      { amount: 0, currency: { label: "RUB", symbol: "₽" } },
+    ],
+  },
+  {
+    label: "<b>Bank transfer - </b>",
+    name: "bank_transfer",
+    costs: [
+      { amount: 0, currency: { label: "USD", symbol: "$" } },
+      { amount: 0, currency: { label: "GBP", symbol: "£" } },
+      { amount: 0, currency: { label: "AUD", symbol: "A$" } },
+      { amount: 0, currency: { label: "JPY", symbol: "¥" } },
+      { amount: 0, currency: { label: "RUB", symbol: "₽" } },
+    ],
+  },
+  {
+    label: "Cash on collection - </b>",
+    name: "cash_on_collection",
+    costs: [
+      { amount: 1.99, currency: { label: "USD", symbol: "$" } },
+      { amount: 1.49, currency: { label: "GBP", symbol: "£" } },
+      { amount: 2.59, currency: { label: "AUD", symbol: "A$" } },
+      { amount: 214.9, currency: { label: "JPY", symbol: "¥" } },
+      { amount: 150.49, currency: { label: "RUB", symbol: "₽" } },
+    ],
+  },
+];
