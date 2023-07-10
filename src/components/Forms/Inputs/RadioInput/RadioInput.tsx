@@ -4,13 +4,7 @@ import { Markup } from "interweave";
 import { useAppSelector } from "../../../../hooks/useReduxHooks";
 
 import classes from "./RadioInput.module.css";
-import { Price } from "../../../../models/productSlice.models";
-
-interface RadioInputProps {
-  label: string;
-  name: string;
-  shippingCosts: Price[];
-}
+import { RadioInputProps } from "../../../../models/ui-and-hooks";
 
 function RadioInput({
   inputDetails,
@@ -21,11 +15,11 @@ function RadioInput({
   onClick: (event: FormEvent<HTMLInputElement>) => void;
   checkedInput: string | null;
 }) {
-  const { label, name, shippingCosts } = inputDetails;
+  const { label, name, costs } = inputDetails;
   const { billingCurrency } = useAppSelector((state) => state.products);
 
-  const shippingPrice = shippingCosts.find(
-    (shippingCost) => shippingCost.currency.symbol === billingCurrency,
+  const shippingPrice = costs.find(
+    (cost) => cost.currency.symbol === billingCurrency,
   )!.amount;
 
   const updatedLabel = `${label}<b>${

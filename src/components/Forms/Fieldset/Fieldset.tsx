@@ -1,11 +1,17 @@
 import { useState, FormEvent, Fragment } from "react";
 
-import classes from "./ShippingMethod.module.css";
+import classes from "./Fieldset.module.css";
 import RadioInput from "../Inputs/RadioInput/RadioInput";
-import { shippingOptions } from "../../../utils/config";
+import { RadioInputProps } from "../../../models/ui-and-hooks";
 import Hr from "../../UI/Hr";
 
-function ShippingMethod() {
+function Fieldset({
+  options,
+  heading,
+}: {
+  options: RadioInputProps[];
+  heading: string;
+}) {
   const [checkedInput, setCheckedInput] = useState<string | null>("");
 
   const clickHandler = (event: FormEvent<HTMLInputElement>) => {
@@ -14,11 +20,9 @@ function ShippingMethod() {
 
   return (
     <fieldset className={classes.fieldset}>
-      <legend className={classes.fieldset__legend}>
-        Choose a shipping method
-      </legend>
+      <legend className={classes.fieldset__legend}>{heading}</legend>
       <Hr customClass={classes.fieldset__hr} />
-      {shippingOptions.map((option) => (
+      {options.map((option) => (
         <Fragment key={option.name}>
           <RadioInput
             inputDetails={option}
@@ -32,4 +36,4 @@ function ShippingMethod() {
   );
 }
 
-export default ShippingMethod;
+export default Fieldset;

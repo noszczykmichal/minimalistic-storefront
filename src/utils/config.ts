@@ -87,7 +87,7 @@ export const shippingOptions = [
   {
     label: "Carrier method: <b>Flat Rate</b> <br>Rate: <b>Fixed-</b>",
     name: "flatRate",
-    shippingCosts: [
+    costs: [
       { amount: 5.0, currency: { label: "USD", symbol: "$" } },
       { amount: 3.59, currency: { label: "GBP", symbol: "£" } },
       { amount: 6.49, currency: { label: "AUD", symbol: "A$" } },
@@ -98,7 +98,7 @@ export const shippingOptions = [
   {
     label: "Carrier method: <b>Best Way</b> <br>Rate: <b>Table Rate-</b>",
     name: "bestWay",
-    shippingCosts: [
+    costs: [
       { amount: 10.0, currency: { label: "USD", symbol: "$" } },
       { amount: 7.19, currency: { label: "GBP", symbol: "£" } },
       { amount: 12.9, currency: { label: "AUD", symbol: "A$" } },
@@ -109,7 +109,7 @@ export const shippingOptions = [
   {
     label: "In-store pickup: <br><b>(online payment) - </b>",
     name: "in-store/online_payment",
-    shippingCosts: [
+    costs: [
       { amount: 0, currency: { label: "USD", symbol: "$" } },
       { amount: 0, currency: { label: "GBP", symbol: "£" } },
       { amount: 0, currency: { label: "AUD", symbol: "A$" } },
@@ -120,7 +120,7 @@ export const shippingOptions = [
   {
     label: "In-store pickup: <br><b>(payment on collection) - </b>",
     name: "in-store/payment_on_collection",
-    shippingCosts: [
+    costs: [
       { amount: 0.99, currency: { label: "USD", symbol: "$" } },
       { amount: 0.79, currency: { label: "GBP", symbol: "£" } },
       { amount: 1.29, currency: { label: "AUD", symbol: "A$" } },
@@ -154,7 +154,7 @@ export const paymentOptions = [
     ],
   },
   {
-    label: "Cash on collection - </b>",
+    label: "<b>Cash on collection - </b>",
     name: "cash_on_collection",
     costs: [
       { amount: 1.99, currency: { label: "USD", symbol: "$" } },

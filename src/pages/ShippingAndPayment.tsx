@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router";
 
 import classes from "./ShippingAndPayment.module.css";
-import ShippingMethod from "../components/Forms/ShippingMethod/ShippingMethod";
+import { shippingOptions, paymentOptions } from "../utils/config";
+import Fieldset from "../components/Forms/Fieldset/Fieldset";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
 import Button from "../components/UI/Button";
 
@@ -13,7 +14,14 @@ function ShippingAndPayment() {
       <div className={classes["form-wrapper"]}>
         <h1>Shipping and Payment</h1>
         <form className={classes.form}>
-          <ShippingMethod />
+          <Fieldset
+            options={shippingOptions}
+            heading="Choose a shipping method"
+          />
+          <Fieldset
+            options={paymentOptions}
+            heading="Choose a payment method"
+          />
           <div className={classes["actions-wrapper"]}>
             <Button
               customClass={classes.form__button}
