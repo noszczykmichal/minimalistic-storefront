@@ -5,12 +5,12 @@ import thunk from "redux-thunk";
 
 import uiSlice from "./uiSlice";
 import productsSlice from "./productsSlice";
-import formSlice from "./formSlice";
+import formSlice from "./shippingAddress";
 
 const rootReducer = combineReducers({
   ui: uiSlice.reducer,
   products: productsSlice.reducer,
-  form: formSlice.reducer,
+  shippingAddress: formSlice.reducer,
 });
 
 const persistConfig = {

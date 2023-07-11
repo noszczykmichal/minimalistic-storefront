@@ -16,7 +16,14 @@ function Fieldset({
 
   const clickHandler = (event: FormEvent<HTMLInputElement>) => {
     setCheckedInput(event.currentTarget.getAttribute("name"));
+    console.log(event.currentTarget.getAttribute("name"));
   };
+
+  // const shipping_and_payment = {
+  //   selected_shipping: "carrier",
+  //   cost: 5.0,
+  //   isSelected: true,
+  // };
 
   return (
     <fieldset className={classes.fieldset}>

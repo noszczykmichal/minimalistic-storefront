@@ -9,7 +9,7 @@ import TextInput from "../components/Forms/Inputs/TextInput/TextInput";
 import useRedirect from "../hooks/useRedirect";
 
 function Address() {
-  const { isFormValid } = useAppSelector((state) => state.form);
+  const { isFormValid } = useAppSelector((state) => state.shippingAddress);
   const redirect = useRedirect();
 
   const onProceedToBilling = (event: FormEvent) => {
