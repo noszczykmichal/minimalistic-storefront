@@ -1,23 +1,31 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useRef, FormEvent } from "react";
 import { Markup } from "interweave";
-import { useAppSelector } from "../../../../hooks/useReduxHooks";
 
 import classes from "./RadioInput.module.css";
 import { RadioInputProps } from "../../../../models/ui-and-hooks";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../../../hooks/useReduxHooks";
+import { shippingPaymentOptionsActions } from "../../../../store/shippingPaymentOptions";
 
 function RadioInput({
   inputDetails,
   clicked,
   checkedInput,
+  fieldsetId,
 }: {
   inputDetails: RadioInputProps;
   clicked: (event: FormEvent<HTMLInputElement>, optionCost: number) => void;
   checkedInput: string | null;
+  fieldsetId: string;
 }) {
   const { label, name, costs } = inputDetails;
   const { billingCurrency } = useAppSelector((state) => state.products);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
+  const { updatePriceOfAnOption } = shippingPaymentOptionsActions;
 
   const optionPrice = costs.find(
     (cost) => cost.currency.symbol === billingCurrency,
@@ -33,13 +41,15 @@ function RadioInput({
 
   useEffect(() => {
     if (inputRef.current!.checked) {
-      console.log(
-        "[hook-radio] :",
-        inputRef.current!.getAttribute("name"),
-        optionPrice,
-      );
+      dispatch(updatePriceOfAnOption({ fieldsetId, optionPrice }));
     }
-  }, [billingCurrency, optionPrice]);
+  }, [
+    billingCurrency,
+    optionPrice,
+    updatePriceOfAnOption,
+    dispatch,
+    fieldsetId,
+  ]);
 
   return (
     <div className={classes["form-control"]}>

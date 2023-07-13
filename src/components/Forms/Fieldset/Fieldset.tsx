@@ -29,8 +29,7 @@ function Fieldset({
     optionCost: number,
   ) => {
     setCheckedInput(event.currentTarget.getAttribute("name"));
-    // console.log(event.currentTarget.getAttribute("name"));
-    // console.log(optionCost);
+
     dispatch(
       optionChangeHandler({
         identifier,
@@ -38,16 +37,7 @@ function Fieldset({
         optionCost,
       }),
     );
-
-    // ta sama metoda co tu będzie rejestrowała że został kliknięty
-    // musi się odpalać w radio w useEffect żeby wysłać aktualną cenę
   };
-
-  // const shipping_and_payment = {
-  //   selected_shipping: "carrier",
-  //   cost: 5.0,
-  //   isSelected: true,
-  // };
 
   return (
     <fieldset className={classes.fieldset}>
@@ -59,6 +49,7 @@ function Fieldset({
             inputDetails={option}
             clicked={clickHandler}
             checkedInput={checkedInput}
+            fieldsetId={identifier}
           />
           <Hr customClass={classes.fieldset__hr} />
         </Fragment>

@@ -5,9 +5,13 @@ import { shippingOptions, paymentOptions } from "../utils/config";
 import Fieldset from "../components/Forms/Fieldset/Fieldset";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
 import Button from "../components/UI/Button";
+import { useAppSelector } from "../hooks/useReduxHooks";
 
 function ShippingAndPayment() {
   const navigate = useNavigate();
+  const { isFormValid } = useAppSelector(
+    (state) => state.shippingPaymentOptions,
+  );
 
   return (
     <section className={classes.section}>
@@ -31,7 +35,12 @@ function ShippingAndPayment() {
             >
               Back
             </Button>
-            <Button customClass={classes.form__button}>Next</Button>
+            <Button
+              customClass={classes.form__button}
+              isDisabled={!isFormValid}
+            >
+              Next
+            </Button>
           </div>
         </form>
       </div>
