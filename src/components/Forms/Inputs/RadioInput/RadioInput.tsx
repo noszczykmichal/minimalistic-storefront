@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { FormEvent } from "react";
+import { useEffect, useRef, FormEvent } from "react";
 import { Markup } from "interweave";
 import { useAppSelector } from "../../../../hooks/useReduxHooks";
 
@@ -8,23 +8,38 @@ import { RadioInputProps } from "../../../../models/ui-and-hooks";
 
 function RadioInput({
   inputDetails,
-  onClick,
+  clicked,
   checkedInput,
 }: {
   inputDetails: RadioInputProps;
-  onClick: (event: FormEvent<HTMLInputElement>) => void;
+  clicked: (event: FormEvent<HTMLInputElement>, optionCost: number) => void;
   checkedInput: string | null;
 }) {
   const { label, name, costs } = inputDetails;
   const { billingCurrency } = useAppSelector((state) => state.products);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const shippingPrice = costs.find(
+  const optionPrice = costs.find(
     (cost) => cost.currency.symbol === billingCurrency,
   )!.amount;
 
   const updatedLabel = `${label}<b>${
-    billingCurrency + shippingPrice.toFixed(2)
+    billingCurrency + optionPrice.toFixed(2)
   }</b>`;
+
+  const onChangeHandler = (event: FormEvent<HTMLInputElement>) => {
+    clicked(event, optionPrice);
+  };
+
+  useEffect(() => {
+    if (inputRef.current!.checked) {
+      console.log(
+        "[hook-radio] :",
+        inputRef.current!.getAttribute("name"),
+        optionPrice,
+      );
+    }
+  }, [billingCurrency, optionPrice]);
 
   return (
     <div className={classes["form-control"]}>
@@ -35,8 +50,9 @@ function RadioInput({
           value={name}
           className={classes["form-control__input"]}
           id={name}
-          onChange={onClick}
+          onChange={onChangeHandler}
           checked={name === checkedInput}
+          ref={inputRef}
         />
         <Markup content={updatedLabel} />
       </label>

@@ -17,10 +17,12 @@ function ShippingAndPayment() {
           <Fieldset
             options={shippingOptions}
             heading="Choose a shipping method"
+            identifier="shippingOption"
           />
           <Fieldset
             options={paymentOptions}
             heading="Choose a payment method"
+            identifier="paymentOption"
           />
           <div className={classes["actions-wrapper"]}>
             <Button
