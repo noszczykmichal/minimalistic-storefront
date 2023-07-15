@@ -1,7 +1,7 @@
 import { useEffect, FormEvent } from "react";
 
 import classes from "./TextInput.module.css";
-import { formActions } from "../../../../store/formSlice";
+import { shippingAddressActions } from "../../../../store/shippingAddress";
 import {
   useAppSelector,
   useAppDispatch,
@@ -17,8 +17,9 @@ interface TextInputProps {
 
 function TextInput({ inputDetails }: { inputDetails: TextInputProps }) {
   const { label, name, type, errorMessage, validator } = inputDetails;
-  const { registerInput, inputChangeHandler, inputBlurHandler } = formActions;
-  const { inputs } = useAppSelector((state) => state.form);
+  const { registerInput, inputChangeHandler, inputBlurHandler } =
+    shippingAddressActions;
+  const { inputs } = useAppSelector((state) => state.shippingAddress);
   const dispatch = useAppDispatch();
   const currentInput = inputs[name];
   const currentValue = currentInput ? currentInput.value : "";

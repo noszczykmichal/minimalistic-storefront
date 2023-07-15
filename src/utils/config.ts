@@ -85,9 +85,9 @@ export const shippingAddressInputs = [
 
 export const shippingOptions = [
   {
-    label: "Carrier method: <b>Flat Rate</b> <br>Rate: <b>Fixed-US$5.00</b>",
+    label: "Carrier method: <b>Flat Rate</b> <br>Rate: <b>Fixed-</b>",
     name: "flatRate",
-    shipping: [
+    costs: [
       { amount: 5.0, currency: { label: "USD", symbol: "$" } },
       { amount: 3.59, currency: { label: "GBP", symbol: "£" } },
       { amount: 6.49, currency: { label: "AUD", symbol: "A$" } },
@@ -96,15 +96,72 @@ export const shippingOptions = [
     ],
   },
   {
-    label:
-      "Carrier method: <b>Best Way</b> <br>Rate: <b>Table Rate-US$10.00</b>",
+    label: "Carrier method: <b>Best Way</b> <br>Rate: <b>Table Rate-</b>",
     name: "bestWay",
-    shipping: [
+    costs: [
       { amount: 10.0, currency: { label: "USD", symbol: "$" } },
       { amount: 7.19, currency: { label: "GBP", symbol: "£" } },
       { amount: 12.9, currency: { label: "AUD", symbol: "A$" } },
       { amount: 1079.95, currency: { label: "JPY", symbol: "¥" } },
       { amount: 756.29, currency: { label: "RUB", symbol: "₽" } },
+    ],
+  },
+  {
+    label: "In-store pickup: <br><b>(online payment) - </b>",
+    name: "in-store/online_payment",
+    costs: [
+      { amount: 0, currency: { label: "USD", symbol: "$" } },
+      { amount: 0, currency: { label: "GBP", symbol: "£" } },
+      { amount: 0, currency: { label: "AUD", symbol: "A$" } },
+      { amount: 0, currency: { label: "JPY", symbol: "¥" } },
+      { amount: 0, currency: { label: "RUB", symbol: "₽" } },
+    ],
+  },
+  {
+    label: "In-store pickup: <br><b>(payment on collection) - </b>",
+    name: "in-store/payment_on_collection",
+    costs: [
+      { amount: 0.99, currency: { label: "USD", symbol: "$" } },
+      { amount: 0.79, currency: { label: "GBP", symbol: "£" } },
+      { amount: 1.29, currency: { label: "AUD", symbol: "A$" } },
+      { amount: 106.95, currency: { label: "JPY", symbol: "¥" } },
+      { amount: 74.89, currency: { label: "RUB", symbol: "₽" } },
+    ],
+  },
+];
+
+export const paymentOptions = [
+  {
+    label: "<b>Credit card - </b>",
+    name: "credit_card",
+    costs: [
+      { amount: 0, currency: { label: "USD", symbol: "$" } },
+      { amount: 0, currency: { label: "GBP", symbol: "£" } },
+      { amount: 0, currency: { label: "AUD", symbol: "A$" } },
+      { amount: 0, currency: { label: "JPY", symbol: "¥" } },
+      { amount: 0, currency: { label: "RUB", symbol: "₽" } },
+    ],
+  },
+  {
+    label: "<b>Bank transfer - </b>",
+    name: "bank_transfer",
+    costs: [
+      { amount: 0, currency: { label: "USD", symbol: "$" } },
+      { amount: 0, currency: { label: "GBP", symbol: "£" } },
+      { amount: 0, currency: { label: "AUD", symbol: "A$" } },
+      { amount: 0, currency: { label: "JPY", symbol: "¥" } },
+      { amount: 0, currency: { label: "RUB", symbol: "₽" } },
+    ],
+  },
+  {
+    label: "<b>Cash on collection - </b>",
+    name: "cash_on_collection",
+    costs: [
+      { amount: 1.99, currency: { label: "USD", symbol: "$" } },
+      { amount: 1.49, currency: { label: "GBP", symbol: "£" } },
+      { amount: 2.59, currency: { label: "AUD", symbol: "A$" } },
+      { amount: 214.9, currency: { label: "JPY", symbol: "¥" } },
+      { amount: 150.49, currency: { label: "RUB", symbol: "₽" } },
     ],
   },
 ];

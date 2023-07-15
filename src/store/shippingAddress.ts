@@ -15,8 +15,8 @@ const initialState: {
   isFormValid: false,
 };
 
-const formSlice = createSlice({
-  name: "form",
+const shippingAddress = createSlice({
+  name: "shippingAddress",
   initialState,
   reducers: {
     registerInput(state, action) {
@@ -92,6 +92,6 @@ const formSlice = createSlice({
   },
 });
 
-export const formActions = formSlice.actions;
+export const shippingAddressActions = shippingAddress.actions;
 
-export default formSlice;
+export default shippingAddress;
