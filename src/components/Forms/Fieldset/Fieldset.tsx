@@ -16,7 +16,7 @@ function Fieldset({
   heading: string;
   identifier: string;
 }) {
-  const [checkedInput, setCheckedInput] = useState<string | null>("");
+  const [checkedInputName, setCheckedInputName] = useState<string | null>("");
   const { registerOption, optionChangeHandler } = shippingPaymentOptionsActions;
   const dispatch = useAppDispatch();
 
@@ -28,7 +28,7 @@ function Fieldset({
     event: FormEvent<HTMLInputElement>,
     optionCost: number,
   ) => {
-    setCheckedInput(event.currentTarget.getAttribute("name"));
+    setCheckedInputName(event.currentTarget.getAttribute("name"));
 
     dispatch(
       optionChangeHandler({
@@ -48,7 +48,7 @@ function Fieldset({
           <RadioInput
             inputDetails={option}
             clicked={clickHandler}
-            checkedInput={checkedInput}
+            checkedInputName={checkedInputName}
             fieldsetId={identifier}
           />
           <Hr customClass={classes.fieldset__hr} />

@@ -1,16 +1,57 @@
 .form-control__label {
-  /* width: 80%; */
   padding: 4px 0;
   display: grid;
   grid-template-columns: 10% auto;
   gap: 4px;
 }
 
-/* .form-control__input {
-  color: red;
-  background-color: red;
-} */
-
 .form-control__label {
   line-height: 1.5;
+}
+
+.form-control__input {
+  display: none;
+}
+
+.checkmark {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+}
+
+.checkmark__kick {
+  position: absolute;
+  display: block;
+  height: 3px;
+  min-width: 0px;
+  background-color: #5ece7b;
+  left: 3px;
+  top: 21px;
+}
+
+.checkmark__kick--checked {
+  min-width: 8px;
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  -ms-transition: all 0.25s;
+  -o-transition: all 0.25s;
+  transition: all 0.25s;
+}
+
+.checkmark__stem {
+  position: absolute;
+  min-width: 0;
+  height: 18px;
+  background-color: transparent;
+  left: 11px;
+  top: 6px;
+}
+
+.checkmark__stem--checked {
+  min-width: 3px;
+  background-color: #5ece7b;
+  transition: all 0.25s 0.25s;
 }
