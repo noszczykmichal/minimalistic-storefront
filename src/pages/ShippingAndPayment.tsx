@@ -38,6 +38,7 @@ function ShippingAndPayment() {
             <Button
               customClass={classes.form__button}
               isDisabled={!isFormValid}
+              clicked={() => navigate("/cart/review")}
             >
               Next
             </Button>

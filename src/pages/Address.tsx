@@ -15,7 +15,7 @@ function Address() {
   const onProceedToBilling = (event: FormEvent) => {
     event.preventDefault();
     if (isFormValid) {
-      redirect("/shipping&payment");
+      redirect("/cart/shipping&payment");
     }
   };
 
