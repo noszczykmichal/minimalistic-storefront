@@ -62,6 +62,7 @@ function TextInput({ inputDetails }: { inputDetails: TextInputProps }) {
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
           value={currentValue}
+          autoComplete="on"
         />
       </label>
       {currentInput?.hasError && (

@@ -5,7 +5,7 @@ import RadioInput from "../Inputs/RadioInput/RadioInput";
 import { RadioInputProps } from "../../../models/ui-and-hooks";
 import Hr from "../../UI/Hr";
 import { shippingPaymentOptionsActions } from "../../../store/shippingPaymentOptions";
-import { useAppDispatch } from "../../../hooks/useReduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
 
 function Fieldset({
   options,
@@ -19,10 +19,18 @@ function Fieldset({
   const [checkedInputName, setCheckedInputName] = useState<string | null>("");
   const { registerOption, optionChangeHandler } = shippingPaymentOptionsActions;
   const dispatch = useAppDispatch();
+  const value = useAppSelector((state) =>
+    state.shippingPaymentOptions.inputs[identifier]
+      ? state.shippingPaymentOptions.inputs[identifier].value
+      : "",
+  );
 
   useEffect(() => {
     dispatch(registerOption(identifier));
-  }, [dispatch, identifier, registerOption]);
+    if (value) {
+      setCheckedInputName(value);
+    }
+  }, [dispatch, identifier, registerOption, value]);
 
   const clickHandler = (
     event: FormEvent<HTMLInputElement>,

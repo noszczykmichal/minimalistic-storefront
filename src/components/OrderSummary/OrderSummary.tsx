@@ -7,6 +7,15 @@ function OrderSummary() {
   const { cart, billingCurrency, totalPrice, productsTotal } = useAppSelector(
     (state) => state.products,
   );
+
+  const { shippingOption, paymentOption } = useAppSelector(
+    (state) => state.shippingPaymentOptions.inputs,
+  );
+
+  const isShippingPriceSet = shippingOption ? shippingOption.isSelected : false;
+  const shippingPrice = shippingOption ? shippingOption.cost : 0;
+  const paymentPrice = paymentOption ? paymentOption.cost : 0;
+
   return (
     <div className={classes["order-summary"]}>
       <p className={classes["order-summary__heading"]}>Order Summary</p>
@@ -26,8 +35,28 @@ function OrderSummary() {
               classes["summary-wrapper__label--bold"],
             ].join(" ")}
           >
-            Total:
+            Order Total:
           </p>
+          {isShippingPriceSet && (
+            <p
+              className={[
+                classes["summary-wrapper__label"],
+                classes["summary-wrapper__label--bold"],
+              ].join(" ")}
+            >
+              Shipping:
+            </p>
+          )}
+          {!!paymentPrice && (
+            <p
+              className={[
+                classes["summary-wrapper__label"],
+                classes["summary-wrapper__label--bold"],
+              ].join(" ")}
+            >
+              Other:
+            </p>
+          )}
         </div>
         <div className={classes["summary-wrapper__values"]}>
           <p className={classes.values__item}>
@@ -39,6 +68,18 @@ function OrderSummary() {
             {billingCurrency}
             {totalPrice.toFixed(2)}
           </p>
+          {isShippingPriceSet && (
+            <p className={classes.values__item}>
+              {billingCurrency}
+              {shippingPrice}
+            </p>
+          )}
+          {!!paymentPrice && (
+            <p className={classes.values__item}>
+              {billingCurrency}
+              {paymentPrice}
+            </p>
+          )}
         </div>
       </div>
     </div>
