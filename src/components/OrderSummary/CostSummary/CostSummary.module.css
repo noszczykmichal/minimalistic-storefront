@@ -1,0 +1,23 @@
+.cost-summary {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-weight: 400;
+  line-height: 1.75rem;
+}
+
+.cost-summary__label,
+.cost-summary__label--bold,
+.values__item {
+  margin: 0 0 0.5rem 0;
+}
+
+.cost-summary__label--bold {
+  font-weight: 500;
+}
+
+.values__item {
+  font-weight: 700;
+}

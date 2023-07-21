@@ -1,6 +1,6 @@
 import classes from "./OrderSummaryItem.module.css";
-import { CartItem } from "../../../models/productSlice.models";
-import { useAppSelector } from "../../../hooks/useReduxHooks";
+import { CartItem } from "../../../../models/productSlice.models";
+import { useAppSelector } from "../../../../hooks/useReduxHooks";
 
 function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
   const { billingCurrency } = useAppSelector((state) => state.products);
