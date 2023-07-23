@@ -1,0 +1,10 @@
+.order-summary-list__heading {
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin-top: 0;
+}
+
+.order-summary-list__cart-items {
+  list-style: none;
+  padding: 0;
+}

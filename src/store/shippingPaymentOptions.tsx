@@ -19,11 +19,19 @@ const shippingPaymentOptions = createSlice({
   initialState,
   reducers: {
     registerOption(state, action) {
-      const inputToBeRegistered = {
-        value: "",
-        cost: 0,
-        isSelected: false,
+      const isInputRegistered =
+        state.inputs[action.payload] && state.inputs[action.payload].value;
+      let inputToBeRegistered = {
+        ...state.inputs[action.payload],
       };
+
+      if (!isInputRegistered) {
+        inputToBeRegistered = {
+          value: "",
+          cost: 0,
+          isSelected: false,
+        };
+      }
 
       return {
         ...state,

@@ -12,7 +12,7 @@ function Cart() {
   );
   const redirect = useRedirect();
 
-  const onOrderHandler = () => redirect("/address");
+  const onOrderHandler = () => redirect("/cart/address");
 
   return (
     <section>
