@@ -1,25 +1,10 @@
-.section {
-  margin: 80px auto;
-}
-
-.wrapper {
-  display: grid;
-  grid-template-columns: 70% 5% auto;
+.actions-wrapper {
+  display: flex;
   gap: 16px;
 }
 
-.hr {
-  width: 1px;
-  height: 100%;
-  margin: 0 auto;
-}
-
-.gr {
-  margin-top: 48px;
-}
-
-.form__button {
-  width: 20%;
+.actions-wrapper__button {
+  width: 50%;
   background-color: #5ece7b;
   border: 1px solid transparent;
   color: #fff;
@@ -32,14 +17,9 @@
   white-space: nowrap;
 }
 
-.form__button:hover,
-.form__button:active {
+.actions-wrapper__button:hover,
+.actions-wrapper__button:active {
   border: 1px solid #5ece7b;
   background-color: #fff;
   color: #5ece7b;
-}
-
-.actions-wrapper {
-  display: flex;
-  gap: 16px;
 }

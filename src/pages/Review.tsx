@@ -1,18 +1,22 @@
-import { useNavigate } from "react-router";
-
 import classes from "./Review.module.css";
-import Button from "../components/UI/Button";
+import OrderSummaryList from "../components/OrderSummary/OrderSummaryList/OrderSummaryList";
+import CostSummary from "../components/OrderSummary/CostSummary/CostSummary";
+import Hr from "../components/UI/Hr";
+import ActionButtons from "../components/Forms/ActionButtons/ActionButtons";
 
 function Review() {
-  const navigate = useNavigate();
-
   return (
     <section className={classes.section}>
-      <h1>Here&apos;s summary of your current buy</h1>
+      <div className={classes.wrapper}>
+        <OrderSummaryList />
+        <Hr customClass={classes.hr} />
+        <CostSummary />
+      </div>
+      <Hr customClass={classes.gr} />
 
-      <Button customClass={classes.form__button} clicked={() => navigate(-1)}>
-        Back
-      </Button>
+      {/* to trzeba wydzielić do komponentu i wrzucić na każdą stronę  */}
+
+      <ActionButtons isNextBttnDisabled={false} nextBttnPath="" />
     </section>
   );
 }

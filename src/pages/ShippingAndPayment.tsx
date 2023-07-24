@@ -1,14 +1,11 @@
-import { useNavigate } from "react-router";
-
 import classes from "./ShippingAndPayment.module.css";
 import { shippingOptions, paymentOptions } from "../utils/config";
 import Fieldset from "../components/Forms/Fieldset/Fieldset";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
-import Button from "../components/UI/Button";
 import { useAppSelector } from "../hooks/useReduxHooks";
+import ActionButtons from "../components/Forms/ActionButtons/ActionButtons";
 
 function ShippingAndPayment() {
-  const navigate = useNavigate();
   const { isFormValid } = useAppSelector(
     (state) => state.shippingPaymentOptions,
   );
@@ -28,21 +25,10 @@ function ShippingAndPayment() {
             heading="Choose a payment method"
             identifier="paymentOption"
           />
-          <div className={classes["actions-wrapper"]}>
-            <Button
-              customClass={classes.form__button}
-              clicked={() => navigate(-1)}
-            >
-              Back
-            </Button>
-            <Button
-              customClass={classes.form__button}
-              isDisabled={!isFormValid}
-              clicked={() => navigate("/cart/review")}
-            >
-              Next
-            </Button>
-          </div>
+          <ActionButtons
+            isNextBttnDisabled={!isFormValid}
+            nextBttnPath="/cart/review"
+          />
         </form>
       </div>
 

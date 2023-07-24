@@ -13,7 +13,11 @@ function CostSummary() {
   const isShippingPriceSet = shippingOption ? shippingOption.isSelected : false;
   const shippingPrice = shippingOption ? shippingOption.cost : 0;
   const paymentPrice = paymentOption ? paymentOption.cost : 0;
-  const totalPriceAndOtherCosts = totalPrice + shippingPrice + paymentPrice;
+  const totalPriceAndOtherCosts = (
+    totalPrice +
+    shippingPrice +
+    paymentPrice
+  ).toFixed(2);
   return (
     <div className={classes["cost-summary"]}>
       <div className={classes["cost-summary__labels"]}>
