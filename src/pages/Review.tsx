@@ -13,9 +13,6 @@ function Review() {
         <CostSummary />
       </div>
       <Hr customClass={classes.gr} />
-
-      {/* to trzeba wydzielić do komponentu i wrzucić na każdą stronę  */}
-
       <ActionButtons isNextBttnDisabled={false} nextBttnPath="" />
     </section>
   );

@@ -1,23 +1,12 @@
-import { FormEvent } from "react";
-
 import classes from "./Address.module.css";
 import { useAppSelector } from "../hooks/useReduxHooks";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
-import Button from "../components/UI/Button";
 import { shippingAddressInputs } from "../utils/config";
 import TextInput from "../components/Forms/Inputs/TextInput/TextInput";
-import useRedirect from "../hooks/useRedirect";
+import ActionButtons from "../components/Forms/ActionButtons/ActionButtons";
 
 function Address() {
   const { isFormValid } = useAppSelector((state) => state.shippingAddress);
-  const redirect = useRedirect();
-
-  const onProceedToBilling = (event: FormEvent) => {
-    event.preventDefault();
-    if (isFormValid) {
-      redirect("/cart/shipping&payment");
-    }
-  };
 
   return (
     <section className={classes.section}>
@@ -28,13 +17,11 @@ function Address() {
           {shippingAddressInputs.map((input) => (
             <TextInput key={input.name} inputDetails={input} />
           ))}
-          <Button
-            customClass={classes.form__button}
-            clicked={onProceedToBilling}
-            isDisabled={!isFormValid}
-          >
-            PROCEED TO BILLING
-          </Button>
+
+          <ActionButtons
+            isNextBttnDisabled={!isFormValid}
+            nextBttnPath="/cart/shipping&payment"
+          />
         </form>
       </div>
 
