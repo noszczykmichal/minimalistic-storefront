@@ -18,7 +18,11 @@
   margin-top: 48px;
 }
 
-.form__button {
+.action__buttons {
+  background-color: red;
+}
+
+/* .form__button {
   width: 20%;
   background-color: #5ece7b;
   border: 1px solid transparent;
@@ -42,4 +46,28 @@
 .actions-wrapper {
   display: flex;
   gap: 16px;
+} */
+
+.table {
+  margin: 0 auto;
+  margin-top: 48px;
+  border-collapse: collapse;
+}
+
+thead {
+  border-right: 1px solid #ccc;
+  border-collapse: collapse;
+}
+.th:last-child {
+  border-right: 1px solid #ccc;
+}
+
+.th {
+  border-left: 1px solid #ccc;
+  padding: 0 16px;
+  padding-bottom: 16px;
+}
+
+td {
+  text-align: center;
 }
