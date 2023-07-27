@@ -1,9 +1,9 @@
-import classes from "./ShippingAndPayment.module.css";
 import { shippingOptions, paymentOptions } from "../utils/config";
 import Fieldset from "../components/Forms/Fieldset/Fieldset";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
 import { useAppSelector } from "../hooks/useReduxHooks";
 import ActionButtons from "../components/Forms/ActionButtons/ActionButtons";
+import classes from "./ShippingAndPayment.module.css";
 
 function ShippingAndPayment() {
   const { isFormValid } = useAppSelector(

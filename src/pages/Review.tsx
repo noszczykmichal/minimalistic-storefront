@@ -37,43 +37,42 @@ function Review() {
     <section className={classes.section}>
       <div className={classes.wrapper}>
         <OrderSummaryList />
-        <Hr customClass={classes.hr} />
+        <Hr customClass={classes["hr--vertical"]} />
         <CostSummary />
       </div>
-      <Hr customClass={classes.gr} />
-      <table className={classes.table}>
-        <thead>
-          <tr>
-            <th className={classes.th}>Shipping Address</th>
-            <th className={classes.th}>Shipping Method</th>
-            <th className={classes.th}>Payment Method</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className={classes.th}>
-              {fName.value} {lName.value}
-              <br />
-              {address1.value} {address2.value}
-              <br />
-              {postalCode.value} {city.value}
-              <br />
-              {country.value}
-              <br />
-              tel: {phone.value}
-              <br />
-              email: {email.value}
-            </td>
-            <td className={classes.th}>
-              <Markup content={chosenShippingMethod} />
-            </td>
-            <td className={classes.th}>
-              {" "}
-              <Markup content={chosenPaymentMethod} />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <Hr customClass={classes["hr--horizontal"]} />
+      <div className={classes["order-details"]}>
+        <div className={classes["order-detail"]}>
+          <h4 className={classes["order-detail__heading"]}>Shipping Address</h4>
+          <p className={classes["order-detail__value"]}>
+            {fName.value} {lName.value}
+            <br />
+            {address1.value} {address2.value}
+            <br />
+            {postalCode.value} {city.value}
+            <br />
+            {country.value}
+            <br />
+            tel: {phone.value}
+            <br />
+            email: {email.value}
+          </p>
+        </div>
+        <div className={classes["order-detail"]}>
+          <h4 className={classes["order-detail__heading"]}>Shipping Method</h4>
+          <p className={classes["order-detail__value"]}>
+            <Markup content={chosenShippingMethod} />
+          </p>
+        </div>
+
+        <div className={classes["order-detail"]}>
+          <h4 className={classes["order-detail__heading"]}>Payment Method</h4>
+          <p className={classes["order-detail__value"]}>
+            {" "}
+            <Markup content={chosenPaymentMethod} />
+          </p>
+        </div>
+      </div>
       <ActionButtons isNextBttnDisabled={false} nextBttnPath="" />
     </section>
   );

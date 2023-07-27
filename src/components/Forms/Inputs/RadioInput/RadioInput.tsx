@@ -2,13 +2,13 @@
 import { useEffect, useRef, FormEvent } from "react";
 import { Markup } from "interweave";
 
-import classes from "./RadioInput.module.css";
 import { RadioInputProps } from "../../../../models/ui-and-hooks";
 import {
   useAppSelector,
   useAppDispatch,
 } from "../../../../hooks/useReduxHooks";
 import { shippingPaymentOptionsActions } from "../../../../store/shippingPaymentOptions";
+import classes from "./RadioInput.module.css";
 
 function RadioInput({
   inputDetails,
@@ -39,7 +39,7 @@ function RadioInput({
     (cost) => cost.currency.symbol === billingCurrency,
   )!.amount;
 
-  const updatedLabel = `${label}<b>${
+  const updatedLabel = `${label}<b> - ${
     billingCurrency + optionPrice.toFixed(2)
   }</b>`;
 

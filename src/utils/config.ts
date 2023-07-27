@@ -11,7 +11,7 @@ const validators = {
 };
 
 const errorMessages = {
-  lengthErrorMessage: "Please enter at least for 4 characters.",
+  lengthErrorMessage: "Please enter at least 4 characters.",
   telErrorMessage:
     "A correct phone number should consist of at least 9 digits.",
   emailErrorMessage: "Please enter a value in the format: example@domain.com.",
@@ -85,7 +85,7 @@ export const shippingAddressInputs = [
 
 export const shippingOptions = [
   {
-    label: "Carrier method: <b>Flat Rate</b> <br>Rate: <b>Fixed-</b>",
+    label: "Carrier method: <b>Flat Rate</b> <br>Rate: <b>Fixed</b>",
     name: "flatRate",
     costs: [
       { amount: 5.0, currency: { label: "USD", symbol: "$" } },
@@ -96,7 +96,7 @@ export const shippingOptions = [
     ],
   },
   {
-    label: "Carrier method: <b>Best Way</b> <br>Rate: <b>Table Rate-</b>",
+    label: "Carrier method: <b>Best Way</b> <br>Rate: <b>Table Rate</b>",
     name: "bestWay",
     costs: [
       { amount: 10.0, currency: { label: "USD", symbol: "$" } },
@@ -107,7 +107,7 @@ export const shippingOptions = [
     ],
   },
   {
-    label: "In-store pickup: <br><b>(online payment) - </b>",
+    label: "In-store pickup: <br><b>(online payment)</b>",
     name: "in-store/online_payment",
     costs: [
       { amount: 0, currency: { label: "USD", symbol: "$" } },
@@ -118,7 +118,7 @@ export const shippingOptions = [
     ],
   },
   {
-    label: "In-store pickup: <br><b>(payment on collection) - </b>",
+    label: "In-store pickup: <br><b>(payment on collection)</b>",
     name: "in-store/payment_on_collection",
     costs: [
       { amount: 0.99, currency: { label: "USD", symbol: "$" } },
@@ -132,7 +132,7 @@ export const shippingOptions = [
 
 export const paymentOptions = [
   {
-    label: "<b>Credit card - </b>",
+    label: "<b>Credit card</b>",
     name: "credit_card",
     costs: [
       { amount: 0, currency: { label: "USD", symbol: "$" } },
@@ -143,7 +143,7 @@ export const paymentOptions = [
     ],
   },
   {
-    label: "<b>Bank transfer - </b>",
+    label: "<b>Bank transfer</b>",
     name: "bank_transfer",
     costs: [
       { amount: 0, currency: { label: "USD", symbol: "$" } },
@@ -154,7 +154,7 @@ export const paymentOptions = [
     ],
   },
   {
-    label: "<b>Cash on collection - </b>",
+    label: "<b>Cash on collection</b>",
     name: "cash_on_collection",
     costs: [
       { amount: 1.99, currency: { label: "USD", symbol: "$" } },
