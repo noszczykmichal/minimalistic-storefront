@@ -6,14 +6,14 @@ import OrderSummaryItem from "./OrderSummaryItem/OrderSummaryItem";
 function OrderSummaryList() {
   const { cart } = useAppSelector((state) => state.products);
   return (
-    <>
+    <div>
       <p className={classes["order-summary-list__heading"]}>Order Summary</p>
       <ul className={classes["order-summary-list__cart-items"]}>
         {cart.map((item) => (
           <OrderSummaryItem key={item.internalID} cartItem={item} />
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 

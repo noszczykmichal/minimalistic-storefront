@@ -1,0 +1,25 @@
+.actions-wrapper {
+  display: flex;
+  gap: 16px;
+}
+
+.actions-wrapper__button {
+  width: 50%;
+  background-color: #5ece7b;
+  border: 1px solid transparent;
+  color: #fff;
+  margin-top: 24px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.actions-wrapper__button:hover,
+.actions-wrapper__button:active {
+  border: 1px solid #5ece7b;
+  background-color: #fff;
+  color: #5ece7b;
+}
