@@ -21,3 +21,9 @@
 .values__item {
   font-weight: 700;
 }
+
+@media (min-width: 1201px) {
+  .cost-summary {
+    width: 270px;
+  }
+}

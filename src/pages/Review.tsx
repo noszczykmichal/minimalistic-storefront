@@ -1,4 +1,5 @@
 import { Markup } from "interweave";
+import { useNavigate } from "react-router";
 
 import OrderSummaryList from "../components/OrderSummary/OrderSummaryList/OrderSummaryList";
 import CostSummary from "../components/OrderSummary/CostSummary/CostSummary";
@@ -9,6 +10,7 @@ import { shippingOptions, paymentOptions } from "../utils/config";
 import classes from "./Review.module.css";
 
 function Review() {
+  const navigate = useNavigate();
   const {
     fName,
     lName,
@@ -32,6 +34,9 @@ function Review() {
   const chosenPaymentMethod = paymentOptions.find(
     (element) => element.name === paymentOption.value,
   )?.label;
+
+  const redirectToAddressPage = () => navigate("/cart/address");
+  const redirectToShipAndPayPage = () => navigate("/cart/shipping&payment");
 
   return (
     <section className={classes.section}>
@@ -57,23 +62,47 @@ function Review() {
             <br />
             email: {email.value}
           </p>
+          <button
+            type="button"
+            className={classes["order-detail__button"]}
+            onClick={redirectToAddressPage}
+          >
+            Change
+          </button>
         </div>
         <div className={classes["order-detail"]}>
           <h4 className={classes["order-detail__heading"]}>Shipping Method</h4>
           <p className={classes["order-detail__value"]}>
             <Markup content={chosenShippingMethod} />
           </p>
+          <button
+            type="button"
+            className={classes["order-detail__button"]}
+            onClick={redirectToShipAndPayPage}
+          >
+            Change
+          </button>
         </div>
 
         <div className={classes["order-detail"]}>
           <h4 className={classes["order-detail__heading"]}>Payment Method</h4>
           <p className={classes["order-detail__value"]}>
-            {" "}
             <Markup content={chosenPaymentMethod} />
           </p>
+          <button
+            type="button"
+            className={classes["order-detail__button"]}
+            onClick={redirectToShipAndPayPage}
+          >
+            Change
+          </button>
         </div>
       </div>
-      <ActionButtons isNextBttnDisabled={false} nextBttnPath="" />
+      <ActionButtons
+        isNextBttnDisabled={false}
+        nextBttnPath=""
+        customClass={classes.actionButtons}
+      />
     </section>
   );
 }
