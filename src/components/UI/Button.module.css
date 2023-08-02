@@ -1,11 +1,11 @@
 .button {
-  max-width: 18rem;
+  max-width: 250px;
   text-transform: uppercase;
   font-family: "Raleway", sans-serif;
   font-weight: 600;
-  line-height: 1.2rem;
-  padding: 1rem 2rem;
-  margin-top: 1.25rem;
+  line-height: 1.2;
+  padding: 16px 32px;
+  margin-top: 20px;
   cursor: pointer;
 }
 
