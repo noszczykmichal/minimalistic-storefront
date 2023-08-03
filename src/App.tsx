@@ -13,6 +13,7 @@ const Cart = lazy(() => import("./pages/Cart"));
 const Address = lazy(() => import("./pages/Address"));
 const ShippingAndPayment = lazy(() => import("./pages/ShippingAndPayment"));
 const Review = lazy(() => import("./pages/Review"));
+const Confirm = lazy(() => import("./pages/Confirm"));
 
 function App({
   categories,
@@ -44,6 +45,7 @@ function App({
             element={<ShippingAndPayment />}
           />
           <Route path="/cart/review" element={<Review />} />
+          <Route path="/cart/confirm" element={<Confirm />} />
           <Route path="*" element={<PDP />} />
         </Routes>
       </Suspense>
