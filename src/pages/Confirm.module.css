@@ -1,0 +1,49 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.wrapperIcon {
+  width: 70%;
+  /* height: 50%; */
+  max-width: 300px;
+}
+
+.wrapperHeading {
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  font-size: 1rem;
+
+  text-align: center;
+}
+
+.link {
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid transparent;
+  padding: 4px 0;
+  transition: all 0.25s;
+}
+
+.link:hover,
+.link:active {
+  background-color: #5ece7b;
+  color: #fff;
+}
+
+@media (min-width: 320px) {
+  .heading {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 481px) {
+  .heading {
+    font-size: 1.5rem;
+  }
+}
