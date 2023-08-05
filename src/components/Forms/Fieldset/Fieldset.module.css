@@ -6,9 +6,9 @@
 
 .fieldset__legend {
   font-size: 1.2rem;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
 .fieldset__hr {
-  margin: 10px 0;
+  margin: 0.625rem 0;
 }

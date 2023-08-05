@@ -1,9 +1,9 @@
 .cart-item {
-  margin-top: 32px;
-  margin-bottom: 40px;
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
   display: flex;
   justify-content: space-between;
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 .column-wrapper {
@@ -26,25 +26,25 @@
 
 .product-details__price {
   font-weight: 500;
-  margin: 4px 0;
+  margin: 0.25rem 0;
 }
 
 .product-attribute__label {
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1rem;
-  margin: 8px 0;
+  margin: 0.5rem 0;
 }
 
 .product-attribute__values {
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
   width: 100%;
 }
 
 .product-attribute__value {
-  height: 32px;
-  width: 40px;
+  height: 2rem;
+  width: 2.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,8 +64,8 @@
 
 .product-attribute__value--color {
   position: relative;
-  height: 24px;
-  width: 24px;
+  height: 1.5rem;
+  width: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,8 +75,8 @@
 
 .product-attribute__value--color::after {
   position: absolute;
-  height: 28px;
-  width: 28px;
+  height: 1.75rem;
+  width: 1.75rem;
   content: "";
 }
 
@@ -92,8 +92,8 @@
 }
 
 .cart-actions__button {
-  height: 24px;
-  width: 24px;
+  height: 1.5rem;
+  width: 1.5rem;
   border: 1px solid #1d1f22;
   background-color: transparent;
   cursor: pointer;

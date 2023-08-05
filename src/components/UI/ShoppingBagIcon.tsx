@@ -12,7 +12,6 @@ function ShoppingBagIcon({ animateCheckmark }: { animateCheckmark: boolean }) {
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 384 384"
-      className={classes["shopping-bag-icon"]}
     >
       <defs />
       <path
@@ -86,7 +85,7 @@ function ShoppingBagIcon({ animateCheckmark }: { animateCheckmark: boolean }) {
         mountOnEnter
       >
         <path
-          className={classes.tick}
+          className={classes.checkmark}
           d="M346.4,470.86a5.83,5.83,0,0,1-4-1.73c-4.7-4.3-9.43-8.57-14.05-12.95-2.57-2.43-2.78-5.37-.79-7.61s5.17-2.32,8,.12a96,96,0,0,1,8.23,7.63c2,2.24,3.21,1.59,5-.18,6.31-6.23,12.76-12.32,19.18-18.43,3.4-3.24,6.41-3.59,8.74-1.08s1.75,5.37-1.43,8.43q-12.14,11.69-24.32,23.35A7.47,7.47,0,0,1,346.4,470.86Z"
           ref={nodeRef}
         />

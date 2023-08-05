@@ -1,8 +1,4 @@
-.shopping-bag-icon {
-  /* scale: 0.5; */
-}
-
-.tick {
+.checkmark {
   opacity: 0;
   fill: #1b9d62;
   transform: translate(-114px, -204px);
@@ -17,7 +13,3 @@
   opacity: 1;
   transition: opacity 0.15s;
 }
-
-/* .shopping-bag-icon {
-  scale: 0.3;
-} */

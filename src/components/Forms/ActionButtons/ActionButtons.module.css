@@ -1,6 +1,6 @@
 .actions-wrapper {
   display: flex;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .actions-wrapper__button {
@@ -8,8 +8,8 @@
   background-color: #5ece7b;
   border: 1px solid transparent;
   color: #fff;
-  margin-top: 24px;
-  height: 43px;
+  margin-top: 1.5rem;
+  height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;

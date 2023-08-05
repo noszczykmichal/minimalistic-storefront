@@ -13,10 +13,10 @@ function Confirm() {
 
   return (
     <section className={classes.section}>
-      <div className={classes.wrapperIcon}>
+      <div className={classes["icon-wrapper"]}>
         <ShoppingBagIcon animateCheckmark={showCheckmark} />
       </div>
-      <div className={classes.wrapperHeading}>
+      <div className={classes["heading-wrapper"]}>
         <h1 className={classes.heading}>Thank you for your purchase !</h1>
         <Link to="/" className={classes.link}>
           Ready for More Shopping?
