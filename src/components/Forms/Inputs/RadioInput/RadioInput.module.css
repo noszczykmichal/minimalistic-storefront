@@ -1,8 +1,8 @@
 .form-control__label {
-  padding: 4px 0;
+  padding: 0.25rem 0;
   display: grid;
   grid-template-columns: 10% auto;
-  gap: 4px;
+  gap: 0.25rem;
 }
 
 .form-control__label {

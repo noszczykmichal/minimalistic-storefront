@@ -1,0 +1,15 @@
+.checkmark {
+  opacity: 0;
+  fill: #1b9d62;
+  transform: translate(-114px, -204px);
+}
+
+.fadeIn-appear {
+  opacity: 0.1;
+  transition: opacity 0.15s;
+}
+
+.fadeIn-enter-done {
+  opacity: 1;
+  transition: opacity 0.15s;
+}

@@ -66,7 +66,7 @@ function CostSummary() {
         {isShippingPriceSet && (
           <p className={classes.values__item}>
             {billingCurrency}
-            {shippingPrice}
+            {shippingPrice.toFixed(2)}
           </p>
         )}
         {!!paymentPrice && (

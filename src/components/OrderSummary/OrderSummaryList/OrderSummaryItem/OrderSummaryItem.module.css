@@ -1,16 +1,16 @@
 .cart-item {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 1.25rem;
   position: relative;
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 .cart-item__image-wrapper {
   display: flex;
   align-items: center;
   width: 30%;
-  gap: 10px;
+  gap: 0.625rem;
 }
 
 .cart-item__product-quantity {

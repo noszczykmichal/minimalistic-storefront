@@ -100,8 +100,9 @@ function Review() {
       </div>
       <ActionButtons
         isNextBttnDisabled={false}
-        nextBttnPath=""
+        nextBttnPath="/cart/confirm"
         customClass={classes.actionButtons}
+        nextBttnCustomText="Confirm & Order"
       />
     </section>
   );

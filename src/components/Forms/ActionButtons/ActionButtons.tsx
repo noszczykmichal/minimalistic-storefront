@@ -7,12 +7,14 @@ interface ActionButtonsProps {
   isNextBttnDisabled: boolean;
   nextBttnPath: string;
   customClass?: string;
+  nextBttnCustomText?: string;
 }
 
 function ActionButtons({
   isNextBttnDisabled,
   nextBttnPath,
   customClass,
+  nextBttnCustomText,
 }: ActionButtonsProps) {
   const navigate = useNavigate();
   const attachedClasses = [classes["actions-wrapper"], customClass].join(" ");
@@ -33,7 +35,7 @@ function ActionButtons({
         isDisabled={isNextBttnDisabled}
         clicked={nextButtonClickHandler}
       >
-        Next
+        {nextBttnCustomText}
       </Button>
     </div>
   );
@@ -41,6 +43,7 @@ function ActionButtons({
 
 ActionButtons.defaultProps = {
   customClass: "",
+  nextBttnCustomText: "Next",
 };
 
 export default ActionButtons;
