@@ -69,6 +69,9 @@ const shippingPaymentOptions = createSlice({
         inputs: { ...state.inputs, [fieldsetId]: updatedOption },
       };
     },
+    clearShippingPaymentOptions(state) {
+      return { ...state, inputs: {}, isFormValid: false };
+    },
   },
 });
 
