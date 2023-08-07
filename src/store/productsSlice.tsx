@@ -137,6 +137,14 @@ const productsSlice = createSlice({
         totalPrice: updatedTotalPrice,
       };
     },
+    clearCart(state) {
+      return {
+        ...state,
+        cart: [],
+        productsTotal: 0,
+        totalPrice: 0,
+      };
+    },
   },
 });
 

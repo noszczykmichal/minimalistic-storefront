@@ -89,6 +89,13 @@ const shippingAddress = createSlice({
         isFormValid,
       };
     },
+    clearShippingAddress(state) {
+      return {
+        ...state,
+        inputs: {},
+        isFormValid: false,
+      };
+    },
   },
 });
 
