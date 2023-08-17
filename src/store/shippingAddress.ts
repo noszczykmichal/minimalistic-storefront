@@ -7,10 +7,12 @@ interface Input {
   hasError: boolean;
 }
 
-const initialState: {
+interface ShippingAddressInterface {
   inputs: { [key: string]: Input };
   isFormValid: boolean;
-} = {
+}
+
+const initialState: ShippingAddressInterface = {
   inputs: {},
   isFormValid: false,
 };
@@ -46,19 +48,22 @@ const shippingAddress = createSlice({
     },
     inputChangeHandler(state, action) {
       const { value, name, validator } = action.payload;
-      const isValid = validator(value);
+      const isCurrentInputValid = validator(value);
       const isTouched = true;
       const hasError = false;
       const updatedInput = {
         value,
         isTouched,
-        isValid,
+        isValid: isCurrentInputValid,
         hasError,
       };
 
-      const isFormValid = Object.keys(state.inputs).every(
-        (input) => state.inputs[input].isValid === true,
-      );
+      const filteredInputs = Object.keys(state.inputs)
+        .filter((input) => input !== name)
+        .map((filteredInput) => state.inputs[filteredInput].isValid);
+
+      const areOtherInputsValid = filteredInputs.every((el) => el === true);
+      const isFormValid = areOtherInputsValid && isCurrentInputValid;
 
       return {
         ...state,
@@ -69,19 +74,23 @@ const shippingAddress = createSlice({
 
     inputBlurHandler(state, action) {
       const { value, name, validator } = action.payload;
-      const isValid = validator(value);
+      const isCurrentInputValid = validator(value);
       const isTouched = true;
-      const hasError = !isValid && isTouched;
+      const hasError = !isCurrentInputValid && isTouched;
+
       const updatedInput = {
         value,
         isTouched,
-        isValid,
+        isValid: isCurrentInputValid,
         hasError,
       };
 
-      const isFormValid = Object.keys(state.inputs).every(
-        (input) => state.inputs[input].isValid === true,
-      );
+      const filteredInputs = Object.keys(state.inputs)
+        .filter((input) => input !== name)
+        .map((filteredInput) => state.inputs[filteredInput].isValid);
+
+      const areOtherInputsValid = filteredInputs.every((el) => el === true);
+      const isFormValid = areOtherInputsValid && isCurrentInputValid;
 
       return {
         ...state,
