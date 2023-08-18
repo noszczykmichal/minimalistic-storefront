@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { ValidationFn } from "../models/utility-models";
+
 interface Input {
   value: string;
   isValid: boolean;
@@ -14,6 +16,12 @@ interface ShippingAddressInterface {
 interface ActionInterface {
   payload: any;
   type: string;
+}
+
+interface InputPayload {
+  value: string;
+  name: string;
+  validator: ValidationFn;
 }
 
 function inputStateHandler(
@@ -75,7 +83,7 @@ const shippingAddress = createSlice({
       };
     },
     inputChangeHandler(state, action) {
-      const { value, name, validator } = action.payload;
+      const { value, name, validator }: InputPayload = action.payload;
       const isCurrentInputValid = validator(value);
       const { updatedInput, isFormValid } = inputStateHandler(
         state,
@@ -92,7 +100,7 @@ const shippingAddress = createSlice({
     },
 
     inputBlurHandler(state, action) {
-      const { value, name, validator } = action.payload;
+      const { value, name, validator }: InputPayload = action.payload;
       const isCurrentInputValid = validator(value);
       const hasError = !isCurrentInputValid;
 

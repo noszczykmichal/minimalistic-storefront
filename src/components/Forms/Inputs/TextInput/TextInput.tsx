@@ -6,13 +6,14 @@ import {
   useAppSelector,
   useAppDispatch,
 } from "../../../../hooks/useReduxHooks";
+import { ValidationFn } from "../../../../models/utility-models";
 
 interface TextInputProps {
   label: string;
   name: string;
   type: string;
   errorMessage: string;
-  validator: (length: string) => boolean;
+  validator: ValidationFn;
 }
 
 function TextInput({ inputDetails }: { inputDetails: TextInputProps }) {

@@ -1,5 +1,5 @@
 import classes from "./ThumbnailArrow.module.css";
-import { ThumbnailArrowVariant } from "../../models/ui-and-hooks";
+import { ThumbnailArrowVariant } from "../../models/utility-models";
 
 function ThumbnailArrow({
   variant,
