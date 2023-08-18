@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface Input {
   value: string;
-  isTouched: boolean;
   isValid: boolean;
   hasError: boolean;
 }
@@ -10,6 +9,36 @@ interface Input {
 interface ShippingAddressInterface {
   inputs: { [key: string]: Input };
   isFormValid: boolean;
+}
+
+interface ActionInterface {
+  payload: any;
+  type: string;
+}
+
+function inputStateHandler(
+  state: ShippingAddressInterface,
+  action: ActionInterface,
+  isValid: boolean,
+  hasError: boolean,
+) {
+  const { value, name } = action.payload;
+  const isCurrentInputValid = isValid;
+
+  const updatedInput: Input = {
+    value,
+    isValid: isCurrentInputValid,
+    hasError,
+  };
+
+  const filteredInputs = Object.keys(state.inputs)
+    .filter((input) => input !== name)
+    .map((filteredInput) => state.inputs[filteredInput].isValid);
+
+  const areOtherInputsValid = filteredInputs.every((el) => el === true);
+  const isFormValid = areOtherInputsValid && isCurrentInputValid;
+
+  return { updatedInput, isFormValid };
 }
 
 const initialState: ShippingAddressInterface = {
@@ -31,7 +60,6 @@ const shippingAddress = createSlice({
       if (!state.inputs[inputName]) {
         inputState = {
           value: "",
-          isTouched: false,
           isValid: false,
           hasError: false,
         };
@@ -49,21 +77,12 @@ const shippingAddress = createSlice({
     inputChangeHandler(state, action) {
       const { value, name, validator } = action.payload;
       const isCurrentInputValid = validator(value);
-      const isTouched = true;
-      const hasError = false;
-      const updatedInput = {
-        value,
-        isTouched,
-        isValid: isCurrentInputValid,
-        hasError,
-      };
-
-      const filteredInputs = Object.keys(state.inputs)
-        .filter((input) => input !== name)
-        .map((filteredInput) => state.inputs[filteredInput].isValid);
-
-      const areOtherInputsValid = filteredInputs.every((el) => el === true);
-      const isFormValid = areOtherInputsValid && isCurrentInputValid;
+      const { updatedInput, isFormValid } = inputStateHandler(
+        state,
+        action,
+        isCurrentInputValid,
+        false,
+      );
 
       return {
         ...state,
@@ -75,22 +94,14 @@ const shippingAddress = createSlice({
     inputBlurHandler(state, action) {
       const { value, name, validator } = action.payload;
       const isCurrentInputValid = validator(value);
-      const isTouched = true;
-      const hasError = !isCurrentInputValid && isTouched;
+      const hasError = !isCurrentInputValid;
 
-      const updatedInput = {
-        value,
-        isTouched,
-        isValid: isCurrentInputValid,
+      const { updatedInput, isFormValid } = inputStateHandler(
+        state,
+        action,
+        isCurrentInputValid,
         hasError,
-      };
-
-      const filteredInputs = Object.keys(state.inputs)
-        .filter((input) => input !== name)
-        .map((filteredInput) => state.inputs[filteredInput].isValid);
-
-      const areOtherInputsValid = filteredInputs.every((el) => el === true);
-      const isFormValid = areOtherInputsValid && isCurrentInputValid;
+      );
 
       return {
         ...state,
