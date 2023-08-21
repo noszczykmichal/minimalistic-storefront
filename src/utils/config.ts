@@ -1,6 +1,6 @@
 const validators = {
   stringValidator: (text: string) => {
-    return text.trim().length >= 4;
+    return text.trim().length >= 3;
   },
   phoneValidator: (text: string) => {
     return text.trim().length >= 9;
@@ -11,7 +11,7 @@ const validators = {
 };
 
 const errorMessages = {
-  lengthErrorMessage: "Please enter at least 4 characters.",
+  lengthErrorMessage: "Please enter at least 3 characters.",
   telErrorMessage:
     "A correct phone number should consist of at least 9 digits.",
   emailErrorMessage: "Please enter a value in the format: example@domain.com.",
