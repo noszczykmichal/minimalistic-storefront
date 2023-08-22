@@ -2,7 +2,7 @@
 import { useEffect, useRef, FormEvent } from "react";
 import { Markup } from "interweave";
 
-import { RadioInputProps } from "../../../../models/ui-and-hooks";
+import { RadioInputProps } from "../../../../models/utility-models";
 import {
   useAppSelector,
   useAppDispatch,

@@ -9,3 +9,5 @@ export interface RadioInputProps {
   name: string;
   costs: Price[];
 }
+
+export type ValidationFn = (length: string) => boolean;

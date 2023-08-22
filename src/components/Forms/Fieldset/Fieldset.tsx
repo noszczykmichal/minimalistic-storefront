@@ -2,7 +2,7 @@ import { useEffect, useState, FormEvent, Fragment } from "react";
 
 import classes from "./Fieldset.module.css";
 import RadioInput from "../Inputs/RadioInput/RadioInput";
-import { RadioInputProps } from "../../../models/ui-and-hooks";
+import { RadioInputProps } from "../../../models/utility-models";
 import Hr from "../../UI/Hr";
 import { shippingPaymentOptionsActions } from "../../../store/shippingPaymentOptions";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
