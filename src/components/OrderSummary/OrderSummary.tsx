@@ -1,7 +1,7 @@
 import classes from "./OrderSummary.module.css";
 
 import OrderSummaryList from "./OrderSummaryList/OrderSummaryList";
-import Hr from "../UI/Hr";
+import Hr from "../UI/Hr/Hr";
 import CostSummary from "./CostSummary/CostSummary";
 
 function OrderSummary() {
