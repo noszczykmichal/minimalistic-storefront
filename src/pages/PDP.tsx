@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { Markup } from "interweave";
 
 import classes from "./PDP.module.css";
-import Button from "../components/UI/Button";
+import Button from "../components/UI/Button/Button";
 import Modal from "../components/UI/Modal";
 import { productActions } from "../store/productsSlice";
 import { uiActions } from "../store/uiSlice";

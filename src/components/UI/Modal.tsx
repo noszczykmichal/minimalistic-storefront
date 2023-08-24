@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
 import classes from "./Modal.module.css";
-import Button from "./Button";
+import Button from "./Button/Button";
 import { uiActions } from "../../store/uiSlice";
 import { useAppSelector, useAppDispatch } from "../../hooks/useReduxHooks";
 
