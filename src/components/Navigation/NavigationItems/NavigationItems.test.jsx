@@ -1,23 +1,16 @@
 import { render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import configureMockStore from "redux-mock-store";
-import { MemoryRouter } from "react-router";
 
 import NavigationItems from "./NavigationItems";
-
-const mockStore = configureMockStore();
+import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
 
 describe("NavigationItems component", () => {
   it("should render a list of link elements if a non-empty array is passed", () => {
     const testCategories = ["testString", "testString2"];
-    const store = mockStore({});
 
     render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <NavigationItems categories={testCategories} />
-        </MemoryRouter>
-      </Provider>,
+      <WithMockStoreAndRouter>
+        <NavigationItems categories={testCategories} />
+      </WithMockStoreAndRouter>,
     );
 
     const ulElement = screen.getByRole("list");
@@ -28,14 +21,11 @@ describe("NavigationItems component", () => {
 
   it("should render a link to '/'(homepage) if encounters 'all' element in array passed through categories prop", () => {
     const testCategories = ["all"];
-    const store = mockStore({});
 
     render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <NavigationItems categories={testCategories} />
-        </MemoryRouter>
-      </Provider>,
+      <WithMockStoreAndRouter>
+        <NavigationItems categories={testCategories} />
+      </WithMockStoreAndRouter>,
     );
 
     const linkElement = screen.getByRole("link");
