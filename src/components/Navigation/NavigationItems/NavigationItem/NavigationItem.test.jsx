@@ -11,10 +11,10 @@ import NavigationItem from "./NavigationItem";
 import { useAppDispatch } from "../../../../hooks/useReduxHooks";
 import { uiActions } from "../../../../store/uiSlice";
 
-describe("NavigationItem Component", () => {
+describe("NavigationItem component", () => {
   const dispatch = jest.fn();
 
-  test("should render link with correct text and href attribute value", () => {
+  test("should render a link with correct text and href attribute value", () => {
     const testContent = "Test content";
     const testHref = "/some-link";
     useAppDispatch.mockReturnValue(dispatch);
@@ -30,7 +30,7 @@ describe("NavigationItem Component", () => {
     expect(linkElement).toHaveAttribute("href", testHref);
   });
 
-  test("should dispatch actions on Navlink click", () => {
+  test("should dispatch 4 actions on a Navlink click", () => {
     useAppDispatch.mockReturnValue(dispatch);
     const {
       backdropVisibilityToggle,
