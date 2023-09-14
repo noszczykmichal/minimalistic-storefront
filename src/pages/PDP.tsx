@@ -6,7 +6,7 @@ import { Markup } from "interweave";
 
 import classes from "./PDP.module.css";
 import Button from "../components/UI/Button/Button";
-import Modal from "../components/UI/Modal";
+import Modal from "../components/UI/Modal/Modal";
 import { productActions } from "../store/productsSlice";
 import { uiActions } from "../store/uiSlice";
 import { AttributeItem, ProductType } from "../models/productSlice.models";

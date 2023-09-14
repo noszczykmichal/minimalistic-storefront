@@ -17,7 +17,7 @@ import { persistor, store } from "./store/store";
 import "./index.css";
 import App from "./App";
 import Loader from "./components/UI/Loader";
-import ErrorModal from "./components/UI/ErrorModal";
+import ErrorModal from "./components/UI/ErrorModal/ErrorModal";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
