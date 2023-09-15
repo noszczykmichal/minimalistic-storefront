@@ -1,0 +1,9 @@
+{
+  "extends": ["eslint:recommended", "plugin:jest/recommended"],
+  "env": {
+    "jest/globals": true
+  },
+  "rules": {
+    "import/first": "off"
+  }
+}
