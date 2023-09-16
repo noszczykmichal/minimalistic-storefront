@@ -6,7 +6,7 @@ describe("Hr component", () => {
   test("should render an empty div element with class 'hr'", () => {
     const { container } = render(<Hr />);
 
-    const hrElement = container.querySelector("div");
+    const hrElement = container.firstChild;
 
     expect(hrElement).toBeInTheDocument();
     expect(hrElement).toBeEmptyDOMElement();

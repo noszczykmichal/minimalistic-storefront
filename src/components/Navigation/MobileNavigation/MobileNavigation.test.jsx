@@ -1,4 +1,3 @@
-/* eslint-disable import/first */
 jest.mock("../../../hooks/useReduxHooks.ts", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
@@ -6,7 +5,7 @@ jest.mock("../../../hooks/useReduxHooks.ts", () => ({
 
 import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
-import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
+import { MemoryRouter } from "react-router";
 
 import MobileNavigation from "./MobileNavigation";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
@@ -22,9 +21,9 @@ describe("MobileNavigation component", () => {
     });
 
     const { container } = render(
-      <WithMockStoreAndRouter>
+      <MemoryRouter>
         <MobileNavigation />
-      </WithMockStoreAndRouter>,
+      </MemoryRouter>,
     );
 
     const result = await axe(container);

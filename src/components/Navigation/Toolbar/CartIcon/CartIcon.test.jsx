@@ -1,4 +1,3 @@
-/* eslint-disable import/first */
 jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
   useAppDispatch: jest.fn(),
   useAppSelector: jest.fn(),
@@ -8,7 +7,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import CartIcon from "./CartIcon";
-import WithMockStoreAndRouter from "../../../../utils/WithMockStoreAndRouter";
 import {
   useAppDispatch,
   useAppSelector,
@@ -21,22 +19,14 @@ describe("CartIcon component", () => {
 
   it("should render a CartIcon", () => {
     useAppSelector.mockReturnValue({ productsTotal: 1 });
-    render(
-      <WithMockStoreAndRouter>
-        <CartIcon />
-      </WithMockStoreAndRouter>,
-    );
+    render(<CartIcon />);
 
     const cartIcon = screen.getByRole("button");
     expect(cartIcon).toBeInTheDocument();
   });
   it("should render a disabled CartIcon if productsTotal value equals 0", () => {
     useAppSelector.mockReturnValue({ productsTotal: 0 });
-    render(
-      <WithMockStoreAndRouter>
-        <CartIcon />
-      </WithMockStoreAndRouter>,
-    );
+    render(<CartIcon />);
 
     const cartIcon = screen.getByRole("button");
     expect(cartIcon).toBeDisabled();
@@ -50,11 +40,7 @@ describe("CartIcon component", () => {
       miniCartVisibilityToggle,
       currencySwitcherVisibToggle,
     } = uiActions;
-    render(
-      <WithMockStoreAndRouter>
-        <CartIcon />
-      </WithMockStoreAndRouter>,
-    );
+    render(<CartIcon />);
 
     const cartIcon = screen.getByRole("button");
     userEvent.click(cartIcon);

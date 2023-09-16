@@ -4,6 +4,10 @@
     "jest/globals": true
   },
   "rules": {
-    "import/first": "off"
+    "import/first": "off",
+    "testing-library/no-node-access": [
+      "error",
+      { "allowContainerFirstChild": true }
+    ]
   }
 }

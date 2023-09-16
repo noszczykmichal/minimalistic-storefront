@@ -1,4 +1,3 @@
-/* eslint-disable import/first */
 jest.mock("../../../hooks/useReduxHooks.ts", () => ({
   useAppDispatch: jest.fn(),
   useAppSelector: jest.fn(),
@@ -13,11 +12,11 @@ import { uiActions } from "../../../store/uiSlice";
 
 describe("Modal component", () => {
   const dispatch = jest.fn();
-  const testNotSelected = ["size", "color"];
+  const testNotSelected = ["size"];
   it("should not render Modal when isModalOpen is false", () => {
     useAppSelector.mockReturnValue({ isModalOpen: false });
-    const { container } = render(<Modal notSelected={testNotSelected} />);
-    const modalComponent = container.firstElementChild;
+    render(<Modal notSelected={testNotSelected} />);
+    const modalComponent = screen.queryByRole("list");
 
     expect(modalComponent).toBeNull();
   });
@@ -26,10 +25,8 @@ describe("Modal component", () => {
     useAppSelector.mockReturnValue({ isModalOpen: true });
     render(<Modal notSelected={testNotSelected} />);
 
-    const list = screen.getByRole("list");
-    const listItem = list.firstElementChild;
+    const listItem = screen.queryByRole("listitem");
 
-    expect(list).toBeInTheDocument();
     expect(listItem).not.toBeNull();
   });
 

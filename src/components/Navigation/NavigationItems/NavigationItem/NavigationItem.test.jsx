@@ -1,4 +1,3 @@
-/* eslint-disable import/first */
 jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
   useAppDispatch: jest.fn(),
 }));

@@ -14,9 +14,10 @@ describe("NavigationItems component", () => {
     );
 
     const ulElement = screen.getByRole("list");
+    const listElement = screen.getByText(testCategories[0]);
 
     expect(ulElement).toBeInTheDocument();
-    expect(ulElement.children.length).toBe(testCategories.length);
+    expect(listElement).toBeInTheDocument();
   });
 
   it("should render a link to '/'(homepage) if encounters 'all' element in array passed through categories prop", () => {

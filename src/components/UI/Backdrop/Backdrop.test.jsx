@@ -1,6 +1,4 @@
-/* eslint-disable import/first */
-
-jest.mock("../../hooks/useReduxHooks.ts", () => ({
+jest.mock("../../../hooks/useReduxHooks.ts", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
@@ -9,7 +7,6 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import Backdrop from "./Backdrop";
-import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
 import { useAppSelector, useAppDispatch } from "../../../hooks/useReduxHooks";
 import { uiActions } from "../../../store/uiSlice";
 
@@ -20,11 +17,7 @@ describe("Backdrop component", () => {
       isBackdropOpen: false,
     });
 
-    const { container } = render(
-      <WithMockStoreAndRouter>
-        <Backdrop />
-      </WithMockStoreAndRouter>,
-    );
+    const { container } = render(<Backdrop />);
 
     const backdrop = container.firstChild;
 
@@ -37,11 +30,7 @@ describe("Backdrop component", () => {
       isBackdropOpen: true,
     });
 
-    const { container } = render(
-      <WithMockStoreAndRouter>
-        <Backdrop />
-      </WithMockStoreAndRouter>,
-    );
+    const { container } = render(<Backdrop />);
 
     const backdrop = container.firstChild;
 
@@ -54,11 +43,7 @@ describe("Backdrop component", () => {
       isBackdropOpen: true,
     });
 
-    const { container } = render(
-      <WithMockStoreAndRouter>
-        <Backdrop />
-      </WithMockStoreAndRouter>,
-    );
+    const { container } = render(<Backdrop />);
 
     const backdrop = container.firstChild;
 
@@ -72,11 +57,7 @@ describe("Backdrop component", () => {
       isBackdropOpen: true,
     });
 
-    const { container } = render(
-      <WithMockStoreAndRouter>
-        <Backdrop />
-      </WithMockStoreAndRouter>,
-    );
+    const { container } = render(<Backdrop />);
 
     const backdrop = container.firstChild;
 
@@ -101,13 +82,9 @@ describe("Backdrop component", () => {
       mobileNavVisibilityToggle,
     } = uiActions;
 
-    const { container } = render(
-      <WithMockStoreAndRouter>
-        <Backdrop />
-      </WithMockStoreAndRouter>,
-    );
+    const { container } = render(<Backdrop />);
 
-    const backdrop = container.firstElementChild;
+    const backdrop = container.firstChild;
     userEvent.click(backdrop);
     expect(dispatch).toBeCalledTimes(5);
     expect(dispatch).toBeCalledWith(currencySwitcherVisibToggle(false));
