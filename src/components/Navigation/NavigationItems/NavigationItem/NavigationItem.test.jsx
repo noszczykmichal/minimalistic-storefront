@@ -11,6 +11,9 @@ import { useAppDispatch } from "../../../../hooks/useReduxHooks";
 import { uiActions } from "../../../../store/uiSlice";
 
 describe("NavigationItem component", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   const dispatch = jest.fn();
 
   test("should render a link with correct text and href attribute value", () => {
@@ -23,8 +26,8 @@ describe("NavigationItem component", () => {
         <NavigationItem link={testHref}>{testContent}</NavigationItem>
       </MemoryRouter>,
     );
-
     const linkElement = screen.getByText(testContent);
+
     expect(linkElement).toBeInTheDocument();
     expect(linkElement).toHaveAttribute("href", testHref);
   });
@@ -43,7 +46,6 @@ describe("NavigationItem component", () => {
         <NavigationItem />
       </MemoryRouter>,
     );
-
     const linkElement = screen.getByRole("link");
     userEvent.click(linkElement);
 

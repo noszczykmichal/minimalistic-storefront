@@ -14,9 +14,10 @@ describe("Button component", () => {
 
   test("should apply a specific class when customClass prop is non-empty string", () => {
     const testClass = "foo";
-    render(<Button customClass={testClass} />);
 
+    render(<Button customClass={testClass} />);
     const outputElement = screen.getByRole("button");
+
     expect(outputElement).toHaveClass(testClass);
   });
 

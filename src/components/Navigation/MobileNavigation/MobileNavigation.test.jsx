@@ -14,7 +14,7 @@ describe("MobileNavigation component", () => {
   const dispatch = jest.fn();
 
   it("should have no accessibility violations", async () => {
-    useAppDispatch(dispatch);
+    useAppDispatch.mockReturnValue(dispatch);
     useAppSelector.mockReturnValue({
       categories: ["tech", "music"],
       isMobileNavOpen: true,

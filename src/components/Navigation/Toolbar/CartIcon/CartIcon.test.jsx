@@ -11,24 +11,28 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../hooks/useReduxHooks";
-
 import { uiActions } from "../../../../store/uiSlice";
 
 describe("CartIcon component", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   const dispatch = jest.fn();
 
   it("should render a CartIcon", () => {
     useAppSelector.mockReturnValue({ productsTotal: 1 });
-    render(<CartIcon />);
 
+    render(<CartIcon />);
     const cartIcon = screen.getByRole("button");
+
     expect(cartIcon).toBeInTheDocument();
   });
   it("should render a disabled CartIcon if productsTotal value equals 0", () => {
     useAppSelector.mockReturnValue({ productsTotal: 0 });
-    render(<CartIcon />);
 
+    render(<CartIcon />);
     const cartIcon = screen.getByRole("button");
+
     expect(cartIcon).toBeDisabled();
   });
   it("should dispatch actions on  CartIcon click", () => {
@@ -40,10 +44,11 @@ describe("CartIcon component", () => {
       miniCartVisibilityToggle,
       currencySwitcherVisibToggle,
     } = uiActions;
-    render(<CartIcon />);
 
+    render(<CartIcon />);
     const cartIcon = screen.getByRole("button");
     userEvent.click(cartIcon);
+
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(true));
     expect(dispatch).toHaveBeenCalledWith(backdropTypeToggle(false));

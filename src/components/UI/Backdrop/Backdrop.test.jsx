@@ -11,54 +11,54 @@ import { useAppSelector, useAppDispatch } from "../../../hooks/useReduxHooks";
 import { uiActions } from "../../../store/uiSlice";
 
 describe("Backdrop component", () => {
-  it("should not render the Backdrop if 'isBackdropOpen' is false", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should not render Backdrop when 'isBackdropOpen' is false", () => {
     useAppSelector.mockReturnValue({
       isBackdropTransparent: false,
       isBackdropOpen: false,
     });
 
     const { container } = render(<Backdrop />);
-
     const backdrop = container.firstChild;
 
     expect(backdrop).not.toBeInTheDocument();
   });
 
-  it("should render the Backdrop if 'isBackdropOpen' is true", () => {
+  it("should render Backdrop when 'isBackdropOpen' is true", () => {
     useAppSelector.mockReturnValue({
       isBackdropTransparent: false,
       isBackdropOpen: true,
     });
 
     const { container } = render(<Backdrop />);
-
     const backdrop = container.firstChild;
 
     expect(backdrop).toBeInTheDocument();
   });
 
-  it("should render the Backdrop only with the class 'backdrop' if 'isBackdropTransparent' is true", () => {
+  it("should render Backdrop with the class 'backdrop' when 'isBackdropTransparent' is true", () => {
     useAppSelector.mockReturnValue({
       isBackdropTransparent: true,
       isBackdropOpen: true,
     });
 
     const { container } = render(<Backdrop />);
-
     const backdrop = container.firstChild;
 
     expect(backdrop).toBeInTheDocument();
     expect(backdrop).toHaveClass("backdrop");
     expect(backdrop).not.toHaveClass("backdrop--grey");
   });
-  it("should render the Backdrop with classes 'backdrop' and 'backdrop--grey' if 'isBackdropTransparent' is false", () => {
+  it("should render Backdrop with classes 'backdrop' and 'backdrop--grey' when 'isBackdropTransparent' is false", () => {
     useAppSelector.mockReturnValue({
       isBackdropTransparent: false,
       isBackdropOpen: true,
     });
 
     const { container } = render(<Backdrop />);
-
     const backdrop = container.firstChild;
 
     expect(backdrop).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe("Backdrop component", () => {
     expect(backdrop).toHaveClass("backdrop--grey");
   });
 
-  it("should dispatch 5 actions on the Backdrop click", () => {
+  it("should dispatch 5 actions on Backdrop click", () => {
     useAppSelector.mockReturnValue({
       isBackdropTransparent: false,
       isBackdropOpen: true,
@@ -83,14 +83,14 @@ describe("Backdrop component", () => {
     } = uiActions;
 
     const { container } = render(<Backdrop />);
-
     const backdrop = container.firstChild;
     userEvent.click(backdrop);
-    expect(dispatch).toBeCalledTimes(5);
-    expect(dispatch).toBeCalledWith(currencySwitcherVisibToggle(false));
-    expect(dispatch).toBeCalledWith(backdropVisibilityToggle(false));
-    expect(dispatch).toBeCalledWith(miniCartVisibilityToggle(false));
-    expect(dispatch).toBeCalledWith(modalToggle(false));
-    expect(dispatch).toBeCalledWith(mobileNavVisibilityToggle(false));
+
+    expect(dispatch).toHaveBeenCalledTimes(5);
+    expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(false));
+    expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(false));
+    expect(dispatch).toHaveBeenCalledWith(miniCartVisibilityToggle(false));
+    expect(dispatch).toHaveBeenCalledWith(modalToggle(false));
+    expect(dispatch).toHaveBeenCalledWith(mobileNavVisibilityToggle(false));
   });
 });

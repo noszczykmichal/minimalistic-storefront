@@ -10,12 +10,15 @@ import { useAppDispatch } from "../../../../hooks/useReduxHooks";
 import { uiActions } from "../../../../store/uiSlice";
 
 describe("ToggleButton component", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   const dispatch = jest.fn();
 
   it("should render a button", () => {
     useAppDispatch.mockReturnValue(dispatch);
-    render(<ToggleButton />);
 
+    render(<ToggleButton />);
     const toggleButton = screen.getByRole("button");
 
     expect(toggleButton).toBeInTheDocument();
@@ -31,7 +34,6 @@ describe("ToggleButton component", () => {
     } = uiActions;
 
     render(<ToggleButton />);
-
     const toggleButton = screen.getByRole("button");
     userEvent.click(toggleButton);
 

@@ -15,8 +15,8 @@ describe("Hr component", () => {
 
   test("should apply specific class when customClass prop is non-empty string", () => {
     const testClass = "test-class";
-    const { container } = render(<Hr customClass={testClass} />);
 
+    const { container } = render(<Hr customClass={testClass} />);
     const hrElement = container.firstChild;
 
     expect(hrElement).toHaveClass("hr");

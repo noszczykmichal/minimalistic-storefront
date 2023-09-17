@@ -12,7 +12,6 @@ describe("NavigationItems component", () => {
         <NavigationItems categories={testCategories} />
       </WithMockStoreAndRouter>,
     );
-
     const ulElement = screen.getByRole("list");
     const listElement = screen.getByText(testCategories[0]);
 
@@ -28,7 +27,6 @@ describe("NavigationItems component", () => {
         <NavigationItems categories={testCategories} />
       </WithMockStoreAndRouter>,
     );
-
     const linkElement = screen.getByRole("link");
 
     expect(linkElement.textContent).toBe("all");
