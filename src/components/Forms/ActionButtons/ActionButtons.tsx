@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 
-import Button from "../../UI/Button";
+import Button from "../../UI/Button/Button";
 import classes from "./ActionButtons.module.css";
 
 interface ActionButtonsProps {

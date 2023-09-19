@@ -46,13 +46,16 @@ function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
   }
 
   return (
-    <div className={classes.switcher}>
+    <div className={classes.switcher} aria-label="billing-currency">
       <button
         type="button"
         className={classes.switcher__button}
         onClick={currencySwitcherOpen}
+        aria-label="open"
       >
-        <span className={classes.button__content}>{billingCurrency}</span>
+        <span className={classes.button__content} aria-label="currencies-pane">
+          {billingCurrency}
+        </span>
         <svg
           width="8"
           height="4"
@@ -83,7 +86,11 @@ function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
         mountOnEnter
         unmountOnExit
       >
-        <div className={classes.switcher__options} ref={switcherOptionsRef}>
+        <div
+          className={classes.switcher__options}
+          ref={switcherOptionsRef}
+          aria-label="currencies-list"
+        >
           {currencies.map((currency) => (
             <div
               key={currency.label}

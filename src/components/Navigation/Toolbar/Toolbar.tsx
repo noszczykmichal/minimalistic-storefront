@@ -5,7 +5,7 @@ import classes from "./Toolbar.module.css";
 import Logo from "./Logo/Logo";
 import CartIcon from "./CartIcon/CartIcon";
 import CurrencySwitcher from "./CurrencySwitcher/CurrencySwitcher";
-import Backdrop from "../../UI/Backdrop";
+import Backdrop from "../../UI/Backdrop/Backdrop";
 import MiniCart from "../../Cart/MiniCart/MiniCart";
 import ToggleButton from "../MobileNavigation/ToggleButton/ToggleButton";
 import { useAppSelector } from "../../../hooks/useReduxHooks";

@@ -1,0 +1,13 @@
+{
+  "extends": ["eslint:recommended", "plugin:jest/recommended"],
+  "env": {
+    "jest/globals": true
+  },
+  "rules": {
+    "import/first": "off",
+    "testing-library/no-node-access": [
+      "error",
+      { "allowContainerFirstChild": true }
+    ]
+  }
+}

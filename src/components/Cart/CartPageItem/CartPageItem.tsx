@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import classes from "./CartPageItem.module.css";
-import Hr from "../../UI/Hr";
-import ThumbnailArrow from "../../UI/ThumbnailArrow";
+import Hr from "../../UI/Hr/Hr";
+import ThumbnailArrow from "../../UI/ThumbnailArrow/ThumbnailArrow";
 import useChangeQuantity from "../../../hooks/useChangeQuantity";
 import { CartItem } from "../../../models/productSlice.models";
 import { useAppSelector } from "../../../hooks/useReduxHooks";

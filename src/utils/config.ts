@@ -1,4 +1,4 @@
-const validators = {
+export const validators = {
   stringValidator: (text: string) => {
     return text.trim().length >= 3;
   },
