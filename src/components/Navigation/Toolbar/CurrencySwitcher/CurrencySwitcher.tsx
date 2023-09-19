@@ -46,11 +46,12 @@ function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
   }
 
   return (
-    <div className={classes.switcher}>
+    <div className={classes.switcher} aria-label="billing-currency">
       <button
         type="button"
         className={classes.switcher__button}
         onClick={currencySwitcherOpen}
+        aria-label="open"
       >
         <span className={classes.button__content} aria-label="currencies-pane">
           {billingCurrency}
