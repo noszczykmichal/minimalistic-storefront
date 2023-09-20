@@ -58,7 +58,7 @@ describe("CurrencySwitcher component", () => {
     render(<CurrencySwitcher currencies={testCurrencies} />);
     const currenciesList = screen.queryByLabelText("currencies-list");
     const option1 = screen.getByLabelText(testCurrencies[0].symbol);
-    const option2 = screen.getByText(testCurrencies[1].symbol);
+    const option2 = screen.getByLabelText(testCurrencies[1].symbol);
 
     expect(currenciesList).toBeInTheDocument();
     expect(option1).toBeInTheDocument();
