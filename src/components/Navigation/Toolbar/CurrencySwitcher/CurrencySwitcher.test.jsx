@@ -44,7 +44,7 @@ describe("CurrencySwitcher component", () => {
     });
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
-    const currenciesList = screen.queryByLabelText("currencies-list");
+    const currenciesList = screen.queryByRole("list");
 
     expect(currenciesList).not.toBeInTheDocument();
   });
@@ -56,7 +56,7 @@ describe("CurrencySwitcher component", () => {
     });
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
-    const currenciesList = screen.queryByLabelText("currencies-list");
+    const currenciesList = screen.queryByRole("list");
     const option1 = screen.getByLabelText(testCurrencies[0].symbol);
     const option2 = screen.getByLabelText(testCurrencies[1].symbol);
 
