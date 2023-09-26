@@ -20,8 +20,17 @@ const testCurrencies = [
 ];
 
 describe("CurrencySwitcher component", () => {
+  const dispatch = jest.fn();
+  const {
+    backdropVisibilityToggle,
+    backdropTypeToggle,
+    currencySwitcherVisibToggle,
+    miniCartVisibilityToggle,
+  } = uiActions;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    useAppDispatch.mockReturnValue(dispatch);
   });
 
   it("should render CurrencySwitcher displaying chosen currency when isCurrencySwitcherOpen is false", () => {
@@ -70,14 +79,6 @@ describe("CurrencySwitcher component", () => {
       isCurrencySwitcherOpen: true,
       billingCurrency: "$",
     });
-    const {
-      backdropVisibilityToggle,
-      backdropTypeToggle,
-      currencySwitcherVisibToggle,
-      miniCartVisibilityToggle,
-    } = uiActions;
-    const dispatch = jest.fn();
-    useAppDispatch.mockReturnValue(dispatch);
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
     const button = screen.getByRole("button");
@@ -95,11 +96,8 @@ describe("CurrencySwitcher component", () => {
       isCurrencySwitcherOpen: true,
       billingCurrency: "$",
     });
-    const { backdropVisibilityToggle, currencySwitcherVisibToggle } = uiActions;
-    const { onCurrencyChange } = productActions;
 
-    const dispatch = jest.fn();
-    useAppDispatch.mockReturnValue(dispatch);
+    const { onCurrencyChange } = productActions;
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
     const option = screen.getByLabelText(testCurrencies[0].symbol);

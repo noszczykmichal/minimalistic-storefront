@@ -11,12 +11,26 @@ import { useAppSelector, useAppDispatch } from "../../../hooks/useReduxHooks";
 import { uiActions } from "../../../store/uiSlice";
 
 describe("Backdrop component", () => {
+  const dispatch = jest.fn();
+  const {
+    currencySwitcherVisibToggle,
+    backdropVisibilityToggle,
+    miniCartVisibilityToggle,
+    modalToggle,
+    mobileNavVisibilityToggle,
+  } = uiActions;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    useAppDispatch.mockReturnValue(dispatch);
+    useAppSelector.mockReturnValue({
+      isBackdropTransparent: false,
+      isBackdropOpen: true,
+    });
   });
 
   it("should not render Backdrop when 'isBackdropOpen' is false", () => {
-    useAppSelector.mockReturnValue({
+    useAppSelector.mockReturnValueOnce({
       isBackdropTransparent: false,
       isBackdropOpen: false,
     });
@@ -28,11 +42,6 @@ describe("Backdrop component", () => {
   });
 
   it("should render Backdrop when 'isBackdropOpen' is true", () => {
-    useAppSelector.mockReturnValue({
-      isBackdropTransparent: false,
-      isBackdropOpen: true,
-    });
-
     const { container } = render(<Backdrop />);
     const backdrop = container.firstChild;
 
@@ -40,7 +49,7 @@ describe("Backdrop component", () => {
   });
 
   it("should render Backdrop with the class 'backdrop' when 'isBackdropTransparent' is true", () => {
-    useAppSelector.mockReturnValue({
+    useAppSelector.mockReturnValueOnce({
       isBackdropTransparent: true,
       isBackdropOpen: true,
     });
@@ -53,11 +62,6 @@ describe("Backdrop component", () => {
     expect(backdrop).not.toHaveClass("backdrop--grey");
   });
   it("should render Backdrop with classes 'backdrop' and 'backdrop--grey' when 'isBackdropTransparent' is false", () => {
-    useAppSelector.mockReturnValue({
-      isBackdropTransparent: false,
-      isBackdropOpen: true,
-    });
-
     const { container } = render(<Backdrop />);
     const backdrop = container.firstChild;
 
@@ -67,21 +71,6 @@ describe("Backdrop component", () => {
   });
 
   it("should dispatch 5 actions on Backdrop click", () => {
-    useAppSelector.mockReturnValue({
-      isBackdropTransparent: false,
-      isBackdropOpen: true,
-    });
-
-    const dispatch = jest.fn();
-    useAppDispatch.mockReturnValue(dispatch);
-    const {
-      currencySwitcherVisibToggle,
-      backdropVisibilityToggle,
-      miniCartVisibilityToggle,
-      modalToggle,
-      mobileNavVisibilityToggle,
-    } = uiActions;
-
     const { container } = render(<Backdrop />);
     const backdrop = container.firstChild;
     userEvent.click(backdrop);

@@ -4,9 +4,9 @@ import NavigationItems from "./NavigationItems";
 import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
 
 describe("NavigationItems component", () => {
-  it("should render a list of link elements if a non-empty array is passed", () => {
-    const testCategories = ["testString", "testString2"];
+  const testCategories = ["all"];
 
+  it("should render a list of link elements if a non-empty array is passed", () => {
     render(
       <WithMockStoreAndRouter>
         <NavigationItems categories={testCategories} />
@@ -20,8 +20,6 @@ describe("NavigationItems component", () => {
   });
 
   it("should render a link to '/'(homepage) if encounters 'all' element in array passed through categories prop", () => {
-    const testCategories = ["all"];
-
     render(
       <WithMockStoreAndRouter>
         <NavigationItems categories={testCategories} />

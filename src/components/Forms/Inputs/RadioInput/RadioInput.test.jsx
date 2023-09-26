@@ -26,10 +26,14 @@ const testFieldID = "testID";
 describe("RadioInput component", () => {
   const dispatch = jest.fn();
   const { updatePriceOfAnOption } = shippingPaymentOptionsActions;
-  it("should render RadioInput with correct label, name and value attributes", () => {
+
+  beforeEach(() => {
+    jest.clearAllMocks();
     useAppSelector.mockReturnValue({ billingCurrency: "$" });
     useAppDispatch.mockReturnValue(dispatch);
+  });
 
+  it("should render RadioInput with correct label, name and value attributes", () => {
     render(<RadioInput inputDetails={testProps} />);
     const label = screen.getByText(testProps.label);
     const radioInput = screen.getByRole("radio");
@@ -40,9 +44,6 @@ describe("RadioInput component", () => {
   });
 
   it("should have checked attribute when 'checkedInputName' equals value of the 'name' prop", () => {
-    useAppSelector.mockReturnValue({ billingCurrency: "$" });
-    useAppDispatch.mockReturnValue(dispatch);
-
     render(
       <RadioInput inputDetails={testProps} checkedInputName={testProps.name} />,
     );
@@ -52,9 +53,6 @@ describe("RadioInput component", () => {
   });
 
   it("should dispatch action on initial render if input is checked", () => {
-    useAppSelector.mockReturnValue({ billingCurrency: "$" });
-    useAppDispatch.mockReturnValue(dispatch);
-
     render(
       <RadioInput
         inputDetails={testProps}
@@ -73,9 +71,6 @@ describe("RadioInput component", () => {
   });
 
   it("should NOT dispatch action on initial render if input is not checked", () => {
-    useAppSelector.mockReturnValue({ billingCurrency: "$" });
-    useAppDispatch.mockReturnValue(dispatch);
-
     render(
       <RadioInput
         inputDetails={testProps}
@@ -88,9 +83,6 @@ describe("RadioInput component", () => {
   });
 
   it("should update based on billingCurrency change and send action with updated data", () => {
-    useAppSelector.mockReturnValue({ billingCurrency: "$" });
-    useAppDispatch.mockReturnValue(dispatch);
-
     const { rerender } = render(
       <RadioInput
         inputDetails={testProps}
@@ -130,8 +122,6 @@ describe("RadioInput component", () => {
   });
 
   it("should call the onChangeHandler with the correct arguments on change", () => {
-    useAppSelector.mockReturnValue({ billingCurrency: "$" });
-    useAppDispatch.mockReturnValue(dispatch);
     const mockedClicked = jest.fn();
     render(
       <RadioInput

@@ -21,17 +21,16 @@ const testProps = {
 };
 
 describe("TextInput component", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   const dispatch = jest.fn();
   const { inputChangeHandler, inputBlurHandler, registerInput } =
     shippingAddressActions;
-  it("should render input element with the correct name and type attributes wrapped within a label", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
     useAppSelector.mockReturnValue({ inputs: {} });
+  });
 
+  it("should render input element with the correct name and type attributes wrapped within a label", () => {
     render(<TextInput inputDetails={testProps} />);
     const labelElement = screen.getByText(testProps.label);
     const inputElement = screen.getByRole("textbox");
@@ -42,8 +41,7 @@ describe("TextInput component", () => {
   });
 
   it("should apply correct classes and not display an error message when hasError is false", () => {
-    useAppDispatch.mockReturnValue(dispatch);
-    useAppSelector.mockReturnValue({
+    useAppSelector.mockReturnValueOnce({
       inputs: { fName: { hasError: false } },
     });
 
@@ -57,8 +55,7 @@ describe("TextInput component", () => {
   });
 
   it("should apply correct classes and display an error message when hasError is true", () => {
-    useAppDispatch.mockReturnValue(dispatch);
-    useAppSelector.mockReturnValue({
+    useAppSelector.mockReturnValueOnce({
       inputs: { fName: { hasError: true } },
     });
 
@@ -74,18 +71,12 @@ describe("TextInput component", () => {
   });
 
   it("should dispatch a correct action in the useEffect hook and pass required data", () => {
-    useAppDispatch.mockReturnValue(dispatch);
-    useAppSelector.mockReturnValue({ inputs: {} });
-
     render(<TextInput inputDetails={testProps} />);
 
     expect(dispatch).toHaveBeenCalledWith(registerInput(testProps.name));
   });
 
   it("should dispatch a correct action on input change and pass required data", () => {
-    useAppDispatch.mockReturnValue(dispatch);
-    useAppSelector.mockReturnValue({ inputs: {} });
-
     render(<TextInput inputDetails={testProps} />);
     const inputElement = screen.getByRole("textbox");
     const updatedValue = "testValue";
@@ -102,9 +93,6 @@ describe("TextInput component", () => {
   });
 
   it("should dispatch a correct action on input blur and pass required data", () => {
-    useAppDispatch.mockReturnValue(dispatch);
-    useAppSelector.mockReturnValue({ inputs: {} });
-
     render(<TextInput inputDetails={testProps} />);
     const inputElement = screen.getByRole("textbox");
     const updatedValue = "testBlur";
