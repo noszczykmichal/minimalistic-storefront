@@ -10,14 +10,13 @@ import { useAppDispatch } from "../../../../hooks/useReduxHooks";
 import { uiActions } from "../../../../store/uiSlice";
 
 describe("ToggleButton component", () => {
+  const dispatch = jest.fn();
   beforeEach(() => {
     jest.clearAllMocks();
+    useAppDispatch.mockReturnValue(dispatch);
   });
-  const dispatch = jest.fn();
 
   it("should render a button", () => {
-    useAppDispatch.mockReturnValue(dispatch);
-
     render(<ToggleButton />);
     const toggleButton = screen.getByRole("button");
 
@@ -25,7 +24,6 @@ describe("ToggleButton component", () => {
   });
 
   it("should dispatch actions on ToggleButton click", () => {
-    useAppDispatch.mockReturnValue(dispatch);
     const {
       backdropVisibilityToggle,
       backdropTypeToggle,

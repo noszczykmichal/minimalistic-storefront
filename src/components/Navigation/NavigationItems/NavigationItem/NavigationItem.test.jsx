@@ -11,15 +11,15 @@ import { useAppDispatch } from "../../../../hooks/useReduxHooks";
 import { uiActions } from "../../../../store/uiSlice";
 
 describe("NavigationItem component", () => {
+  const dispatch = jest.fn();
   beforeEach(() => {
     jest.clearAllMocks();
+    useAppDispatch.mockReturnValue(dispatch);
   });
-  const dispatch = jest.fn();
 
   test("should render a link with correct text and href attribute value", () => {
     const testContent = "Test content";
     const testHref = "/some-link";
-    useAppDispatch.mockReturnValue(dispatch);
 
     render(
       <MemoryRouter>
@@ -33,7 +33,6 @@ describe("NavigationItem component", () => {
   });
 
   test("should dispatch 4 actions on a Navlink click", () => {
-    useAppDispatch.mockReturnValue(dispatch);
     const {
       backdropVisibilityToggle,
       currencySwitcherVisibToggle,

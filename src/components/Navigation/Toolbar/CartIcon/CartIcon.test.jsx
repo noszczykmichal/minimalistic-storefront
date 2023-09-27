@@ -14,21 +14,28 @@ import {
 import { uiActions } from "../../../../store/uiSlice";
 
 describe("CartIcon component", () => {
+  const dispatch = jest.fn();
+  const {
+    backdropVisibilityToggle,
+    backdropTypeToggle,
+    miniCartVisibilityToggle,
+    currencySwitcherVisibToggle,
+  } = uiActions;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    useAppDispatch.mockReturnValue(dispatch);
+    useAppSelector.mockReturnValue({ productsTotal: 1 });
   });
-  const dispatch = jest.fn();
 
   it("should render a CartIcon", () => {
-    useAppSelector.mockReturnValue({ productsTotal: 1 });
-
     render(<CartIcon />);
     const cartIcon = screen.getByRole("button");
 
     expect(cartIcon).toBeInTheDocument();
   });
   it("should render a disabled CartIcon if productsTotal value equals 0", () => {
-    useAppSelector.mockReturnValue({ productsTotal: 0 });
+    useAppSelector.mockReturnValueOnce({ productsTotal: 0 });
 
     render(<CartIcon />);
     const cartIcon = screen.getByRole("button");
@@ -36,15 +43,6 @@ describe("CartIcon component", () => {
     expect(cartIcon).toBeDisabled();
   });
   it("should dispatch actions on  CartIcon click", () => {
-    useAppSelector.mockReturnValue({ productsTotal: 1 });
-    useAppDispatch.mockReturnValue(dispatch);
-    const {
-      backdropVisibilityToggle,
-      backdropTypeToggle,
-      miniCartVisibilityToggle,
-      currencySwitcherVisibToggle,
-    } = uiActions;
-
     render(<CartIcon />);
     const cartIcon = screen.getByRole("button");
     userEvent.click(cartIcon);

@@ -11,14 +11,18 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
 import { uiActions } from "../../../store/uiSlice";
 
 describe("Modal component", () => {
+  const dispatch = jest.fn();
+  const { modalToggle, backdropVisibilityToggle } = uiActions;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    useAppDispatch.mockReturnValue(dispatch);
+    useAppSelector.mockReturnValue({ isModalOpen: true });
   });
 
-  const dispatch = jest.fn();
   const testNotSelected = ["size"];
   it("should not render Modal when isModalOpen is false", () => {
-    useAppSelector.mockReturnValue({ isModalOpen: false });
+    useAppSelector.mockReturnValueOnce({ isModalOpen: false });
 
     render(<Modal notSelected={testNotSelected} />);
     const modalComponent = screen.queryByRole("list");
@@ -27,8 +31,6 @@ describe("Modal component", () => {
   });
 
   it("should render a list of list items when isModalOpen is true", () => {
-    useAppSelector.mockReturnValue({ isModalOpen: true });
-
     render(<Modal notSelected={testNotSelected} />);
     const listItem = screen.queryByRole("listitem");
 
@@ -36,10 +38,6 @@ describe("Modal component", () => {
   });
 
   it("should dispatch 2 actions after button click", () => {
-    useAppSelector.mockReturnValue({ isModalOpen: true });
-    useAppDispatch.mockReturnValue(dispatch);
-    const { modalToggle, backdropVisibilityToggle } = uiActions;
-
     render(<Modal notSelected={testNotSelected} />);
     const button = screen.getByRole("button");
     userEvent.click(button);

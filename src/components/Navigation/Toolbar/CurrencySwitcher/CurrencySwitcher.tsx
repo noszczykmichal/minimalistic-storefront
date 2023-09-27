@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
@@ -13,7 +13,7 @@ import {
 import { Currency } from "../../../../models/productSlice.models";
 
 function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
-  const switcherOptionsRef = useRef<HTMLDivElement>(null);
+  const switcherOptionsRef = useRef<HTMLUListElement>(null);
   const dispatch = useAppDispatch();
   const { isCurrencySwitcherOpen } = useAppSelector((state) => state.ui);
   const { billingCurrency } = useAppSelector((state) => state.products);
@@ -46,7 +46,7 @@ function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
   }
 
   return (
-    <div className={classes.switcher} aria-label="billing-currency">
+    <div className={classes.switcher}>
       <button
         type="button"
         className={classes.switcher__button}
@@ -86,13 +86,9 @@ function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
         mountOnEnter
         unmountOnExit
       >
-        <div
-          className={classes.switcher__options}
-          ref={switcherOptionsRef}
-          aria-label="currencies-list"
-        >
+        <ul className={classes.switcher__options} ref={switcherOptionsRef}>
           {currencies.map((currency) => (
-            <div
+            <li
               key={currency.label}
               aria-label={currency.symbol}
               className={classes.switcher__option}
@@ -100,9 +96,9 @@ function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
             >
               <span className={classes.option__symbol}>{currency.symbol}</span>
               <span className={classes.option__label}>{currency.label}</span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </CSSTransition>
     </div>
   );
