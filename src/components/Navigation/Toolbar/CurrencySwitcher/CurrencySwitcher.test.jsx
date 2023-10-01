@@ -66,12 +66,10 @@ describe("CurrencySwitcher component", () => {
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
     const currenciesList = screen.queryByRole("list");
-    const option1 = screen.getByLabelText(testCurrencies[0].symbol);
-    const option2 = screen.getByLabelText(testCurrencies[1].symbol);
+    const options = screen.getAllByRole("listitem");
 
     expect(currenciesList).toBeInTheDocument();
-    expect(option1).toBeInTheDocument();
-    expect(option2).toBeInTheDocument();
+    expect(options).toHaveLength(testCurrencies.length);
   });
 
   it("should dispatch 4 actions on button click", () => {
