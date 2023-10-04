@@ -11,6 +11,13 @@ import { uiActions } from "../../../../store/uiSlice";
 
 describe("ToggleButton component", () => {
   const dispatch = jest.fn();
+  const {
+    backdropVisibilityToggle,
+    backdropTypeToggle,
+    miniCartVisibilityToggle,
+    mobileNavVisibilityToggle,
+  } = uiActions;
+
   beforeEach(() => {
     jest.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
@@ -24,13 +31,6 @@ describe("ToggleButton component", () => {
   });
 
   it("should dispatch actions on ToggleButton click", () => {
-    const {
-      backdropVisibilityToggle,
-      backdropTypeToggle,
-      miniCartVisibilityToggle,
-      mobileNavVisibilityToggle,
-    } = uiActions;
-
     render(<ToggleButton />);
     const toggleButton = screen.getByRole("button");
     userEvent.click(toggleButton);
