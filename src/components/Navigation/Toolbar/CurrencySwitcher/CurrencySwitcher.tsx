@@ -51,11 +51,9 @@ function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
         type="button"
         className={classes.switcher__button}
         onClick={currencySwitcherOpen}
-        aria-label="open"
+        aria-label="Currencies Pane"
       >
-        <span className={classes.button__content} aria-label="currencies-pane">
-          {billingCurrency}
-        </span>
+        {billingCurrency}
         <svg
           width="8"
           height="4"

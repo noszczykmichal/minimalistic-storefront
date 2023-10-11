@@ -42,7 +42,7 @@ describe("CartIcon component", () => {
 
     expect(cartIcon).toBeDisabled();
   });
-  it("should dispatch actions on  CartIcon click", () => {
+  it("should dispatch actions on CartIcon click", () => {
     render(<CartIcon />);
     const cartIcon = screen.getByRole("button");
     userEvent.click(cartIcon);

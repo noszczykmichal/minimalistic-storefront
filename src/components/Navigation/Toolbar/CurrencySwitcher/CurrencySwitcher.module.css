@@ -15,16 +15,14 @@
   cursor: pointer;
 }
 
-.button__content {
-  margin-right: 0.5rem;
-}
-
 .button__arrow {
+  margin-left: 8px;
   transform: rotate(180deg);
   transition: transform 0.3s ease-out;
 }
 
 .button__arrow--rotate {
+  margin-left: 8px;
   transform: rotate(0);
   transition: transform 0.3s ease-out;
 }

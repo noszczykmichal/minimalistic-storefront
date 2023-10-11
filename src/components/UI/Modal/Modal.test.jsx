@@ -13,6 +13,7 @@ import { uiActions } from "../../../store/uiSlice";
 describe("Modal component", () => {
   const dispatch = jest.fn();
   const { modalToggle, backdropVisibilityToggle } = uiActions;
+  const testNotSelected = ["size", "colour"];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -20,7 +21,6 @@ describe("Modal component", () => {
     useAppSelector.mockReturnValue({ isModalOpen: true });
   });
 
-  const testNotSelected = ["size"];
   it("should not render Modal when isModalOpen is false", () => {
     useAppSelector.mockReturnValueOnce({ isModalOpen: false });
 
@@ -32,9 +32,11 @@ describe("Modal component", () => {
 
   it("should render a list of list items when isModalOpen is true", () => {
     render(<Modal notSelected={testNotSelected} />);
-    const listItem = screen.queryByRole("listitem");
+    const listElem = screen.getByRole("list");
+    const listItems = screen.getAllByRole("listitem");
 
-    expect(listItem).not.toBeNull();
+    expect(listElem).toBeInTheDocument();
+    expect(listItems).toHaveLength(testNotSelected.length);
   });
 
   it("should dispatch 2 actions after button click", () => {

@@ -4,7 +4,7 @@ import NavigationItems from "./NavigationItems";
 import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
 
 describe("NavigationItems component", () => {
-  const testCategories = ["all"];
+  const testCategories = ["all", "tech"];
 
   it("should render a list of link elements if a non-empty array is passed", () => {
     render(
@@ -12,11 +12,11 @@ describe("NavigationItems component", () => {
         <NavigationItems categories={testCategories} />
       </WithMockStoreAndRouter>,
     );
-    const ulElement = screen.getByRole("list");
-    const listElement = screen.getByText(testCategories[0]);
+    const listElement = screen.getByRole("list");
+    const items = screen.getAllByRole("listitem");
 
-    expect(ulElement).toBeInTheDocument();
     expect(listElement).toBeInTheDocument();
+    expect(items).toHaveLength(testCategories.length);
   });
 
   it("should render a link to '/'(homepage) if encounters 'all' element in array passed through categories prop", () => {
@@ -25,9 +25,9 @@ describe("NavigationItems component", () => {
         <NavigationItems categories={testCategories} />
       </WithMockStoreAndRouter>,
     );
-    const linkElement = screen.getByRole("link");
+    const linkElement = screen.getByText("all");
 
-    expect(linkElement.textContent).toBe("all");
+    expect(linkElement).toBeInTheDocument();
     expect(linkElement).toHaveAttribute("href", "/");
   });
 });

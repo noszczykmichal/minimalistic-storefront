@@ -27,6 +27,7 @@ function CartIcon() {
       type="button"
       className={classes["cart-icon"]}
       onClick={minicartToggle}
+      aria-label={`Cart: ${productsTotal || 0} items`}
       disabled={!productsTotal}
     >
       <svg

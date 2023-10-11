@@ -3,7 +3,7 @@ jest.mock("../../../hooks/useReduxHooks.ts", () => ({
   useAppDispatch: jest.fn(),
 }));
 
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
 import { MemoryRouter } from "react-router";
 
@@ -13,13 +13,31 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
 describe("MobileNavigation component", () => {
   const dispatch = jest.fn();
 
-  it("should have no accessibility violations", async () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
     useAppSelector.mockReturnValue({
       categories: ["tech", "music"],
       isMobileNavOpen: true,
     });
+  });
 
+  it("should render a list of NavigationItems", () => {
+    render(
+      <MemoryRouter>
+        <MobileNavigation />
+      </MemoryRouter>,
+    );
+
+    const listEl = screen.getByRole("list");
+    const listItems = screen.getAllByRole("listitem");
+    const { categories } = useAppSelector.mock.results[0].value;
+
+    expect(listEl).toBeInTheDocument();
+    expect(listItems).toHaveLength(categories.length);
+  });
+
+  it("should have no accessibility violations", async () => {
     const { container } = render(
       <MemoryRouter>
         <MobileNavigation />

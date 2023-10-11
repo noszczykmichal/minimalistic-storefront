@@ -28,6 +28,8 @@ describe("CurrencySwitcher component", () => {
     miniCartVisibilityToggle,
   } = uiActions;
 
+  const { onCurrencyChange } = productActions;
+
   beforeEach(() => {
     jest.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
@@ -40,10 +42,10 @@ describe("CurrencySwitcher component", () => {
     });
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
-    const currenciesPane = screen.getByLabelText("currencies-pane");
+    const button = screen.getByRole("button");
 
-    expect(currenciesPane).toBeInTheDocument();
-    expect(currenciesPane.textContent).toBe(testCurrencies[0].symbol);
+    expect(button).toBeInTheDocument();
+    expect(button.textContent).toBe(testCurrencies[0].symbol);
   });
 
   it("should render CurrencySwitcher without currencies list when isCurrencySwitcherOpen is false", () => {
@@ -66,12 +68,10 @@ describe("CurrencySwitcher component", () => {
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
     const currenciesList = screen.queryByRole("list");
-    const option1 = screen.getByLabelText(testCurrencies[0].symbol);
-    const option2 = screen.getByLabelText(testCurrencies[1].symbol);
+    const options = screen.getAllByRole("listitem");
 
     expect(currenciesList).toBeInTheDocument();
-    expect(option1).toBeInTheDocument();
-    expect(option2).toBeInTheDocument();
+    expect(options).toHaveLength(testCurrencies.length);
   });
 
   it("should dispatch 4 actions on button click", () => {
@@ -96,8 +96,6 @@ describe("CurrencySwitcher component", () => {
       isCurrencySwitcherOpen: true,
       billingCurrency: "$",
     });
-
-    const { onCurrencyChange } = productActions;
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
     const option = screen.getByLabelText(testCurrencies[0].symbol);

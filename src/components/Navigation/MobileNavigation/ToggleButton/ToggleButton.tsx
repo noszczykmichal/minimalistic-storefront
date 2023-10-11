@@ -24,6 +24,7 @@ function ToggleButton() {
       type="button"
       className={classes.toggle}
       onClick={onToggleButtonClick}
+      aria-label="Show Menu"
     >
       <div className={classes.toggle__bar} />
       <div className={classes.toggle__bar} />
