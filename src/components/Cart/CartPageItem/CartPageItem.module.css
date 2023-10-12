@@ -146,10 +146,6 @@
   gap: 0.5rem;
 }
 
-.button__svg-y-axis {
-  position: absolute;
-}
-
 @media (min-width: 360px) {
   .column-wrapper--cart-actions {
     height: 18rem;
