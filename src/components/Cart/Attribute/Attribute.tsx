@@ -19,7 +19,11 @@ function Attribute({
       <h3 className={classes["product-attribute__label"]}>{name}:</h3>
       <div className={classes["product-attribute__values"]}>
         {items.map((attributeItem) => (
-          <AttributeVariant variantData={attributeItem} variantType={name} />
+          <AttributeVariant
+            key={attributeItem.value}
+            variantData={attributeItem}
+            variantType={name}
+          />
         ))}
       </div>
     </div>

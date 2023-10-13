@@ -9,47 +9,43 @@ function AttributeVariant({
   variantType: string;
 }) {
   const { selected, displayValue, value } = variantData;
-  const name = variantType;
 
-  const textAttributeClasses = selected
-    ? [
-        classes["product-attribute__value"],
-        classes["product-attribute__value--selected"],
-      ]
-    : [classes["product-attribute__value"]];
+  let attachedClasses;
+  let inlineStyles;
+  let buttonText = displayValue;
 
-  let content = (
-    <button
-      type="button"
-      key={displayValue}
-      className={textAttributeClasses.join(" ")}
-    >
-      {value}
-    </button>
-  );
-
-  if (name === "Color") {
-    const colourAttributeClasses = selected
+  if (variantType === "Color") {
+    attachedClasses = selected
       ? [
           classes["product-attribute__value--color"],
           classes["product-attribute__value--color-selected"],
         ]
       : [classes["product-attribute__value--color"]];
-    content = (
-      <button
-        type="button"
-        key={displayValue}
-        className={colourAttributeClasses.join(" ")}
-        style={{
-          backgroundColor: value === "#FFFFFF" ? "#F0F0F0" : `${value}`,
-        }}
-      >
-        {displayValue}
-      </button>
-    );
+
+    inlineStyles = {
+      backgroundColor: value === "#FFFFFF" ? "#F0F0F0" : `${value}`,
+    };
+  } else {
+    attachedClasses = selected
+      ? [
+          classes["product-attribute__value"],
+          classes["product-attribute__value--selected"],
+        ]
+      : [classes["product-attribute__value"]];
+
+    buttonText = value;
   }
 
-  return content;
+  return (
+    <button
+      type="button"
+      key={displayValue}
+      className={attachedClasses.join(" ")}
+      style={inlineStyles}
+    >
+      {buttonText}
+    </button>
+  );
 }
 
 export default AttributeVariant;
