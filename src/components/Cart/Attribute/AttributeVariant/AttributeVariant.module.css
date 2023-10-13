@@ -1,0 +1,37 @@
+.product-attribute__value {
+  height: 2.8rem;
+  width: 3.9rem;
+  background-color: transparent;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.1rem;
+  border: 1px solid #1d1f22;
+}
+
+.product-attribute__value--selected {
+  background-color: #1d1f22;
+  color: #fff;
+}
+
+.product-attribute__value--color {
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: transparent;
+  border: none;
+}
+
+.product-attribute__value--color::after {
+  position: absolute;
+  height: 2.3rem;
+  width: 2.3rem;
+  content: "";
+}
+
+.product-attribute__value--color-selected::after {
+  border: 1px solid #5ece7b;
+}

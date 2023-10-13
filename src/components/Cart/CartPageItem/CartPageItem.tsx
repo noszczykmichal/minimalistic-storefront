@@ -7,6 +7,7 @@ import { CartItem } from "../../../models/productSlice.models";
 import { useAppSelector } from "../../../hooks/useReduxHooks";
 import PlusIcon from "../Icons/PlusIcon/PlusIcon";
 import MinusIcon from "../Icons/MinusIcon/MinusIcon";
+import Attribute from "../Attribute/Attribute";
 import classes from "./CartPageItem.module.css";
 
 function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
@@ -44,6 +45,7 @@ function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
     <>
       <Hr customClass={classes["cart-page__hr"]} />
       <li className={classes["cart-page__item"]}>
+        {/* first column */}
         <div className={classes["column-wrapper"]}>
           <div className={classes["cart-item__product-details"]}>
             <h3 className={classes["product-details__title"]}>
@@ -68,63 +70,11 @@ function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
 
           <div className={classes["cart-item__product-attributes"]}>
             {itemDetails.attributes.map((attribute) => (
-              <div
-                key={attribute.name}
-                className={classes["product-attribute"]}
-              >
-                <h3 className={classes["product-attribute__label"]}>
-                  {attribute.name}:
-                </h3>
-                <div className={classes["product-attribute__values"]}>
-                  {attribute.items.map((attributeItem) => {
-                    const textAttributeClasses = attributeItem.selected
-                      ? [
-                          classes["product-attribute__value"],
-                          classes["product-attribute__value--selected"],
-                        ]
-                      : [classes["product-attribute__value"]];
-
-                    let content = (
-                      <button
-                        type="button"
-                        key={attributeItem.displayValue}
-                        className={textAttributeClasses.join(" ")}
-                      >
-                        {attributeItem.value}
-                      </button>
-                    );
-
-                    if (attribute.name === "Color") {
-                      const colourAttributeClasses = attributeItem.selected
-                        ? [
-                            classes["product-attribute__value--color"],
-                            classes["product-attribute__value--color-selected"],
-                          ]
-                        : [classes["product-attribute__value--color"]];
-                      content = (
-                        <button
-                          type="button"
-                          key={attributeItem.displayValue}
-                          className={colourAttributeClasses.join(" ")}
-                          style={{
-                            backgroundColor:
-                              attributeItem.value === "#FFFFFF"
-                                ? "#F0F0F0"
-                                : `${attributeItem.value}`,
-                          }}
-                        >
-                          {attributeItem.displayValue}
-                        </button>
-                      );
-                    }
-
-                    return content;
-                  })}
-                </div>
-              </div>
+              <Attribute attributeDetails={attribute} key={attribute.name} />
             ))}
           </div>
         </div>
+        {/* second column */}
         <div className={classes["column-wrapper--cart-actions"]}>
           <div className={classes["cart-actions"]}>
             <button
