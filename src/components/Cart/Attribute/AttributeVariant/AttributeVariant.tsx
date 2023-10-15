@@ -9,7 +9,6 @@ function AttributeVariant({
   variantType: string;
 }) {
   const { selected, displayValue, value } = variantData;
-
   let attachedClasses;
   let inlineStyles;
   let buttonText = displayValue;
