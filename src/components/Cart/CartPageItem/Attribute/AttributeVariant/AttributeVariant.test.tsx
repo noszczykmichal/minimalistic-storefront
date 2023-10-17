@@ -31,7 +31,7 @@ describe("AttributeVariant component", () => {
     expect(button).toHaveClass("product-attribute__value--color-selected");
   });
 
-  it('should render an AttributeVariant with text "white" and background color of "#F0F0F0"', () => {
+  it('should render the AttributeVariant of background colour of rgb(240, 240, 240) if value is "white"', () => {
     const testData = {
       displayValue: "White",
       value: "#F0F0F0",
@@ -40,8 +40,7 @@ describe("AttributeVariant component", () => {
     const grey = "rgb(240, 240, 240)";
 
     render(<AttributeVariant variantType="Color" variantData={testData} />);
-    const regExp = new RegExp(`${testData.displayValue}`);
-    const button = screen.getByText(regExp);
+    const button = screen.getByRole("button");
     const style = window.getComputedStyle(button);
 
     expect(button).toBeInTheDocument();

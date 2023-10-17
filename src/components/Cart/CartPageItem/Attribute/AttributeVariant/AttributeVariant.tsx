@@ -1,4 +1,4 @@
-import { AttributeVariantInterface } from "../../../../models/utility-models";
+import { AttributeVariantInterface } from "../../../../../models/utility-models";
 import classes from "./AttributeVariant.module.css";
 
 function AttributeVariant({
@@ -11,7 +11,7 @@ function AttributeVariant({
   const { selected, displayValue, value } = variantData;
   let attachedClasses;
   let inlineStyles;
-  let buttonText = displayValue;
+  let buttonText = "";
 
   if (variantType === "Color") {
     attachedClasses = selected
@@ -41,6 +41,7 @@ function AttributeVariant({
       key={displayValue}
       className={attachedClasses.join(" ")}
       style={inlineStyles}
+      aria-label={displayValue}
     >
       {buttonText}
     </button>

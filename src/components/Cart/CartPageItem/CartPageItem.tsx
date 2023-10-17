@@ -7,15 +7,13 @@ import { CartItem } from "../../../models/productSlice.models";
 import { useAppSelector } from "../../../hooks/useReduxHooks";
 import PlusIcon from "../Icons/PlusIcon/PlusIcon";
 import MinusIcon from "../Icons/MinusIcon/MinusIcon";
-import Attribute from "../Attribute/Attribute";
+import Attribute from "./Attribute/Attribute";
 import classes from "./CartPageItem.module.css";
 
 function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
   const { internalID, name, brand, gallery, quantity } = itemDetails;
   const [currentIndex, setCurrentIndex] = useState(0);
-  const billingCurrency = useAppSelector(
-    (state) => state.products.billingCurrency,
-  );
+  const { billingCurrency } = useAppSelector((state) => state.products);
 
   const filteredPrices = itemDetails.prices.filter(
     (price) => price.currency.symbol === billingCurrency,
@@ -81,6 +79,7 @@ function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
               type="button"
               className={classes["cart-actions__button"]}
               onClick={increaseQuantityHandler}
+              aria-label="Increase quantity"
             >
               <PlusIcon />
             </button>
@@ -89,6 +88,7 @@ function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
               type="button"
               className={classes["cart-actions__button"]}
               onClick={decreaseQuantityHandler}
+              aria-label="Decrease quantity"
             >
               <MinusIcon />
             </button>

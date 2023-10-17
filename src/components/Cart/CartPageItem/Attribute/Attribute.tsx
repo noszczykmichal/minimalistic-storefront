@@ -1,4 +1,4 @@
-import { AttributeVariantInterface } from "../../../models/utility-models";
+import { AttributeVariantInterface } from "../../../../models/utility-models";
 import AttributeVariant from "./AttributeVariant/AttributeVariant";
 import classes from "./Attribute.module.css";
 
