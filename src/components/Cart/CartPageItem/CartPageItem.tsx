@@ -94,9 +94,10 @@ function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
             </button>
           </div>
           <div className={classes["image-container"]}>
-            <div
+            <img
               className={classes["image-container__image"]}
-              style={{ backgroundImage: `url(${gallery[currentIndex]})` }}
+              src={`${gallery[currentIndex]}`}
+              alt={`${brand} ${name}`}
             />
             {gallery.length > 1 ? (
               <div className={classes["image-container__scrolling-arrows"]}>

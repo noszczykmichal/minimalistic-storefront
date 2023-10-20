@@ -3,7 +3,6 @@ jest.mock("../../../hooks/useReduxHooks.ts", () => ({
   useAppSelector: jest.fn(),
 }));
 
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { testItemDetails } from "../../../utils/testData";
 
@@ -60,7 +59,7 @@ describe("CartPageItem component", () => {
     expect(rightArrow).toBeInTheDocument();
   });
 
-  it("should not render thumbnail arrows when gallery length is smaller than one", () => {
+  it("should not render thumbnail arrows when gallery length equals one", () => {
     const testSpecificDetails = {
       ...testItemDetails,
       gallery: [

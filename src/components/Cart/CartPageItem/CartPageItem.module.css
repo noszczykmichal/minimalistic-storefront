@@ -81,9 +81,7 @@
 .image-container__image {
   height: 16.2rem;
   width: 11.25rem;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  object-fit: contain;
 }
 
 .image-container__scrolling-arrows {
