@@ -3,9 +3,11 @@ jest.mock("../../../hooks/useReduxHooks.ts", () => ({
   useAppSelector: jest.fn(),
 }));
 
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import { testItemDetails } from "../../../utils/testData";
+import userEvent from "@testing-library/user-event";
 
+import { testItemDetails } from "../../../utils/testData";
 import CartPageItem from "./CartPageItem";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
 
@@ -74,5 +76,56 @@ describe("CartPageItem component", () => {
 
     expect(leftArrow).toBeNull();
     expect(rightArrow).toBeNull();
+  });
+
+  it("should change currently displayed thumbnail to the next one when 'Next' button is clicked", () => {
+    render(<CartPageItem itemDetails={testItemDetails} />);
+
+    const [defaultImage, nextImage] = testItemDetails.gallery;
+
+    const imageEl = screen.getByRole("img");
+    expect(imageEl).toHaveAttribute("src", defaultImage);
+
+    const nextButton = screen.getByLabelText(/Next/);
+    userEvent.click(nextButton);
+
+    expect(imageEl).toHaveAttribute("src", nextImage);
+  });
+
+  it("should change the first thumbnail from the gallery to the last one when the 'Previous' button is clicked", () => {
+    const [defaultImage, , thirdImage] = testItemDetails.gallery;
+
+    const { rerender } = render(<CartPageItem itemDetails={testItemDetails} />);
+    const imgEl = screen.getByRole("img");
+
+    expect(imgEl).toHaveAttribute("src", defaultImage);
+
+    const previousButton = screen.getByLabelText(/Previous/);
+    userEvent.click(previousButton);
+
+    rerender(<CartPageItem itemDetails={testItemDetails} />);
+    expect(imgEl).toHaveAttribute("src", thirdImage);
+  });
+
+  it("should display the first thumbnail when reaching the end of the gallery", () => {
+    const [firstImage, , defaultImage] = testItemDetails.gallery;
+    let mockedValue = 2;
+    const setMockedValue = () => {
+      mockedValue = 0;
+    };
+
+    const useStateMock = () => [mockedValue, setMockedValue];
+    jest.spyOn(React, "useState").mockImplementation(useStateMock);
+
+    const { rerender } = render(<CartPageItem itemDetails={testItemDetails} />);
+
+    const imgEl = screen.getByRole("img");
+    const nextButton = screen.getByLabelText(/Next/);
+
+    expect(imgEl).toHaveAttribute("src", defaultImage);
+    userEvent.click(nextButton);
+
+    rerender(<CartPageItem itemDetails={testItemDetails} />);
+    expect(imgEl).toHaveAttribute("src", firstImage);
   });
 });
