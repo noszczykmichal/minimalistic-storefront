@@ -15,6 +15,7 @@ function ThumbnailArrow({
       type="button"
       className={[classes.button, attachedClass].join(" ")}
       onClick={clicked}
+      aria-label={variant === "left" ? "Previous image" : "Next image"}
     >
       <svg
         width="8"

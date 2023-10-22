@@ -11,3 +11,9 @@ export interface RadioInputProps {
 }
 
 export type ValidationFn = (length: string) => boolean;
+
+export interface AttributeVariantInterface {
+  displayValue: string;
+  selected?: boolean;
+  value: string;
+}
