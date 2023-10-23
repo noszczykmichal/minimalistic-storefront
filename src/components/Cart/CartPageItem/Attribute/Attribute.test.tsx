@@ -12,7 +12,12 @@ describe("Attribute component", () => {
       ],
     };
 
-    render(<Attribute attributeDetails={testAttributeDetails} />);
+    render(
+      <Attribute
+        attributeDetails={testAttributeDetails}
+        isInMiniView={false}
+      />,
+    );
 
     const regEx = new RegExp(`${testAttributeDetails.name}`);
     const h3Element = screen.getByText(regEx);

@@ -1,7 +1,9 @@
-import classes from "./MiniCartItem.module.css";
+/* eslint-disable react/jsx-boolean-value */
 import useChangeQuantity from "../../../../../hooks/useChangeQuantity";
 import { useAppSelector } from "../../../../../hooks/useReduxHooks";
 import { CartItem } from "../../../../../models/productSlice.models";
+import Attribute from "../../../CartPageItem/Attribute/Attribute";
+import classes from "./MiniCartItem.module.css";
 
 function MiniCartItem({ itemDetails }: { itemDetails: CartItem }) {
   const { internalID, quantity, gallery } = itemDetails;
@@ -31,57 +33,11 @@ function MiniCartItem({ itemDetails }: { itemDetails: CartItem }) {
 
         <div className={classes["cart-item__product-attributes"]}>
           {itemDetails.attributes.map((attribute) => (
-            <div key={attribute.name} className={classes["product-attribute"]}>
-              <h3 className={classes["product-attribute__label"]}>
-                {attribute.name}:
-              </h3>
-              <div className={classes["product-attribute__values"]}>
-                {attribute.items.map((attributeItem) => {
-                  const textAttributeClasses = attributeItem.selected
-                    ? [
-                        classes["product-attribute__value"],
-                        classes["product-attribute__value--selected"],
-                      ]
-                    : [classes["product-attribute__value"]];
-
-                  let content = (
-                    <button
-                      type="button"
-                      key={attributeItem.displayValue}
-                      className={textAttributeClasses.join(" ")}
-                    >
-                      {attributeItem.value}
-                    </button>
-                  );
-
-                  if (attribute.name === "Color") {
-                    const colourAttributeClasses = attributeItem.selected
-                      ? [
-                          classes["product-attribute__value--color"],
-                          classes["product-attribute__value--color-selected"],
-                        ]
-                      : [classes["product-attribute__value--color"]];
-                    content = (
-                      <button
-                        type="button"
-                        key={attributeItem.displayValue}
-                        className={colourAttributeClasses.join(" ")}
-                        style={{
-                          backgroundColor:
-                            attributeItem.value === "#FFFFFF"
-                              ? "#F0F0F0"
-                              : `${attributeItem.value}`,
-                        }}
-                      >
-                        {attributeItem.displayValue}
-                      </button>
-                    );
-                  }
-
-                  return content;
-                })}
-              </div>
-            </div>
+            <Attribute
+              attributeDetails={attribute}
+              isInMiniView={true}
+              key={attribute.name}
+            />
           ))}
         </div>
       </div>
