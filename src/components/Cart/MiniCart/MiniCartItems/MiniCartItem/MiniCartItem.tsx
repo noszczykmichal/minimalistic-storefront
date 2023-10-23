@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-boolean-value */
 import useChangeQuantity from "../../../../../hooks/useChangeQuantity";
 import { useAppSelector } from "../../../../../hooks/useReduxHooks";
 import { CartItem } from "../../../../../models/productSlice.models";
@@ -35,7 +34,7 @@ function MiniCartItem({ itemDetails }: { itemDetails: CartItem }) {
           {itemDetails.attributes.map((attribute) => (
             <Attribute
               attributeDetails={attribute}
-              isInMiniView={true}
+              isInMiniView
               key={attribute.name}
             />
           ))}
