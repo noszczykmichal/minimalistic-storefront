@@ -12,8 +12,6 @@ import {
   useAppSelector,
 } from "../../../../../hooks/useReduxHooks";
 
-jest.mock("../../../../../hooks/useChangeQuantity.ts");
-
 describe("MiniCartItem component", () => {
   const dispatch = jest.fn();
   beforeEach(() => {
