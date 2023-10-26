@@ -7,7 +7,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { testItemDetails } from "../../../utils/testData";
+import { testItemDetails } from "../../../utils/testUtils";
 import CartPageItem from "./CartPageItem";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
 

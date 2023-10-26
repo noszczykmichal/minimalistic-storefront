@@ -6,7 +6,7 @@ import { render, screen } from "@testing-library/react";
 
 import MiniCartItems from "./MiniCartItems";
 import { useAppSelector } from "../../../../hooks/useReduxHooks";
-import { testItemDetails } from "../../../../utils/testData";
+import { testItemDetails } from "../../../../utils/testUtils";
 
 describe("MiniCartItems component", () => {
   beforeEach(() => {

@@ -1,4 +1,5 @@
-/* eslint-disable import/prefer-default-export */
+import configureStore from "redux-mock-store";
+
 import { CartItem } from "../models/productSlice.models";
 
 export const testItemDetails: CartItem = {
@@ -47,3 +48,17 @@ export const testItemDetails: CartItem = {
   quantity: 1,
   internalID: "jacket-canada-gooseem",
 };
+
+export function createMockStore(productsTotalVal: number) {
+  const mockStore = configureStore([]);
+
+  return mockStore({
+    ui: { isMiniCartOpen: true },
+    products: {
+      cart: [testItemDetails],
+      productsTotal: productsTotalVal,
+      totalPrice: 144.69,
+      billingCurrency: "$",
+    },
+  });
+}

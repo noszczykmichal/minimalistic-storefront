@@ -3,19 +3,16 @@ jest.mock("../../../hooks/useReduxHooks.ts", () => ({
   useAppDispatch: jest.fn(),
 }));
 import { render, screen } from "@testing-library/react";
-import configureStore from "redux-mock-store";
-import { Provider } from "react-redux";
-import { MemoryRouter } from "react-router";
+import { axe } from "jest-axe";
 
 import { useAppDispatch } from "../../../hooks/useReduxHooks";
-import { testItemDetails } from "../../../utils/testData";
+import { createMockStore } from "../../../utils/testUtils";
 import MiniCart from "./MiniCart";
-
-const mockStore = configureStore([]);
+import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
 
 describe("MiniCart component", () => {
   const dispatch = jest.fn();
-  let store;
+
   beforeEach(() => {
     jest.clearAllMocks();
 
@@ -23,21 +20,12 @@ describe("MiniCart component", () => {
   });
 
   it("should render a heading containing the word 'item' when 'productsTotal' is 1", () => {
-    store = mockStore({
-      ui: { isMiniCartOpen: true },
-      products: {
-        cart: [testItemDetails],
-        productsTotal: 1,
-        totalPrice: 144.69,
-        billingCurrency: "$",
-      },
-    });
+    const mockStore = createMockStore(1);
+
     render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <MiniCart />
-        </MemoryRouter>
-      </Provider>,
+      <WithMockStoreAndRouter customStore={mockStore}>
+        <MiniCart />
+      </WithMockStoreAndRouter>,
     );
 
     const heading = screen.getByText(/My Bag/);
@@ -47,26 +35,30 @@ describe("MiniCart component", () => {
   });
 
   it("should render a heading containing the word 'items' when 'productsTotal' is 2 or greater", () => {
-    store = mockStore({
-      ui: { isMiniCartOpen: true },
-      products: {
-        cart: [testItemDetails],
-        productsTotal: 2,
-        totalPrice: 144.69,
-        billingCurrency: "$",
-      },
-    });
+    const mockStore = createMockStore(2);
+
     render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <MiniCart />
-        </MemoryRouter>
-      </Provider>,
+      <WithMockStoreAndRouter customStore={mockStore}>
+        <MiniCart />
+      </WithMockStoreAndRouter>,
     );
 
     const heading = screen.getByText(/My Bag/);
     const wordPattern = /\bitems\b/;
 
     expect(wordPattern.test(heading.textContent)).toBe(true);
+  });
+
+  it("should have no accessibility violations", async () => {
+    const mockStore = createMockStore(2);
+
+    const { container } = render(
+      <WithMockStoreAndRouter customStore={mockStore}>
+        <MiniCart />
+      </WithMockStoreAndRouter>,
+    );
+    const result = await axe(container);
+
+    expect(result).toHaveNoViolations();
   });
 });

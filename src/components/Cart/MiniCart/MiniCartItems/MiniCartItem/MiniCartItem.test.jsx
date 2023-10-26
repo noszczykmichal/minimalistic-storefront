@@ -6,7 +6,7 @@ jest.mock("../../../../../hooks/useReduxHooks.ts", () => ({
 import { render, screen } from "@testing-library/react";
 
 import MiniCartItem from "./MiniCartItem";
-import { testItemDetails } from "../../../../../utils/testData";
+import { testItemDetails } from "../../../../../utils/testUtils";
 import {
   useAppDispatch,
   useAppSelector,
