@@ -12,6 +12,7 @@ import userEvent from "@testing-library/user-event";
 import Fieldset from "./Fieldset";
 import { useAppDispatch } from "../../../hooks/useReduxHooks";
 import { shippingPaymentOptionsActions } from "../../../store/shippingPaymentOptions";
+import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
 
 const testOptions = [
   {
@@ -55,13 +56,13 @@ describe("Fieldset component", () => {
 
   it("should render a fieldset with 2 inputs on the basis of provided data", () => {
     render(
-      <Provider store={store}>
+      <WithMockStoreAndRouter customStore={store}>
         <Fieldset
           options={testOptions}
           heading="Delivery"
           identifier={fieldIdentifier}
         />
-      </Provider>,
+      </WithMockStoreAndRouter>,
     );
 
     const fieldsetElem = screen.getByRole("group");
@@ -80,27 +81,29 @@ describe("Fieldset component", () => {
     });
 
     render(
-      <Provider store={newStore}>
+      <WithMockStoreAndRouter customStore={newStore}>
         <Fieldset
           options={testOptions}
           heading="Delivery"
           identifier={fieldIdentifier}
         />
-      </Provider>,
+      </WithMockStoreAndRouter>,
     );
 
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenLastCalledWith(registerOption(fieldIdentifier));
   });
 
-  it("should update the state if a value for given fieldset is registered in the store", () => {
+  it("should update the local state if a value for the given fieldset is found in the Redux store", () => {
     const mockedSetCheckedInputName = jest.fn();
     const mockedCheckedInputName = "";
     const mockedValue = "flatRate";
+    const useStateMock = () => [
+      mockedCheckedInputName,
+      mockedSetCheckedInputName,
+    ];
 
-    jest
-      .spyOn(React, "useState")
-      .mockReturnValueOnce([mockedCheckedInputName, mockedSetCheckedInputName]);
+    jest.spyOn(React, "useState").mockImplementation(useStateMock);
 
     render(
       <Provider store={store}>
@@ -124,13 +127,13 @@ describe("Fieldset component", () => {
     ).amount;
 
     render(
-      <Provider store={store}>
+      <WithMockStoreAndRouter customStore={store}>
         <Fieldset
           options={testOptions}
           heading="Delivery"
           identifier={fieldIdentifier}
         />
-      </Provider>,
+      </WithMockStoreAndRouter>,
     );
 
     const radioElement = screen.getByLabelText(
