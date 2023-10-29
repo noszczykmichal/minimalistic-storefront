@@ -7,6 +7,13 @@
   text-transform: uppercase;
 }
 
+.product-attribute__label--mini-cart {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  margin: 0.5rem 0;
+}
+
 .product-attribute__values {
   display: flex;
   gap: 0.5rem;

@@ -9,7 +9,13 @@ describe("AttributeVariant component", () => {
       value: "#030BFF",
     };
 
-    render(<AttributeVariant variantType="Color" variantData={testData} />);
+    render(
+      <AttributeVariant
+        variantType="Color"
+        variantData={testData}
+        inMiniView={false}
+      />,
+    );
     const button = screen.getByRole("button");
 
     expect(button).toBeInTheDocument();
@@ -24,7 +30,13 @@ describe("AttributeVariant component", () => {
       selected: true,
     };
 
-    render(<AttributeVariant variantType="Color" variantData={testData} />);
+    render(
+      <AttributeVariant
+        variantType="Color"
+        variantData={testData}
+        inMiniView={false}
+      />,
+    );
     const button = screen.getByRole("button");
 
     expect(button).toBeInTheDocument();
@@ -39,7 +51,13 @@ describe("AttributeVariant component", () => {
     // #F0F0F0 translated to rgb
     const grey = "rgb(240, 240, 240)";
 
-    render(<AttributeVariant variantType="Color" variantData={testData} />);
+    render(
+      <AttributeVariant
+        variantType="Color"
+        variantData={testData}
+        inMiniView={false}
+      />,
+    );
     const button = screen.getByRole("button");
     const style = window.getComputedStyle(button);
 
@@ -53,7 +71,13 @@ describe("AttributeVariant component", () => {
       value: "L",
     };
 
-    render(<AttributeVariant variantType="Size" variantData={testData} />);
+    render(
+      <AttributeVariant
+        variantType="Size"
+        variantData={testData}
+        inMiniView={false}
+      />,
+    );
     const button = screen.getByRole("button");
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass("product-attribute__value");
@@ -67,7 +91,13 @@ describe("AttributeVariant component", () => {
       selected: true,
     };
 
-    render(<AttributeVariant variantType="Size" variantData={testData} />);
+    render(
+      <AttributeVariant
+        variantType="Size"
+        variantData={testData}
+        inMiniView={false}
+      />,
+    );
     const button = screen.getByRole("button");
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass("product-attribute__value--selected");

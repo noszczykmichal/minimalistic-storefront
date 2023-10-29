@@ -68,7 +68,11 @@ function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
 
           <div className={classes["cart-item__product-attributes"]}>
             {itemDetails.attributes.map((attribute) => (
-              <Attribute attributeDetails={attribute} key={attribute.name} />
+              <Attribute
+                attributeDetails={attribute}
+                isInMiniView={false}
+                key={attribute.name}
+              />
             ))}
           </div>
         </div>

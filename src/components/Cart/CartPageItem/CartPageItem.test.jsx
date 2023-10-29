@@ -7,7 +7,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { testItemDetails } from "../../../utils/testData";
+import { testItemDetails } from "../../../utils/testUtils";
 import CartPageItem from "./CartPageItem";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
 
@@ -22,9 +22,10 @@ describe("CartPageItem component", () => {
 
   it("should render CartPageItem with accurate product description", () => {
     render(<CartPageItem itemDetails={testItemDetails} />);
-    const priceRegEx = /\$518.47/;
+
     const brandRegEx = new RegExp(`${testItemDetails.brand}`);
     const nameRegEx = new RegExp(`${testItemDetails.name}`);
+    const priceRegEx = /\$518.47/;
 
     const brandElement = screen.getByText(brandRegEx);
     const nameElement = screen.getByText(nameRegEx);
