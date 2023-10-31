@@ -126,8 +126,8 @@ describe("ActionButtons component", () => {
       </WithMockStoreAndRouter>,
     );
 
-    const backButton = screen.getByText(testButtonText);
-    userEvent.click(backButton);
+    const nextButton = screen.getByText(testButtonText);
+    userEvent.click(nextButton);
 
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith(testBttnPath);
