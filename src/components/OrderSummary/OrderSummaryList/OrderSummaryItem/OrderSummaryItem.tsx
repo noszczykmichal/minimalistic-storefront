@@ -21,23 +21,26 @@ function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
   );
 
   return (
-    <li className={classes["cart-item"]}>
+    <li className={classes["order-summary-item"]}>
       {/* first column */}
-      <div className={classes["cart-item__image-wrapper"]}>
-        <p className={classes["cart-item__product-quantity"]}>{quantity} x</p>
-        <div
-          className={classes["cart-item__thumbnail"]}
-          style={{ backgroundImage: `url(${gallery[0]})` }}
+      <div className={classes["order-summary-item__image-wrapper"]}>
+        <p className={classes["image-wrapper__product-quantity"]}>
+          {quantity} x
+        </p>
+        <img
+          className={classes["image-wrapper__thumbnail"]}
+          src={`${gallery[0]}`}
+          alt={`${brand} ${name}`}
         />
       </div>
       {/* second column */}
-      <div className={classes["cart-item__description"]}>
+      <div className={classes["order-summary-item__description"]}>
         <p>
           {brand} {name}
           {chosenAttributes}
         </p>
       </div>
-      <p className={classes["cart-item__price-tag"]}>
+      <p className={classes["order-summary-item__price-tag"]}>
         {billingCurrency}
         {currentPrice}
       </p>
