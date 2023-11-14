@@ -16,9 +16,13 @@ function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
     </span>
   ));
 
-  const currentPrice = cartItem.prices.map((price) =>
-    price.currency.symbol === billingCurrency ? price.amount.toFixed(2) : null,
-  );
+  const currentPrice = cartItem.prices
+    .map((price) =>
+      price.currency.symbol === billingCurrency
+        ? price.amount.toFixed(2)
+        : null,
+    )
+    .find((price) => price !== null);
 
   return (
     <li className={classes["order-summary-item"]}>
@@ -41,8 +45,7 @@ function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
         </p>
       </div>
       <p className={classes["order-summary-item__price-tag"]}>
-        {billingCurrency}
-        {currentPrice}
+        {billingCurrency + currentPrice}
       </p>
     </li>
   );
