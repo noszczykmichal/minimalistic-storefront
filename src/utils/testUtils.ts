@@ -49,13 +49,60 @@ export const testItemDetails: CartItem = {
   internalID: "jacket-canada-gooseem",
 };
 
-export function createMockStore(productsTotalVal: number) {
+const testNikeAir = {
+  id: "huarache-x-stussy-le",
+  name: "Nike Air Huarache Le",
+  brand: "Nike x Stussy",
+  inStock: true,
+  gallery: [
+    "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_2_720x.jpg?v=1612816087",
+    "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_1_720x.jpg?v=1612816087",
+    "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_3_720x.jpg?v=1612816087",
+  ],
+  description: "<p>Great sneakers for everyday use!</p>",
+  attributes: [
+    {
+      name: "Size",
+      items: [
+        {
+          displayValue: "40",
+          value: "40",
+          selected: true,
+        },
+        {
+          displayValue: "41",
+          value: "41",
+        },
+      ],
+    },
+  ],
+  prices: [
+    {
+      currency: {
+        label: "USD",
+        symbol: "$",
+      },
+      amount: 144.69,
+    },
+    {
+      currency: {
+        label: "GBP",
+        symbol: "£",
+      },
+      amount: 104,
+    },
+  ],
+  quantity: 1,
+  internalID: "huarache-x-stussy-le40",
+};
+
+export function createTestStore(productsTotalVal: number) {
   const mockStore = configureStore([]);
 
   return mockStore({
     ui: { isMiniCartOpen: true },
     products: {
-      cart: [testItemDetails],
+      cart: [testItemDetails, testNikeAir],
       productsTotal: productsTotalVal,
       totalPrice: 144.69,
       billingCurrency: "$",
