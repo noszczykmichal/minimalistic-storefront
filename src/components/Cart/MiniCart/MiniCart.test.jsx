@@ -6,7 +6,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
 
 import { useAppDispatch } from "../../../hooks/useReduxHooks";
-import { createMockStore } from "../../../utils/testUtils";
+import { createTestStore } from "../../../utils/testUtils";
 import MiniCart from "./MiniCart";
 import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
 
@@ -20,7 +20,7 @@ describe("MiniCart component", () => {
   });
 
   it("should render a heading containing the word 'item' when 'productsTotal' is 1", () => {
-    const mockStore = createMockStore(1);
+    const mockStore = createTestStore(1);
 
     render(
       <WithMockStoreAndRouter customStore={mockStore}>
@@ -35,7 +35,7 @@ describe("MiniCart component", () => {
   });
 
   it("should render a heading containing the word 'items' when 'productsTotal' is 2 or greater", () => {
-    const mockStore = createMockStore(2);
+    const mockStore = createTestStore(2);
 
     render(
       <WithMockStoreAndRouter customStore={mockStore}>
@@ -50,7 +50,7 @@ describe("MiniCart component", () => {
   });
 
   it("should have no accessibility violations", async () => {
-    const mockStore = createMockStore(2);
+    const mockStore = createTestStore(2);
 
     const { container } = render(
       <WithMockStoreAndRouter customStore={mockStore}>
