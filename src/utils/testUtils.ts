@@ -96,7 +96,26 @@ const testNikeAir = {
   internalID: "huarache-x-stussy-le40",
 };
 
-export function createTestStore(productsTotalVal: number) {
+const testShippingPaymentOptions = {
+  isFormValid: true,
+  inputs: {
+    shippingOption: {
+      value: "bestWay",
+      cost: 10,
+      isSelected: true,
+    },
+    paymentOption: {
+      value: "bank_transfer",
+      cost: 0,
+      isSelected: true,
+    },
+  },
+};
+
+export function createTestStore(
+  productsTotalVal: number = 2,
+  shippingPaymentOptionsValue = testShippingPaymentOptions,
+) {
   const mockStore = configureStore([]);
 
   return mockStore({
@@ -107,5 +126,6 @@ export function createTestStore(productsTotalVal: number) {
       totalPrice: 144.69,
       billingCurrency: "$",
     },
+    shippingPaymentOptions: shippingPaymentOptionsValue,
   });
 }
