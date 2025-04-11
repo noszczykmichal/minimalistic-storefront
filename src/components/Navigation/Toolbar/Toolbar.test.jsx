@@ -54,6 +54,8 @@ describe("Toolbar component", () => {
 
   it("should not render NavigationItems and CurrencySwitcher when props categories and currencies are empty arrays", () => {
     useAppSelector.mockReturnValue({
+      categories: [],
+      currencies: [],
       billingCurrency: "$",
       totalPrice: 0,
     });
@@ -64,12 +66,12 @@ describe("Toolbar component", () => {
       </MemoryRouter>,
     );
 
+    const navigationItemsList = screen.queryByTestId("navigation-items");
     const { billingCurrency } = useAppSelector.mock.results[0].value;
-    const listElement = screen.queryByRole("list");
     const currencySwitcher = screen.queryByText(billingCurrency);
 
-    expect(listElement).not.toBeInTheDocument();
-    expect(currencySwitcher).not.toBeInTheDocument();
+    expect(navigationItemsList).toBeNull();
+    expect(currencySwitcher).toBeNull();
   });
 
   it("should have no accessibility violations", async () => {
