@@ -16,10 +16,10 @@ function Toolbar() {
   let navigationItems;
   let currencySwitcher;
 
-  if (categories) {
+  if (categories.length) {
     navigationItems = <NavigationItems categories={categories} />;
   }
-  if (currencies) {
+  if (currencies.length) {
     currencySwitcher = <CurrencySwitcher currencies={currencies} />;
   }
 
