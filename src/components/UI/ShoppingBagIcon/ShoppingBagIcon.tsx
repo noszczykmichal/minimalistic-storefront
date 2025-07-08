@@ -3,7 +3,11 @@ import { CSSTransition } from "react-transition-group";
 
 import classes from "@/components/UI/ShoppingBagIcon/ShoppingBagIcon.module.css";
 
-function ShoppingBagIcon({ animateCheckmark }: { animateCheckmark: boolean }) {
+export default function ShoppingBagIcon({
+  animateCheckmark,
+}: {
+  animateCheckmark: boolean;
+}) {
   const nodeRef = useRef(null);
 
   return (
@@ -93,5 +97,3 @@ function ShoppingBagIcon({ animateCheckmark }: { animateCheckmark: boolean }) {
     </svg>
   );
 }
-
-export default ShoppingBagIcon;

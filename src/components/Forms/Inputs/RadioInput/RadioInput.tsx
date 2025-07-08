@@ -7,7 +7,7 @@ import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
 import classes from "@/components/Forms/Inputs/RadioInput/RadioInput.module.css";
 
-function RadioInput({
+export default function RadioInput({
   inputDetails,
   clicked,
   checkedInputName,
@@ -78,5 +78,3 @@ function RadioInput({
     </div>
   );
 }
-
-export default RadioInput;

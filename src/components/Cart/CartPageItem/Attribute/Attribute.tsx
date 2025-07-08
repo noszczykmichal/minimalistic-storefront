@@ -7,7 +7,7 @@ interface AttributeInterface {
   items: AttributeVariantInterface[];
 }
 
-function Attribute({
+export default function Attribute({
   attributeDetails,
   isInMiniView,
 }: {
@@ -35,5 +35,3 @@ function Attribute({
     </div>
   );
 }
-
-export default Attribute;

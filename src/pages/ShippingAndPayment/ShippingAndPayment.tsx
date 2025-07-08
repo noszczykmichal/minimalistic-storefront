@@ -5,7 +5,7 @@ import { useAppSelector } from "@/hooks/useReduxHooks";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 import classes from "@/pages/ShippingAndPayment/ShippingAndPayment.module.css";
 
-function ShippingAndPayment() {
+export default function ShippingAndPayment() {
   const { isFormValid } = useAppSelector(
     (state) => state.shippingPaymentOptions,
   );
@@ -36,5 +36,3 @@ function ShippingAndPayment() {
     </section>
   );
 }
-
-export default ShippingAndPayment;

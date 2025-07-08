@@ -5,7 +5,7 @@ import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 import classes from "@/pages/Address/Address.module.css";
 
-function Address() {
+export default function Address() {
   const { isFormValid } = useAppSelector((state) => state.shippingAddress);
 
   return (
@@ -29,5 +29,3 @@ function Address() {
     </section>
   );
 }
-
-export default Address;

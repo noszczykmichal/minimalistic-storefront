@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import { uiActions } from "@/store/uiSlice";
 
-function useRedirect() {
+export default function useRedirect() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { backdropVisibilityToggle, miniCartVisibilityToggle } = uiActions;
@@ -16,5 +16,3 @@ function useRedirect() {
     }
   };
 }
-
-export default useRedirect;

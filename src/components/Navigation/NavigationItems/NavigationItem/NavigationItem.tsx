@@ -5,7 +5,7 @@ import { uiActions } from "@/store/uiSlice";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/NavigationItems/NavigationItem/NavigationItem.module.css";
 
-function NavigationItem({
+export default function NavigationItem({
   link,
   children,
 }: {
@@ -35,5 +35,3 @@ function NavigationItem({
     </li>
   );
 }
-
-export default NavigationItem;

@@ -17,7 +17,7 @@ const ShippingAndPayment = lazy(
 const Review = lazy(() => import("@/pages/Review/Review"));
 const Confirm = lazy(() => import("@/pages/Confirm/Confirm"));
 
-function App({
+export default function App({
   categories,
   currencies,
 }: {
@@ -54,5 +54,3 @@ function App({
     </Layout>
   );
 }
-
-export default App;

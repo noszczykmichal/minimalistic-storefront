@@ -12,7 +12,7 @@ import { AttributeItem, ProductType } from "@/models/productSlice.models";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/pages/PDP/PDP.module.css";
 
-function PDP() {
+export default function PDP() {
   const dispatch = useAppDispatch();
   const { currentPDP: displayedProduct, billingCurrency } = useAppSelector(
     (state) => state.products,
@@ -222,5 +222,3 @@ function PDP() {
     </section>
   );
 }
-
-export default PDP;

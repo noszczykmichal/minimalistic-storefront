@@ -2,7 +2,7 @@ import { uiActions } from "@/store/uiSlice";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/MobileNavigation/ToggleButton/ToggleButton.module.css";
 
-function ToggleButton() {
+export default function ToggleButton() {
   const dispatch = useAppDispatch();
 
   const {
@@ -32,5 +32,3 @@ function ToggleButton() {
     </button>
   );
 }
-
-export default ToggleButton;

@@ -7,7 +7,7 @@ import { uiActions } from "@/store/uiSlice";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import classes from "@/components/UI/Backdrop/Backdrop.module.css";
 
-function Backdrop() {
+export default function Backdrop() {
   const backdropRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const {
@@ -56,5 +56,3 @@ function Backdrop() {
     </CSSTransition>
   );
 }
-
-export default Backdrop;

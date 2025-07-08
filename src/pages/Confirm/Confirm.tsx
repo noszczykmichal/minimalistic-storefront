@@ -8,7 +8,7 @@ import { shippingAddressActions } from "@/store/shippingAddress";
 import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
 import classes from "@/pages/Confirm/Confirm.module.css";
 
-function Confirm() {
+export default function Confirm() {
   const [showCheckmark, setShowCheckmark] = useState(false);
   const dispatch = useAppDispatch();
   const { clearCart } = productActions;
@@ -36,5 +36,3 @@ function Confirm() {
     </section>
   );
 }
-
-export default Confirm;

@@ -1,6 +1,6 @@
 import classes from "@/components/Cart/Icons/PlusIcon/PlusIcon.module.css";
 
-function PlusIcon() {
+export default function PlusIcon() {
   return (
     <>
       <svg
@@ -35,5 +35,3 @@ function PlusIcon() {
     </>
   );
 }
-
-export default PlusIcon;

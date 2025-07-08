@@ -9,7 +9,7 @@ import { useAppSelector } from "@/hooks/useReduxHooks";
 import { shippingOptions, paymentOptions } from "@/utils/config";
 import classes from "@/pages/Review/Review.module.css";
 
-function Review() {
+export default function Review() {
   const navigate = useNavigate();
   const {
     fName,
@@ -107,5 +107,3 @@ function Review() {
     </section>
   );
 }
-
-export default Review;

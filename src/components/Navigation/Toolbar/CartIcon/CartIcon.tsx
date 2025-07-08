@@ -2,7 +2,7 @@ import { uiActions } from "@/store/uiSlice";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/Toolbar/CartIcon/CartIcon.module.css";
 
-function CartIcon() {
+export default function CartIcon() {
   const dispatch = useAppDispatch();
   const { productsTotal } = useAppSelector((state) => state.products);
   const {
@@ -53,5 +53,3 @@ function CartIcon() {
     </button>
   );
 }
-
-export default CartIcon;

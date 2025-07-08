@@ -5,7 +5,7 @@ import ProductList from "@/components/Products/ProductList/ProductList";
 import Loader from "@/components/UI/Loader/Loader";
 import classes from "@/pages/PLP/PLP.module.css";
 
-function PLP() {
+export default function PLP() {
   const location = useLocation();
   const { pathname } = location;
   const searchedCategory = pathname === "/" ? "all" : pathname.substring(1);
@@ -58,5 +58,3 @@ function PLP() {
     </section>
   );
 }
-
-export default PLP;

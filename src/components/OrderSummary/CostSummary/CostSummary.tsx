@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/OrderSummary/CostSummary/CostSummary.module.css";
 
-function CostSummary() {
+export default function CostSummary() {
   const { billingCurrency, totalPrice } = useAppSelector(
     (state) => state.products,
   );
@@ -83,5 +83,3 @@ function CostSummary() {
     </div>
   );
 }
-
-export default CostSummary;

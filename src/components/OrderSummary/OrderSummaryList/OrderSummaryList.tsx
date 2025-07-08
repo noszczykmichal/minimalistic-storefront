@@ -3,7 +3,7 @@ import { useAppSelector } from "@/hooks/useReduxHooks";
 import OrderSummaryItem from "@/components/OrderSummary/OrderSummaryList/OrderSummaryItem/OrderSummaryItem";
 import classes from "@/components/OrderSummary/OrderSummaryList/OrderSummaryList.module.css";
 
-function OrderSummaryList() {
+export default function OrderSummaryList() {
   const { cart } = useAppSelector((state) => state.products);
   return (
     <div>
@@ -16,5 +16,3 @@ function OrderSummaryList() {
     </div>
   );
 }
-
-export default OrderSummaryList;
