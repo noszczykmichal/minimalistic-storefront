@@ -1,6 +1,6 @@
-import { AttributeVariantInterface } from "../../../../models/utility-models";
-import AttributeVariant from "./AttributeVariant/AttributeVariant";
-import classes from "./Attribute.module.css";
+import { AttributeVariantInterface } from "@/models/utility-models";
+import AttributeVariant from "@/components/Cart/CartPageItem/Attribute/AttributeVariant/AttributeVariant";
+import classes from "@/components/Cart/CartPageItem/Attribute/Attribute.module.css";
 
 interface AttributeInterface {
   name: string;

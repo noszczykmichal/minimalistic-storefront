@@ -2,8 +2,8 @@ import * as ReactDOM from "react-router";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
-import ActionButtons from "./ActionButtons";
+import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
+import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 
 describe("ActionButtons component", () => {
   let testIsDisabled = true;

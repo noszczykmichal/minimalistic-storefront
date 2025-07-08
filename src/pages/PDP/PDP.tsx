@@ -4,13 +4,13 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { Markup } from "interweave";
 
-import classes from "./PDP.module.css";
-import Button from "../components/UI/Button/Button";
-import Modal from "../components/UI/Modal/Modal";
-import { productActions } from "../store/productsSlice";
-import { uiActions } from "../store/uiSlice";
-import { AttributeItem, ProductType } from "../models/productSlice.models";
-import { useAppDispatch, useAppSelector } from "../hooks/useReduxHooks";
+import Button from "@/components/UI/Button/Button";
+import Modal from "@/components/UI/Modal/Modal";
+import { productActions } from "@/store/productsSlice";
+import { uiActions } from "@/store/uiSlice";
+import { AttributeItem, ProductType } from "@/models/productSlice.models";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
+import classes from "@/pages/PDP/PDP.module.css";
 
 function PDP() {
   const dispatch = useAppDispatch();

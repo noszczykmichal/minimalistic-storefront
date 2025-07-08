@@ -1,6 +1,6 @@
-import { productActions } from "../store/productsSlice";
-import { useAppDispatch } from "./useReduxHooks";
-import { ChangeQuantityVariants } from "../models/utility-models";
+import { productActions } from "@/store/productsSlice";
+import { useAppDispatch } from "@/hooks/useReduxHooks";
+import { ChangeQuantityVariants } from "@/models/utility-models";
 
 function useChangeQuantity(
   internalID: string,

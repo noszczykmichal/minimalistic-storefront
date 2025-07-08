@@ -1,12 +1,12 @@
-jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
 import { render, screen } from "@testing-library/react";
 
-import MiniCartItems from "./MiniCartItems";
-import { useAppSelector } from "../../../../hooks/useReduxHooks";
-import { testItemDetails } from "../../../../utils/testUtils";
+import MiniCartItems from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItems";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import { testItemDetails } from "@/utils/testUtils";
 
 describe("MiniCartItems component", () => {
   beforeEach(() => {

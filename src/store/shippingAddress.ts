@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { ValidationFn } from "../models/utility-models";
+import { ValidationFn } from "@/models/utility-models";
 
 interface Input {
   value: string;

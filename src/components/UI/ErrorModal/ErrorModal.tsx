@@ -1,4 +1,4 @@
-import classes from "./ErrorModal.module.css";
+import classes from "@/components/UI/ErrorModal/ErrorModal.module.css";
 
 type ErrorDetails = {
   message: string;

@@ -1,13 +1,13 @@
-jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppDispatch: jest.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import ToggleButton from "./ToggleButton";
-import { useAppDispatch } from "../../../../hooks/useReduxHooks";
-import { uiActions } from "../../../../store/uiSlice";
+import ToggleButton from "@/components/Navigation/MobileNavigation/ToggleButton/ToggleButton";
+import { useAppDispatch } from "@/hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
 
 describe("ToggleButton component", () => {
   const dispatch = jest.fn();

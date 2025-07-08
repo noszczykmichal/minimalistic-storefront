@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 
-import classes from "./Layout.module.css";
-import Toolbar from "../Navigation/Toolbar/Toolbar";
-import MobileNavigation from "../Navigation/MobileNavigation/MobileNavigation";
+import Toolbar from "@/components/Navigation/Toolbar/Toolbar";
+import MobileNavigation from "@/components/Navigation/MobileNavigation/MobileNavigation";
+import classes from "@/components/Layout/Layout.module.css";
 
 function Layout({ children }: { children: ReactNode }) {
   return (

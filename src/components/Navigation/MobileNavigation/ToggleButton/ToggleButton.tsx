@@ -1,6 +1,6 @@
-import classes from "./ToggleButton.module.css";
-import { uiActions } from "../../../../store/uiSlice";
-import { useAppDispatch } from "../../../../hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
+import { useAppDispatch } from "@/hooks/useReduxHooks";
+import classes from "@/components/Navigation/MobileNavigation/ToggleButton/ToggleButton.module.css";
 
 function ToggleButton() {
   const dispatch = useAppDispatch();

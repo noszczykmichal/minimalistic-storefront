@@ -1,11 +1,11 @@
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-import classes from "./MiniCart.module.css";
-import MiniCartItems from "./MiniCartItems/MiniCartItems";
-import Button from "../../UI/Button/Button";
-import { useAppSelector } from "../../../hooks/useReduxHooks";
-import useRedirect from "../../../hooks/useRedirect";
+import MiniCartItems from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItems";
+import Button from "@/components/UI/Button/Button";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import useRedirect from "@/hooks/useRedirect";
+import classes from "@/components/Cart/MiniCart/MiniCart.module.css";
 
 function MiniCart() {
   const miniCartRef = useRef<HTMLDivElement>(null);

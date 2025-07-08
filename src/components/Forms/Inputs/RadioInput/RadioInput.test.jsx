@@ -1,4 +1,4 @@
-jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
@@ -6,12 +6,9 @@ jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import RadioInput from "./RadioInput";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../hooks/useReduxHooks";
-import { shippingPaymentOptionsActions } from "../../../../store/shippingPaymentOptions";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
+import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
+import RadioInput from "@/components/Forms/Inputs/RadioInput/RadioInput";
 
 const testProps = {
   label: "cash",

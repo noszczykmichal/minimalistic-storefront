@@ -1,5 +1,5 @@
-import NavigationItem from "./NavigationItem/NavigationItem";
-import classes from "./NavigationItems.module.css";
+import NavigationItem from "@/components/Navigation/NavigationItems/NavigationItem/NavigationItem";
+import classes from "@/components/Navigation/NavigationItems/NavigationItems.module.css";
 
 function NavigationItems({ categories }: { categories: string[] }) {
   return (

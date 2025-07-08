@@ -1,4 +1,4 @@
-jest.mock("../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
@@ -8,8 +8,8 @@ import { axe } from "jest-axe";
 import ReactDOM from "react-dom";
 import { MemoryRouter } from "react-router";
 
-import Toolbar from "./Toolbar";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
+import Toolbar from "@/components/Navigation/Toolbar/Toolbar";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 
 describe("Toolbar component", () => {
   jest.spyOn(ReactDOM, "createPortal").mockImplementationOnce(() => {

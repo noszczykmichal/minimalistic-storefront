@@ -2,18 +2,20 @@ import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router";
 import { useDispatch } from "react-redux";
 
-import Layout from "./components/Layout/Layout";
-import Loader from "./components/UI/Loader";
-import { uiActions } from "./store/uiSlice";
-import PLP from "./pages/PLP";
-import { Currency } from "./models/productSlice.models";
+import Layout from "@/components/Layout/Layout";
+import Loader from "@/components/UI/Loader/Loader";
+import { uiActions } from "@/store/uiSlice";
+import PLP from "@/pages/PLP/PLP";
+import { Currency } from "@/models/productSlice.models";
 
-const PDP = lazy(() => import("./pages/PDP"));
-const Cart = lazy(() => import("./pages/Cart"));
-const Address = lazy(() => import("./pages/Address"));
-const ShippingAndPayment = lazy(() => import("./pages/ShippingAndPayment"));
-const Review = lazy(() => import("./pages/Review"));
-const Confirm = lazy(() => import("./pages/Confirm"));
+const PDP = lazy(() => import("@/pages/PDP/PDP"));
+const Cart = lazy(() => import("@/pages/Cart/Cart"));
+const Address = lazy(() => import("@/pages/Address/Address"));
+const ShippingAndPayment = lazy(
+  () => import("@/pages/ShippingAndPayment/ShippingAndPayment"),
+);
+const Review = lazy(() => import("@/pages/Review/Review"));
+const Confirm = lazy(() => import("@/pages/Confirm/Confirm"));
 
 function App({
   categories,

@@ -12,12 +12,12 @@ import {
 import { Provider } from "react-redux";
 import { Query } from "@apollo/client/react/components";
 import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "./store/store";
+import { persistor, store } from "@/store/store";
 
-import "./index.css";
-import App from "./App";
-import Loader from "./components/UI/Loader";
-import ErrorModal from "./components/UI/ErrorModal/ErrorModal";
+import App from "@/App";
+import Loader from "@/components/UI/Loader/Loader";
+import ErrorModal from "@/components/UI/ErrorModal/ErrorModal";
+import "@/index.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,

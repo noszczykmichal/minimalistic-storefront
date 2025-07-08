@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import ShoppingBagIcon from "../components/UI/ShoppingBagIcon";
-import { useAppDispatch } from "../hooks/useReduxHooks";
-import { productActions } from "../store/productsSlice";
-import { shippingAddressActions } from "../store/shippingAddress";
-import { shippingPaymentOptionsActions } from "../store/shippingPaymentOptions";
-import classes from "./Confirm.module.css";
+import ShoppingBagIcon from "@/components/UI/ShoppingBagIcon/ShoppingBagIcon";
+import { useAppDispatch } from "@/hooks/useReduxHooks";
+import { productActions } from "@/store/productsSlice";
+import { shippingAddressActions } from "@/store/shippingAddress";
+import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
+import classes from "@/pages/Confirm/Confirm.module.css";
 
 function Confirm() {
   const [showCheckmark, setShowCheckmark] = useState(false);

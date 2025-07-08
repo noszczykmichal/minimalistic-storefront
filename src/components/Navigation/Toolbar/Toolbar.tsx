@@ -1,14 +1,14 @@
 import { createPortal } from "react-dom";
 
-import NavigationItems from "../NavigationItems/NavigationItems";
-import classes from "./Toolbar.module.css";
-import Logo from "./Logo/Logo";
-import CartIcon from "./CartIcon/CartIcon";
-import CurrencySwitcher from "./CurrencySwitcher/CurrencySwitcher";
-import Backdrop from "../../UI/Backdrop/Backdrop";
-import MiniCart from "../../Cart/MiniCart/MiniCart";
-import ToggleButton from "../MobileNavigation/ToggleButton/ToggleButton";
-import { useAppSelector } from "../../../hooks/useReduxHooks";
+import NavigationItems from "@/components/Navigation/NavigationItems/NavigationItems";
+import Logo from "@/components/Navigation/Toolbar/Logo/Logo";
+import CartIcon from "@/components/Navigation/Toolbar/CartIcon/CartIcon";
+import CurrencySwitcher from "@/components/Navigation/Toolbar/CurrencySwitcher/CurrencySwitcher";
+import Backdrop from "@/components/UI/Backdrop/Backdrop";
+import MiniCart from "@/components/Cart/MiniCart/MiniCart";
+import ToggleButton from "@/components/Navigation/MobileNavigation/ToggleButton/ToggleButton";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import classes from "@/components/Navigation/Toolbar/Toolbar.module.css";
 
 function Toolbar() {
   const { categories, currencies } = useAppSelector((state) => state.ui);

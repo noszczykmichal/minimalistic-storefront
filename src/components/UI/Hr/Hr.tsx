@@ -1,4 +1,4 @@
-import classes from "./Hr.module.css";
+import classes from "@/components/UI/Hr/Hr.module.css";
 
 function Hr({ customClass }: { customClass: string }) {
   const attachedClasses = [classes.hr, customClass].join(" ");

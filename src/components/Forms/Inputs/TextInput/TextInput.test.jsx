@@ -1,16 +1,13 @@
-jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
 
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import TextInput from "./TextInput";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../hooks/useReduxHooks";
-import { shippingAddressActions } from "../../../../store/shippingAddress";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
+import { shippingAddressActions } from "@/store/shippingAddress";
+import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
 
 const testProps = {
   label: "First Name",

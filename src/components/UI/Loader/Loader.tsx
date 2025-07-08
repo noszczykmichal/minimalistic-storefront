@@ -1,4 +1,4 @@
-import classes from "./Loader.module.css";
+import classes from "@/components/UI/Loader/Loader.module.css";
 
 function Loader() {
   return (

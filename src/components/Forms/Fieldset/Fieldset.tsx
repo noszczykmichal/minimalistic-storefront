@@ -1,11 +1,11 @@
 import { useEffect, useState, FormEvent, Fragment } from "react";
 
-import classes from "./Fieldset.module.css";
-import RadioInput from "../Inputs/RadioInput/RadioInput";
-import { RadioInputProps } from "../../../models/utility-models";
-import Hr from "../../UI/Hr/Hr";
-import { shippingPaymentOptionsActions } from "../../../store/shippingPaymentOptions";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
+import RadioInput from "@/components/Forms/Inputs/RadioInput/RadioInput";
+import { RadioInputProps } from "@/models/utility-models";
+import Hr from "@/components/UI/Hr/Hr";
+import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
+import classes from "@/components/Forms/Fieldset/Fieldset.module.css";
 
 function Fieldset({
   options,

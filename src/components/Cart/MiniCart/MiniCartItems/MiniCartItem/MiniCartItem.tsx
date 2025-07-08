@@ -1,8 +1,8 @@
-import useChangeQuantity from "../../../../../hooks/useChangeQuantity";
-import { useAppSelector } from "../../../../../hooks/useReduxHooks";
-import { CartItem } from "../../../../../models/productSlice.models";
-import Attribute from "../../../CartPageItem/Attribute/Attribute";
-import classes from "./MiniCartItem.module.css";
+import useChangeQuantity from "@/hooks/useChangeQuantity";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import { CartItem } from "@/models/productSlice.models";
+import Attribute from "@/components/Cart/CartPageItem/Attribute/Attribute";
+import classes from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItem/MiniCartItem.module.css";
 
 function MiniCartItem({ itemDetails }: { itemDetails: CartItem }) {
   const { internalID, quantity, gallery } = itemDetails;

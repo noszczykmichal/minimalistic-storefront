@@ -1,9 +1,6 @@
-import classes from "./CartIcon.module.css";
-import { uiActions } from "../../../../store/uiSlice";
-import {
-  useAppSelector,
-  useAppDispatch,
-} from "../../../../hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
+import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
+import classes from "@/components/Navigation/Toolbar/CartIcon/CartIcon.module.css";
 
 function CartIcon() {
   const dispatch = useAppDispatch();

@@ -1,8 +1,7 @@
-import classes from "./OrderSummary.module.css";
-
-import OrderSummaryList from "./OrderSummaryList/OrderSummaryList";
-import Hr from "../UI/Hr/Hr";
-import CostSummary from "./CostSummary/CostSummary";
+import OrderSummaryList from "@/components/OrderSummary/OrderSummaryList/OrderSummaryList";
+import Hr from "@/components/UI/Hr/Hr";
+import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
+import classes from "@/components/OrderSummary/OrderSummary.module.css";
 
 function OrderSummary() {
   return (

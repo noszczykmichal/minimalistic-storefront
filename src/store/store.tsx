@@ -3,10 +3,10 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 
-import uiSlice from "./uiSlice";
-import productsSlice from "./productsSlice";
-import shippingAddress from "./shippingAddress";
-import shippingPaymentOptions from "./shippingPaymentOptions";
+import uiSlice from "@/store/uiSlice";
+import productsSlice from "@/store/productsSlice";
+import shippingAddress from "@/store/shippingAddress";
+import shippingPaymentOptions from "@/store/shippingPaymentOptions";
 
 const rootReducer = combineReducers({
   ui: uiSlice.reducer,

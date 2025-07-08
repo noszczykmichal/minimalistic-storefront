@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import AttributeVariant from "./AttributeVariant";
+import AttributeVariant from "@/components/Cart/CartPageItem/Attribute/AttributeVariant/AttributeVariant";
 
 describe("AttributeVariant component", () => {
   it('should render an AttributeVariant of type "Color" that is not selected', () => {

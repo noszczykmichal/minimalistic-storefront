@@ -3,13 +3,10 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useLocation, useNavigate } from "react-router-dom";
 
-import classes from "./Product.module.css";
-import { productActions } from "../../../../store/productsSlice";
-import {
-  useAppSelector,
-  useAppDispatch,
-} from "../../../../hooks/useReduxHooks";
-import { ProductType } from "../../../../models/productSlice.models";
+import { productActions } from "@/store/productsSlice";
+import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
+import { ProductType } from "@/models/productSlice.models";
+import classes from "@/components/Products/ProductList/Product/Product.module.css";
 
 function Product({ productDetails }: { productDetails: ProductType }) {
   const { billingCurrency } = useAppSelector((state) => state.products);
