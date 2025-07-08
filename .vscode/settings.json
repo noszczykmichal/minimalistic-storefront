@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["checkmark", "Elem", "reduxjs", "sneakers", "testid"]
+  "cSpell.words": ["checkmark", "Elem", "reduxjs", "sneakers", "testid"],
+  "github-actions.use-enterprise": true
 }

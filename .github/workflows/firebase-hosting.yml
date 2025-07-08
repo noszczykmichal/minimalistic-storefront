@@ -39,6 +39,13 @@ jobs:
       - name: Build the project
         run: npm run build
 
+      - name: Check if FIREBASE_TOKEN is available
+        run: |
+          if [ -z "${{ secrets.FIREBASE_TOKEN }}" ]; then
+          echo "FIREBASE_TOKEN is missing!"
+          exit 1
+          fi
+
       - name: Deploy to Firebase Hosting
         if: github.ref == 'refs/heads/main'
         run: |
