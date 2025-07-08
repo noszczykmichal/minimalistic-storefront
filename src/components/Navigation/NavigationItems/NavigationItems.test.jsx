@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 
-import NavigationItems from "./NavigationItems";
-import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
+import NavigationItems from "@/components/Navigation/NavigationItems/NavigationItems";
+import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 
 describe("NavigationItems component", () => {
   const testCategories = ["all", "tech"];

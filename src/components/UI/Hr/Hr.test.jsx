@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 
-import Hr from "./Hr";
+import Hr from "@/components/UI/Hr/Hr";
 
 describe("Hr component", () => {
   test("should render an empty div element with class 'hr'", () => {

@@ -1,4 +1,4 @@
-import { validators } from "./config";
+import { validators } from "@/utils/config";
 
 const { stringValidator, phoneValidator, emailValidator } = validators;
 

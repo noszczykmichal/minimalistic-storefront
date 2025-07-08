@@ -1,4 +1,4 @@
-jest.mock("../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
@@ -7,8 +7,8 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
 import { MemoryRouter } from "react-router";
 
-import MobileNavigation from "./MobileNavigation";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
+import MobileNavigation from "@/components/Navigation/MobileNavigation/MobileNavigation";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 
 describe("MobileNavigation component", () => {
   const dispatch = jest.fn();

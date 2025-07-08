@@ -1,4 +1,4 @@
-jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppDispatch: jest.fn(),
   useAppSelector: jest.fn(),
 }));
@@ -6,13 +6,10 @@ jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import CurrencySwitcher from "./CurrencySwitcher";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../hooks/useReduxHooks";
-import { uiActions } from "../../../../store/uiSlice";
-import { productActions } from "../../../../store/productsSlice";
+import CurrencySwitcher from "@/components/Navigation/Toolbar/CurrencySwitcher/CurrencySwitcher";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
+import { productActions } from "@/store/productsSlice";
 
 const testCurrencies = [
   { label: "USD", symbol: "$" },

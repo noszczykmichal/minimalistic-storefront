@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 
-import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
-import CostSummary from "./CostSummary";
-import { createTestStore } from "../../../utils/testUtils";
+import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
+import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
+import { createTestStore } from "@/utils/testUtils";
 
 describe("CostSummary component", () => {
   it("should not initially render neither 'Other' nor 'Shipping' elements", () => {

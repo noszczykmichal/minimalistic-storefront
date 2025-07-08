@@ -1,9 +1,9 @@
-import classes from "./Address.module.css";
-import { useAppSelector } from "../hooks/useReduxHooks";
-import OrderSummary from "../components/OrderSummary/OrderSummary";
-import { shippingAddressInputs } from "../utils/config";
-import TextInput from "../components/Forms/Inputs/TextInput/TextInput";
-import ActionButtons from "../components/Forms/ActionButtons/ActionButtons";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import OrderSummary from "@/components/OrderSummary/OrderSummary";
+import { shippingAddressInputs } from "@/utils/config";
+import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
+import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
+import classes from "@/pages/Address/Address.module.css";
 
 function Address() {
   const { isFormValid } = useAppSelector((state) => state.shippingAddress);

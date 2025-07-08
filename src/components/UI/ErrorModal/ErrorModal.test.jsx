@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import ErrorModal from "./ErrorModal";
+import ErrorModal from "@/components/UI/ErrorModal/ErrorModal";
 
 describe("ErrorModal component", () => {
   it("render a provided error message", () => {

@@ -1,6 +1,6 @@
 import configureStore from "redux-mock-store";
 
-import { CartItem } from "../models/productSlice.models";
+import { CartItem } from "@/models/productSlice.models";
 
 export const testItemDetails: CartItem = {
   id: "jacket-canada-goosee",

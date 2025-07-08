@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { ReactNode } from "react";
 
-import classes from "./NavigationItem.module.css";
-import { uiActions } from "../../../../store/uiSlice";
-import { useAppDispatch } from "../../../../hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
+import { useAppDispatch } from "@/hooks/useReduxHooks";
+import classes from "@/components/Navigation/NavigationItems/NavigationItem/NavigationItem.module.css";
 
 function NavigationItem({
   link,

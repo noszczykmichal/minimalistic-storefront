@@ -1,12 +1,9 @@
 import { useEffect, FormEvent } from "react";
 
-import classes from "./TextInput.module.css";
-import { shippingAddressActions } from "../../../../store/shippingAddress";
-import {
-  useAppSelector,
-  useAppDispatch,
-} from "../../../../hooks/useReduxHooks";
-import { ValidationFn } from "../../../../models/utility-models";
+import { shippingAddressActions } from "@/store/shippingAddress";
+import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
+import { ValidationFn } from "@/models/utility-models";
+import classes from "@/components/Forms/Inputs/TextInput/TextInput.module.css";
 
 interface TextInputProps {
   label: string;

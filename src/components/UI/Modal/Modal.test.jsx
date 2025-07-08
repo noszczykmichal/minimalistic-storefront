@@ -1,4 +1,4 @@
-jest.mock("../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppDispatch: jest.fn(),
   useAppSelector: jest.fn(),
 }));
@@ -6,9 +6,9 @@ jest.mock("../../../hooks/useReduxHooks.ts", () => ({
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import Modal from "./Modal";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useReduxHooks";
-import { uiActions } from "../../../store/uiSlice";
+import Modal from "@/components/UI/Modal/Modal";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
 
 describe("Modal component", () => {
   const dispatch = jest.fn();

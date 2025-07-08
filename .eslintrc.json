@@ -55,12 +55,21 @@
     "react/jsx-uses-react": ["off"],
     "react/react-in-jsx-scope": ["off"],
     "react/jsx-props-no-spreading": ["warn"],
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "import/extensions": "off"
   },
   "overrides": [
     {
       "files": ["**/*.test.js", "**/*.test.jsx"],
       "extends": ["./.eslintrc.test.json"]
     }
-  ]
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true, // optional but useful
+        "project": "./tsconfig.json" // ensure it's pointing at your main tsconfig
+      }
+    }
+  }
 }

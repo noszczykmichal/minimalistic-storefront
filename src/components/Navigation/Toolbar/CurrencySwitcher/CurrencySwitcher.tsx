@@ -3,14 +3,11 @@
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-import classes from "./CurrencySwitcher.module.css";
-import { productActions } from "../../../../store/productsSlice";
-import { uiActions } from "../../../../store/uiSlice";
-import {
-  useAppSelector,
-  useAppDispatch,
-} from "../../../../hooks/useReduxHooks";
-import { Currency } from "../../../../models/productSlice.models";
+import { productActions } from "@/store/productsSlice";
+import { uiActions } from "@/store/uiSlice";
+import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
+import { Currency } from "@/models/productSlice.models";
+import classes from "@/components/Navigation/Toolbar/CurrencySwitcher/CurrencySwitcher.module.css";
 
 function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
   const switcherOptionsRef = useRef<HTMLUListElement>(null);

@@ -1,6 +1,6 @@
 import { ReactNode, FormEvent } from "react";
 
-import classes from "./Button.module.css";
+import classes from "@/components/UI/Button/Button.module.css";
 
 function Button({
   customClass,

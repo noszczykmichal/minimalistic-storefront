@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import ThumbnailArrow from "./ThumbnailArrow";
+import ThumbnailArrow from "@/components/UI/ThumbnailArrow/ThumbnailArrow";
 
 describe("ThumbnailArrow component", () => {
   it("should render a left arrow when variant is 'left' and apply correct classes", () => {

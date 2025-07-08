@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import Attribute from "./Attribute";
+import Attribute from "@/components/Cart/CartPageItem/Attribute/Attribute";
 
 describe("Attribute component", () => {
   it("should render h3 element and 2 buttons based on the provided data", () => {

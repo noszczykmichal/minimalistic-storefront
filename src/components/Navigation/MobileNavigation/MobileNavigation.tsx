@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-import classes from "./MobileNavigation.module.css";
-import NavigationItems from "../NavigationItems/NavigationItems";
-import { useAppSelector } from "../../../hooks/useReduxHooks";
+import NavigationItems from "@/components/Navigation/NavigationItems/NavigationItems";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import classes from "@/components/Navigation/MobileNavigation/MobileNavigation.module.css";
 
 function MobileNavigation() {
   const { categories, isMobileNavOpen } = useAppSelector((state) => state.ui);

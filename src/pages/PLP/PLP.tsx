@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 
-import classes from "./PLP.module.css";
-import ProductList from "../components/Products/ProductList/ProductList";
-import Loader from "../components/UI/Loader";
+import ProductList from "@/components/Products/ProductList/ProductList";
+import Loader from "@/components/UI/Loader/Loader";
+import classes from "@/pages/PLP/PLP.module.css";
 
 function PLP() {
   const location = useLocation();

@@ -1,4 +1,4 @@
-jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppDispatch: jest.fn(),
 }));
 
@@ -6,9 +6,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
 
-import NavigationItem from "./NavigationItem";
-import { useAppDispatch } from "../../../../hooks/useReduxHooks";
-import { uiActions } from "../../../../store/uiSlice";
+import NavigationItem from "@/components/Navigation/NavigationItems/NavigationItem/NavigationItem";
+import { useAppDispatch } from "@/hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
 
 describe("NavigationItem component", () => {
   const dispatch = jest.fn();

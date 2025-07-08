@@ -1,4 +1,4 @@
-import classes from "./PlusIcon.module.css";
+import classes from "@/components/Cart/Icons/PlusIcon/PlusIcon.module.css";
 
 function PlusIcon() {
   return (

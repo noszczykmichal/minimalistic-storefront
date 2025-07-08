@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-import classes from "./ShoppingBagIcon.module.css";
+import classes from "@/components/UI/ShoppingBagIcon/ShoppingBagIcon.module.css";
 
 function ShoppingBagIcon({ animateCheckmark }: { animateCheckmark: boolean }) {
   const nodeRef = useRef(null);

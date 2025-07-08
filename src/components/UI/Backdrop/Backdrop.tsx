@@ -3,9 +3,9 @@
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-import classes from "./Backdrop.module.css";
-import { uiActions } from "../../../store/uiSlice";
-import { useAppSelector, useAppDispatch } from "../../../hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
+import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
+import classes from "@/components/UI/Backdrop/Backdrop.module.css";
 
 function Backdrop() {
   const backdropRef = useRef<HTMLDivElement>(null);

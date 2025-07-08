@@ -1,16 +1,13 @@
-jest.mock("../../../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppDispatch: jest.fn(),
   useAppSelector: jest.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
 
-import MiniCartItem from "./MiniCartItem";
-import { testItemDetails } from "../../../../../utils/testUtils";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../hooks/useReduxHooks";
+import MiniCartItem from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItem/MiniCartItem";
+import { testItemDetails } from "@/utils/testUtils";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 
 describe("MiniCartItem component", () => {
   const dispatch = jest.fn();

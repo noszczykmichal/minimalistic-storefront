@@ -1,5 +1,5 @@
-jest.mock("../../../hooks/useReduxHooks.ts", () => ({
-  ...jest.requireActual("../../../hooks/useReduxHooks.ts"),
+jest.mock("@/hooks/useReduxHooks", () => ({
+  ...jest.requireActual("@/hooks/useReduxHooks"),
   useAppDispatch: jest.fn(),
 }));
 
@@ -9,10 +9,10 @@ import configureStore from "redux-mock-store";
 import { Provider } from "react-redux";
 import userEvent from "@testing-library/user-event";
 
-import Fieldset from "./Fieldset";
-import { useAppDispatch } from "../../../hooks/useReduxHooks";
-import { shippingPaymentOptionsActions } from "../../../store/shippingPaymentOptions";
-import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
+import Fieldset from "@/components/Forms/Fieldset/Fieldset";
+import { useAppDispatch } from "@/hooks/useReduxHooks";
+import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
+import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 
 const testOptions = [
   {

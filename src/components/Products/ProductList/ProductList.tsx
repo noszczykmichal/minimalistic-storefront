@@ -1,6 +1,6 @@
-import classes from "./ProductList.module.css";
-import Product from "./Product/Product";
-import { ProductType } from "../../../models/productSlice.models";
+import Product from "@/components/Products/ProductList/Product/Product";
+import { ProductType } from "@/models/productSlice.models";
+import classes from "@/components/Products/ProductList/ProductList.module.css";
 
 function ProductList({ products }: { products: ProductType[] }) {
   return (

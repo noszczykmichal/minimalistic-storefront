@@ -1,5 +1,5 @@
-import { AttributeVariantInterface } from "../../../../../models/utility-models";
-import classes from "./AttributeVariant.module.css";
+import { AttributeVariantInterface } from "@/models/utility-models";
+import classes from "@/components/Cart/CartPageItem/Attribute/AttributeVariant/AttributeVariant.module.css";
 
 function AttributeVariant({
   variantData,

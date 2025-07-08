@@ -1,7 +1,7 @@
-import { useAppSelector } from "../../../hooks/useReduxHooks";
+import { useAppSelector } from "@/hooks/useReduxHooks";
 
-import classes from "./OrderSummaryList.module.css";
-import OrderSummaryItem from "./OrderSummaryItem/OrderSummaryItem";
+import OrderSummaryItem from "@/components/OrderSummary/OrderSummaryList/OrderSummaryItem/OrderSummaryItem";
+import classes from "@/components/OrderSummary/OrderSummaryList/OrderSummaryList.module.css";
 
 function OrderSummaryList() {
   const { cart } = useAppSelector((state) => state.products);

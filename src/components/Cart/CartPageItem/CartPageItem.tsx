@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-import Hr from "../../UI/Hr/Hr";
-import ThumbnailArrow from "../../UI/ThumbnailArrow/ThumbnailArrow";
-import useChangeQuantity from "../../../hooks/useChangeQuantity";
-import { CartItem } from "../../../models/productSlice.models";
-import { useAppSelector } from "../../../hooks/useReduxHooks";
-import PlusIcon from "../Icons/PlusIcon/PlusIcon";
-import MinusIcon from "../Icons/MinusIcon/MinusIcon";
-import Attribute from "./Attribute/Attribute";
-import classes from "./CartPageItem.module.css";
+import Hr from "@/components/UI/Hr/Hr";
+import ThumbnailArrow from "@/components/UI/ThumbnailArrow/ThumbnailArrow";
+import useChangeQuantity from "@/hooks/useChangeQuantity";
+import { CartItem } from "@/models/productSlice.models";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import PlusIcon from "@/components/Cart/Icons/PlusIcon/PlusIcon";
+import MinusIcon from "@/components/Cart/Icons/MinusIcon/MinusIcon";
+import Attribute from "@/components/Cart/CartPageItem/Attribute/Attribute";
+import classes from "@/components/Cart/CartPageItem/CartPageItem.module.css";
 
 function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
   const { internalID, name, brand, gallery, quantity } = itemDetails;

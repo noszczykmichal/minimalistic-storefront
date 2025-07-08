@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import Button from "./Button";
+import Button from "@/components/UI/Button/Button";
 
 describe("Button component", () => {
   test("should render a button with text 'Click me'", () => {

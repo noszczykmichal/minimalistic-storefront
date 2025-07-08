@@ -5,7 +5,7 @@ import {
   Price,
   ProductType,
   ProductAttribute,
-} from "../models/productSlice.models";
+} from "@/models/productSlice.models";
 
 const initialState: {
   billingCurrency: string;

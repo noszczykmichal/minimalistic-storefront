@@ -1,4 +1,4 @@
-jest.mock("../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppSelector: jest.fn(),
   useAppDispatch: jest.fn(),
 }));
@@ -6,9 +6,9 @@ jest.mock("../../../hooks/useReduxHooks.ts", () => ({
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import Backdrop from "./Backdrop";
-import { useAppSelector, useAppDispatch } from "../../../hooks/useReduxHooks";
-import { uiActions } from "../../../store/uiSlice";
+import Backdrop from "@/components/UI/Backdrop/Backdrop";
+import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
 
 describe("Backdrop component", () => {
   const dispatch = jest.fn();

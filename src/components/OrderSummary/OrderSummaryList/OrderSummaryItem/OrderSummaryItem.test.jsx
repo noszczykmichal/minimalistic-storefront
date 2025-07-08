@@ -1,12 +1,12 @@
-jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppSelector: jest.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
 
-import OrderSummaryItem from "./OrderSummaryItem";
-import { testItemDetails } from "../../../../utils/testUtils";
-import { useAppSelector } from "../../../../hooks/useReduxHooks";
+import OrderSummaryItem from "@/components/OrderSummary/OrderSummaryList/OrderSummaryItem/OrderSummaryItem";
+import { testItemDetails } from "@/utils/testUtils";
+import { useAppSelector } from "@/hooks/useReduxHooks";
 
 describe("OrderSummaryItem component", () => {
   beforeEach(() => {

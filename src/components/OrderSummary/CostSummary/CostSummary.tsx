@@ -1,5 +1,5 @@
-import classes from "./CostSummary.module.css";
-import { useAppSelector } from "../../../hooks/useReduxHooks";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import classes from "@/components/OrderSummary/CostSummary/CostSummary.module.css";
 
 function CostSummary() {
   const { billingCurrency, totalPrice } = useAppSelector(

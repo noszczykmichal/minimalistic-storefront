@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 
-import OrderSummaryList from "./OrderSummaryList";
-import WithMockStoreAndRouter from "../../../utils/WithMockStoreAndRouter";
-import { createTestStore } from "../../../utils/testUtils";
+import OrderSummaryList from "@/components/OrderSummary/OrderSummaryList/OrderSummaryList";
+import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
+import { createTestStore } from "@/utils/testUtils";
 
 describe("OrderSummaryList component", () => {
   it("should render OrderSummaryList with heading and 2 list elements", async () => {

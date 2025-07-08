@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 
-import { useAppDispatch } from "./useReduxHooks";
-import { uiActions } from "../store/uiSlice";
+import { useAppDispatch } from "@/hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
 
 function useRedirect() {
   const navigate = useNavigate();

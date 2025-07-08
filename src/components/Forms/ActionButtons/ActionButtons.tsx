@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 
-import Button from "../../UI/Button/Button";
-import classes from "./ActionButtons.module.css";
+import Button from "@/components/UI/Button/Button";
+import classes from "@/components/Forms/ActionButtons/ActionButtons.module.css";
 
 interface ActionButtonsProps {
   isNextBttnDisabled: boolean;

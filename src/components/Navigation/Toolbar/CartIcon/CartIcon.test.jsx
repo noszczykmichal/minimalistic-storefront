@@ -1,4 +1,4 @@
-jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
+jest.mock("@/hooks/useReduxHooks", () => ({
   useAppDispatch: jest.fn(),
   useAppSelector: jest.fn(),
 }));
@@ -6,12 +6,9 @@ jest.mock("../../../../hooks/useReduxHooks.ts", () => ({
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import CartIcon from "./CartIcon";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../hooks/useReduxHooks";
-import { uiActions } from "../../../../store/uiSlice";
+import CartIcon from "@/components/Navigation/Toolbar/CartIcon/CartIcon";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
+import { uiActions } from "@/store/uiSlice";
 
 describe("CartIcon component", () => {
   const dispatch = jest.fn();
