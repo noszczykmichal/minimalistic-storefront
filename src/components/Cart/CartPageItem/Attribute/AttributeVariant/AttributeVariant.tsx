@@ -1,7 +1,7 @@
 import { AttributeVariantInterface } from "@/models/utility-models";
 import classes from "@/components/Cart/CartPageItem/Attribute/AttributeVariant/AttributeVariant.module.css";
 
-function AttributeVariant({
+export default function AttributeVariant({
   variantData,
   variantType,
   inMiniView,
@@ -66,5 +66,3 @@ function AttributeVariant({
     </button>
   );
 }
-
-export default AttributeVariant;

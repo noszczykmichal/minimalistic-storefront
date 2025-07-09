@@ -8,7 +8,11 @@ import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { ProductType } from "@/models/productSlice.models";
 import classes from "@/components/Products/ProductList/Product/Product.module.css";
 
-function Product({ productDetails }: { productDetails: ProductType }) {
+export default function Product({
+  productDetails,
+}: {
+  productDetails: ProductType;
+}) {
   const { billingCurrency } = useAppSelector((state) => state.products);
   const { onCurrentPDPChange, addProductToCart } = productActions;
   const dispatch = useAppDispatch();
@@ -111,5 +115,3 @@ function Product({ productDetails }: { productDetails: ProductType }) {
     </li>
   );
 }
-
-export default Product;

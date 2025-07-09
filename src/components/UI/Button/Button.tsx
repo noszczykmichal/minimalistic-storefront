@@ -2,7 +2,7 @@ import { ReactNode, FormEvent } from "react";
 
 import classes from "@/components/UI/Button/Button.module.css";
 
-function Button({
+export default function Button({
   customClass,
   children,
   isDisabled,
@@ -29,5 +29,3 @@ Button.defaultProps = {
   isDisabled: false,
   clicked: () => {},
 };
-
-export default Button;

@@ -6,7 +6,11 @@ import { uiActions } from "@/store/uiSlice";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import classes from "@/components/UI/Modal/Modal.module.css";
 
-function Modal({ notSelected }: { notSelected: (string | null)[] }) {
+export default function Modal({
+  notSelected,
+}: {
+  notSelected: (string | null)[];
+}) {
   const modalRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const { isModalOpen } = useAppSelector((state) => state.ui);
@@ -48,5 +52,3 @@ function Modal({ notSelected }: { notSelected: (string | null)[] }) {
     </CSSTransition>
   );
 }
-
-export default Modal;

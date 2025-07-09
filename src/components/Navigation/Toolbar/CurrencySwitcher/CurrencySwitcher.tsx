@@ -9,7 +9,11 @@ import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { Currency } from "@/models/productSlice.models";
 import classes from "@/components/Navigation/Toolbar/CurrencySwitcher/CurrencySwitcher.module.css";
 
-function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
+export default function CurrencySwitcher({
+  currencies,
+}: {
+  currencies: Currency[];
+}) {
   const switcherOptionsRef = useRef<HTMLUListElement>(null);
   const dispatch = useAppDispatch();
   const { isCurrencySwitcherOpen } = useAppSelector((state) => state.ui);
@@ -98,5 +102,3 @@ function CurrencySwitcher({ currencies }: { currencies: Currency[] }) {
     </div>
   );
 }
-
-export default CurrencySwitcher;

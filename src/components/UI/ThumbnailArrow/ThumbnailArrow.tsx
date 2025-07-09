@@ -1,7 +1,7 @@
 import { ThumbnailArrowVariant } from "@/models/utility-models";
 import classes from "@/components/UI/ThumbnailArrow/ThumbnailArrow.module.css";
 
-function ThumbnailArrow({
+export default function ThumbnailArrow({
   variant,
   clicked,
 }: {
@@ -35,5 +35,3 @@ function ThumbnailArrow({
     </button>
   );
 }
-
-export default ThumbnailArrow;

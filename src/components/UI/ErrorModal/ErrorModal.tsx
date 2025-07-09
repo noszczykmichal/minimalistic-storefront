@@ -4,7 +4,11 @@ type ErrorDetails = {
   message: string;
 };
 
-function ErrorModal({ errorDetails }: { errorDetails: ErrorDetails }) {
+export default function ErrorModal({
+  errorDetails,
+}: {
+  errorDetails: ErrorDetails;
+}) {
   return (
     <div className={classes.container}>
       <p className={classes.error}>
@@ -17,5 +21,3 @@ function ErrorModal({ errorDetails }: { errorDetails: ErrorDetails }) {
     </div>
   );
 }
-
-export default ErrorModal;

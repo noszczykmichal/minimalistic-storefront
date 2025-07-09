@@ -13,7 +13,11 @@ interface TextInputProps {
   validator: ValidationFn;
 }
 
-function TextInput({ inputDetails }: { inputDetails: TextInputProps }) {
+export default function TextInput({
+  inputDetails,
+}: {
+  inputDetails: TextInputProps;
+}) {
   const { label, name, type, errorMessage, validator } = inputDetails;
   const { registerInput, inputChangeHandler, inputBlurHandler } =
     shippingAddressActions;
@@ -69,5 +73,3 @@ function TextInput({ inputDetails }: { inputDetails: TextInputProps }) {
     </div>
   );
 }
-
-export default TextInput;

@@ -6,7 +6,7 @@ import { CartItem } from "@/models/productSlice.models";
 import useRedirect from "@/hooks/useRedirect";
 import classes from "@/pages/Cart/Cart.module.css";
 
-function Cart() {
+export default function Cart() {
   const { billingCurrency, cart, productsTotal, totalPrice } = useAppSelector(
     (state) => state.products,
   );
@@ -54,5 +54,3 @@ function Cart() {
     </section>
   );
 }
-
-export default Cart;

@@ -7,7 +7,7 @@ import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/Forms/Fieldset/Fieldset.module.css";
 
-function Fieldset({
+export default function Fieldset({
   options,
   heading,
   identifier,
@@ -65,5 +65,3 @@ function Fieldset({
     </fieldset>
   );
 }
-
-export default Fieldset;

@@ -1,7 +1,11 @@
 import NavigationItem from "@/components/Navigation/NavigationItems/NavigationItem/NavigationItem";
 import classes from "@/components/Navigation/NavigationItems/NavigationItems.module.css";
 
-function NavigationItems({ categories }: { categories: string[] }) {
+export default function NavigationItems({
+  categories,
+}: {
+  categories: string[];
+}) {
   return (
     <ul className={classes["navigation-items"]} data-testid="navigation-items">
       {categories.map((category) => {
@@ -17,5 +21,3 @@ function NavigationItems({ categories }: { categories: string[] }) {
     </ul>
   );
 }
-
-export default NavigationItems;

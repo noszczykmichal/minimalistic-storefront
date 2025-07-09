@@ -2,7 +2,7 @@ import MiniCartItem from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItem/
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItems.module.css";
 
-function MiniCartItems() {
+export default function MiniCartItems() {
   const { cart } = useAppSelector((state) => state.products);
 
   return (
@@ -13,5 +13,3 @@ function MiniCartItems() {
     </ul>
   );
 }
-
-export default MiniCartItems;

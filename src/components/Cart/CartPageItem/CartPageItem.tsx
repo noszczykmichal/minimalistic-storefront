@@ -10,7 +10,11 @@ import MinusIcon from "@/components/Cart/Icons/MinusIcon/MinusIcon";
 import Attribute from "@/components/Cart/CartPageItem/Attribute/Attribute";
 import classes from "@/components/Cart/CartPageItem/CartPageItem.module.css";
 
-function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
+export default function CartPageItem({
+  itemDetails,
+}: {
+  itemDetails: CartItem;
+}) {
   const { internalID, name, brand, gallery, quantity } = itemDetails;
   const [currentIndex, setCurrentIndex] = useState(0);
   const { billingCurrency } = useAppSelector((state) => state.products);
@@ -121,5 +125,3 @@ function CartPageItem({ itemDetails }: { itemDetails: CartItem }) {
     </>
   );
 }
-
-export default CartPageItem;

@@ -1,4 +1,4 @@
-function MinusIcon() {
+export default function MinusIcon() {
   return (
     <svg
       width="17"
@@ -16,5 +16,3 @@ function MinusIcon() {
     </svg>
   );
 }
-
-export default MinusIcon;

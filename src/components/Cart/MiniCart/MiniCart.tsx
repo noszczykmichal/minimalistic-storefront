@@ -7,7 +7,7 @@ import { useAppSelector } from "@/hooks/useReduxHooks";
 import useRedirect from "@/hooks/useRedirect";
 import classes from "@/components/Cart/MiniCart/MiniCart.module.css";
 
-function MiniCart() {
+export default function MiniCart() {
   const miniCartRef = useRef<HTMLDivElement>(null);
   const redirect = useRedirect();
   const { productsTotal, totalPrice, billingCurrency } = useAppSelector(
@@ -72,5 +72,3 @@ function MiniCart() {
     </CSSTransition>
   );
 }
-
-export default MiniCart;

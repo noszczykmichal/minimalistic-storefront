@@ -10,7 +10,7 @@ interface ActionButtonsProps {
   nextBttnCustomText?: string;
 }
 
-function ActionButtons({
+export default function ActionButtons({
   isNextBttnDisabled,
   nextBttnPath,
   customClass,
@@ -45,5 +45,3 @@ ActionButtons.defaultProps = {
   customClass: "",
   nextBttnCustomText: "Next",
 };
-
-export default ActionButtons;

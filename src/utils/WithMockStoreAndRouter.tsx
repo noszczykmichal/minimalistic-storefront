@@ -11,7 +11,7 @@ interface WithMockStoreAndRouterProps {
 
 const mockStore = configureMockStore();
 
-function WithMockStoreAndRouter({
+export default function WithMockStoreAndRouter({
   children,
   customStore,
 }: WithMockStoreAndRouterProps) {
@@ -27,5 +27,3 @@ function WithMockStoreAndRouter({
 WithMockStoreAndRouter.defaultProps = {
   customStore: undefined,
 };
-
-export default WithMockStoreAndRouter;

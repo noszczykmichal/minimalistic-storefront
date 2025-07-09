@@ -10,7 +10,7 @@ import ToggleButton from "@/components/Navigation/MobileNavigation/ToggleButton/
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/Toolbar/Toolbar.module.css";
 
-function Toolbar() {
+export default function Toolbar() {
   const { categories, currencies } = useAppSelector((state) => state.ui);
 
   let navigationItems;
@@ -41,5 +41,3 @@ function Toolbar() {
     </header>
   );
 }
-
-export default Toolbar;

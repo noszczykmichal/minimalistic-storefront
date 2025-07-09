@@ -1,6 +1,6 @@
 import classes from "@/components/UI/Loader/Loader.module.css";
 
-function Loader() {
+export default function Loader() {
   return (
     <div className={classes["loader-container"]}>
       <div className={classes["lds-ripple"]}>
@@ -10,5 +10,3 @@ function Loader() {
     </div>
   );
 }
-
-export default Loader;

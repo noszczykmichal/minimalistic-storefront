@@ -3,7 +3,7 @@ import Hr from "@/components/UI/Hr/Hr";
 import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
 import classes from "@/components/OrderSummary/OrderSummary.module.css";
 
-function OrderSummary() {
+export default function OrderSummary() {
   return (
     <div className={classes["order-summary"]}>
       <OrderSummaryList />
@@ -12,5 +12,3 @@ function OrderSummary() {
     </div>
   );
 }
-
-export default OrderSummary;

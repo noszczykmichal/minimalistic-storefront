@@ -4,7 +4,11 @@ import { CartItem } from "@/models/productSlice.models";
 import Attribute from "@/components/Cart/CartPageItem/Attribute/Attribute";
 import classes from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItem/MiniCartItem.module.css";
 
-function MiniCartItem({ itemDetails }: { itemDetails: CartItem }) {
+export default function MiniCartItem({
+  itemDetails,
+}: {
+  itemDetails: CartItem;
+}) {
   const { internalID, quantity, gallery } = itemDetails;
   const { billingCurrency } = useAppSelector((state) => state.products);
 
@@ -65,5 +69,3 @@ function MiniCartItem({ itemDetails }: { itemDetails: CartItem }) {
     </li>
   );
 }
-
-export default MiniCartItem;

@@ -5,7 +5,7 @@ import NavigationItems from "@/components/Navigation/NavigationItems/NavigationI
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/MobileNavigation/MobileNavigation.module.css";
 
-function MobileNavigation() {
+export default function MobileNavigation() {
   const { categories, isMobileNavOpen } = useAppSelector((state) => state.ui);
   const nodeRef = useRef<HTMLElement>(null);
 
@@ -29,5 +29,3 @@ function MobileNavigation() {
     </CSSTransition>
   );
 }
-
-export default MobileNavigation;

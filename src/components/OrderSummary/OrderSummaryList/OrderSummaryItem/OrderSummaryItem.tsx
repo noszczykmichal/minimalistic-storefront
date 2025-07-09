@@ -2,7 +2,7 @@ import { CartItem } from "@/models/productSlice.models";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/OrderSummary/OrderSummaryList/OrderSummaryItem/OrderSummaryItem.module.css";
 
-function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
+export default function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
   const { billingCurrency } = useAppSelector((state) => state.products);
   const { quantity, gallery, brand, name } = cartItem;
 
@@ -50,5 +50,3 @@ function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
     </li>
   );
 }
-
-export default OrderSummaryItem;

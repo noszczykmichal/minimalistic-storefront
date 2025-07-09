@@ -2,7 +2,7 @@ import { productActions } from "@/store/productsSlice";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import { ChangeQuantityVariants } from "@/models/utility-models";
 
-function useChangeQuantity(
+export default function useChangeQuantity(
   internalID: string,
   operationType: ChangeQuantityVariants,
 ) {
@@ -16,5 +16,3 @@ function useChangeQuantity(
       }),
     );
 }
-
-export default useChangeQuantity;
