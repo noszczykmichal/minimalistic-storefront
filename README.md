@@ -23,16 +23,13 @@
 
 ## Technologies Used
 
-- [React](https://reactjs.org/blog/2022/03/29/react-v18.html)
-- [React-Router](https://github.com/remix-run/react-router)
-- [Typescript](https://www.typescriptlang.org/)
-- [Apollo Client](https://www.apollographql.com/docs/react/)
-- [React Transition Group](https://reactcommunity.org/react-transition-group/)
-- [Redux](https://redux.js.org/)
-- [Redux-Persist](https://github.com/rt2zz/redux-persist)
-- [Interweave](https://interweave.dev/)
-- [ESLint](https://www.npmjs.com/package/eslint)
-- [Prettier](https://www.npmjs.com/package/prettier)
+- [React](https://react.dev/), [React Router](https://reactrouter.com/en/main), [TypeScript](https://www.typescriptlang.org/)
+- [Apollo Client](https://www.apollographql.com/docs/react/) (GraphQL)
+- [Redux](https://redux.js.org/) + [Redux Persist](https://github.com/rt2zz/redux-persist)
+- Testing: [Jest](https://jestjs.io/), [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- Code Quality: [ESLint](https://eslint.org/), [Prettier](https://prettier.io/)
+- CI/CD: [GitHub Actions](https://docs.github.com/en/actions), [Firebase Hosting](https://firebase.google.com/docs/hosting)
+- Additional Tools: [React Transition Group](https://reactcommunity.org/react-transition-group/), [Interweave](https://interweave.dev/)
 
 ## Features
 
