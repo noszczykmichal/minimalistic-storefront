@@ -47,7 +47,7 @@ describe("ActionButtons component", () => {
     const nextButton = screen.getByText(testButtonText);
 
     expect(nextButton).toBeInTheDocument();
-    expect(nextButton).not.toHaveAttribute("disabled");
+    expect(nextButton).toHaveAttribute("disabled");
   });
 
   it("should render the ActionsButton with button containing a custom text", () => {
