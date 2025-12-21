@@ -1,6 +1,6 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppDispatch: jest.fn(),
-  useAppSelector: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppDispatch: vi.fn(),
+  useAppSelector: vi.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
@@ -17,7 +17,7 @@ const testCurrencies = [
 ];
 
 describe("CurrencySwitcher component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   const {
     backdropVisibilityToggle,
     backdropTypeToggle,
@@ -28,7 +28,7 @@ describe("CurrencySwitcher component", () => {
   const { onCurrencyChange } = productActions;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
   });
 

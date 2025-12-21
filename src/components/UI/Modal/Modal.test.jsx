@@ -1,6 +1,6 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppDispatch: jest.fn(),
-  useAppSelector: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppDispatch: vi.fn(),
+  useAppSelector: vi.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
@@ -11,12 +11,12 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { uiActions } from "@/store/uiSlice";
 
 describe("Modal component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   const { modalToggle, backdropVisibilityToggle } = uiActions;
   const testNotSelected = ["size", "colour"];
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
     useAppSelector.mockReturnValue({ isModalOpen: true });
   });

@@ -1,7 +1,9 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  ...jest.requireActual("@/hooks/useReduxHooks"),
-  useAppDispatch: jest.fn(),
-}));
+vi.mock("@/hooks/useReduxHooks", async (importActual) => {
+ const actual=await importActual();
+ 
+  return  { ...actual,
+  useAppDispatch: vi.fn(),}
+});
 
 import React from "react";
 import { render, screen } from "@testing-library/react";
@@ -36,14 +38,14 @@ const testOptions = [
 const mockStore = configureStore([]);
 
 describe("Fieldset component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   const { registerOption, optionChangeHandler } = shippingPaymentOptionsActions;
   const fieldIdentifier = "shippingOption";
   let store;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    jest.restoreAllMocks();
+    vi.clearAllMocks();
+    vi.restoreAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
 
     store = mockStore({
@@ -65,8 +67,8 @@ describe("Fieldset component", () => {
       </WithMockStoreAndRouter>,
     );
 
-    const fieldsetElem = screen.getByRole("group");
-    const radioElements = screen.getAllByRole("radio");
+    const fieldsetElem = screen.getByRole("group", );
+    const radioElements = screen.getAllByRole("radio", { queryFallbacks: true, hidden: true });
 
     expect(fieldsetElem).toBeInTheDocument();
     expect(radioElements).toHaveLength(testOptions.length);
@@ -94,30 +96,23 @@ describe("Fieldset component", () => {
     expect(dispatch).toHaveBeenLastCalledWith(registerOption(fieldIdentifier));
   });
 
-  it("should update the local state if a value for the given fieldset is found in the Redux store", () => {
-    const mockedSetCheckedInputName = jest.fn();
-    const mockedCheckedInputName = "";
-    const mockedValue = "flatRate";
-    const useStateMock = () => [
-      mockedCheckedInputName,
-      mockedSetCheckedInputName,
-    ];
+it("should update the local state if a value for the given fieldset is found in the Redux store", () => {
 
-    jest.spyOn(React, "useState").mockImplementation(useStateMock);
 
-    render(
-      <Provider store={store}>
-        <Fieldset
-          options={testOptions}
-          heading="Delivery"
-          identifier={fieldIdentifier}
-        />
-      </Provider>,
-    );
+  render(
+    <WithMockStoreAndRouter customStore={store}>
+      <Fieldset
+        options={testOptions}
+        heading="Delivery"
+        identifier={fieldIdentifier}
+      />
+    </WithMockStoreAndRouter>
+  );
 
-    expect(mockedSetCheckedInputName).toHaveBeenCalledTimes(1);
-    expect(mockedSetCheckedInputName).toHaveBeenCalledWith(mockedValue);
-  });
+
+  const radioElement = screen.getByLabelText(/Flat Rate/i);
+  expect(radioElement).toBeChecked();
+});
 
   it("should call clickHandler when clicked and dispatch an action", () => {
     const { costs } = testOptions[1];

@@ -1,6 +1,6 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppSelector: jest.fn(),
-  useAppDispatch: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppSelector: vi.fn(),
+  useAppDispatch: vi.fn(),
 }));
 import { render, screen } from "@testing-library/react";
 
@@ -10,7 +10,7 @@ import { testItemDetails } from "@/utils/testUtils";
 
 describe("MiniCartItems component", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppSelector.mockReturnValue({
       billingCurrency: "$",
       cart: [testItemDetails],

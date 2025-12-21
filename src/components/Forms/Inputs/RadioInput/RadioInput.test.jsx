@@ -1,6 +1,6 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppSelector: jest.fn(),
-  useAppDispatch: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppSelector: vi.fn(),
+  useAppDispatch: vi.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
@@ -21,11 +21,11 @@ const testProps = {
 const testFieldID = "testID";
 
 describe("RadioInput component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   const { updatePriceOfAnOption } = shippingPaymentOptionsActions;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppSelector.mockReturnValue({ billingCurrency: "$" });
     useAppDispatch.mockReturnValue(dispatch);
   });
@@ -119,7 +119,7 @@ describe("RadioInput component", () => {
   });
 
   it("should call the onChangeHandler with the correct arguments on change", () => {
-    const mockedClicked = jest.fn();
+    const mockedClicked = vi.fn();
     render(
       <RadioInput
         inputDetails={testProps}

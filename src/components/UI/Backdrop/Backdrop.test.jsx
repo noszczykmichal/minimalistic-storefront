@@ -1,9 +1,9 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppSelector: jest.fn(),
-  useAppDispatch: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppSelector: vi.fn(),
+  useAppDispatch: vi.fn(),
 }));
 
-import { render } from "@testing-library/react";
+import { render,  } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import Backdrop from "@/components/UI/Backdrop/Backdrop";
@@ -11,7 +11,7 @@ import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { uiActions } from "@/store/uiSlice";
 
 describe("Backdrop component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   const {
     currencySwitcherVisibToggle,
     backdropVisibilityToggle,
@@ -21,7 +21,7 @@ describe("Backdrop component", () => {
   } = uiActions;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
     useAppSelector.mockReturnValue({
       isBackdropTransparent: false,
@@ -56,7 +56,7 @@ describe("Backdrop component", () => {
 
     const { container } = render(<Backdrop />);
     const backdrop = container.firstChild;
-
+    
     expect(backdrop).toBeInTheDocument();
     expect(backdrop).toHaveClass("backdrop");
     expect(backdrop).not.toHaveClass("backdrop--grey");

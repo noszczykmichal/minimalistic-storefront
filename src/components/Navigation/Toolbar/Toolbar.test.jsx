@@ -1,6 +1,6 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppSelector: jest.fn(),
-  useAppDispatch: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppSelector: vi.fn(),
+  useAppDispatch: vi.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
@@ -12,16 +12,18 @@ import Toolbar from "@/components/Navigation/Toolbar/Toolbar";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 
 describe("Toolbar component", () => {
-  jest.spyOn(ReactDOM, "createPortal").mockImplementationOnce(() => {
-    const div = document.createElement("div");
-    div.setAttribute("id", "modals-root");
-  });
-
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
+
+    let modalRoot = document.getElementById("modals-root");
+    if (!modalRoot) {
+      modalRoot = document.createElement("div");
+      modalRoot.setAttribute("id", "modals-root");
+      document.body.appendChild(modalRoot);
+    }
   });
 
   it("should render NavigationItems and CurrencySwitcher when props categories and currencies are non empty arrays", () => {

@@ -1,6 +1,6 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppDispatch: jest.fn(),
-  useAppSelector: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppDispatch: vi.fn(),
+  useAppSelector: vi.fn(),
 }));
 
 import React from "react";
@@ -12,10 +12,10 @@ import CartPageItem from "@/components/Cart/CartPageItem/CartPageItem";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 
 describe("CartPageItem component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
     useAppSelector.mockReturnValue({ billingCurrency: "$" });
   });
@@ -108,25 +108,22 @@ describe("CartPageItem component", () => {
     expect(imgEl).toHaveAttribute("src", thirdImage);
   });
 
-  it("should display the first thumbnail when reaching the end of the gallery", () => {
-    const [firstImage, , defaultImage] = testItemDetails.gallery;
-    let mockedValue = 2;
-    const setMockedValue = () => {
-      mockedValue = 0;
-    };
+  it("should display the first thumbnail when reaching the end of the gallery",  () => {
+   render(<CartPageItem itemDetails={testItemDetails} />);
 
-    const useStateMock = () => [mockedValue, setMockedValue];
-    jest.spyOn(React, "useState").mockImplementation(useStateMock);
+  const [firstImage, secondImage, thirdImage] = testItemDetails.gallery;
+  const imgEl = screen.getByRole("img");
+  const nextButton = screen.getByLabelText(/Next/);
 
-    const { rerender } = render(<CartPageItem itemDetails={testItemDetails} />);
+  expect(imgEl).toHaveAttribute("src", firstImage);
 
-    const imgEl = screen.getByRole("img");
-    const nextButton = screen.getByLabelText(/Next/);
+  userEvent.click(nextButton);
+  expect(imgEl).toHaveAttribute("src", secondImage);
 
-    expect(imgEl).toHaveAttribute("src", defaultImage);
-    userEvent.click(nextButton);
+  userEvent.click(nextButton);
+  expect(imgEl).toHaveAttribute("src", thirdImage);
 
-    rerender(<CartPageItem itemDetails={testItemDetails} />);
-    expect(imgEl).toHaveAttribute("src", firstImage);
+  userEvent.click(nextButton);
+  expect(imgEl).toHaveAttribute("src", firstImage);
   });
 });

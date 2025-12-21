@@ -1,7 +1,8 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  ...jest.requireActual("@/hooks/useReduxHooks"),
-  useAppDispatch: jest.fn(),
-}));
+vi.mock("@/hooks/useReduxHooks", async(importActual) => {
+  const actual=await importActual();
+return {  ...actual,
+  useAppDispatch: vi.fn()}
+});
 import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
 
@@ -11,10 +12,10 @@ import MiniCart from "@/components/Cart/MiniCart/MiniCart";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 
 describe("MiniCart component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
     useAppDispatch.mockReturnValue(dispatch);
   });
