@@ -3,7 +3,7 @@ vi.mock("@/hooks/useReduxHooks", () => ({
   useAppDispatch: vi.fn(),
 }));
 
-import { render,  } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import Backdrop from "@/components/UI/Backdrop/Backdrop";
@@ -56,7 +56,7 @@ describe("Backdrop component", () => {
 
     const { container } = render(<Backdrop />);
     const backdrop = container.firstChild;
-    
+
     expect(backdrop).toBeInTheDocument();
     expect(backdrop).toHaveClass("backdrop");
     expect(backdrop).not.toHaveClass("backdrop--grey");

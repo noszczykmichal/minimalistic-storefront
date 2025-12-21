@@ -26,7 +26,7 @@
 - [React](https://react.dev/), [React Router](https://reactrouter.com/en/main), [TypeScript](https://www.typescriptlang.org/)
 - [Apollo Client](https://www.apollographql.com/docs/react/) (GraphQL)
 - [Redux](https://redux.js.org/) + [Redux Persist](https://github.com/rt2zz/redux-persist)
-- Testing: [Jest](https://jestjs.io/), [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- Testing: [Vitest](https://vitest.dev/), [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - Code Quality: [ESLint](https://eslint.org/), [Prettier](https://prettier.io/)
 - CI/CD: [GitHub Actions](https://docs.github.com/en/actions), [Firebase Hosting](https://firebase.google.com/docs/hosting)
 - Additional Tools: [React Transition Group](https://reactcommunity.org/react-transition-group/), [Interweave](https://interweave.dev/)
@@ -63,13 +63,13 @@ To run this project locally:
 3. Install dependencies
 
 ```
-  $npm install
+  $pnpm install
 ```
 
 4. Run the app
 
 ```
-  $npm start
+  $pnpm start
 ```
 
 ## Acknowledgements

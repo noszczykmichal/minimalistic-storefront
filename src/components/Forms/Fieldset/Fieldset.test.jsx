@@ -1,14 +1,11 @@
 vi.mock("@/hooks/useReduxHooks", async (importActual) => {
- const actual=await importActual();
- 
-  return  { ...actual,
-  useAppDispatch: vi.fn(),}
+  const actual = await importActual();
+
+  return { ...actual, useAppDispatch: vi.fn() };
 });
 
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import configureStore from "redux-mock-store";
-import { Provider } from "react-redux";
 import userEvent from "@testing-library/user-event";
 
 import Fieldset from "@/components/Forms/Fieldset/Fieldset";
@@ -67,8 +64,11 @@ describe("Fieldset component", () => {
       </WithMockStoreAndRouter>,
     );
 
-    const fieldsetElem = screen.getByRole("group", );
-    const radioElements = screen.getAllByRole("radio", { queryFallbacks: true, hidden: true });
+    const fieldsetElem = screen.getByRole("group");
+    const radioElements = screen.getAllByRole("radio", {
+      queryFallbacks: true,
+      hidden: true,
+    });
 
     expect(fieldsetElem).toBeInTheDocument();
     expect(radioElements).toHaveLength(testOptions.length);
@@ -96,23 +96,20 @@ describe("Fieldset component", () => {
     expect(dispatch).toHaveBeenLastCalledWith(registerOption(fieldIdentifier));
   });
 
-it("should update the local state if a value for the given fieldset is found in the Redux store", () => {
+  it("should update the local state if a value for the given fieldset is found in the Redux store", () => {
+    render(
+      <WithMockStoreAndRouter customStore={store}>
+        <Fieldset
+          options={testOptions}
+          heading="Delivery"
+          identifier={fieldIdentifier}
+        />
+      </WithMockStoreAndRouter>,
+    );
 
-
-  render(
-    <WithMockStoreAndRouter customStore={store}>
-      <Fieldset
-        options={testOptions}
-        heading="Delivery"
-        identifier={fieldIdentifier}
-      />
-    </WithMockStoreAndRouter>
-  );
-
-
-  const radioElement = screen.getByLabelText(/Flat Rate/i);
-  expect(radioElement).toBeChecked();
-});
+    const radioElement = screen.getByLabelText(/Flat Rate/i);
+    expect(radioElement).toBeChecked();
+  });
 
   it("should call clickHandler when clicked and dispatch an action", () => {
     const { costs } = testOptions[1];

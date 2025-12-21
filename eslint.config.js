@@ -21,10 +21,17 @@ const compat = new FlatCompat({
 
 export default tseslint.config(
   {
-    ignores: ["**/dist/**", "node_modules/", "coverage/", "eslint.config.js"],
+    ignores: [
+      "**/dist/**",
+      "node_modules/",
+      "coverage/",
+      "eslint.config.js",
+      "vitest.config.ts",
+      "vite.config.ts",
+    ],
   },
 
-  // 1. Emulate your previous "extends" list
+  // 1. Emulate previous "extends" list
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...compat.extends("airbnb"),
@@ -48,6 +55,16 @@ export default tseslint.config(
         tsconfigRootDir: __dirname,
       },
     },
+    settings: {
+      react: { version: "detect" },
+      "import/resolver": {
+        typescript: {
+          alwaysTryTypes: true,
+          project: "./tsconfig.json",
+        },
+        node: true,
+      },
+    },
     rules: {
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
@@ -57,7 +74,7 @@ export default tseslint.config(
       "react/react-in-jsx-scope": "off",
       "react/jsx-props-no-spreading": "warn",
       "@typescript-eslint/no-shadow": "error",
-      // Airbnb is strict about extensions, you might need this:
+
       "react/jsx-filename-extension": [1, { extensions: [".tsx", ".jsx"] }],
       "import/no-extraneous-dependencies": [
         "error",
@@ -69,9 +86,6 @@ export default tseslint.config(
         },
       ],
       "import/extensions": "off",
-    },
-    settings: {
-      react: { version: "detect" },
     },
   },
 
@@ -96,7 +110,11 @@ export default tseslint.config(
       "import/first": "off",
     },
   },
-
-  // 4. Prettier (Must be last to override Airbnb's formatting rules)
+  {
+    files: ["**/*.d.ts"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
   prettier,
 );

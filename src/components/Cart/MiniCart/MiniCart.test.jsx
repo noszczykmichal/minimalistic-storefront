@@ -1,7 +1,6 @@
-vi.mock("@/hooks/useReduxHooks", async(importActual) => {
-  const actual=await importActual();
-return {  ...actual,
-  useAppDispatch: vi.fn()}
+vi.mock("@/hooks/useReduxHooks", async (importActual) => {
+  const actual = await importActual();
+  return { ...actual, useAppDispatch: vi.fn() };
 });
 import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";

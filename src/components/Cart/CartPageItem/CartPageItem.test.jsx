@@ -108,22 +108,22 @@ describe("CartPageItem component", () => {
     expect(imgEl).toHaveAttribute("src", thirdImage);
   });
 
-  it("should display the first thumbnail when reaching the end of the gallery",  () => {
-   render(<CartPageItem itemDetails={testItemDetails} />);
+  it("should display the first thumbnail when reaching the end of the gallery", () => {
+    render(<CartPageItem itemDetails={testItemDetails} />);
 
-  const [firstImage, secondImage, thirdImage] = testItemDetails.gallery;
-  const imgEl = screen.getByRole("img");
-  const nextButton = screen.getByLabelText(/Next/);
+    const [firstImage, secondImage, thirdImage] = testItemDetails.gallery;
+    const imgEl = screen.getByRole("img");
+    const nextButton = screen.getByLabelText(/Next/);
 
-  expect(imgEl).toHaveAttribute("src", firstImage);
+    expect(imgEl).toHaveAttribute("src", firstImage);
 
-  userEvent.click(nextButton);
-  expect(imgEl).toHaveAttribute("src", secondImage);
+    userEvent.click(nextButton);
+    expect(imgEl).toHaveAttribute("src", secondImage);
 
-  userEvent.click(nextButton);
-  expect(imgEl).toHaveAttribute("src", thirdImage);
+    userEvent.click(nextButton);
+    expect(imgEl).toHaveAttribute("src", thirdImage);
 
-  userEvent.click(nextButton);
-  expect(imgEl).toHaveAttribute("src", firstImage);
+    userEvent.click(nextButton);
+    expect(imgEl).toHaveAttribute("src", firstImage);
   });
 });
