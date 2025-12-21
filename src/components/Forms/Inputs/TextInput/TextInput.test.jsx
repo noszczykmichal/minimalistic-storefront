@@ -1,6 +1,6 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppSelector: jest.fn(),
-  useAppDispatch: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppSelector: vi.fn(),
+  useAppDispatch: vi.fn(),
 }));
 
 import { fireEvent, render, screen } from "@testing-library/react";
@@ -18,11 +18,11 @@ const testProps = {
 };
 
 describe("TextInput component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   const { inputChangeHandler, inputBlurHandler, registerInput } =
     shippingAddressActions;
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
     useAppSelector.mockReturnValue({ inputs: {} });
   });

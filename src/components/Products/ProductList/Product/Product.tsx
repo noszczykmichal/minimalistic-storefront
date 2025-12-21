@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { productActions } from "@/store/productsSlice";
@@ -57,6 +57,7 @@ export default function Product({
     (price) => price.currency.symbol === billingCurrency,
   );
   const addToCartButton = (
+    // eslint-disable-next-line jsx-a11y/control-has-associated-label
     <button
       type="button"
       className={classes["product-card__button--add-to-cart"]}

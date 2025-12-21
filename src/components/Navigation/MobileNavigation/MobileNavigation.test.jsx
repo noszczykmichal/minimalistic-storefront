@@ -1,6 +1,6 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppSelector: jest.fn(),
-  useAppDispatch: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppSelector: vi.fn(),
+  useAppDispatch: vi.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
@@ -11,10 +11,10 @@ import MobileNavigation from "@/components/Navigation/MobileNavigation/MobileNav
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 
 describe("MobileNavigation component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
     useAppSelector.mockReturnValue({
       categories: ["tech", "music"],

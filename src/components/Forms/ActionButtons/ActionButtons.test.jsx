@@ -11,7 +11,7 @@ describe("ActionButtons component", () => {
   let testButtonText = "Next";
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it("should render the ActionButtons with the 'Next' button disabled when 'isDisabled' is true", () => {
@@ -89,9 +89,9 @@ describe("ActionButtons component", () => {
   });
 
   it("should navigate back to the previous page when 'Back' button is clicked", () => {
-    const mockedUseNavigate = jest.fn();
+    const mockedUseNavigate = vi.fn();
 
-    jest.spyOn(ReactDOM, "useNavigate").mockReturnValue(mockedUseNavigate);
+    vi.spyOn(ReactDOM, "useNavigate").mockReturnValue(mockedUseNavigate);
 
     render(
       <WithMockStoreAndRouter>
@@ -111,10 +111,10 @@ describe("ActionButtons component", () => {
   });
 
   it("should navigate to the page specified in 'nextBttnPath' when 'Next' button is clicked", () => {
-    const mockedUseNavigate = jest.fn();
+    const mockedUseNavigate = vi.fn();
     testButtonText = "Next";
 
-    jest.spyOn(ReactDOM, "useNavigate").mockReturnValue(mockedUseNavigate);
+    vi.spyOn(ReactDOM, "useNavigate").mockReturnValue(mockedUseNavigate);
 
     render(
       <WithMockStoreAndRouter>

@@ -1,30 +1,27 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppSelector: jest.fn(),
-  useAppDispatch: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppSelector: vi.fn(),
+  useAppDispatch: vi.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
-import ReactDOM from "react-dom";
 import { MemoryRouter } from "react-router";
 
 import Toolbar from "@/components/Navigation/Toolbar/Toolbar";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 
 describe("Toolbar component", () => {
-  jest.spyOn(ReactDOM, "createPortal").mockImplementationOnce(() => {
-    const div = document.createElement("div");
-    div.setAttribute("id", "modals-root");
-  });
-
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
   });
 
   it("should render NavigationItems and CurrencySwitcher when props categories and currencies are non empty arrays", () => {
+    const modalRoot = document.createElement("div");
+    modalRoot.setAttribute("id", "modals-root");
+
     useAppSelector.mockReturnValue({
       categories: ["testString", "testString2"],
       currencies: [
@@ -39,6 +36,7 @@ describe("Toolbar component", () => {
       <MemoryRouter>
         <Toolbar />
       </MemoryRouter>,
+      { container: document.body.appendChild(modalRoot) },
     );
 
     const { categories, billingCurrency } =
@@ -53,6 +51,9 @@ describe("Toolbar component", () => {
   });
 
   it("should not render NavigationItems and CurrencySwitcher when props categories and currencies are empty arrays", () => {
+    const modalRoot = document.createElement("div");
+    modalRoot.setAttribute("id", "modals-root");
+
     useAppSelector.mockReturnValue({
       categories: [],
       currencies: [],
@@ -64,6 +65,7 @@ describe("Toolbar component", () => {
       <MemoryRouter>
         <Toolbar />
       </MemoryRouter>,
+      { container: document.body.appendChild(modalRoot) },
     );
 
     const navigationItemsList = screen.queryByTestId("navigation-items");
@@ -75,6 +77,9 @@ describe("Toolbar component", () => {
   });
 
   it("should have no accessibility violations", async () => {
+    const modalRoot = document.createElement("div");
+    modalRoot.setAttribute("id", "modals-root");
+
     useAppSelector.mockReturnValue({
       categories: ["testString", "testString2"],
       currencies: [
@@ -88,6 +93,7 @@ describe("Toolbar component", () => {
       <MemoryRouter>
         <Toolbar />
       </MemoryRouter>,
+      { container: document.body.appendChild(modalRoot) },
     );
     const result = await axe(container);
 

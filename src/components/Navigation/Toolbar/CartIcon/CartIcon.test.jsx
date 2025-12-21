@@ -1,6 +1,6 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppDispatch: jest.fn(),
-  useAppSelector: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppDispatch: vi.fn(),
+  useAppSelector: vi.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { uiActions } from "@/store/uiSlice";
 
 describe("CartIcon component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   const {
     backdropVisibilityToggle,
     backdropTypeToggle,
@@ -20,7 +20,7 @@ describe("CartIcon component", () => {
   } = uiActions;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
     useAppSelector.mockReturnValue({ productsTotal: 1 });
   });

@@ -1,6 +1,6 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppDispatch: jest.fn(),
-  useAppSelector: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppDispatch: vi.fn(),
+  useAppSelector: vi.fn(),
 }));
 
 import React from "react";
@@ -12,10 +12,10 @@ import CartPageItem from "@/components/Cart/CartPageItem/CartPageItem";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 
 describe("CartPageItem component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
     useAppSelector.mockReturnValue({ billingCurrency: "$" });
   });
@@ -109,24 +109,21 @@ describe("CartPageItem component", () => {
   });
 
   it("should display the first thumbnail when reaching the end of the gallery", () => {
-    const [firstImage, , defaultImage] = testItemDetails.gallery;
-    let mockedValue = 2;
-    const setMockedValue = () => {
-      mockedValue = 0;
-    };
+    render(<CartPageItem itemDetails={testItemDetails} />);
 
-    const useStateMock = () => [mockedValue, setMockedValue];
-    jest.spyOn(React, "useState").mockImplementation(useStateMock);
-
-    const { rerender } = render(<CartPageItem itemDetails={testItemDetails} />);
-
+    const [firstImage, secondImage, thirdImage] = testItemDetails.gallery;
     const imgEl = screen.getByRole("img");
     const nextButton = screen.getByLabelText(/Next/);
 
-    expect(imgEl).toHaveAttribute("src", defaultImage);
-    userEvent.click(nextButton);
+    expect(imgEl).toHaveAttribute("src", firstImage);
 
-    rerender(<CartPageItem itemDetails={testItemDetails} />);
+    userEvent.click(nextButton);
+    expect(imgEl).toHaveAttribute("src", secondImage);
+
+    userEvent.click(nextButton);
+    expect(imgEl).toHaveAttribute("src", thirdImage);
+
+    userEvent.click(nextButton);
     expect(imgEl).toHaveAttribute("src", firstImage);
   });
 });

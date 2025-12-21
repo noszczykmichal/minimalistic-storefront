@@ -1,12 +1,11 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  ...jest.requireActual("@/hooks/useReduxHooks"),
-  useAppDispatch: jest.fn(),
-}));
+vi.mock("@/hooks/useReduxHooks", async (importActual) => {
+  const actual = await importActual();
 
-import React from "react";
+  return { ...actual, useAppDispatch: vi.fn() };
+});
+
 import { render, screen } from "@testing-library/react";
 import configureStore from "redux-mock-store";
-import { Provider } from "react-redux";
 import userEvent from "@testing-library/user-event";
 
 import Fieldset from "@/components/Forms/Fieldset/Fieldset";
@@ -36,14 +35,14 @@ const testOptions = [
 const mockStore = configureStore([]);
 
 describe("Fieldset component", () => {
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   const { registerOption, optionChangeHandler } = shippingPaymentOptionsActions;
   const fieldIdentifier = "shippingOption";
   let store;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    jest.restoreAllMocks();
+    vi.clearAllMocks();
+    vi.restoreAllMocks();
     useAppDispatch.mockReturnValue(dispatch);
 
     store = mockStore({
@@ -66,7 +65,10 @@ describe("Fieldset component", () => {
     );
 
     const fieldsetElem = screen.getByRole("group");
-    const radioElements = screen.getAllByRole("radio");
+    const radioElements = screen.getAllByRole("radio", {
+      queryFallbacks: true,
+      hidden: true,
+    });
 
     expect(fieldsetElem).toBeInTheDocument();
     expect(radioElements).toHaveLength(testOptions.length);
@@ -95,28 +97,18 @@ describe("Fieldset component", () => {
   });
 
   it("should update the local state if a value for the given fieldset is found in the Redux store", () => {
-    const mockedSetCheckedInputName = jest.fn();
-    const mockedCheckedInputName = "";
-    const mockedValue = "flatRate";
-    const useStateMock = () => [
-      mockedCheckedInputName,
-      mockedSetCheckedInputName,
-    ];
-
-    jest.spyOn(React, "useState").mockImplementation(useStateMock);
-
     render(
-      <Provider store={store}>
+      <WithMockStoreAndRouter customStore={store}>
         <Fieldset
           options={testOptions}
           heading="Delivery"
           identifier={fieldIdentifier}
         />
-      </Provider>,
+      </WithMockStoreAndRouter>,
     );
 
-    expect(mockedSetCheckedInputName).toHaveBeenCalledTimes(1);
-    expect(mockedSetCheckedInputName).toHaveBeenCalledWith(mockedValue);
+    const radioElement = screen.getByLabelText(/Flat Rate/i);
+    expect(radioElement).toBeChecked();
   });
 
   it("should call clickHandler when clicked and dispatch an action", () => {

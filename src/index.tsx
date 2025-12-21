@@ -19,6 +19,20 @@ import Loader from "@/components/UI/Loader/Loader";
 import ErrorModal from "@/components/UI/ErrorModal/ErrorModal";
 import "@/index.css";
 
+interface Category {
+  name: string;
+}
+
+interface Currency {
+  label: string;
+  symbol: string;
+}
+
+interface StoreData {
+  categories: Category[];
+  currencies: Currency[];
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
@@ -48,7 +62,7 @@ root.render(
         <Provider store={store}>
           <PersistGate loading={<Loader />} persistor={persistor}>
             <Query query={categoriesAndCurrenciesQuery}>
-              {(props: QueryResult<any, OperationVariables>) => {
+              {(props: QueryResult<StoreData, OperationVariables>) => {
                 const { data, loading, error } = props;
                 let content = null;
 
@@ -56,8 +70,8 @@ root.render(
                   content = <Loader />;
                 }
 
-                if (data && data.categories && data.currencies) {
-                  const fetchedCategories = data.categories.map(
+                if (data && data?.categories && data?.currencies) {
+                  const fetchedCategories = data?.categories.map(
                     (category: { name: string }) => category.name,
                   );
 

@@ -1,5 +1,5 @@
-jest.mock("@/hooks/useReduxHooks", () => ({
-  useAppSelector: jest.fn(),
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppSelector: vi.fn(),
 }));
 
 import { render, screen } from "@testing-library/react";
@@ -10,7 +10,7 @@ import { useAppSelector } from "@/hooks/useReduxHooks";
 
 describe("OrderSummaryItem component", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useAppSelector.mockReturnValue({ billingCurrency: "$" });
   });
 
