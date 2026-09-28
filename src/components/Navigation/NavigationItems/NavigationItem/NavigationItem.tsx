@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import { ReactNode } from "react";
 
 import { uiActions } from "@/store/uiSlice";
