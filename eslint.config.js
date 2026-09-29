@@ -87,6 +87,10 @@ export default tseslint.config(
       ],
       "import/extensions": "off",
     },
+    "react/require-default-props": [
+      "error",
+      { forbidDefaultForRequired: true, functions: "defaultArguments" },
+    ],
   },
 
   // 3. Test Overrides

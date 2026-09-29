@@ -13,7 +13,7 @@ const mockStore = configureMockStore();
 
 export default function WithMockStoreAndRouter({
   children,
-  customStore,
+  customStore = undefined,
 }: WithMockStoreAndRouterProps) {
   const store = customStore || mockStore({});
 
@@ -23,7 +23,3 @@ export default function WithMockStoreAndRouter({
     </Provider>
   );
 }
-
-WithMockStoreAndRouter.defaultProps = {
-  customStore: undefined,
-};
