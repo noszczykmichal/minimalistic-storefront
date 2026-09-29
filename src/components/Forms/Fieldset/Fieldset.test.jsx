@@ -134,9 +134,7 @@ describe("Fieldset component", () => {
 
     userEvent.click(radioElement);
 
-    expect(dispatch).toHaveBeenCalledTimes(2);
-    expect(dispatch).toHaveBeenNthCalledWith(
-      2,
+    expect(dispatch).toHaveBeenLastCalledWith(
       optionChangeHandler({
         identifier: fieldIdentifier,
         name: radioElement.getAttribute("name"),

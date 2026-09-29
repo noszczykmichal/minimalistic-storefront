@@ -5,8 +5,8 @@ import classes from "@/components/UI/Button/Button.module.css";
 export default function Button({
   customClass,
   children,
-  isDisabled,
-  clicked,
+  isDisabled = false,
+  clicked = () => {},
 }: {
   customClass: string;
   children: ReactNode;
@@ -24,8 +24,3 @@ export default function Button({
     </button>
   );
 }
-
-Button.defaultProps = {
-  isDisabled: false,
-  clicked: () => {},
-};

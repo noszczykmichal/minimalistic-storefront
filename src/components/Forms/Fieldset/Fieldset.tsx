@@ -1,4 +1,4 @@
-import { useEffect, useState, FormEvent, Fragment } from "react";
+import { useEffect, FormEvent, Fragment } from "react";
 
 import RadioInput from "@/components/Forms/Inputs/RadioInput/RadioInput";
 import { RadioInputProps } from "@/models/utility-models";
@@ -16,7 +16,6 @@ export default function Fieldset({
   heading: string;
   identifier: string;
 }) {
-  const [checkedInputName, setCheckedInputName] = useState<string | null>("");
   const { registerOption, optionChangeHandler } = shippingPaymentOptionsActions;
   const dispatch = useAppDispatch();
   const value = useAppSelector((state) =>
@@ -27,17 +26,12 @@ export default function Fieldset({
 
   useEffect(() => {
     dispatch(registerOption(identifier));
-    if (value) {
-      setCheckedInputName(value);
-    }
-  }, [dispatch, identifier, registerOption, value]);
+  }, [dispatch, identifier, registerOption]);
 
   const clickHandler = (
     event: FormEvent<HTMLInputElement>,
     optionCost: number,
   ) => {
-    setCheckedInputName(event.currentTarget.getAttribute("name"));
-
     dispatch(
       optionChangeHandler({
         identifier,
@@ -56,7 +50,7 @@ export default function Fieldset({
           <RadioInput
             inputDetails={option}
             clicked={clickHandler}
-            checkedInputName={checkedInputName}
+            checkedInputName={value}
             fieldsetId={identifier}
           />
           <Hr customClass={classes.fieldset__hr} />

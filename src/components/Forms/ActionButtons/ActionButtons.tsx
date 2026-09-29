@@ -13,8 +13,8 @@ interface ActionButtonsProps {
 export default function ActionButtons({
   isNextBttnDisabled,
   nextBttnPath,
-  customClass,
-  nextBttnCustomText,
+  customClass = "",
+  nextBttnCustomText = "Next",
 }: ActionButtonsProps) {
   const navigate = useNavigate();
   const attachedClasses = [classes["actions-wrapper"], customClass].join(" ");
@@ -40,8 +40,3 @@ export default function ActionButtons({
     </div>
   );
 }
-
-ActionButtons.defaultProps = {
-  customClass: "",
-  nextBttnCustomText: "Next",
-};

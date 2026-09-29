@@ -35,7 +35,7 @@ export default function TextInput({
       inputChangeHandler({
         value: event.currentTarget.value,
         name,
-        validator,
+        isValid: validator(event.currentTarget.value),
       }),
     );
   };
@@ -45,7 +45,7 @@ export default function TextInput({
       inputBlurHandler({
         value: event.currentTarget.value,
         name,
-        validator,
+        isValid: validator(event.currentTarget.value),
       }),
     );
   };
