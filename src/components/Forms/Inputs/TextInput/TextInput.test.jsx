@@ -84,7 +84,7 @@ describe("TextInput component", () => {
       inputChangeHandler({
         value: updatedValue,
         name: testProps.name,
-        validator: testProps.validator,
+        isValid: testProps.validator(updatedValue),
       }),
     );
   });
@@ -100,7 +100,7 @@ describe("TextInput component", () => {
       inputBlurHandler({
         value: updatedValue,
         name: testProps.name,
-        validator: testProps.validator,
+        isValid: testProps.validator(updatedValue),
       }),
     );
   });

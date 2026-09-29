@@ -1,6 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-import { ValidationFn } from "@/models/utility-models";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Input {
   value: string;
@@ -13,39 +11,30 @@ interface ShippingAddressInterface {
   isFormValid: boolean;
 }
 
-interface ActionInterface {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  payload: any;
-  type: string;
-}
-
 interface InputPayload {
   value: string;
   name: string;
-  validator: ValidationFn;
+  isValid: boolean;
 }
 
 function inputStateHandler(
   state: ShippingAddressInterface,
-  action: ActionInterface,
+  name: string,
+  value: string,
   isValid: boolean,
   hasError: boolean,
 ) {
-  const { value, name } = action.payload;
-  const isCurrentInputValid = isValid;
-
   const updatedInput: Input = {
     value,
-    isValid: isCurrentInputValid,
+    isValid,
     hasError,
   };
 
-  const filteredInputs = Object.keys(state.inputs)
+  const areOtherInputsValid = Object.keys(state.inputs)
     .filter((input) => input !== name)
-    .map((filteredInput) => state.inputs[filteredInput].isValid);
+    .every((filteredInput) => state.inputs[filteredInput].isValid);
 
-  const areOtherInputsValid = filteredInputs.every((el) => el === true);
-  const isFormValid = areOtherInputsValid && isCurrentInputValid;
+  const isFormValid = areOtherInputsValid && isValid;
 
   return { updatedInput, isFormValid };
 }
@@ -59,7 +48,7 @@ const shippingAddress = createSlice({
   name: "shippingAddress",
   initialState,
   reducers: {
-    registerInput(state, action) {
+    registerInput(state, action: PayloadAction<string>) {
       const inputName = action.payload;
       let inputState = state.inputs[inputName];
       const isFormValid = Object.keys(state.inputs).every(
@@ -83,13 +72,14 @@ const shippingAddress = createSlice({
         isFormValid,
       };
     },
-    inputChangeHandler(state, action) {
-      const { value, name, validator }: InputPayload = action.payload;
-      const isCurrentInputValid = validator(value);
+    inputChangeHandler(state, action: PayloadAction<InputPayload>) {
+      const { value, name, isValid } = action.payload;
+
       const { updatedInput, isFormValid } = inputStateHandler(
         state,
-        action,
-        isCurrentInputValid,
+        name,
+        value,
+        isValid,
         false,
       );
 
@@ -100,16 +90,15 @@ const shippingAddress = createSlice({
       };
     },
 
-    inputBlurHandler(state, action) {
-      const { value, name, validator }: InputPayload = action.payload;
-      const isCurrentInputValid = validator(value);
-      const hasError = !isCurrentInputValid;
+    inputBlurHandler(state, action: PayloadAction<InputPayload>) {
+      const { value, name, isValid } = action.payload;
 
       const { updatedInput, isFormValid } = inputStateHandler(
         state,
-        action,
-        isCurrentInputValid,
-        hasError,
+        name,
+        value,
+        isValid,
+        !isValid,
       );
 
       return {

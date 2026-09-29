@@ -79,18 +79,27 @@ export default tseslint.config(
       "import/no-extraneous-dependencies": [
         "error",
         {
-          devDependencies: true,
+          devDependencies: [
+            "**/*.test.{js,jsx,ts,tsx}",
+            "**/*.spec.{js,jsx,ts,tsx}",
+            "src/utils/testUtils.*",
+            "src/utils/WithMockStoreAndRouter.*",
+            "src/setupTests.*",
+            "vite.config.*",
+            "vitest.config.*",
+            "eslint.config.*",
+          ],
           optionalDependencies: false,
           peerDependencies: false,
           packageDir: "./",
         },
       ],
       "import/extensions": "off",
+      "react/require-default-props": [
+        "error",
+        { forbidDefaultForRequired: true, functions: "defaultArguments" },
+      ],
     },
-    "react/require-default-props": [
-      "error",
-      { forbidDefaultForRequired: true, functions: "defaultArguments" },
-    ],
   },
 
   // 3. Test Overrides
