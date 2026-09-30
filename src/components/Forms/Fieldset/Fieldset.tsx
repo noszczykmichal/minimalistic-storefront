@@ -1,7 +1,7 @@
 import { useEffect, FormEvent, Fragment } from "react";
 
 import RadioInput from "@/components/Forms/Inputs/RadioInput/RadioInput";
-import { RadioInputProps } from "@/models/utility-models";
+import { RadioInputProps } from "@/types/utility-models";
 import Hr from "@/components/UI/Hr/Hr";
 import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";

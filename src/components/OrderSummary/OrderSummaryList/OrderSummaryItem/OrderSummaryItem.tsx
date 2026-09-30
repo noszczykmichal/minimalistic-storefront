@@ -1,4 +1,4 @@
-import { CartItem } from "@/models/productSlice.models";
+import { CartItem } from "@/types/productSlice.models";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/OrderSummary/OrderSummaryList/OrderSummaryItem/OrderSummaryItem.module.css";
 

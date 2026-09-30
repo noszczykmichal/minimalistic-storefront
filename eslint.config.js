@@ -22,7 +22,7 @@ const compat = new FlatCompat({
 export default tseslint.config(
   {
     ignores: [
-      "**/dist/**",
+      "build/",
       "node_modules/",
       "coverage/",
       "eslint.config.js",
@@ -105,6 +105,10 @@ export default tseslint.config(
       "react/require-default-props": [
         "error",
         { forbidDefaultForRequired: true, functions: "defaultArguments" },
+      ],
+      "no-param-reassign": [
+        "error",
+        { props: true, ignorePropertyModificationsFor: ["state"] },
       ],
     },
   },

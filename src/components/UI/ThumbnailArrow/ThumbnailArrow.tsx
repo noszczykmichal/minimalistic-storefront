@@ -1,4 +1,4 @@
-import { ThumbnailArrowVariant } from "@/models/utility-models";
+import { ThumbnailArrowVariant } from "@/types/utility-models";
 import classes from "@/components/UI/ThumbnailArrow/ThumbnailArrow.module.css";
 
 export default function ThumbnailArrow({

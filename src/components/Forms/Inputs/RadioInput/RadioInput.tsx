@@ -1,7 +1,7 @@
 import { useEffect, useRef, FormEvent } from "react";
 import { Markup } from "interweave";
 
-import { RadioInputProps } from "@/models/utility-models";
+import { RadioInputProps } from "@/types/utility-models";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
 import classes from "@/components/Forms/Inputs/RadioInput/RadioInput.module.css";

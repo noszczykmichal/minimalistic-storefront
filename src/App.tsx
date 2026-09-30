@@ -6,7 +6,7 @@ import Layout from "@/components/Layout/Layout";
 import Loader from "@/components/UI/Loader/Loader";
 import { uiActions } from "@/store/uiSlice";
 import PLP from "@/pages/PLP/PLP";
-import { Currency } from "@/models/productSlice.models";
+import { Currency } from "@/types/productSlice.models";
 
 const PDP = lazy(() => import("@/pages/PDP/PDP"));
 const Cart = lazy(() => import("@/pages/Cart/Cart"));
@@ -16,6 +16,7 @@ const ShippingAndPayment = lazy(
 );
 const Review = lazy(() => import("@/pages/Review/Review"));
 const Confirm = lazy(() => import("@/pages/Confirm/Confirm"));
+const Login = lazy(() => import("@/pages/Login/Login"));
 
 export default function App({
   categories,
@@ -40,6 +41,7 @@ export default function App({
               element={<PLP />}
             />
           ))}
+          <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cart/address" element={<Address />} />
           <Route

@@ -1,89 +1,75 @@
-export const validators = {
-  stringValidator: (text: string) => {
-    return text.trim().length >= 3;
-  },
-  phoneValidator: (text: string) => {
-    return text.trim().length >= 9;
-  },
-  emailValidator: (text: string) => {
-    return text.trim().includes("@");
-  },
-};
+import {
+  Option,
+  PaymentMethod,
+  ShippingOptionName,
+} from "@/types/productSlice.models";
+import { ShippingAddress } from "./schemas";
 
-const errorMessages = {
-  lengthErrorMessage: "Please enter at least 3 characters.",
-  telErrorMessage:
-    "A correct phone number should consist of at least 9 digits.",
-  emailErrorMessage: "Please enter a value in the format: example@domain.com.",
-};
+interface ShippingAddressField {
+  label: string;
+  name: keyof ShippingAddress;
+  type: "text" | "tel" | "email";
+  autoComplete: string;
+}
 
 export const shippingAddressInputs = [
   {
     label: "First Name:",
-    name: "fName",
+    name: "firstName",
     type: "text",
-    errorMessage: errorMessages.lengthErrorMessage,
-    validator: validators.stringValidator,
+    autoComplete: "given-name",
   },
   {
     label: "Last Name:",
-    name: "lName",
+    name: "lastName",
     type: "text",
-    errorMessage: errorMessages.lengthErrorMessage,
-    validator: validators.stringValidator,
+    autoComplete: "family-name",
   },
   {
     label: "Address Line 1:",
-    name: "address_1",
+    name: "addressLine1",
     type: "text",
-    errorMessage: errorMessages.lengthErrorMessage,
-    validator: validators.stringValidator,
+    autoComplete: "address-line1",
   },
   {
     label: "Address Line 2:",
-    name: "address_2",
+    name: "addressLine2",
     type: "text",
-    errorMessage: errorMessages.lengthErrorMessage,
-    validator: validators.stringValidator,
+    autoComplete: "address-line2",
   },
   {
     label: "City:",
     name: "city",
     type: "text",
-    errorMessage: errorMessages.lengthErrorMessage,
-    validator: validators.stringValidator,
+    autoComplete: "address-level2",
   },
   {
     label: "Postal Code:",
-    name: "postal_code",
+    name: "postalCode",
     type: "text",
-    errorMessage: errorMessages.lengthErrorMessage,
-    validator: validators.stringValidator,
+    autoComplete: "postal-code",
   },
   {
     label: "Country:",
     name: "country",
     type: "text",
-    errorMessage: errorMessages.lengthErrorMessage,
-    validator: validators.stringValidator,
+    autoComplete: "country-name",
   },
   {
     label: "Phone:",
     name: "phone",
     type: "tel",
-    errorMessage: errorMessages.telErrorMessage,
-    validator: validators.phoneValidator,
+    autoComplete: "tel",
   },
   {
     label: "E-mail:",
     name: "email",
     type: "email",
-    errorMessage: errorMessages.emailErrorMessage,
-    validator: validators.emailValidator,
+    autoComplete: "email",
   },
-];
+] satisfies ShippingAddressField[];
 
-export const shippingOptions = [
+export const shippingOptions: Option<ShippingOptionName>[] = [
   {
     label: "Carrier method: <b>Flat Rate</b> <br>Rate: <b>Fixed</b>",
     name: "flatRate",
@@ -130,7 +116,7 @@ export const shippingOptions = [
   },
 ];
 
-export const paymentOptions = [
+export const paymentOptions: Option<PaymentMethod>[] = [
   {
     label: "<b>Credit card</b>",
     name: "credit_card",

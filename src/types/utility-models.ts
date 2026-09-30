@@ -1,4 +1,4 @@
-import { Price } from "@/models/productSlice.models";
+import { Price } from "@/types/productSlice.models";
 
 export type ChangeQuantityVariants = "addition" | "subtraction";
 

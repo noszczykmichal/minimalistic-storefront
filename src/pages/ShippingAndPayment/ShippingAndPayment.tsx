@@ -1,4 +1,4 @@
-import { shippingOptions, paymentOptions } from "@/utils/config";
+import { shippingOptions, paymentOptions } from "@/utils/form/constants";
 import Fieldset from "@/components/Forms/Fieldset/Fieldset";
 import OrderSummary from "@/components/OrderSummary/OrderSummary";
 import { useAppSelector } from "@/hooks/useReduxHooks";

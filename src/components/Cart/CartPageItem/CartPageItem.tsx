@@ -3,7 +3,7 @@ import { useState } from "react";
 import Hr from "@/components/UI/Hr/Hr";
 import ThumbnailArrow from "@/components/UI/ThumbnailArrow/ThumbnailArrow";
 import useChangeQuantity from "@/hooks/useChangeQuantity";
-import { CartItem } from "@/models/productSlice.models";
+import { CartItem } from "@/types/productSlice.models";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import PlusIcon from "@/components/Cart/Icons/PlusIcon/PlusIcon";
 import MinusIcon from "@/components/Cart/Icons/MinusIcon/MinusIcon";

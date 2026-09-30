@@ -4,6 +4,9 @@
   background-color: transparent;
   padding: 0;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .cart-icon:disabled {

@@ -9,6 +9,7 @@ import MiniCart from "@/components/Cart/MiniCart/MiniCart";
 import ToggleButton from "@/components/Navigation/MobileNavigation/ToggleButton/ToggleButton";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/Toolbar/Toolbar.module.css";
+import AccountIcon from "./AccountIcon/AccountIcon";
 
 export default function Toolbar() {
   const { categories, currencies } = useAppSelector((state) => state.ui);
@@ -31,6 +32,7 @@ export default function Toolbar() {
         {currencySwitcher}
         <CartIcon />
         <MiniCart />
+        <AccountIcon />
         <ToggleButton />
       </div>
 
