@@ -24,5 +24,14 @@ export default defineConfig({
   },
   build: {
     outDir: "build",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom", "react-router"],
+          apollo: ["@apollo/client", "graphql"],
+          redux: ["@reduxjs/toolkit", "react-redux", "redux-persist"],
+        },
+      },
+    },
   },
 });
