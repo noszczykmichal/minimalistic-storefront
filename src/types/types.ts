@@ -70,3 +70,13 @@ export interface AttributeVariantInterface {
   selected?: boolean;
   value: string;
 }
+
+const isCurrencyLabel = (label: string): label is CurrencyLabel =>
+  (CURRENCY_LABELS as readonly string[]).includes(label);
+
+export const isCurrency = (currency: {
+  label: string;
+  symbol: string;
+}): currency is Currency =>
+  isCurrencyLabel(currency.label) &&
+  CURRENCY_SYMBOLS[currency.label] === currency.symbol;

@@ -18,6 +18,7 @@ import App from "@/App";
 import Loader from "@/components/UI/Loader/Loader";
 import ErrorModal from "@/components/UI/ErrorModal/ErrorModal";
 import "@/index.css";
+import { isCurrency } from "./types/types";
 
 interface Category {
   name: string;
@@ -78,7 +79,7 @@ root.render(
                   content = (
                     <App
                       categories={fetchedCategories}
-                      currencies={data.currencies}
+                      currencies={data.currencies.filter(isCurrency)}
                     />
                   );
                 }
