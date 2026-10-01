@@ -95,6 +95,7 @@ export default tseslint.config(
             "vitest.config.*",
             "eslint.config.*",
             "@types/**",
+            "vitest.setup.js",
           ],
           optionalDependencies: false,
           peerDependencies: false,
@@ -140,6 +141,7 @@ export default tseslint.config(
         { allowContainerFirstChild: true },
       ],
       "import/first": "off",
+      "react/jsx-props-no-spreading": "off",
     },
   },
   {

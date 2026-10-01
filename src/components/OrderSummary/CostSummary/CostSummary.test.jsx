@@ -3,135 +3,93 @@ import configureStore from "redux-mock-store";
 
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
-import { createTestStore } from "@/utils/testUtils";
+
+const mockStore = configureStore([]);
+
+const renderCostSummary = ({
+  draft = {},
+  billingCurrency = "$",
+  totalPrice = 100,
+} = {}) => {
+  const store = mockStore({
+    products: { billingCurrency, totalPrice },
+    shippingAddressAndPayment: { draft },
+  });
+
+  return render(
+    <WithMockStoreAndRouter customStore={store}>
+      <CostSummary />
+    </WithMockStoreAndRouter>,
+  );
+};
 
 describe("CostSummary component", () => {
-  it("should not initially render neither 'Other' nor 'Shipping' elements", () => {
-    const customShippingPaymentOptions = {
-      isFormValid: false,
-      inputs: {
-        shippingOption: {
-          value: "",
-          cost: 0,
-          isSelected: false,
-        },
-        paymentOption: {
-          value: "",
-          cost: 0,
-          isSelected: false,
-        },
-      },
-    };
+  it("should render tax, order total and total based on the cart price", () => {
+    renderCostSummary();
 
-    const store = createTestStore(2, customShippingPaymentOptions);
-
-    const { rerender } = render(
-      <WithMockStoreAndRouter customStore={store}>
-        <CostSummary />
-      </WithMockStoreAndRouter>,
-    );
-
-    const shippingElement = screen.queryByText("Shipping:");
-    const otherElement = screen.queryByText("Other:");
-
-    expect(shippingElement).toBeNull();
-    expect(otherElement).toBeNull();
-
-    const updatedShippingPaymentOptions = {
-      isFormValid: true,
-      inputs: {
-        shippingOption: {
-          value: "bestWay",
-          cost: 10,
-          isSelected: true,
-        },
-        paymentOption: {
-          value: "cash_on_collection",
-          cost: 1.99,
-          isSelected: true,
-        },
-      },
-    };
-
-    const updatedStore = createTestStore(2, updatedShippingPaymentOptions);
-
-    rerender(
-      <WithMockStoreAndRouter customStore={updatedStore}>
-        <CostSummary />
-      </WithMockStoreAndRouter>,
-    );
-
-    const shippingElAfterRerender = screen.getByText("Shipping:");
-    const otherElAfterRerender = screen.getByText("Other:");
-
-    expect(shippingElAfterRerender).toBeInTheDocument();
-    expect(otherElAfterRerender).toBeInTheDocument();
+    expect(screen.getByText("Tax 21%:")).toBeInTheDocument();
+    expect(screen.getByText("$21.00")).toBeInTheDocument();
+    expect(screen.getAllByText("$100.00")).toHaveLength(2);
   });
 
-  it("should not show 'Other' in CostSummary component when payment method is for free", () => {
-    const store = createTestStore();
-    // initial render shouldn't find element
-    const { rerender } = render(
-      <WithMockStoreAndRouter customStore={store}>
-        <CostSummary />
-      </WithMockStoreAndRouter>,
-    );
+  it("should not render 'Shipping' or 'Other' when no options are selected", () => {
+    renderCostSummary({ draft: { shippingOption: "", paymentMethod: "" } });
 
-    const otherElement = screen.queryByText("Other:");
-    expect(otherElement).toBeNull();
+    expect(screen.queryByText("Shipping:")).not.toBeInTheDocument();
+    expect(screen.queryByText("Other:")).not.toBeInTheDocument();
+  });
 
-    const storeCopy = store.getState();
-    const configuration = configureStore([]);
+  it("should not render 'Shipping' when the shipping option is null", () => {
+    renderCostSummary({ draft: { shippingOption: null } });
 
-    const updatedStore = configuration({
-      ...storeCopy,
-      shippingPaymentOptions: {
-        ...storeCopy.shippingPaymentOptions,
-        inputs: {
-          ...storeCopy.shippingPaymentOptions.inputs,
-          paymentOption: {
-            value: "cash_on_collection",
-            cost: 1.99,
-            isSelected: true,
-          },
-        },
-      },
+    expect(screen.queryByText("Shipping:")).not.toBeInTheDocument();
+  });
+
+  it("should render the shipping price when a shipping option is selected", () => {
+    renderCostSummary({ draft: { shippingOption: "bestWay" } });
+
+    expect(screen.getByText("Shipping:")).toBeInTheDocument();
+    expect(screen.getByText("$10.00")).toBeInTheDocument();
+  });
+
+  it("should render 'Shipping' for a free shipping option", () => {
+    renderCostSummary({
+      draft: { shippingOption: "in-store/online_payment" },
     });
-    // secondary render after the store update
-    rerender(
-      <WithMockStoreAndRouter customStore={updatedStore}>
-        <CostSummary />
-      </WithMockStoreAndRouter>,
-    );
 
-    const otherElAfterRerender = screen.getByText("Other:");
-    expect(otherElAfterRerender).toBeInTheDocument();
+    expect(screen.getByText("Shipping:")).toBeInTheDocument();
+    expect(screen.getByText("$0.00")).toBeInTheDocument();
   });
 
-  it("should render CostSummary component with correct values", () => {
-    const store = createTestStore();
+  it("should render 'Other' when a paid payment method is selected", () => {
+    renderCostSummary({ draft: { paymentMethod: "cash_on_collection" } });
 
-    const { products, shippingPaymentOptions } = store.getState();
-    const { totalPrice, billingCurrency } = products;
-    const { inputs } = shippingPaymentOptions;
-    const { shippingOption } = inputs;
-    const taxValue = billingCurrency + (totalPrice * 0.21).toFixed(2);
-    const totalPriceValue = billingCurrency + totalPrice.toFixed(2);
-    const shippingOptionValue =
-      billingCurrency + shippingOption.cost.toFixed(2);
+    expect(screen.getByText("Other:")).toBeInTheDocument();
+    expect(screen.getByText("$1.99")).toBeInTheDocument();
+  });
 
-    render(
-      <WithMockStoreAndRouter customStore={store}>
-        <CostSummary />
-      </WithMockStoreAndRouter>,
-    );
+  it("should not render 'Other' when a free payment method is selected", () => {
+    renderCostSummary({ draft: { paymentMethod: "credit_card" } });
 
-    const taxValueElement = screen.getByText(taxValue);
-    const totalPriceValueElement = screen.getByText(totalPriceValue);
-    const shippingOptionValueElement = screen.getByText(shippingOptionValue);
+    expect(screen.queryByText("Other:")).not.toBeInTheDocument();
+  });
 
-    expect(taxValueElement).toBeInTheDocument();
-    expect(totalPriceValueElement).toBeInTheDocument();
-    expect(shippingOptionValueElement).toBeInTheDocument();
+  it("should include shipping and payment costs in the total", () => {
+    renderCostSummary({
+      draft: { shippingOption: "bestWay", paymentMethod: "cash_on_collection" },
+    });
+
+    expect(screen.getByText("$111.99")).toBeInTheDocument();
+  });
+
+  it("should use prices in the selected billing currency", () => {
+    renderCostSummary({
+      billingCurrency: "£",
+      draft: { shippingOption: "bestWay", paymentMethod: "cash_on_collection" },
+    });
+
+    expect(screen.getByText("£7.19")).toBeInTheDocument();
+    expect(screen.getByText("£1.49")).toBeInTheDocument();
+    expect(screen.getByText("£108.68")).toBeInTheDocument();
   });
 });

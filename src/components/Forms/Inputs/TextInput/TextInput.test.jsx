@@ -1,107 +1,86 @@
-vi.mock("@/hooks/useReduxHooks", () => ({
-  useAppSelector: vi.fn(),
-  useAppDispatch: vi.fn(),
-}));
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
 
-import { fireEvent, render, screen } from "@testing-library/react";
-
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { shippingAddressActions } from "@/store/shippingAddressAndPayment";
 import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
 
-const testProps = {
-  label: "First Name",
-  type: "text",
-  name: "fName",
-  errorMessage: "test error",
-  validator: () => true,
-};
+const createRegistration = (name = "firstName") => ({
+  name,
+  onChange: vi.fn(),
+  onBlur: vi.fn(),
+  ref: vi.fn(),
+});
 
 describe("TextInput component", () => {
-  const dispatch = vi.fn();
-  const { inputChangeHandler, inputBlurHandler, registerInput } =
-    shippingAddressActions;
+  let registration;
+
+  const renderTextInput = (props = {}) =>
+    render(
+      <TextInput
+        label="First Name:"
+        type="text"
+        autoComplete="given-name"
+        registration={registration}
+        {...props}
+      />,
+    );
+
   beforeEach(() => {
-    vi.clearAllMocks();
-    useAppDispatch.mockReturnValue(dispatch);
-    useAppSelector.mockReturnValue({ inputs: {} });
+    registration = createRegistration();
   });
 
-  it("should render input element with the correct name and type attributes wrapped within a label", () => {
-    render(<TextInput inputDetails={testProps} />);
-    const labelElement = screen.getByText(testProps.label);
-    const inputElement = screen.getByRole("textbox");
+  it("should render an input associated with its label", () => {
+    renderTextInput();
 
-    expect(labelElement).toBeInTheDocument();
-    expect(inputElement).toHaveAttribute("type", testProps.type);
-    expect(inputElement).toHaveAttribute("name", testProps.name);
+    const input = screen.getByLabelText("First Name:");
+
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute("name", "firstName");
+    expect(input).toHaveAttribute("type", "text");
+    expect(input).toHaveAttribute("autocomplete", "given-name");
   });
 
-  it("should apply correct classes and not display an error message when hasError is false", () => {
-    useAppSelector.mockReturnValueOnce({
-      inputs: { fName: { hasError: false } },
-    });
+  it("should render the input type passed in props", () => {
+    renderTextInput({ label: "E-mail:", type: "email", autoComplete: "email" });
 
-    render(<TextInput inputDetails={testProps} />);
-    const inputElement = screen.getByRole("textbox");
-    const errorMessageEl = screen.queryByText(testProps.errorMessage);
-
-    expect(inputElement).toHaveClass("form-control__input");
-    expect(inputElement).not.toHaveClass("form-control__input--hasError");
-    expect(errorMessageEl).not.toBeInTheDocument();
+    expect(screen.getByLabelText("E-mail:")).toHaveAttribute("type", "email");
   });
 
-  it("should apply correct classes and display an error message when hasError is true", () => {
-    useAppSelector.mockReturnValueOnce({
-      inputs: { fName: { hasError: true } },
-    });
+  it("should not mark the input as invalid or show a message when there is no error", () => {
+    renderTextInput();
 
-    render(<TextInput inputDetails={testProps} />);
-    const inputElement = screen.getByRole("textbox");
-    const errorMessageEl = screen.getByText(testProps.errorMessage);
-
-    expect(inputElement).toHaveClass(
-      "form-control__input",
-      "form-control__input--hasError",
+    expect(screen.getByLabelText("First Name:")).toHaveAttribute(
+      "aria-invalid",
+      "false",
     );
-    expect(errorMessageEl).toBeInTheDocument();
+    expect(
+      screen.queryByText("This field is required."),
+    ).not.toBeInTheDocument();
   });
 
-  it("should dispatch a correct action in the useEffect hook and pass required data", () => {
-    render(<TextInput inputDetails={testProps} />);
+  it("should mark the input as invalid and show the message when an error is passed", () => {
+    renderTextInput({ error: "This field is required." });
 
-    expect(dispatch).toHaveBeenCalledWith(registerInput(testProps.name));
-  });
-
-  it("should dispatch a correct action on input change and pass required data", () => {
-    render(<TextInput inputDetails={testProps} />);
-    const inputElement = screen.getByRole("textbox");
-    const updatedValue = "testValue";
-
-    fireEvent.change(inputElement, { target: { value: updatedValue } });
-
-    expect(dispatch).toHaveBeenCalledWith(
-      inputChangeHandler({
-        value: updatedValue,
-        name: testProps.name,
-        isValid: testProps.validator(updatedValue),
-      }),
+    expect(screen.getByLabelText("First Name:")).toHaveAttribute(
+      "aria-invalid",
+      "true",
     );
+    expect(screen.getByText("This field is required.")).toBeInTheDocument();
   });
 
-  it("should dispatch a correct action on input blur and pass required data", () => {
-    render(<TextInput inputDetails={testProps} />);
-    const inputElement = screen.getByRole("textbox");
-    const updatedValue = "testBlur";
+  it("should call registration.onChange when the user types", () => {
+    renderTextInput();
 
-    fireEvent.blur(inputElement, { target: { value: updatedValue } });
+    userEvent.type(screen.getByLabelText("First Name:"), "Max");
 
-    expect(dispatch).toHaveBeenCalledWith(
-      inputBlurHandler({
-        value: updatedValue,
-        name: testProps.name,
-        isValid: testProps.validator(updatedValue),
-      }),
+    expect(registration.onChange).toHaveBeenCalled();
+  });
+
+  it("should pass the input element to registration.ref", () => {
+    renderTextInput();
+
+    expect(registration.ref).toHaveBeenCalledWith(
+      screen.getByLabelText("First Name:"),
     );
   });
 });

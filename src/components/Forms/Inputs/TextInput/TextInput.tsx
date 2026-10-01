@@ -26,6 +26,7 @@ export default function TextInput({
       <label htmlFor={registration.name}>
         {label}
         <input
+          id={registration.name}
           type={type}
           className={attachedClasses.join(" ")}
           aria-invalid={Boolean(error)}

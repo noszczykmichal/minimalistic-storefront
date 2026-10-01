@@ -1,4 +1,4 @@
-import { AttributeVariantInterface } from "@/types/utility-models";
+import { AttributeVariantInterface } from "@/types/types";
 import classes from "@/components/Cart/CartPageItem/Attribute/AttributeVariant/AttributeVariant.module.css";
 
 export default function AttributeVariant({

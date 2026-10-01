@@ -36,7 +36,7 @@ export default function CostSummary() {
     shippingOption,
     billingCurrency,
   );
-  const isShippingPriceSet = shippingOption !== "" || shippingPrice !== 0;
+  const isShippingPriceSet = Boolean(shippingOption);
   const paymentPrice = calculateOptionPrice(
     paymentOptions,
     paymentMethod,

@@ -19,7 +19,7 @@ export default function ActionButtons({
   const attachedClasses = [classes["actions-wrapper"], customClass].join(" ");
 
   return (
-    <div className={attachedClasses}>
+    <div className={attachedClasses} data-testid="actionButtonsWrapper">
       <Button
         customClass={classes["actions-wrapper__button"]}
         clicked={backButtonHandler}

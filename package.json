@@ -37,11 +37,9 @@
     "@graphql-codegen/cli": "^3.3.1",
     "@graphql-codegen/client-preset": "^3.0.1",
     "@testing-library/dom": "^10.4.2",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^29.5.1",
-    "@types/jest-axe": "^3.5.5",
     "@types/node": "^22.0.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -67,7 +65,6 @@
     "eslint-plugin-vitest": "^0.5.4",
     "globals": "^16.5.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest-axe": "^8.0.0",
     "jsdom": "^27.3.0",
     "prettier": "^3.3.3",
     "redux-mock-store": "^1.5.4",
@@ -77,7 +74,8 @@
     "vite-plugin-checker": "^0.8.0",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^5.0.1",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "vitest-axe": "^0.1.0"
   },
   "browserslist": {
     "production": [
