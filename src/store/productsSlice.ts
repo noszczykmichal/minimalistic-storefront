@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import {
-  CartItem,
-  Price,
-  ProductType,
-  ProductAttribute,
-} from "@/types/productSlice.models";
+import { CartItem, Price, ProductType, ProductAttribute } from "@/types/types";
 
 const initialState: {
   billingCurrency: string;

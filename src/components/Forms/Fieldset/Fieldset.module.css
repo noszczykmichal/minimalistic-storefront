@@ -12,3 +12,10 @@
 .fieldset__hr {
   margin: 0.625rem 0;
 }
+
+.fieldset__error {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: justify;
+  color: red;
+}

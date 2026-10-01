@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 
 import { productActions } from "@/store/productsSlice";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
-import { ProductType } from "@/types/productSlice.models";
+import { ProductType } from "@/types/types";
 import classes from "@/components/Products/ProductList/Product/Product.module.css";
 
 export default function Product({

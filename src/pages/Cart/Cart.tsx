@@ -2,7 +2,7 @@ import CartPageItem from "@/components/Cart/CartPageItem/CartPageItem";
 import Hr from "@/components/UI/Hr/Hr";
 import Button from "@/components/UI/Button/Button";
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import { CartItem } from "@/types/productSlice.models";
+import { CartItem } from "@/types/types";
 import useRedirect from "@/hooks/useRedirect";
 import classes from "@/pages/Cart/Cart.module.css";
 
@@ -11,8 +11,7 @@ export default function Cart() {
     (state) => state.products,
   );
   const redirect = useRedirect();
-
-  const onOrderHandler = () => redirect("/cart/address");
+  const onOrderHandler = () => redirect("/cart/shipping/address&payment");
 
   return (
     <section>

@@ -1,39 +1,35 @@
-import { useNavigate } from "react-router";
-
 import Button from "@/components/UI/Button/Button";
 import classes from "@/components/Forms/ActionButtons/ActionButtons.module.css";
 
 interface ActionButtonsProps {
-  isNextBttnDisabled: boolean;
-  nextBttnPath: string;
+  isNextBttnDisabled?: boolean;
+  nextButtonHandler: () => void;
+  backButtonHandler: () => void;
   customClass?: string;
   nextBttnCustomText?: string;
 }
 
 export default function ActionButtons({
-  isNextBttnDisabled,
-  nextBttnPath,
+  isNextBttnDisabled = false,
+  nextButtonHandler,
+  backButtonHandler,
   customClass = "",
   nextBttnCustomText = "Next",
 }: ActionButtonsProps) {
-  const navigate = useNavigate();
   const attachedClasses = [classes["actions-wrapper"], customClass].join(" ");
-
-  const backButtonClickHandler = () => navigate(-1);
-  const nextButtonClickHandler = () => navigate(`${nextBttnPath}`);
 
   return (
     <div className={attachedClasses}>
       <Button
         customClass={classes["actions-wrapper__button"]}
-        clicked={backButtonClickHandler}
+        clicked={backButtonHandler}
       >
         Back
       </Button>
       <Button
         customClass={classes["actions-wrapper__button"]}
         isDisabled={isNextBttnDisabled}
-        clicked={nextButtonClickHandler}
+        clicked={nextButtonHandler}
       >
         {nextBttnCustomText}
       </Button>

@@ -110,6 +110,14 @@ export default tseslint.config(
         "error",
         { props: true, ignorePropertyModificationsFor: ["state"] },
       ],
+
+      "react/jsx-props-no-spreading": [
+        "error",
+        {
+          html: "ignore",
+          custom: "enforce",
+        },
+      ],
     },
   },
 

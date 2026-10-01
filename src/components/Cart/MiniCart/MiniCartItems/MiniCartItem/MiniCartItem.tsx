@@ -1,6 +1,6 @@
 import useChangeQuantity from "@/hooks/useChangeQuantity";
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import { CartItem } from "@/types/productSlice.models";
+import { CartItem } from "@/types/types";
 import Attribute from "@/components/Cart/CartPageItem/Attribute/Attribute";
 import classes from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItem/MiniCartItem.module.css";
 

@@ -6,14 +6,11 @@ import Layout from "@/components/Layout/Layout";
 import Loader from "@/components/UI/Loader/Loader";
 import { uiActions } from "@/store/uiSlice";
 import PLP from "@/pages/PLP/PLP";
-import { Currency } from "@/types/productSlice.models";
+import { Currency } from "@/types/types";
 
 const PDP = lazy(() => import("@/pages/PDP/PDP"));
 const Cart = lazy(() => import("@/pages/Cart/Cart"));
-const Address = lazy(() => import("@/pages/Address/Address"));
-const ShippingAndPayment = lazy(
-  () => import("@/pages/ShippingAndPayment/ShippingAndPayment"),
-);
+const ShippingForm = lazy(() => import("@/pages/ShippingForm/ShippingForm"));
 const Review = lazy(() => import("@/pages/Review/Review"));
 const Confirm = lazy(() => import("@/pages/Confirm/Confirm"));
 const Login = lazy(() => import("@/pages/Login/Login"));
@@ -43,10 +40,9 @@ export default function App({
           ))}
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/cart/address" element={<Address />} />
           <Route
-            path="/cart/shipping&payment"
-            element={<ShippingAndPayment />}
+            path="/cart/shipping/address&payment"
+            element={<ShippingForm />}
           />
           <Route path="/cart/review" element={<Review />} />
           <Route path="/cart/confirm" element={<Confirm />} />

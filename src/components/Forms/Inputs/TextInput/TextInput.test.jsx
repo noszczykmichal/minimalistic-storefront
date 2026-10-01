@@ -6,7 +6,7 @@ vi.mock("@/hooks/useReduxHooks", () => ({
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { shippingAddressActions } from "@/store/shippingAddress";
+import { shippingAddressActions } from "@/store/shippingAddressAndPayment";
 import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
 
 const testProps = {

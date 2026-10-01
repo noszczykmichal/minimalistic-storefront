@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { Currency } from "@/types/productSlice.models";
+import { Currency } from "@/types/types";
 
 const initialState: {
   categories: string[];

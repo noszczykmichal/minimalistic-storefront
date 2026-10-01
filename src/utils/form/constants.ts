@@ -1,13 +1,9 @@
-import {
-  Option,
-  PaymentMethod,
-  ShippingOptionName,
-} from "@/types/productSlice.models";
-import { ShippingAddress } from "./schemas";
+import { Option, PaymentMethod, ShippingOptionName } from "@/types/types";
+import { AddressAndPaymentFormInput } from "./schemas";
 
 interface ShippingAddressField {
   label: string;
-  name: keyof ShippingAddress;
+  name: keyof AddressAndPaymentFormInput;
   type: "text" | "tel" | "email";
   autoComplete: string;
 }

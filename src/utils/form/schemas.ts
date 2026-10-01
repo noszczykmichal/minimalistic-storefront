@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { PAYMENT_METHODS } from "@/types/productSlice.models";
+import { PAYMENT_METHODS } from "@/types/types";
 import { SHIPPING_FORM } from "./currencies";
 
 const required = "This field is required.";
@@ -24,11 +24,15 @@ export const shippingAddressSchema = z.object({
 });
 
 const shippingMethodAndPayment = z.object({
-  shippingOption: z.enum(SHIPPING_FORM, {
-    error: "Choose a shipping method.",
-  }),
+  shippingOption: z.string("Choose a shipping method.").pipe(
+    z.enum(SHIPPING_FORM, {
+      error: "Choose a shipping method.",
+    }),
+  ),
 
-  paymentMethod: z.enum(PAYMENT_METHODS, { error: "Choose a payment method." }),
+  paymentMethod: z
+    .string("Choose a shipping method.")
+    .pipe(z.enum(PAYMENT_METHODS, { error: "Choose a payment method." })),
 });
 
 export const fullSchema = z.object({
@@ -36,4 +40,15 @@ export const fullSchema = z.object({
   ...shippingMethodAndPayment.shape,
 });
 
-export type ShippingAddress = z.infer<typeof shippingAddressSchema>;
+export const stepFieldNames = [
+  shippingAddressSchema.keyof().options,
+  shippingMethodAndPayment.keyof().options,
+] as const;
+
+export type AddressAndPaymentFormInput = z.input<typeof fullSchema>;
+export type AddressAndPaymentFormValues = z.output<typeof fullSchema>;
+
+export type FormFieldName = keyof AddressAndPaymentFormInput;
+
+export const isFormFieldName = (name: string): name is FormFieldName =>
+  name in fullSchema.shape;

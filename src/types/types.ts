@@ -34,7 +34,7 @@ export type ShippingOptionName = (typeof SHIPPING_FORM)[number];
 export type CurrencyLabel = (typeof CURRENCY_LABELS)[number];
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
-interface Cost {
+export interface Cost {
   amount: number;
   currency: Currency;
 }
@@ -59,4 +59,14 @@ export interface ProductType {
 export interface CartItem extends ProductType {
   quantity: number;
   internalID: string;
+}
+
+export type ChangeQuantityVariants = "addition" | "subtraction";
+
+export type ThumbnailArrowVariant = "right" | "left";
+
+export interface AttributeVariantInterface {
+  displayValue: string;
+  selected?: boolean;
+  value: string;
 }
