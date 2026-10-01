@@ -1,140 +1,104 @@
-vi.mock("@/hooks/useReduxHooks", () => ({
-  useAppSelector: vi.fn(),
-  useAppDispatch: vi.fn(),
-}));
-
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
+import { useAppSelector } from "@/hooks/useReduxHooks";
 import RadioInput from "@/components/Forms/Inputs/RadioInput/RadioInput";
 
-const testProps = {
-  label: "cash",
+vi.mock("@/hooks/useReduxHooks", () => ({
+  useAppSelector: vi.fn(),
+}));
+
+const testOption = {
+  label: "Cash on collection",
   name: "cash_on_collection",
   costs: [
     { amount: 1.99, currency: { label: "USD", symbol: "$" } },
     { amount: 1.49, currency: { label: "GBP", symbol: "£" } },
   ],
 };
-const testFieldID = "testID";
+
+const createRegistration = (name = "paymentMethod") => ({
+  name,
+  onChange: vi.fn(),
+  onBlur: vi.fn(),
+  ref: vi.fn(),
+});
 
 describe("RadioInput component", () => {
-  const dispatch = vi.fn();
-  const { updatePriceOfAnOption } = shippingPaymentOptionsActions;
+  let registration;
+
+  const renderRadioInput = (billingCurrency = "$") => {
+    useAppSelector.mockReturnValue({ billingCurrency });
+
+    return render(
+      <RadioInput inputDetails={testOption} registration={registration} />,
+    );
+  };
 
   beforeEach(() => {
     vi.clearAllMocks();
-    useAppSelector.mockReturnValue({ billingCurrency: "$" });
-    useAppDispatch.mockReturnValue(dispatch);
+    registration = createRegistration();
   });
 
-  it("should render RadioInput with correct label, name and value attributes", () => {
-    render(<RadioInput inputDetails={testProps} />);
-    const label = screen.getByText(testProps.label);
-    const radioInput = screen.getByRole("radio");
+  it("should render a radio input associated with its label", () => {
+    renderRadioInput();
 
-    expect(label).toBeInTheDocument();
-    expect(radioInput).toHaveAttribute("name", testProps.name);
-    expect(radioInput).toHaveAttribute("value", testProps.name);
+    const radio = screen.getByLabelText(/Cash on collection/);
+
+    expect(radio).toHaveAttribute("type", "radio");
+    expect(radio).toHaveAttribute("name", "paymentMethod");
+    expect(radio).toHaveAttribute("value", "cash_on_collection");
   });
 
-  it("should have checked attribute when 'checkedInputName' equals value of the 'name' prop", () => {
-    render(
-      <RadioInput inputDetails={testProps} checkedInputName={testProps.name} />,
-    );
-    const radioInput = screen.getByRole("radio");
+  it("should show the option price in the billing currency", () => {
+    renderRadioInput("$");
 
-    expect(radioInput).toHaveAttribute("checked");
+    expect(
+      screen.getByLabelText("Cash on collection - $1.99"),
+    ).toBeInTheDocument();
   });
 
-  it("should dispatch action on initial render if input is checked", () => {
-    render(
-      <RadioInput
-        inputDetails={testProps}
-        checkedInputName={testProps.name}
-        fieldsetId={testFieldID}
-      />,
-    );
+  it("should show the option price in a different billing currency", () => {
+    renderRadioInput("£");
 
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith(
-      updatePriceOfAnOption({
-        fieldsetId: testFieldID,
-        optionPrice: testProps.costs[0].amount,
-      }),
-    );
+    expect(
+      screen.getByLabelText("Cash on collection - £1.49"),
+    ).toBeInTheDocument();
   });
 
-  it("should NOT dispatch action on initial render if input is not checked", () => {
-    render(
-      <RadioInput
-        inputDetails={testProps}
-        checkedInputName="foo"
-        fieldsetId={testFieldID}
-      />,
-    );
+  it("should show a price of 0.00 when there is no price for the billing currency", () => {
+    renderRadioInput("¥");
 
-    expect(dispatch).not.toHaveBeenCalled();
+    expect(
+      screen.getByLabelText("Cash on collection - ¥0.00"),
+    ).toBeInTheDocument();
   });
 
-  it("should update based on billingCurrency change and send action with updated data", () => {
-    const { rerender } = render(
-      <RadioInput
-        inputDetails={testProps}
-        checkedInputName={testProps.name}
-        fieldsetId={testFieldID}
-      />,
-    );
-    const regEx = new RegExp(
-      `\\${testProps.costs[0].currency.symbol + testProps.costs[0].amount}`,
-    );
+  it("should call registration.onChange and check the input when clicked", () => {
+    renderRadioInput();
 
-    const label = screen.getByText(regEx);
+    const radio = screen.getByLabelText(/Cash on collection/);
+    userEvent.click(radio);
 
-    expect(label).toBeInTheDocument();
-
-    useAppSelector.mockReturnValue({ billingCurrency: "£" });
-    rerender(
-      <RadioInput
-        inputDetails={testProps}
-        checkedInputName={testProps.name}
-        fieldsetId={testFieldID}
-      />,
-    );
-    const updatedRegEx = new RegExp(
-      `\\${testProps.costs[1].currency.symbol + testProps.costs[1].amount}`,
-    );
-    const updatedLabel = screen.getByText(updatedRegEx);
-
-    expect(updatedLabel).toBeInTheDocument();
-    expect(dispatch).toHaveBeenCalledTimes(2);
-    expect(dispatch).toHaveBeenCalledWith(
-      updatePriceOfAnOption({
-        fieldsetId: testFieldID,
-        optionPrice: testProps.costs[1].amount,
-      }),
-    );
+    expect(registration.onChange).toHaveBeenCalledOnce();
+    expect(radio).toBeChecked();
   });
 
-  it("should call the onChangeHandler with the correct arguments on change", () => {
-    const mockedClicked = vi.fn();
-    render(
-      <RadioInput
-        inputDetails={testProps}
-        clicked={mockedClicked}
-        fieldsetId={testFieldID}
-        checkedInputName="foo"
-      />,
-    );
-    const radioInput = screen.getByRole("radio");
-    userEvent.click(radioInput);
+  it("should call registration.onBlur when the input loses focus", () => {
+    renderRadioInput();
 
-    expect(mockedClicked).toHaveBeenCalledTimes(1);
-    expect(mockedClicked).toHaveBeenCalledWith(
-      expect.anything(),
-      testProps.costs[0].amount,
+    userEvent.click(screen.getByLabelText(/Cash on collection/));
+    userEvent.tab();
+
+    expect(registration.onBlur).toHaveBeenCalledOnce();
+  });
+
+  it("should pass the input element to registration.ref", () => {
+    renderRadioInput();
+
+    expect(registration.ref).toHaveBeenCalledWith(
+      screen.getByLabelText(/Cash on collection/),
     );
   });
 });

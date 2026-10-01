@@ -1,61 +1,35 @@
-import { useEffect, FormEvent, Fragment } from "react";
+import { Fragment } from "react";
 
 import RadioInput from "@/components/Forms/Inputs/RadioInput/RadioInput";
-import { RadioInputProps } from "@/models/utility-models";
 import Hr from "@/components/UI/Hr/Hr";
-import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/Forms/Fieldset/Fieldset.module.css";
+import { UseFormRegisterReturn } from "react-hook-form";
+import { Option } from "@/types/types";
 
-export default function Fieldset({
+interface FieldsetProps<T extends string> {
+  options: Option<T>[];
+  legend: string;
+  registration: UseFormRegisterReturn;
+  error?: string;
+}
+export default function Fieldset<T extends string>({
   options,
-  heading,
-  identifier,
-}: {
-  options: RadioInputProps[];
-  heading: string;
-  identifier: string;
-}) {
-  const { registerOption, optionChangeHandler } = shippingPaymentOptionsActions;
-  const dispatch = useAppDispatch();
-  const value = useAppSelector((state) =>
-    state.shippingPaymentOptions.inputs[identifier]
-      ? state.shippingPaymentOptions.inputs[identifier].value
-      : "",
-  );
-
-  useEffect(() => {
-    dispatch(registerOption(identifier));
-  }, [dispatch, identifier, registerOption]);
-
-  const clickHandler = (
-    event: FormEvent<HTMLInputElement>,
-    optionCost: number,
-  ) => {
-    dispatch(
-      optionChangeHandler({
-        identifier,
-        name: event.currentTarget.getAttribute("name"),
-        optionCost,
-      }),
-    );
-  };
-
+  legend,
+  registration,
+  error = "",
+}: FieldsetProps<T>) {
   return (
-    <fieldset className={classes.fieldset}>
-      <legend className={classes.fieldset__legend}>{heading}</legend>
+    <fieldset className={classes.fieldset} aria-invalid={Boolean(error)}>
+      <legend className={classes.fieldset__legend}>{legend}</legend>
       <Hr customClass={classes.fieldset__hr} />
       {options.map((option) => (
         <Fragment key={option.name}>
-          <RadioInput
-            inputDetails={option}
-            clicked={clickHandler}
-            checkedInputName={value}
-            fieldsetId={identifier}
-          />
+          <RadioInput inputDetails={option} registration={registration} />
           <Hr customClass={classes.fieldset__hr} />
         </Fragment>
       ))}
+
+      {error && <p className={classes.fieldset__error}>{error}</p>}
     </fieldset>
   );
 }

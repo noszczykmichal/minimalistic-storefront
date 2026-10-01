@@ -1,16 +1,9 @@
-vi.mock("@/hooks/useReduxHooks", async (importActual) => {
-  const actual = await importActual();
-
-  return { ...actual, useAppDispatch: vi.fn() };
-});
-
 import { render, screen } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
 
 import Fieldset from "@/components/Forms/Fieldset/Fieldset";
-import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 
 const testOptions = [
@@ -34,112 +27,95 @@ const testOptions = [
 
 const mockStore = configureStore([]);
 
+const createRegistration = (name = "shippingOption") => ({
+  name,
+  onChange: vi.fn(),
+  onBlur: vi.fn(),
+  ref: vi.fn(),
+});
+
 describe("Fieldset component", () => {
-  const dispatch = vi.fn();
-  const { registerOption, optionChangeHandler } = shippingPaymentOptionsActions;
-  const fieldIdentifier = "shippingOption";
-  let store;
+  let registration;
+
+  const renderFieldset = ({ billingCurrency = "$", ...props } = {}) => {
+    const store = mockStore({ products: { billingCurrency } });
+
+    return render(
+      <WithMockStoreAndRouter customStore={store}>
+        <Fieldset
+          options={testOptions}
+          legend="Choose a shipping method"
+          registration={registration}
+          {...props}
+        />
+      </WithMockStoreAndRouter>,
+    );
+  };
 
   beforeEach(() => {
-    vi.clearAllMocks();
-    vi.restoreAllMocks();
-    useAppDispatch.mockReturnValue(dispatch);
+    registration = createRegistration();
+  });
 
-    store = mockStore({
-      products: { billingCurrency: "$" },
-      shippingPaymentOptions: {
-        inputs: { shippingOption: { value: "flatRate" } },
-      },
+  it("should render a fieldset named by its legend", () => {
+    renderFieldset();
+
+    expect(
+      screen.getByRole("group", { name: "Choose a shipping method" }),
+    ).toBeInTheDocument();
+  });
+
+  it("should render one radio input per option with the correct name and value", () => {
+    renderFieldset();
+
+    const radios = screen.getAllByRole("radio");
+
+    expect(radios).toHaveLength(testOptions.length);
+    radios.forEach((radio, index) => {
+      expect(radio).toHaveAttribute("name", "shippingOption");
+      expect(radio).toHaveAttribute("value", testOptions[index].name);
     });
   });
 
-  it("should render a fieldset with 2 inputs on the basis of provided data", () => {
-    render(
-      <WithMockStoreAndRouter customStore={store}>
-        <Fieldset
-          options={testOptions}
-          heading="Delivery"
-          identifier={fieldIdentifier}
-        />
-      </WithMockStoreAndRouter>,
-    );
+  it("should show option prices in the billing currency", () => {
+    renderFieldset();
 
-    const fieldsetElem = screen.getByRole("group");
-    const radioElements = screen.getAllByRole("radio", {
-      queryFallbacks: true,
-      hidden: true,
-    });
-
-    expect(fieldsetElem).toBeInTheDocument();
-    expect(radioElements).toHaveLength(testOptions.length);
+    expect(screen.getByLabelText(/Flat Rate - \$5\.00/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Best Way - \$10\.00/)).toBeInTheDocument();
   });
 
-  it("should dispatch an action on initial render and register a new fieldset", () => {
-    const newStore = mockStore({
-      products: { billingCurrency: "$" },
-      shippingPaymentOptions: {
-        inputs: {},
-      },
-    });
+  it("should show option prices in a different billing currency", () => {
+    renderFieldset({ billingCurrency: "£" });
 
-    render(
-      <WithMockStoreAndRouter customStore={newStore}>
-        <Fieldset
-          options={testOptions}
-          heading="Delivery"
-          identifier={fieldIdentifier}
-        />
-      </WithMockStoreAndRouter>,
-    );
-
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenLastCalledWith(registerOption(fieldIdentifier));
+    expect(screen.getByLabelText(/Flat Rate - £3\.59/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Best Way - £7\.19/)).toBeInTheDocument();
   });
 
-  it("should update the local state if a value for the given fieldset is found in the Redux store", () => {
-    render(
-      <WithMockStoreAndRouter customStore={store}>
-        <Fieldset
-          options={testOptions}
-          heading="Delivery"
-          identifier={fieldIdentifier}
-        />
-      </WithMockStoreAndRouter>,
-    );
+  it("should not render an error message when there is no error", () => {
+    renderFieldset();
 
-    const radioElement = screen.getByLabelText(/Flat Rate/i);
-    expect(radioElement).toBeChecked();
+    expect(
+      screen.queryByText("Choose a shipping method."),
+    ).not.toBeInTheDocument();
   });
 
-  it("should call clickHandler when clicked and dispatch an action", () => {
-    const { costs } = testOptions[1];
-    const billingCurrency = "$";
-    const optionPrice = costs.find(
-      (cost) => cost.currency.symbol === billingCurrency,
-    ).amount;
+  it("should render the error message when an error is passed", () => {
+    renderFieldset({ error: "Choose a shipping method." });
 
-    render(
-      <WithMockStoreAndRouter customStore={store}>
-        <Fieldset
-          options={testOptions}
-          heading="Delivery"
-          identifier={fieldIdentifier}
-        />
-      </WithMockStoreAndRouter>,
-    );
+    expect(screen.getByText("Choose a shipping method.")).toBeInTheDocument();
+  });
 
-    const radioElement = screen.getByLabelText(
-      new RegExp(`\\${testOptions[1].label}`),
-    );
+  it("should call registration.onChange when an option is selected", () => {
+    renderFieldset();
 
-    userEvent.click(radioElement);
+    userEvent.click(screen.getByLabelText(/Best Way/));
 
-    expect(dispatch).toHaveBeenLastCalledWith(
-      optionChangeHandler({
-        identifier: fieldIdentifier,
-        name: radioElement.getAttribute("name"),
-        optionCost: optionPrice,
-      }),
-    );
+    expect(registration.onChange).toHaveBeenCalledOnce();
+    expect(screen.getByLabelText(/Best Way/)).toBeChecked();
+  });
+
+  it("should register every radio input with React Hook Form", () => {
+    renderFieldset();
+
+    expect(registration.ref).toHaveBeenCalledTimes(testOptions.length);
   });
 });

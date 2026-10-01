@@ -1,5 +1,5 @@
 import Product from "@/components/Products/ProductList/Product/Product";
-import { ProductType } from "@/models/productSlice.models";
+import { ProductType } from "@/types/types";
 import classes from "@/components/Products/ProductList/ProductList.module.css";
 
 export default function ProductList({ products }: { products: ProductType[] }) {

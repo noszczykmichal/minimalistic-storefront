@@ -4,23 +4,21 @@ import { Link } from "react-router";
 import ShoppingBagIcon from "@/components/UI/ShoppingBagIcon/ShoppingBagIcon";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import { productActions } from "@/store/productsSlice";
-import { shippingAddressActions } from "@/store/shippingAddress";
-import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
+import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment";
 import classes from "@/pages/Confirm/Confirm.module.css";
 
 export default function Confirm() {
   const [showCheckmark, setShowCheckmark] = useState(false);
   const dispatch = useAppDispatch();
   const { clearCart } = productActions;
-  const { clearShippingAddress } = shippingAddressActions;
-  const { clearShippingPaymentOptions } = shippingPaymentOptionsActions;
+  const { clearShippingAndPaymentData } = shippingAndPaymentActions;
 
   useEffect(() => {
     dispatch(clearCart());
-    dispatch(clearShippingAddress());
-    dispatch(clearShippingPaymentOptions());
+
+    dispatch(clearShippingAndPaymentData());
     setTimeout(() => setShowCheckmark(true), 500);
-  }, [dispatch, clearCart, clearShippingAddress, clearShippingPaymentOptions]);
+  }, [dispatch, clearCart, clearShippingAndPaymentData]);
 
   return (
     <section className={classes.section}>

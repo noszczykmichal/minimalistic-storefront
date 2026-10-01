@@ -1,135 +1,79 @@
-import * as ReactDOM from "react-router";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
 
-import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 
 describe("ActionButtons component", () => {
-  let testIsDisabled = true;
-  const testBttnPath = "/cart/review";
-  let testButtonText = "Next";
+  const onNextButtonClickMock = vi.fn();
+  const onBackButtonClickMock = vi.fn();
+
+  const renderActionButtons = (props = {}) =>
+    render(
+      <ActionButtons
+        nextButtonHandler={onNextButtonClickMock}
+        backButtonHandler={onBackButtonClickMock}
+        {...props}
+      />,
+    );
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it("should render the ActionButtons with the 'Next' button disabled when 'isDisabled' is true", () => {
-    render(
-      <WithMockStoreAndRouter>
-        <ActionButtons
-          isNextBttnDisabled={testIsDisabled}
-          nextBttnPath={testBttnPath}
-          nextBttnCustomText={testButtonText}
-        />
-      </WithMockStoreAndRouter>,
-    );
+  it("should render an enabled 'Next' button by default", () => {
+    renderActionButtons();
 
-    const nextButton = screen.getByText(testButtonText);
-
-    expect(nextButton).toBeInTheDocument();
-    expect(nextButton).toHaveAttribute("disabled");
-  });
-
-  it("should render the ActionButtons with the 'Next' button which is enabled when 'isDisabled' is false", () => {
-    testIsDisabled = false;
-
-    render(
-      <WithMockStoreAndRouter>
-        <ActionButtons
-          isNextBttnDisabled={testIsDisabled}
-          nextBttnPath={testBttnPath}
-          nextBttnCustomText={testButtonText}
-        />
-      </WithMockStoreAndRouter>,
-    );
-
-    const nextButton = screen.getByText(testButtonText);
+    const nextButton = screen.getByText("Next");
 
     expect(nextButton).toBeInTheDocument();
     expect(nextButton).not.toHaveAttribute("disabled");
   });
 
-  it("should render the ActionsButton with button containing a custom text", () => {
-    testButtonText = "custom text";
+  it("should disable the 'Next' button when 'isNextBttnDisabled' is true", () => {
+    renderActionButtons({ isNextBttnDisabled: true });
 
-    render(
-      <WithMockStoreAndRouter>
-        <ActionButtons
-          isNextBttnDisabled={testIsDisabled}
-          nextBttnPath={testBttnPath}
-          nextBttnCustomText={testButtonText}
-        />
-      </WithMockStoreAndRouter>,
-    );
-
-    const nextButton = screen.getByText(testButtonText);
-
-    expect(nextButton).toBeInTheDocument();
+    expect(screen.getByText("Next")).toHaveAttribute("disabled");
   });
 
-  it("should render the ActionsButton with a custom class", () => {
-    const testCustomClass = "my-custom-class";
+  it("should render the 'Next' button with custom text when 'nextBttnCustomText' is provided", () => {
+    renderActionButtons({ nextBttnCustomText: "Confirm & Order" });
 
-    render(
-      <WithMockStoreAndRouter>
-        <ActionButtons
-          isNextBttnDisabled={testIsDisabled}
-          nextBttnPath={testBttnPath}
-          customClass={testCustomClass}
-          nextBttnCustomText={testButtonText}
-        />
-      </WithMockStoreAndRouter>,
-    );
-
-    const nextButton = screen.getByText(testButtonText);
-    const { parentElement } = nextButton;
-
-    expect(parentElement).toHaveClass(testCustomClass);
+    expect(screen.getByText("Confirm & Order")).toBeInTheDocument();
+    expect(screen.queryByText("Next")).not.toBeInTheDocument();
   });
 
-  it("should navigate back to the previous page when 'Back' button is clicked", () => {
-    const mockedUseNavigate = vi.fn();
+  it("should apply a custom class to the wrapper when 'customClass' is provided", () => {
+    renderActionButtons({ customClass: "my-custom-class" });
 
-    vi.spyOn(ReactDOM, "useNavigate").mockReturnValue(mockedUseNavigate);
-
-    render(
-      <WithMockStoreAndRouter>
-        <ActionButtons
-          isNextBttnDisabled={testIsDisabled}
-          nextBttnPath={testBttnPath}
-          nextBttnCustomText={testButtonText}
-        />
-      </WithMockStoreAndRouter>,
+    expect(screen.getByTestId("actionButtonsWrapper")).toHaveClass(
+      "my-custom-class",
     );
-
-    const backButton = screen.getByText(/Back/);
-    userEvent.click(backButton);
-
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith(-1);
   });
 
-  it("should navigate to the page specified in 'nextBttnPath' when 'Next' button is clicked", () => {
-    const mockedUseNavigate = vi.fn();
-    testButtonText = "Next";
+  it("should call 'backButtonHandler' when the 'Back' button is clicked", () => {
+    renderActionButtons();
 
-    vi.spyOn(ReactDOM, "useNavigate").mockReturnValue(mockedUseNavigate);
+    userEvent.click(screen.getByText("Back"));
 
-    render(
-      <WithMockStoreAndRouter>
-        <ActionButtons
-          isNextBttnDisabled={testIsDisabled}
-          nextBttnPath={testBttnPath}
-          nextBttnCustomText={testButtonText}
-        />
-      </WithMockStoreAndRouter>,
-    );
+    expect(onBackButtonClickMock).toHaveBeenCalledOnce();
+    expect(onNextButtonClickMock).not.toHaveBeenCalled();
+  });
 
-    const nextButton = screen.getByText(testButtonText);
-    userEvent.click(nextButton);
+  it("should call 'nextButtonHandler' when the 'Next' button is clicked", () => {
+    renderActionButtons();
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith(testBttnPath);
+    userEvent.click(screen.getByText("Next"));
+
+    expect(onNextButtonClickMock).toHaveBeenCalledOnce();
+    expect(onBackButtonClickMock).not.toHaveBeenCalled();
+  });
+
+  it("should not call 'nextButtonHandler' when the 'Next' button is disabled", () => {
+    renderActionButtons({ isNextBttnDisabled: true });
+
+    userEvent.click(screen.getByText("Next"));
+
+    expect(onNextButtonClickMock).not.toHaveBeenCalled();
   });
 });

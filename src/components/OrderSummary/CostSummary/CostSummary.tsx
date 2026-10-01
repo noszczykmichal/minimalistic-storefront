@@ -1,18 +1,47 @@
 import { useAppSelector } from "@/hooks/useReduxHooks";
+import { shippingOptions, paymentOptions } from "@/utils/form/constants";
 import classes from "@/components/OrderSummary/CostSummary/CostSummary.module.css";
+import { Option } from "@/types/types";
+
+const calculateOptionPrice = <T extends string>(
+  optionsArray: Option<T>[],
+  selectedOption: string | null | undefined,
+  currency: string,
+) => {
+  if (!selectedOption) {
+    return 0;
+  }
+  const chosenOption = optionsArray.find(
+    (option) => option.name === selectedOption,
+  )?.costs;
+
+  const optionPrice = chosenOption?.find(
+    (price) => price.currency.symbol === currency,
+  );
+
+  return optionPrice?.amount ?? 0;
+};
 
 export default function CostSummary() {
   const { billingCurrency, totalPrice } = useAppSelector(
     (state) => state.products,
   );
 
-  const { shippingOption, paymentOption } = useAppSelector(
-    (state) => state.shippingPaymentOptions.inputs,
+  const { shippingOption, paymentMethod } = useAppSelector(
+    (state) => state.shippingAddressAndPayment.draft,
   );
 
-  const isShippingPriceSet = shippingOption ? shippingOption.isSelected : false;
-  const shippingPrice = shippingOption ? shippingOption.cost : 0;
-  const paymentPrice = paymentOption ? paymentOption.cost : 0;
+  const shippingPrice = calculateOptionPrice(
+    shippingOptions,
+    shippingOption,
+    billingCurrency,
+  );
+  const isShippingPriceSet = Boolean(shippingOption);
+  const paymentPrice = calculateOptionPrice(
+    paymentOptions,
+    paymentMethod,
+    billingCurrency,
+  );
   const totalPriceAndOtherCosts = (
     totalPrice +
     shippingPrice +
@@ -41,6 +70,7 @@ export default function CostSummary() {
             Shipping:
           </p>
         )}
+
         {!!paymentPrice && (
           <p
             className={[
@@ -72,7 +102,7 @@ export default function CostSummary() {
         {!!paymentPrice && (
           <p className={classes.values__item}>
             {billingCurrency}
-            {paymentPrice}
+            {paymentPrice.toFixed(2)}
           </p>
         )}
         <p className={classes.values__item}>

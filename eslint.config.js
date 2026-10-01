@@ -22,7 +22,7 @@ const compat = new FlatCompat({
 export default tseslint.config(
   {
     ignores: [
-      "**/dist/**",
+      "build/",
       "node_modules/",
       "coverage/",
       "eslint.config.js",
@@ -95,6 +95,7 @@ export default tseslint.config(
             "vitest.config.*",
             "eslint.config.*",
             "@types/**",
+            "vitest.setup.js",
           ],
           optionalDependencies: false,
           peerDependencies: false,
@@ -105,6 +106,18 @@ export default tseslint.config(
       "react/require-default-props": [
         "error",
         { forbidDefaultForRequired: true, functions: "defaultArguments" },
+      ],
+      "no-param-reassign": [
+        "error",
+        { props: true, ignorePropertyModificationsFor: ["state"] },
+      ],
+
+      "react/jsx-props-no-spreading": [
+        "error",
+        {
+          html: "ignore",
+          custom: "enforce",
+        },
       ],
     },
   },
@@ -128,6 +141,7 @@ export default tseslint.config(
         { allowContainerFirstChild: true },
       ],
       "import/first": "off",
+      "react/jsx-props-no-spreading": "off",
     },
   },
   {

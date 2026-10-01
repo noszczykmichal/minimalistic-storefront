@@ -1,78 +1,45 @@
-import { useEffect, useRef, FormEvent } from "react";
 import { Markup } from "interweave";
+import { UseFormRegisterReturn } from "react-hook-form";
 
-import { RadioInputProps } from "@/models/utility-models";
-import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
-import { shippingPaymentOptionsActions } from "@/store/shippingPaymentOptions";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import type { Cost, Option } from "@/types/types";
 import classes from "@/components/Forms/Inputs/RadioInput/RadioInput.module.css";
 
-export default function RadioInput({
+export default function RadioInput<T extends string>({
   inputDetails,
-  clicked,
-  checkedInputName,
-  fieldsetId,
+  registration,
 }: {
-  inputDetails: RadioInputProps;
-  clicked: (event: FormEvent<HTMLInputElement>, optionCost: number) => void;
-  checkedInputName: string | null;
-  fieldsetId: string;
+  inputDetails: Option<T>;
+  registration: UseFormRegisterReturn;
 }) {
   const { label, name, costs } = inputDetails;
   const { billingCurrency } = useAppSelector((state) => state.products);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const dispatch = useAppDispatch();
-  const { updatePriceOfAnOption } = shippingPaymentOptionsActions;
-  const checkKickClasses =
-    name === checkedInputName
-      ? [classes.checkmark__kick, classes["checkmark__kick--checked"]]
-      : [classes.checkmark__kick];
-  const checkStemClasses =
-    name === checkedInputName
-      ? [classes.checkmark__stem, classes["checkmark__stem--checked"]]
-      : [classes.checkmark__stem];
 
-  const optionPrice = costs.find(
-    (cost) => cost.currency.symbol === billingCurrency,
-  )!.amount;
+  const optionPrice =
+    costs.find((cost: Cost) => cost.currency.symbol === billingCurrency)
+      ?.amount ?? 0;
 
   const updatedLabel = `${label}<b> - ${
     billingCurrency + optionPrice.toFixed(2)
   }</b>`;
 
-  const onChangeHandler = (event: FormEvent<HTMLInputElement>) => {
-    clicked(event, optionPrice);
-  };
-
-  useEffect(() => {
-    if (inputRef.current!.checked) {
-      dispatch(updatePriceOfAnOption({ fieldsetId, optionPrice }));
-    }
-  }, [
-    billingCurrency,
-    optionPrice,
-    updatePriceOfAnOption,
-    dispatch,
-    fieldsetId,
-  ]);
+  const id = `${registration.name}-${name}`;
 
   return (
     <div className={classes["form-control"]}>
-      <label htmlFor={name} className={classes["form-control__label"]}>
-        <span className={classes.checkmark}>
-          <div className={checkKickClasses.join(" ")} />
-          <div className={checkStemClasses.join(" ")} />
-        </span>
+      <label htmlFor={id} className={classes["form-control__label"]}>
         <input
           type="radio"
-          name={name}
           value={name}
           className={classes["form-control__input"]}
-          id={name}
-          onChange={onChangeHandler}
-          checked={name === checkedInputName}
-          ref={inputRef}
+          id={id}
+          {...registration}
         />
-        <Markup content={updatedLabel} />
+        <span className={classes.checkmark} aria-hidden="true">
+          <span className={classes.checkmark__kick} />
+          <span className={classes.checkmark__stem} />
+        </span>
+        <Markup content={updatedLabel} className={classes.markup} />
       </label>
     </div>
   );

@@ -10,6 +10,7 @@
   height: 1.5rem;
   margin-top: 0.25rem;
   font-family: "Roboto Condensed", sans-serif;
+  max-width: 250px;
 }
 
 .form-control__input:focus {

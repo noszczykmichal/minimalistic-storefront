@@ -13,14 +13,12 @@ import {
 
 import uiSlice from "@/store/uiSlice";
 import productsSlice from "@/store/productsSlice";
-import shippingAddress from "@/store/shippingAddress";
-import shippingPaymentOptions from "@/store/shippingPaymentOptions";
+import shippingAddressAndPayment from "@/store/shippingAddressAndPayment";
 
 const rootReducer = combineReducers({
   ui: uiSlice.reducer,
   products: productsSlice.reducer,
-  shippingAddress: shippingAddress.reducer,
-  shippingPaymentOptions: shippingPaymentOptions.reducer,
+  shippingAddressAndPayment: shippingAddressAndPayment.reducer,
 });
 
 const persistConfig = {

@@ -6,38 +6,42 @@ import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
 import Hr from "@/components/UI/Hr/Hr";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import { shippingOptions, paymentOptions } from "@/utils/config";
+import { shippingOptions, paymentOptions } from "@/utils/form/constants";
 import classes from "@/pages/Review/Review.module.css";
 
 export default function Review() {
   const navigate = useNavigate();
   const {
-    fName,
-    lName,
-    address_1: address1,
-    address_2: address2,
-    postal_code: postalCode,
+    firstName,
+    lastName,
+    addressLine1,
+    addressLine2,
+    postalCode,
     city,
     country,
     phone,
     email,
-  } = useAppSelector((state) => state.shippingAddress.inputs);
-
-  const { shippingOption, paymentOption } = useAppSelector(
-    (state) => state.shippingPaymentOptions.inputs,
-  );
+    shippingOption,
+    paymentMethod,
+  } = useAppSelector((state) => state.shippingAddressAndPayment.draft);
 
   const chosenShippingMethod = shippingOptions.find(
-    (element) => element.name === shippingOption.value,
+    (option) => option.name === shippingOption,
   )?.label;
 
   const chosenPaymentMethod = paymentOptions.find(
-    (element) => element.name === paymentOption.value,
+    (option) => option.name === paymentMethod,
   )?.label;
 
-  const redirectToAddressPage = () => navigate("/cart/address");
-  const redirectToShipAndPayPage = () => navigate("/cart/shipping&payment");
+  const redirectToAddressPage = () =>
+    navigate("/cart/shipping/address&payment?step=1");
 
+  const redirectToShipAndPayPage = () =>
+    navigate("/cart/shipping/address&payment?step=2");
+
+  const onNextButtonClick = () => navigate("/cart/confirm");
+
+  const onBackButtonClick = () => navigate(-1);
   return (
     <section className={classes.section}>
       <div className={classes.wrapper}>
@@ -50,17 +54,17 @@ export default function Review() {
         <div className={classes["order-detail"]}>
           <h4 className={classes["order-detail__heading"]}>Shipping Address</h4>
           <p className={classes["order-detail__value"]}>
-            {fName.value} {lName.value}
+            {firstName} {lastName}
             <br />
-            {address1.value} {address2.value}
+            {addressLine1} {addressLine2}
             <br />
-            {postalCode.value} {city.value}
+            {postalCode} {city}
             <br />
-            {country.value}
+            {country}
             <br />
-            tel: {phone.value}
+            tel: {phone}
             <br />
-            email: {email.value}
+            email: {email}
           </p>
           <button
             type="button"
@@ -99,8 +103,8 @@ export default function Review() {
         </div>
       </div>
       <ActionButtons
-        isNextBttnDisabled={false}
-        nextBttnPath="/cart/confirm"
+        backButtonHandler={onBackButtonClick}
+        nextButtonHandler={onNextButtonClick}
         customClass={classes.actionButtons}
         nextBttnCustomText="Confirm & Order"
       />

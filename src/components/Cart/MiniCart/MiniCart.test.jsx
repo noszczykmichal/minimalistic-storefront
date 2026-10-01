@@ -3,7 +3,7 @@ vi.mock("@/hooks/useReduxHooks", async (importActual) => {
   return { ...actual, useAppDispatch: vi.fn() };
 });
 import { render, screen } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { axe } from "vitest-axe";
 
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import { createTestStore } from "@/utils/testUtils";

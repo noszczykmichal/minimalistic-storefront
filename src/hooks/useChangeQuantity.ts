@@ -1,6 +1,6 @@
 import { productActions } from "@/store/productsSlice";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { ChangeQuantityVariants } from "@/models/utility-models";
+import { ChangeQuantityVariants } from "@/types/types";
 
 export default function useChangeQuantity(
   internalID: string,

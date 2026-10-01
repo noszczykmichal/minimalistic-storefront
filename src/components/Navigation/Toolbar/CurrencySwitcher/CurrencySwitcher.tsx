@@ -6,7 +6,7 @@ import { CSSTransition } from "react-transition-group";
 import { productActions } from "@/store/productsSlice";
 import { uiActions } from "@/store/uiSlice";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
-import { Currency } from "@/models/productSlice.models";
+import { Currency } from "@/types/types";
 import classes from "@/components/Navigation/Toolbar/CurrencySwitcher/CurrencySwitcher.module.css";
 
 export default function CurrencySwitcher({
