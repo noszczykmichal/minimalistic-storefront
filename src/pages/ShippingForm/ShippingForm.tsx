@@ -14,8 +14,8 @@ import {
 import defaultShippingAndPaymentData from "@/utils/form/defaultValues";
 import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment";
 import classes from "@/pages/ShippingForm/ShippingForm.module.css";
-import Step1 from "./Step1/Step1";
-import Step2 from "./Step2/Step2";
+import Step1 from "@/pages/ShippingForm/Step1/Step1";
+import Step2 from "@/pages/ShippingForm/Step2/Step2";
 
 const LAST_STEP = stepFieldNames.length;
 
