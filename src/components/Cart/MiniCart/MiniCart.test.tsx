@@ -2,63 +2,90 @@ vi.mock("@/hooks/useReduxHooks", async (importActual) => {
   const actual = await importActual<typeof import("@/hooks/useReduxHooks")>();
   return { ...actual, useAppDispatch: vi.fn() };
 });
+vi.mock("@/hooks/useRedirect", () => ({ default: vi.fn() }));
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
+import configureMockStore from "redux-mock-store";
 
 import { useAppDispatch } from "@/hooks/useReduxHooks";
+import useRedirect from "@/hooks/useRedirect";
 import { createTestStore } from "@/utils/testUtils";
 import MiniCart from "@/components/Cart/MiniCart/MiniCart";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 
+const createEmptyCartStore = (isMiniCartOpen: boolean, totalPrice = 0) =>
+  configureMockStore([])({
+    ui: { isMiniCartOpen },
+    products: { cart: [], productsTotal: 0, totalPrice, billingCurrency: "$" },
+  });
+
+const renderMiniCart = (store = createTestStore()) =>
+  render(
+    <WithMockStoreAndRouter customStore={store}>
+      <MiniCart />
+    </WithMockStoreAndRouter>,
+  );
+
 describe("MiniCart component", () => {
   const dispatch = vi.fn();
+  const redirect = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
 
     vi.mocked(useAppDispatch).mockReturnValue(dispatch);
+    vi.mocked(useRedirect).mockReturnValue(redirect);
   });
 
-  it("should render a heading containing the word 'item' when 'productsTotal' is 1", () => {
-    const mockStore = createTestStore(1);
+  it.each([
+    [1, "My Bag, 1 item"],
+    [2, "My Bag, 2 items"],
+  ])(
+    "should render a heading with the item count when productsTotal is %i",
+    (productsTotal, expectedHeading) => {
+      renderMiniCart(createTestStore(productsTotal));
 
-    render(
-      <WithMockStoreAndRouter customStore={mockStore}>
-        <MiniCart />
-      </WithMockStoreAndRouter>,
-    );
+      expect(
+        screen.getByRole("heading", { name: expectedHeading }),
+      ).toBeInTheDocument();
+    },
+  );
 
-    const heading = screen.getByText(/My Bag/);
-    const wordPattern = /\bitem\b/;
+  it("should render the total price in the billing currency with 2 decimals", () => {
+    renderMiniCart(createEmptyCartStore(true, 12.5));
 
-    expect(wordPattern.test(heading.textContent ?? "")).toBe(true);
+    expect(screen.getByText("$12.50")).toBeInTheDocument();
   });
 
-  it("should render a heading containing the word 'items' when 'productsTotal' is 2 or greater", () => {
-    const mockStore = createTestStore(2);
+  it("should redirect to the cart page when 'View Bag' is clicked", async () => {
+    renderMiniCart();
 
-    render(
-      <WithMockStoreAndRouter customStore={mockStore}>
-        <MiniCart />
-      </WithMockStoreAndRouter>,
-    );
+    await userEvent.click(screen.getByRole("button", { name: "View Bag" }));
 
-    const heading = screen.getByText(/My Bag/);
-    const wordPattern = /\bitems\b/;
+    expect(redirect).toHaveBeenCalledTimes(1);
+    expect(redirect).toHaveBeenCalledWith("/cart");
+  });
 
-    expect(wordPattern.test(heading.textContent ?? "")).toBe(true);
+  it("should redirect to the shipping form when 'Check out' is clicked", async () => {
+    renderMiniCart();
+
+    await userEvent.click(screen.getByRole("button", { name: "Check out" }));
+
+    expect(redirect).toHaveBeenCalledTimes(1);
+    expect(redirect).toHaveBeenCalledWith("/cart/shipping/address&payment");
+  });
+
+  it("should render nothing when isMiniCartOpen is false", () => {
+    renderMiniCart(createEmptyCartStore(false));
+
+    expect(screen.queryByRole("heading")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 
   it("should have no accessibility violations", async () => {
-    const mockStore = createTestStore(2);
+    const { container } = renderMiniCart();
 
-    const { container } = render(
-      <WithMockStoreAndRouter customStore={mockStore}>
-        <MiniCart />
-      </WithMockStoreAndRouter>,
-    );
-    const result = await axe(container);
-
-    expect(result).toHaveNoViolations();
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
