@@ -24,7 +24,7 @@ export default function Attribute({
     <dl className={classes["product-attribute"]}>
       <dt className={labelAttachedClasses}>{name}:</dt>
       <dd className={classes["product-attribute__values"]}>
-        <span className={classes["visually-hidden"]}>
+        <span className="visually-hidden">
           {selectedItem ? selectedItem.displayValue : "Not selected"}
         </span>
         {items.map((attributeItem) => (

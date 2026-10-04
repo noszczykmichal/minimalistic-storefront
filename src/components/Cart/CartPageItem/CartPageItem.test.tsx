@@ -16,8 +16,8 @@ describe("CartPageItem component", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    useAppDispatch.mockReturnValue(dispatch);
-    useAppSelector.mockReturnValue({ billingCurrency: "$" });
+    vi.mocked(useAppDispatch).mockReturnValue(dispatch);
+    vi.mocked(useAppSelector).mockReturnValue({ billingCurrency: "$" });
   });
 
   it("should render CartPageItem with accurate product description", () => {
