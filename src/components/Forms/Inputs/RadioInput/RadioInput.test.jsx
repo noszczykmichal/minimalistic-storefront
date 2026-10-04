@@ -75,21 +75,21 @@ describe("RadioInput component", () => {
     ).toBeInTheDocument();
   });
 
-  it("should call registration.onChange and check the input when clicked", () => {
+  it("should call registration.onChange and check the input when clicked", async () => {
     renderRadioInput();
 
     const radio = screen.getByLabelText(/Cash on collection/);
-    userEvent.click(radio);
+    await userEvent.click(radio);
 
     expect(registration.onChange).toHaveBeenCalledOnce();
     expect(radio).toBeChecked();
   });
 
-  it("should call registration.onBlur when the input loses focus", () => {
+  it("should call registration.onBlur when the input loses focus", async () => {
     renderRadioInput();
 
-    userEvent.click(screen.getByLabelText(/Cash on collection/));
-    userEvent.tab();
+    await userEvent.click(screen.getByLabelText(/Cash on collection/));
+    await userEvent.tab();
 
     expect(registration.onBlur).toHaveBeenCalledOnce();
   });

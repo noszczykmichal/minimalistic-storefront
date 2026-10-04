@@ -71,7 +71,7 @@ describe("CurrencySwitcher component", () => {
     expect(options).toHaveLength(testCurrencies.length);
   });
 
-  it("should dispatch 4 actions on button click", () => {
+  it("should dispatch 4 actions on button click", async () => {
     useAppSelector.mockReturnValue({
       isCurrencySwitcherOpen: true,
       billingCurrency: "$",
@@ -79,7 +79,7 @@ describe("CurrencySwitcher component", () => {
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
     const button = screen.getByRole("button");
-    userEvent.click(button);
+    await userEvent.click(button);
 
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(true));
@@ -88,7 +88,7 @@ describe("CurrencySwitcher component", () => {
     expect(dispatch).toHaveBeenCalledWith(miniCartVisibilityToggle(false));
   });
 
-  it("should dispatch 3 actions on option click", () => {
+  it("should dispatch 3 actions on option click", async () => {
     useAppSelector.mockReturnValue({
       isCurrencySwitcherOpen: true,
       billingCurrency: "$",
@@ -96,7 +96,7 @@ describe("CurrencySwitcher component", () => {
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
     const option = screen.getByLabelText(testCurrencies[0].symbol);
-    userEvent.click(option);
+    await userEvent.click(option);
 
     expect(dispatch).toHaveBeenCalledTimes(3);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(false));

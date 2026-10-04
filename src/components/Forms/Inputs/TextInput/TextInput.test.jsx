@@ -68,10 +68,10 @@ describe("TextInput component", () => {
     expect(screen.getByText("This field is required.")).toBeInTheDocument();
   });
 
-  it("should call registration.onChange when the user types", () => {
+  it("should call registration.onChange when the user types", async () => {
     renderTextInput();
 
-    userEvent.type(screen.getByLabelText("First Name:"), "Max");
+    await userEvent.type(screen.getByLabelText("First Name:"), "Max");
 
     expect(registration.onChange).toHaveBeenCalled();
   });

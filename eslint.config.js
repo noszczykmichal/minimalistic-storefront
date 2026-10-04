@@ -72,9 +72,7 @@ export default tseslint.config(
       "@typescript-eslint/no-throw-literal": "off",
       quotes: ["error", "double", { avoidEscape: true }],
       "react/react-in-jsx-scope": "off",
-      "react/jsx-props-no-spreading": "warn",
       "@typescript-eslint/no-shadow": "error",
-
       "react/jsx-filename-extension": [1, { extensions: [".tsx", ".jsx"] }],
       "import/no-extraneous-dependencies": [
         "error",
@@ -95,7 +93,6 @@ export default tseslint.config(
             "vitest.config.*",
             "eslint.config.*",
             "@types/**",
-            "vitest.setup.js",
           ],
           optionalDependencies: false,
           peerDependencies: false,
@@ -136,6 +133,7 @@ export default tseslint.config(
     },
     rules: {
       ...vitest.configs.recommended.rules,
+      ...testingLibrary.configs["flat/react"].rules,
       "testing-library/no-node-access": [
         "error",
         { allowContainerFirstChild: true },

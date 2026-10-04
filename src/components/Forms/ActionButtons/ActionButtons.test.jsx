@@ -51,28 +51,28 @@ describe("ActionButtons component", () => {
     );
   });
 
-  it("should call 'backButtonHandler' when the 'Back' button is clicked", () => {
+  it("should call 'backButtonHandler' when the 'Back' button is clicked", async () => {
     renderActionButtons();
 
-    userEvent.click(screen.getByText("Back"));
+    await userEvent.click(screen.getByText("Back"));
 
     expect(onBackButtonClickMock).toHaveBeenCalledOnce();
     expect(onNextButtonClickMock).not.toHaveBeenCalled();
   });
 
-  it("should call 'nextButtonHandler' when the 'Next' button is clicked", () => {
+  it("should call 'nextButtonHandler' when the 'Next' button is clicked", async () => {
     renderActionButtons();
 
-    userEvent.click(screen.getByText("Next"));
+    await userEvent.click(screen.getByText("Next"));
 
     expect(onNextButtonClickMock).toHaveBeenCalledOnce();
     expect(onBackButtonClickMock).not.toHaveBeenCalled();
   });
 
-  it("should not call 'nextButtonHandler' when the 'Next' button is disabled", () => {
+  it("should not call 'nextButtonHandler' when the 'Next' button is disabled", async () => {
     renderActionButtons({ isNextBttnDisabled: true });
 
-    userEvent.click(screen.getByText("Next"));
+    await userEvent.click(screen.getByText("Next"));
 
     expect(onNextButtonClickMock).not.toHaveBeenCalled();
   });

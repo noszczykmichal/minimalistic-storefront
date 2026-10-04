@@ -39,10 +39,10 @@ describe("Modal component", () => {
     expect(listItems).toHaveLength(testNotSelected.length);
   });
 
-  it("should dispatch 2 actions after button click", () => {
+  it("should dispatch 2 actions after button click", async () => {
     render(<Modal notSelected={testNotSelected} />);
     const button = screen.getByRole("button");
-    userEvent.click(button);
+    await userEvent.click(button);
 
     expect(dispatch).toBeCalledTimes(2);
     expect(dispatch).toBeCalledWith(modalToggle(false));

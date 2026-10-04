@@ -39,10 +39,10 @@ describe("CartIcon component", () => {
 
     expect(cartIcon).toBeDisabled();
   });
-  it("should dispatch actions on CartIcon click", () => {
+  it("should dispatch actions on CartIcon click", async () => {
     render(<CartIcon />);
     const cartIcon = screen.getByRole("button");
-    userEvent.click(cartIcon);
+    await userEvent.click(cartIcon);
 
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(true));

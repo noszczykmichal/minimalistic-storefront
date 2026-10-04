@@ -30,10 +30,10 @@ describe("ToggleButton component", () => {
     expect(toggleButton).toBeInTheDocument();
   });
 
-  it("should dispatch actions on ToggleButton click", () => {
+  it("should dispatch actions on ToggleButton click", async () => {
     render(<ToggleButton />);
     const toggleButton = screen.getByRole("button");
-    userEvent.click(toggleButton);
+    await userEvent.click(toggleButton);
 
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(true));
