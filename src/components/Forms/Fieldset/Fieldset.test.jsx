@@ -104,10 +104,10 @@ describe("Fieldset component", () => {
     expect(screen.getByText("Choose a shipping method.")).toBeInTheDocument();
   });
 
-  it("should call registration.onChange when an option is selected", () => {
+  it("should call registration.onChange when an option is selected", async () => {
     renderFieldset();
 
-    userEvent.click(screen.getByLabelText(/Best Way/));
+    await userEvent.click(screen.getByLabelText(/Best Way/));
 
     expect(registration.onChange).toHaveBeenCalledOnce();
     expect(screen.getByLabelText(/Best Way/)).toBeChecked();

@@ -32,7 +32,7 @@ describe("NavigationItem component", () => {
     expect(linkElement).toHaveAttribute("href", testHref);
   });
 
-  test("should dispatch 4 actions on a Navlink click", () => {
+  test("should dispatch 4 actions on a Navlink click", async () => {
     const {
       backdropVisibilityToggle,
       currencySwitcherVisibToggle,
@@ -46,7 +46,7 @@ describe("NavigationItem component", () => {
       </MemoryRouter>,
     );
     const linkElement = screen.getByRole("link");
-    userEvent.click(linkElement);
+    await userEvent.click(linkElement);
 
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(false));

@@ -11,7 +11,7 @@ A mock online shop (React 19 + TypeScript, Vite) that reads its catalog from a p
 The package manager is pnpm. CI runs `pnpm install --frozen-lockfile`, so update `pnpm-lock.yaml` whenever you change dependencies.
 
 ```sh
-pnpm dev                 # Vite dev server on :3000 (same as `pnpm start`)
+pnpm dev                 # Vite dev server on :3000
 pnpm build               # tsc type-check, then vite build into build/
 pnpm lint                # eslint . (pnpm lint:fix to autofix)
 pnpm test                # vitest (watch mode locally, single run in CI)
@@ -59,7 +59,7 @@ Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.
 ### Conventions
 
 - `@/` is an alias for `src/` (tsconfig `paths` + `vite-tsconfig-paths`).
-- Each component lives in its own folder as `Name.tsx` + `Name.module.css` + `Name.test.jsx`.
+- Each component lives in its own folder as `Name.tsx` + `Name.module.css` + `Name.test.tsx` (older tests are still `.test.jsx`; see Testing).
 - SVGs import as React components (default export) via `vite-plugin-svgr`.
 - Modals are portaled into `#modals-root` (in `index.html`).
 - Prettier formatting: double quotes, trailing commas, 2-space indent, 80 columns. Lint uses Airbnb + typescript-eslint, with `no-param-reassign` relaxed for `state` so Immer-style reducers are allowed.
@@ -67,7 +67,12 @@ Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.
 ## Testing
 
 - Vitest with `globals: true` and jsdom. Setup file: `src/vitest.setup.js` (jest-dom matchers + vitest-axe `toHaveNoViolations`). CSS modules resolve through `identity-obj-proxy`, so class names come back as the key strings.
-- Tests are `.test.jsx` (plain JSX, not TSX) and sit next to their components. Most include an axe accessibility check.
+- Tests sit next to their components. Most include an axe accessibility check.
+- **Test files are migrating from `.test.jsx` to `.test.tsx`:**
+  - New tests are always `.test.tsx`.
+  - When you edit an existing `.test.jsx` file for any reason, convert it to `.test.tsx` in the same change: rename it, add types (type mock state, props and mocks; no `any`), and keep the test logic unchanged.
+  - Don't convert test files you aren't otherwise editing. Changing a component does not by itself require converting its test.
+  - Keep a conversion to renaming plus typing, without restructuring, so git still detects the file as a rename and its history stays intact.
 - Redux in tests uses `redux-mock-store`, not the real store:
   - wrap components in `WithMockStoreAndRouter` (`src/utils/`), which supplies a `Provider` and a `MemoryRouter`
   - `createTestStore()` (`src/utils/testUtils.ts`) returns a mock store with two cart items

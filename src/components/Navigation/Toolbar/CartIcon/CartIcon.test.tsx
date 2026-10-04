@@ -64,11 +64,11 @@ describe("CartIcon component", () => {
     },
   );
 
-  it("should open the mini cart and close the currency switcher on click", () => {
+  it("should open the mini cart and close the currency switcher on click", async () => {
     mockCartIconState(1);
 
     render(<CartIcon />);
-    userEvent.click(screen.getByRole("button", { name: "Cart: 1 item" }));
+    await userEvent.click(screen.getByRole("button", { name: "Cart: 1 item" }));
 
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(dispatch).toHaveBeenNthCalledWith(1, backdropVisibilityToggle(true));
@@ -80,11 +80,13 @@ describe("CartIcon component", () => {
     );
   });
 
-  it("should not dispatch any actions when the cart is empty and the button is clicked", () => {
+  it("should not dispatch any actions when the cart is empty and the button is clicked", async () => {
     mockCartIconState(0);
 
     render(<CartIcon />);
-    userEvent.click(screen.getByRole("button", { name: "Cart: 0 items" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Cart: 0 items" }),
+    );
 
     expect(dispatch).not.toHaveBeenCalled();
   });

@@ -79,7 +79,7 @@ describe("CartPageItem component", () => {
     expect(rightArrow).toBeNull();
   });
 
-  it("should change currently displayed thumbnail to the next one when 'Next' button is clicked", () => {
+  it("should change currently displayed thumbnail to the next one when 'Next' button is clicked", async () => {
     render(<CartPageItem itemDetails={testItemDetails} />);
 
     const [defaultImage, nextImage] = testItemDetails.gallery;
@@ -88,12 +88,12 @@ describe("CartPageItem component", () => {
     expect(imageEl).toHaveAttribute("src", defaultImage);
 
     const nextButton = screen.getByLabelText(/Next/);
-    userEvent.click(nextButton);
+    await userEvent.click(nextButton);
 
     expect(imageEl).toHaveAttribute("src", nextImage);
   });
 
-  it("should change the first thumbnail from the gallery to the last one when the 'Previous' button is clicked", () => {
+  it("should change the first thumbnail from the gallery to the last one when the 'Previous' button is clicked", async () => {
     const [defaultImage, , thirdImage] = testItemDetails.gallery;
 
     const { rerender } = render(<CartPageItem itemDetails={testItemDetails} />);
@@ -102,13 +102,13 @@ describe("CartPageItem component", () => {
     expect(imgEl).toHaveAttribute("src", defaultImage);
 
     const previousButton = screen.getByLabelText(/Previous/);
-    userEvent.click(previousButton);
+    await userEvent.click(previousButton);
 
     rerender(<CartPageItem itemDetails={testItemDetails} />);
     expect(imgEl).toHaveAttribute("src", thirdImage);
   });
 
-  it("should display the first thumbnail when reaching the end of the gallery", () => {
+  it("should display the first thumbnail when reaching the end of the gallery", async () => {
     render(<CartPageItem itemDetails={testItemDetails} />);
 
     const [firstImage, secondImage, thirdImage] = testItemDetails.gallery;
@@ -117,13 +117,13 @@ describe("CartPageItem component", () => {
 
     expect(imgEl).toHaveAttribute("src", firstImage);
 
-    userEvent.click(nextButton);
+    await userEvent.click(nextButton);
     expect(imgEl).toHaveAttribute("src", secondImage);
 
-    userEvent.click(nextButton);
+    await userEvent.click(nextButton);
     expect(imgEl).toHaveAttribute("src", thirdImage);
 
-    userEvent.click(nextButton);
+    await userEvent.click(nextButton);
     expect(imgEl).toHaveAttribute("src", firstImage);
   });
 });

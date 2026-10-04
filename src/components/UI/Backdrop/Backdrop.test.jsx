@@ -70,10 +70,10 @@ describe("Backdrop component", () => {
     expect(backdrop).toHaveClass("backdrop--grey");
   });
 
-  it("should dispatch 5 actions on Backdrop click", () => {
+  it("should dispatch 5 actions on Backdrop click", async () => {
     const { container } = render(<Backdrop />);
     const backdrop = container.firstChild;
-    userEvent.click(backdrop);
+    await userEvent.click(backdrop);
 
     expect(dispatch).toHaveBeenCalledTimes(5);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(false));

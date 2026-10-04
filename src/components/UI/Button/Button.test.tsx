@@ -48,11 +48,11 @@ describe("Button component", () => {
     expect(outputElement).toBeDisabled();
   });
 
-  test("should call clicked handler once when button is clicked", () => {
+  test("should call clicked handler once when button is clicked", async () => {
     const clickHandler = vi.fn();
     renderButton({ clicked: clickHandler });
 
-    userEvent.click(screen.getByRole("button", { name: "Click me" }));
+    await userEvent.click(screen.getByRole("button", { name: "Click me" }));
 
     expect(clickHandler).toHaveBeenCalledTimes(1);
     expect(clickHandler).toHaveBeenCalledWith(
@@ -60,11 +60,11 @@ describe("Button component", () => {
     );
   });
 
-  test("should not call clicked handler when button is disabled", () => {
+  test("should not call clicked handler when button is disabled", async () => {
     const clickHandler = vi.fn();
     renderButton({ clicked: clickHandler, isDisabled: true });
 
-    userEvent.click(screen.getByRole("button", { name: "Click me" }));
+    await userEvent.click(screen.getByRole("button", { name: "Click me" }));
 
     expect(clickHandler).not.toHaveBeenCalled();
   });

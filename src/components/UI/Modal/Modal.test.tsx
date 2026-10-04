@@ -61,10 +61,10 @@ describe("Modal component", () => {
     ).toBeInTheDocument();
   });
 
-  it("should dispatch 2 actions after button click", () => {
+  it("should dispatch 2 actions after button click", async () => {
     render(<Modal notSelected={testNotSelected} />);
 
-    userEvent.click(screen.getByRole("button", { name: "OK" }));
+    await userEvent.click(screen.getByRole("button", { name: "OK" }));
 
     expect(dispatch).toHaveBeenCalledTimes(2);
     expect(dispatch).toHaveBeenNthCalledWith(1, modalToggle(false));
