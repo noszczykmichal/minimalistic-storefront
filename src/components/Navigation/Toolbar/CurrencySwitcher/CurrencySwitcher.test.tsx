@@ -5,17 +5,31 @@ vi.mock("@/hooks/useReduxHooks", () => ({
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 
 import CurrencySwitcher from "@/components/Navigation/Toolbar/CurrencySwitcher/CurrencySwitcher";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { uiActions } from "@/store/uiSlice";
 import { productActions } from "@/store/productsSlice";
+import type { RootState } from "@/store/store";
 import type { Currency } from "@/types/types";
 
 const testCurrencies: Currency[] = [
   { label: "USD", symbol: "$" },
   { label: "GBP", symbol: "£" },
 ];
+
+const mockSwitcherState = (
+  isCurrencySwitcherOpen: boolean,
+  billingCurrency = "$",
+) => {
+  const state = {
+    ui: { isCurrencySwitcherOpen },
+    products: { billingCurrency },
+  } as unknown as RootState;
+
+  vi.mocked(useAppSelector).mockImplementation((selector) => selector(state));
+};
 
 describe("CurrencySwitcher component", () => {
   const dispatch = vi.fn();
@@ -33,54 +47,40 @@ describe("CurrencySwitcher component", () => {
     vi.mocked(useAppDispatch).mockReturnValue(dispatch);
   });
 
-  it("should render CurrencySwitcher displaying chosen currency when isCurrencySwitcherOpen is false", () => {
-    vi.mocked(useAppSelector).mockReturnValue({
-      isCurrencySwitcherOpen: false,
-      billingCurrency: "$",
-    });
+  it("should display the billing currency on the switcher button", () => {
+    mockSwitcherState(false, "£");
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
-    const button = screen.getByRole("button");
 
-    expect(button).toBeInTheDocument();
-    expect(button.textContent).toBe(testCurrencies[0].symbol);
+    expect(
+      screen.getByRole("button", { name: "Currencies Pane" }),
+    ).toHaveTextContent("£");
   });
 
-  it("should render CurrencySwitcher without currencies list when isCurrencySwitcherOpen is false", () => {
-    vi.mocked(useAppSelector).mockReturnValue({
-      isCurrencySwitcherOpen: false,
-      billingCurrency: "$",
-    });
+  it("should not render the currencies list when isCurrencySwitcherOpen is false", () => {
+    mockSwitcherState(false);
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
-    const currenciesList = screen.queryByRole("list");
 
-    expect(currenciesList).not.toBeInTheDocument();
+    expect(screen.queryByRole("list")).not.toBeInTheDocument();
   });
 
-  it("should render CurrencySwitcher with provided list of currencies when isCurrencySwitcherOpen is true", () => {
-    vi.mocked(useAppSelector).mockReturnValue({
-      isCurrencySwitcherOpen: true,
-      billingCurrency: "$",
-    });
+  it("should render the provided currencies when isCurrencySwitcherOpen is true", () => {
+    mockSwitcherState(true);
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
-    const currenciesList = screen.queryByRole("list");
-    const options = screen.getAllByRole("listitem");
 
-    expect(currenciesList).toBeInTheDocument();
-    expect(options).toHaveLength(testCurrencies.length);
+    expect(screen.getByRole("list")).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(testCurrencies.length);
   });
 
-  it("should dispatch 4 actions on button click", async () => {
-    vi.mocked(useAppSelector).mockReturnValue({
-      isCurrencySwitcherOpen: true,
-      billingCurrency: "$",
-    });
+  it("should dispatch 4 actions when the switcher button is clicked", async () => {
+    mockSwitcherState(false);
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
-    const button = screen.getByRole("button");
-    await userEvent.click(button);
+    await userEvent.click(
+      screen.getByRole("button", { name: "Currencies Pane" }),
+    );
 
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(true));
@@ -89,21 +89,25 @@ describe("CurrencySwitcher component", () => {
     expect(dispatch).toHaveBeenCalledWith(miniCartVisibilityToggle(false));
   });
 
-  it("should dispatch 3 actions on option click", async () => {
-    vi.mocked(useAppSelector).mockReturnValue({
-      isCurrencySwitcherOpen: true,
-      billingCurrency: "$",
-    });
+  it("should dispatch 3 actions with the chosen currency when an option is clicked", async () => {
+    mockSwitcherState(true);
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
-    const option = screen.getByLabelText(testCurrencies[0].symbol);
-    await userEvent.click(option);
+    await userEvent.click(screen.getByLabelText("£"));
 
     expect(dispatch).toHaveBeenCalledTimes(3);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(false));
+    expect(dispatch).toHaveBeenCalledWith(onCurrencyChange("£"));
     expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(false));
-    expect(dispatch).toHaveBeenCalledWith(
-      onCurrencyChange(option.getAttribute("aria-label")),
+  });
+
+  it("should have no accessibility violations when open", async () => {
+    mockSwitcherState(true);
+
+    const { container } = render(
+      <CurrencySwitcher currencies={testCurrencies} />,
     );
+
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
