@@ -1,10 +1,11 @@
-.cart-page__hr {
-  margin: 2rem 0 1.5rem 0;
-}
-
+/* The top border replaces a separate divider element, which is not allowed
+   as a direct child of the cart's <ul>. */
 .cart-page__item {
   display: flex;
   flex-direction: column;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e5e5;
 }
 
 .column-wrapper {

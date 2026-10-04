@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import Hr from "@/components/UI/Hr/Hr";
 import ThumbnailArrow from "@/components/UI/ThumbnailArrow/ThumbnailArrow";
 import useChangeQuantity from "@/hooks/useChangeQuantity";
 import { CartItem } from "@/types/types";
@@ -43,85 +42,91 @@ export default function CartPageItem({
   const increaseQuantityHandler = useChangeQuantity(internalID, "addition");
   const decreaseQuantityHandler = useChangeQuantity(internalID, "subtraction");
 
-  return (
-    <>
-      <Hr customClass={classes["cart-page__hr"]} />
-      <li className={classes["cart-page__item"]}>
-        {/* first column */}
-        <div className={classes["column-wrapper"]}>
-          <div className={classes["cart-item__product-details"]}>
-            <h3 className={classes["product-details__title"]}>
-              <span
-                className={[classes.title__brand, classes.title__item].join(
-                  " ",
-                )}
-              >
-                {brand}
-              </span>
-              <span
-                className={[classes.title__name, classes.title__item].join(" ")}
-              >
-                {name}
-              </span>
-            </h3>
-            <p className={classes["product-details__price"]}>
-              {billingCurrency}
-              {currentPrice.amount.toFixed(2)}
-            </p>
-          </div>
+  const productName = `${brand} ${name}`;
+  // At quantity 1 the "-" button removes the item, so say so.
+  const decreaseLabel =
+    quantity > 1
+      ? `Decrease quantity of ${productName}`
+      : `Remove ${productName} from cart`;
 
-          <div className={classes["cart-item__product-attributes"]}>
-            {itemDetails.attributes.map((attribute) => (
-              <Attribute
-                attributeDetails={attribute}
-                isInMiniView={false}
-                key={attribute.name}
-              />
-            ))}
-          </div>
+  return (
+    <li className={classes["cart-page__item"]}>
+      {/* first column */}
+      <div className={classes["column-wrapper"]}>
+        <div className={classes["cart-item__product-details"]}>
+          <h3 className={classes["product-details__title"]}>
+            <span
+              className={[classes.title__brand, classes.title__item].join(" ")}
+            >
+              {brand}
+            </span>
+            <span
+              className={[classes.title__name, classes.title__item].join(" ")}
+            >
+              {name}
+            </span>
+          </h3>
+          <p className={classes["product-details__price"]}>
+            {billingCurrency}
+            {currentPrice.amount.toFixed(2)}
+          </p>
         </div>
-        {/* second column */}
-        <div className={classes["column-wrapper--cart-actions"]}>
-          <div className={classes["cart-actions"]}>
-            <button
-              type="button"
-              className={classes["cart-actions__button"]}
-              onClick={increaseQuantityHandler}
-              aria-label="Increase quantity"
-            >
-              <PlusIcon />
-            </button>
-            <p className={classes["cart-actions__quantity"]}>{quantity}</p>
-            <button
-              type="button"
-              className={classes["cart-actions__button"]}
-              onClick={decreaseQuantityHandler}
-              aria-label="Decrease quantity"
-            >
-              <MinusIcon />
-            </button>
-          </div>
-          <div className={classes["image-container"]}>
-            <img
-              className={classes["image-container__image"]}
-              src={`${gallery[currentIndex]}`}
-              alt={`${brand} ${name}`}
+
+        <div className={classes["cart-item__product-attributes"]}>
+          {itemDetails.attributes.map((attribute) => (
+            <Attribute
+              attributeDetails={attribute}
+              isInMiniView={false}
+              key={attribute.name}
             />
-            {gallery.length > 1 ? (
-              <div className={classes["image-container__scrolling-arrows"]}>
-                <ThumbnailArrow
-                  variant="left"
-                  clicked={scrollingArrowsHandler}
-                />
-                <ThumbnailArrow
-                  variant="right"
-                  clicked={scrollingArrowsHandler}
-                />
-              </div>
-            ) : null}
-          </div>
+          ))}
         </div>
-      </li>
-    </>
+      </div>
+      {/* second column */}
+      <div className={classes["column-wrapper--cart-actions"]}>
+        <div className={classes["cart-actions"]}>
+          <button
+            type="button"
+            className={classes["cart-actions__button"]}
+            onClick={increaseQuantityHandler}
+            aria-label={`Increase quantity of ${productName}`}
+          >
+            <PlusIcon />
+          </button>
+          <p
+            className={classes["cart-actions__quantity"]}
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <span className="visually-hidden">Quantity of {productName}: </span>
+            {quantity}
+          </p>
+          <button
+            type="button"
+            className={classes["cart-actions__button"]}
+            onClick={decreaseQuantityHandler}
+            aria-label={decreaseLabel}
+          >
+            <MinusIcon />
+          </button>
+        </div>
+        <div className={classes["image-container"]}>
+          <img
+            className={classes["image-container__image"]}
+            src={`${gallery[currentIndex]}`}
+            alt={productName}
+          />
+          {gallery.length > 1 ? (
+            <div className={classes["image-container__scrolling-arrows"]}>
+              <ThumbnailArrow variant="left" clicked={scrollingArrowsHandler} />
+              <ThumbnailArrow
+                variant="right"
+                clicked={scrollingArrowsHandler}
+              />
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </li>
   );
 }
