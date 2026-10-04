@@ -15,34 +15,42 @@
 ## General Information
 
 - As the name suggests, it is an imaginary online shop, fetching data from the GraphQL endpoint.
-- It consists of three main pages:
+- It consists of four main pages:
   - PLP (product listing page)
   - PDP (product description page)
   - Cart page
+  - Checkout (shipping address, payment and delivery)
 - More info on the project and screenshots can be found in [Features](#features).
 
 ## Technologies Used
 
-- [React](https://react.dev/), [React Router](https://reactrouter.com/en/main), [TypeScript](https://www.typescriptlang.org/)
+- [React](https://react.dev/), [React Router](https://reactrouter.com/), [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/) (build tool), [pnpm](https://pnpm.io/) (package manager)
 - [Apollo Client](https://www.apollographql.com/docs/react/) (GraphQL)
-- [Redux](https://redux.js.org/) + [Redux Persist](https://github.com/rt2zz/redux-persist)
+- [Redux Toolkit](https://redux-toolkit.js.org/) + [Redux Persist](https://github.com/rt2zz/redux-persist)
+- Forms: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) (validation)
 - Testing: [Vitest](https://vitest.dev/), [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - Code Quality: [ESLint](https://eslint.org/), [Prettier](https://prettier.io/)
 - CI/CD: [GitHub Actions](https://docs.github.com/en/actions), [Firebase Hosting](https://firebase.google.com/docs/hosting)
+- AI-assisted development: [Claude Code](https://docs.claude.com/en/docs/claude-code/overview)
 - Additional Tools: [React Transition Group](https://reactcommunity.org/react-transition-group/), [Interweave](https://interweave.dev/)
 
 ## Features
 
-- Browse our store to choose from vast variety of products - whether you into tech or clothes you can be sure to find something that catches your eye.
+- Browse our store to choose from a vast variety of products - whether you're into tech or clothes, you can be sure to find something that catches your eye.
   ![Example screenshot](./img/plp.png)
-- Easily switch between range of accepted currencies.
+- Easily switch between a range of accepted currencies.
   ![Example screenshot](./img/currency-switcher.png)
-- Check what's in your cart at one click.
+- Check what's in your cart with one click.
   ![Example screenshot](./img/cart-overlay.png)
-- Visit a product page to learn more about product and configure it to your needs.
+- Visit a product page to learn more about the product and configure it to your needs.
   ![Example screenshot](./img/pdp.png)
-- Proceed to the cart to see summary of your current buy.
+- Proceed to the cart to see a summary of your current order.
   ![Example screenshot](./img/cart.png)
+- Fill in your shipping address.
+  ![Example screenshot](./img/shipping-form-address.png)
+- Choose your preferred payment and delivery method.
+  ![Example screenshot](./img/shipping-form-payment-delivery.png)
 
 ## Setup
 
@@ -50,26 +58,26 @@ To run this project locally:
 
 1. Clone this repository
 
-```
-  $git clone https://github.com/noszczykmichal/minimalistic-storefront
+```bash
+git clone https://github.com/noszczykmichal/minimalistic-storefront
 ```
 
 2. Go into the repository
 
-```
-  $cd minimalistic-storefront
+```bash
+cd minimalistic-storefront
 ```
 
 3. Install dependencies
 
-```
-  $pnpm install
+```bash
+pnpm install
 ```
 
 4. Run the app
 
-```
-  $pnpm start
+```bash
+pnpm dev
 ```
 
 ## Acknowledgements
