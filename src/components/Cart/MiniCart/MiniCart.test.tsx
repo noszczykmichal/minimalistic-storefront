@@ -1,5 +1,5 @@
 vi.mock("@/hooks/useReduxHooks", async (importActual) => {
-  const actual = await importActual();
+  const actual = await importActual<typeof import("@/hooks/useReduxHooks")>();
   return { ...actual, useAppDispatch: vi.fn() };
 });
 import { render, screen } from "@testing-library/react";
@@ -16,7 +16,7 @@ describe("MiniCart component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    useAppDispatch.mockReturnValue(dispatch);
+    vi.mocked(useAppDispatch).mockReturnValue(dispatch);
   });
 
   it("should render a heading containing the word 'item' when 'productsTotal' is 1", () => {
@@ -31,7 +31,7 @@ describe("MiniCart component", () => {
     const heading = screen.getByText(/My Bag/);
     const wordPattern = /\bitem\b/;
 
-    expect(wordPattern.test(heading.textContent)).toBe(true);
+    expect(wordPattern.test(heading.textContent ?? "")).toBe(true);
   });
 
   it("should render a heading containing the word 'items' when 'productsTotal' is 2 or greater", () => {
@@ -46,7 +46,7 @@ describe("MiniCart component", () => {
     const heading = screen.getByText(/My Bag/);
     const wordPattern = /\bitems\b/;
 
-    expect(wordPattern.test(heading.textContent)).toBe(true);
+    expect(wordPattern.test(heading.textContent ?? "")).toBe(true);
   });
 
   it("should have no accessibility violations", async () => {
