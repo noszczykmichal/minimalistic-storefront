@@ -15,10 +15,11 @@
 ## General Information
 
 - As the name suggests, it is an imaginary online shop, fetching data from the GraphQL endpoint.
-- It consists of three main pages:
+- It consists of four main pages:
   - PLP (product listing page)
   - PDP (product description page)
   - Cart page
+  - Checkout (shipping address, payment and delivery)
 - More info on the project and screenshots can be found in [Features](#features).
 
 ## Technologies Used
@@ -46,6 +47,10 @@
   ![Example screenshot](./img/pdp.png)
 - Proceed to the cart to see a summary of your current order.
   ![Example screenshot](./img/cart.png)
+- Fill in your shipping address.
+  ![Example screenshot](./img/shipping-form-address.png)
+- Choose your preferred payment and delivery method.
+  ![Example screenshot](./img/shipping-form-payment-delivery.png)
 
 ## Setup
 
