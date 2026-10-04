@@ -19,13 +19,16 @@ export default function CartIcon() {
     dispatch(currencySwitcherVisibToggle(false));
   };
 
+  const itemsCount = productsTotal || 0;
+  const itemsLabel = itemsCount === 1 ? "item" : "items";
+
   return (
     <button
       type="button"
       className={classes["cart-icon"]}
       onClick={minicartToggle}
-      aria-label={`Cart: ${productsTotal || 0} items`}
-      disabled={!productsTotal}
+      aria-label={`Cart: ${itemsCount} ${itemsLabel}`}
+      disabled={!itemsCount}
     >
       <svg
         width="20"
@@ -47,8 +50,8 @@ export default function CartIcon() {
           fill="#43464E"
         />
       </svg>
-      {productsTotal ? (
-        <p className={classes.counter}>{productsTotal}</p>
+      {itemsCount ? (
+        <span className={classes.counter}>{itemsCount}</span>
       ) : null}
     </button>
   );
