@@ -15,14 +15,18 @@ export default function Attribute({
   isInMiniView: boolean;
 }) {
   const { name, items } = attributeDetails;
+  const selectedItem = items.find((item) => item.selected);
   const labelAttachedClasses = isInMiniView
     ? classes["product-attribute__label--mini-cart"]
     : classes["product-attribute__label"];
 
   return (
-    <div key={name} className={classes["product-attribute"]}>
-      <h3 className={labelAttachedClasses}>{name}:</h3>
-      <div className={classes["product-attribute__values"]}>
+    <dl className={classes["product-attribute"]}>
+      <dt className={labelAttachedClasses}>{name}:</dt>
+      <dd className={classes["product-attribute__values"]}>
+        <span className={classes["visually-hidden"]}>
+          {selectedItem ? selectedItem.displayValue : "Not selected"}
+        </span>
         {items.map((attributeItem) => (
           <AttributeVariant
             key={attributeItem.value}
@@ -31,7 +35,7 @@ export default function Attribute({
             inMiniView={isInMiniView}
           />
         ))}
-      </div>
-    </div>
+      </dd>
+    </dl>
   );
 }

@@ -1,105 +1,91 @@
 import { render, screen } from "@testing-library/react";
 
 import AttributeVariant from "@/components/Cart/CartPageItem/Attribute/AttributeVariant/AttributeVariant";
+import { AttributeVariantInterface } from "@/types/types";
+
+// Chips are aria-hidden and purely visual, so there is no role or label to
+// query them by; these tests check the rendered element and its styling.
+const setupChip = (
+  variantType: string,
+  variantData: AttributeVariantInterface,
+  inMiniView = false,
+) => {
+  const { container } = render(
+    <AttributeVariant
+      variantType={variantType}
+      variantData={variantData}
+      inMiniView={inMiniView}
+    />,
+  );
+
+  return container.firstChild as HTMLElement;
+};
 
 describe("AttributeVariant component", () => {
+  it("should render a non-interactive chip hidden from screen readers", () => {
+    const chip = setupChip("Size", { displayValue: "Large", value: "L" });
+
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    expect(chip.tagName).toBe("SPAN");
+    expect(chip).toHaveAttribute("aria-hidden", "true");
+  });
+
   it('should render an AttributeVariant of type "Color" that is not selected', () => {
-    const testData = {
+    const chip = setupChip("Color", {
       displayValue: "Blue",
       value: "#030BFF",
-    };
+    });
 
-    render(
-      <AttributeVariant
-        variantType="Color"
-        variantData={testData}
-        inMiniView={false}
-      />,
-    );
-    const button = screen.getByRole("button");
-
-    expect(button).toBeInTheDocument();
-    expect(button).toHaveClass("product-attribute__value--color");
-    expect(button).not.toHaveClass("product-attribute__value--color-selected");
+    expect(chip).toHaveClass("product-attribute__value--color");
+    expect(chip).not.toHaveClass("product-attribute__value--color-selected");
+    expect(chip).toHaveStyle({ backgroundColor: "rgb(3, 11, 255)" });
   });
 
   it('should render an AttributeVariant of type "Color" that is selected', () => {
-    const testData = {
+    const chip = setupChip("Color", {
       displayValue: "Blue",
       value: "#030BFF",
       selected: true,
-    };
+    });
 
-    render(
-      <AttributeVariant
-        variantType="Color"
-        variantData={testData}
-        inMiniView={false}
-      />,
-    );
-    const button = screen.getByRole("button");
-
-    expect(button).toBeInTheDocument();
-    expect(button).toHaveClass("product-attribute__value--color-selected");
+    expect(chip).toHaveClass("product-attribute__value--color-selected");
   });
 
-  it('should render the AttributeVariant of background colour of rgb(240, 240, 240) if value is "white"', () => {
-    const testData = {
+  it("should render white as light grey so the chip stays visible", () => {
+    const chip = setupChip("Color", {
       displayValue: "White",
-      value: "#F0F0F0",
-    };
-    // #F0F0F0 translated to rgb
-    const grey = "rgb(240, 240, 240)";
+      value: "#FFFFFF",
+    });
 
-    render(
-      <AttributeVariant
-        variantType="Color"
-        variantData={testData}
-        inMiniView={false}
-      />,
-    );
-    const button = screen.getByRole("button");
-    const style = window.getComputedStyle(button);
-
-    expect(button).toBeInTheDocument();
-    expect(style.backgroundColor).toBe(grey);
+    expect(chip).toHaveStyle({ backgroundColor: "rgb(240, 240, 240)" });
   });
 
   it('should render an AttributeVariant of type "Size" that is not selected', () => {
-    const testData = {
-      displayValue: "Large",
-      value: "L",
-    };
+    const chip = setupChip("Size", { displayValue: "Large", value: "L" });
 
-    render(
-      <AttributeVariant
-        variantType="Size"
-        variantData={testData}
-        inMiniView={false}
-      />,
-    );
-    const button = screen.getByRole("button");
-    expect(button).toBeInTheDocument();
-    expect(button).toHaveClass("product-attribute__value");
-    expect(button).not.toHaveClass("product-attribute__value--selected");
+    expect(chip).toHaveTextContent("L");
+    expect(chip).toHaveClass("product-attribute__value");
+    expect(chip).not.toHaveClass("product-attribute__value--selected");
   });
 
   it('should render an AttributeVariant of type "Size" that is selected', () => {
-    const testData = {
+    const chip = setupChip("Size", {
       displayValue: "Large",
       value: "L",
       selected: true,
-    };
+    });
 
-    render(
-      <AttributeVariant
-        variantType="Size"
-        variantData={testData}
-        inMiniView={false}
-      />,
+    expect(chip).toHaveClass("product-attribute__value--selected");
+  });
+
+  it("should use the mini cart classes in mini view", () => {
+    const chip = setupChip(
+      "Size",
+      { displayValue: "Large", value: "L", selected: true },
+      true,
     );
-    const button = screen.getByRole("button");
-    expect(button).toBeInTheDocument();
-    expect(button).toHaveClass("product-attribute__value--selected");
+
+    expect(chip).toHaveClass("product-attribute__value--mini-cart");
+    expect(chip).toHaveClass("product-attribute__value--selected--mini-cart");
   });
 });

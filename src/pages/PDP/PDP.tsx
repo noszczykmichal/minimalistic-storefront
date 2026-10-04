@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { useState } from "react";
+import { useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { Markup } from "interweave";
 
@@ -8,7 +8,7 @@ import Button from "@/components/UI/Button/Button";
 import Modal from "@/components/UI/Modal/Modal";
 import { productActions } from "@/store/productsSlice";
 import { uiActions } from "@/store/uiSlice";
-import { AttributeItem, ProductType } from "@/types/types";
+import { ProductType } from "@/types/types";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/pages/PDP/PDP.module.css";
 
@@ -24,69 +24,28 @@ export default function PDP() {
   const [mainUrl, setMainUrl] = useState(displayedProduct!.gallery[0]);
   const [product, setProduct] = useState(displayedProduct);
   const [notSelected, setNotSelected] = useState<(string | null)[]>([]);
+  const attributeIdPrefix = useId();
 
   const imageToggle = (imageURL: string) => {
     setMainUrl(imageURL);
   };
 
-  const classNameToggler = (
-    className: string,
-    parentElement: HTMLElement,
-    eventTarget: HTMLElement,
+  const onAttributeValueSelect = (
+    attributeName: string,
+    selectedValue: string,
   ) => {
-    const childrenOfParent = Array.from(parentElement.children);
-
-    childrenOfParent.forEach((element) =>
-      element.classList.remove(classes[`${className}`]),
-    );
-
-    childrenOfParent.forEach((element) =>
-      element === eventTarget
-        ? element.classList.add(classes[`${className}`])
-        : null,
-    );
-  };
-
-  const onAttributeValueSelect = (event: React.MouseEvent) => {
-    const eventTarget = event.target as HTMLElement;
-    const parentEl = eventTarget.parentElement as HTMLElement;
-    const searchedAttributeType = parentEl!.getAttribute("id");
-    const productAttributes = product!.attributes;
-    const searchedAttribItem = eventTarget.innerText;
-
-    if (searchedAttributeType !== "Color") {
-      classNameToggler(
-        "product-attribute__value--selected",
-        parentEl,
-        eventTarget,
-      );
-    } else {
-      classNameToggler(
-        "product-attribute__value--color-selected",
-        parentEl,
-        eventTarget,
-      );
-    }
-
-    const updatedProductAttributes = productAttributes.map((attribute) => {
-      let updatedItems = attribute.items;
-
-      if (attribute.name === searchedAttributeType) {
-        const attributeItems = JSON.parse(JSON.stringify(attribute.items));
-        const clearedOfSelected = attributeItems.map((item: AttributeItem) => {
-          const updatedItem = { ...item };
-          if (item.selected) {
-            delete updatedItem.selected;
-          }
-          return updatedItem;
-        });
-
-        updatedItems = clearedOfSelected.map((attributeItem: AttributeItem) =>
-          attributeItem.value === searchedAttribItem
-            ? { ...attributeItem, selected: true }
-            : attributeItem,
-        );
+    const updatedProductAttributes = product!.attributes.map((attribute) => {
+      if (attribute.name !== attributeName) {
+        return attribute;
       }
+
+      const updatedItems = attribute.items.map((item) => {
+        const { selected, ...itemWithoutSelected } = item;
+
+        return item.value === selectedValue
+          ? { ...itemWithoutSelected, selected: true }
+          : itemWithoutSelected;
+      });
 
       return { ...attribute, items: updatedItems };
     });
@@ -155,53 +114,74 @@ export default function PDP() {
         </h1>
 
         <div className={classes["product-attributes"]}>
-          {displayedProduct!.attributes.map((attribute) => (
-            <div key={attribute.name} className={classes["product-attribute"]}>
-              <h3 className={classes["product-attribute__label"]}>
-                {attribute.name}:
-              </h3>
-              <div
-                id={attribute.name}
-                className={classes["product-attribute__values"]}
-              >
-                {attribute.items.map((attributeItem) => {
-                  let content = (
-                    <button
-                      type="button"
-                      key={attributeItem.displayValue}
-                      className={classes["product-attribute__value"]}
-                      onClick={onAttributeValueSelect}
-                    >
-                      {attributeItem.value}
-                    </button>
-                  );
+          {product!.attributes.map((attribute, attributeIndex) => {
+            const isColor = attribute.name === "Color";
+            const labelId = `${attributeIdPrefix}-${attributeIndex}`;
 
-                  if (attribute.name === "Color") {
-                    content = (
+            return (
+              <div
+                key={attribute.name}
+                className={classes["product-attribute"]}
+              >
+                <h2
+                  id={labelId}
+                  className={classes["product-attribute__label"]}
+                >
+                  {attribute.name}:
+                </h2>
+                <div
+                  role="group"
+                  aria-labelledby={labelId}
+                  className={classes["product-attribute__values"]}
+                >
+                  {attribute.items.map((attributeItem) => {
+                    const baseClass = isColor
+                      ? classes["product-attribute__value--color"]
+                      : classes["product-attribute__value"];
+                    const selectedClass = isColor
+                      ? classes["product-attribute__value--color-selected"]
+                      : classes["product-attribute__value--selected"];
+
+                    return (
                       <button
                         type="button"
-                        key={attributeItem.displayValue}
-                        className={classes["product-attribute__value--color"]}
-                        style={{
-                          backgroundColor:
-                            attributeItem.value === "#FFFFFF"
-                              ? "#F0F0F0"
-                              : `${attributeItem.value}`,
-                        }}
-                        onClick={onAttributeValueSelect}
+                        key={attributeItem.value}
+                        className={
+                          attributeItem.selected
+                            ? [baseClass, selectedClass].join(" ")
+                            : baseClass
+                        }
+                        style={
+                          isColor
+                            ? {
+                                backgroundColor:
+                                  attributeItem.value === "#FFFFFF"
+                                    ? "#F0F0F0"
+                                    : attributeItem.value,
+                              }
+                            : undefined
+                        }
+                        aria-label={
+                          isColor ? attributeItem.displayValue : undefined
+                        }
+                        aria-pressed={!!attributeItem.selected}
+                        onClick={() =>
+                          onAttributeValueSelect(
+                            attribute.name,
+                            attributeItem.value,
+                          )
+                        }
                       >
                         {attributeItem.value}
                       </button>
                     );
-                  }
-
-                  return content;
-                })}
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
           <div className={classes["product-price"]}>
-            <h3 className={classes["product-price__label"]}>Price:</h3>
+            <h2 className={classes["product-price__label"]}>Price:</h2>
             <p className={classes["product-price__value"]}>
               {currentPrice[0].currency.symbol}
               {currentPrice[0].amount}
