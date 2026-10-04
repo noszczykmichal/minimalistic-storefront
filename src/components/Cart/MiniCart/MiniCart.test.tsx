@@ -52,10 +52,36 @@ describe("MiniCart component", () => {
     },
   );
 
+  it("should render a dialog labelled by its heading and move focus into it", () => {
+    renderMiniCart(createTestStore(2));
+
+    const dialog = screen.getByRole("dialog", { name: "My Bag, 2 items" });
+
+    expect(dialog).toHaveFocus();
+  });
+
   it("should render the total price in the billing currency with 2 decimals", () => {
     renderMiniCart(createEmptyCartStore(true, 12.5));
 
-    expect(screen.getByText("$12.50")).toBeInTheDocument();
+    expect(screen.getByRole("term")).toHaveTextContent("Total");
+    expect(screen.getByRole("definition")).toHaveTextContent("$12.50");
+  });
+
+  it("should close without redirecting when Escape is pressed", async () => {
+    renderMiniCart();
+
+    await userEvent.keyboard("{Escape}");
+
+    expect(redirect).toHaveBeenCalledTimes(1);
+    expect(redirect).toHaveBeenCalledWith();
+  });
+
+  it("should ignore other keys", async () => {
+    renderMiniCart();
+
+    await userEvent.keyboard("{Enter}a");
+
+    expect(redirect).not.toHaveBeenCalled();
   });
 
   it("should redirect to the cart page when 'View Bag' is clicked", async () => {
@@ -79,8 +105,17 @@ describe("MiniCart component", () => {
   it("should render nothing when isMiniCartOpen is false", () => {
     renderMiniCart(createEmptyCartStore(false));
 
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(screen.queryByRole("heading")).not.toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
+  });
+
+  it("should not react to Escape when isMiniCartOpen is false", async () => {
+    renderMiniCart(createEmptyCartStore(false));
+
+    await userEvent.keyboard("{Escape}");
+
+    expect(redirect).not.toHaveBeenCalled();
   });
 
   it("should have no accessibility violations", async () => {

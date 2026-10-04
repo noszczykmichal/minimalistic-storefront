@@ -12,8 +12,11 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { uiActions } from "@/store/uiSlice";
 import type { RootState } from "@/store/store";
 
-const mockCartIconState = (productsTotal?: number) => {
-  const state = { products: { productsTotal } } as unknown as RootState;
+const mockCartIconState = (productsTotal?: number, isMiniCartOpen = false) => {
+  const state = {
+    products: { productsTotal },
+    ui: { isMiniCartOpen },
+  } as unknown as RootState;
 
   vi.mocked(useAppSelector).mockImplementation((selector) => selector(state));
 };
@@ -89,6 +92,45 @@ describe("CartIcon component", () => {
     );
 
     expect(dispatch).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    [false, "false"],
+    [true, "true"],
+  ])(
+    "should expose the mini cart state via aria-expanded when isMiniCartOpen is %s",
+    (isMiniCartOpen, expectedValue) => {
+      mockCartIconState(1, isMiniCartOpen);
+
+      render(<CartIcon />);
+      const cartIcon = screen.getByRole("button", { name: "Cart: 1 item" });
+
+      expect(cartIcon).toHaveAttribute("aria-expanded", expectedValue);
+      expect(cartIcon).toHaveAttribute("aria-controls", "mini-cart");
+    },
+  );
+
+  it("should move focus back to the button when the mini cart closes", () => {
+    mockCartIconState(1, true);
+    const { rerender } = render(<CartIcon />);
+    const cartIcon = screen.getByRole("button", { name: "Cart: 1 item" });
+
+    expect(cartIcon).not.toHaveFocus();
+
+    mockCartIconState(1, false);
+    rerender(<CartIcon />);
+
+    expect(cartIcon).toHaveFocus();
+  });
+
+  it("should not take focus when it renders with the mini cart closed", () => {
+    mockCartIconState(1, false);
+
+    render(<CartIcon />);
+
+    expect(
+      screen.getByRole("button", { name: "Cart: 1 item" }),
+    ).not.toHaveFocus();
   });
 
   it("should have no accessibility violations", async () => {

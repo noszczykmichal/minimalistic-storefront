@@ -10,6 +10,10 @@
   scrollbar-width: thin;
 }
 
+.mini-cart:focus-visible {
+  outline: none;
+}
+
 .mini-cart--open {
   animation: MiniCartOpen 0.3s ease-out forwards;
   opacity: 1;
@@ -55,15 +59,17 @@
 .mini-cart__total-price {
   display: flex;
   justify-content: space-between;
-  margin-top: 2.5rem;
+  margin: 2.5rem 0 0;
 }
 
 .total-price__text {
+  margin: 1em 0;
   font-weight: 500;
   font-family: "Roboto Condensed", sans-serif;
 }
 
 .total-price__price {
+  margin: 1em 0;
   font-weight: 700;
 }
 

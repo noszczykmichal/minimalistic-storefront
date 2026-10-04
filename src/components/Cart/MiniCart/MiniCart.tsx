@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
 import MiniCartItems from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItems";
@@ -14,6 +14,28 @@ export default function MiniCart() {
     (state) => state.products,
   );
   const { isMiniCartOpen } = useAppSelector((state) => state.ui);
+  const headingId = useId();
+
+  useEffect(() => {
+    if (isMiniCartOpen) {
+      miniCartRef.current?.focus();
+    }
+  }, [isMiniCartOpen]);
+
+  useEffect(() => {
+    if (!isMiniCartOpen) {
+      return undefined;
+    }
+
+    const onKeyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        redirect();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDownHandler);
+    return () => document.removeEventListener("keydown", onKeyDownHandler);
+  }, [isMiniCartOpen, redirect]);
 
   const onProceedToCartHandler = () => redirect("/cart");
   const onProceedToCheckOutHandler = () =>
@@ -33,8 +55,15 @@ export default function MiniCart() {
       mountOnEnter
       unmountOnExit
     >
-      <div className={classes["mini-cart"]} ref={miniCartRef}>
-        <h2 className={classes["mini-cart__title"]}>
+      <div
+        id="mini-cart"
+        role="dialog"
+        aria-labelledby={headingId}
+        tabIndex={-1}
+        className={classes["mini-cart"]}
+        ref={miniCartRef}
+      >
+        <h2 id={headingId} className={classes["mini-cart__title"]}>
           My Bag,{" "}
           <span className={classes["title__items-count"]}>{productsTotal}</span>{" "}
           <span className={classes["title__items-count"]}>
@@ -42,13 +71,13 @@ export default function MiniCart() {
           </span>
         </h2>
         <MiniCartItems />
-        <div className={classes["mini-cart__total-price"]}>
-          <p className={classes["total-price__text"]}>Total</p>
-          <p className={classes["total-price__price"]}>
+        <dl className={classes["mini-cart__total-price"]}>
+          <dt className={classes["total-price__text"]}>Total</dt>
+          <dd className={classes["total-price__price"]}>
             {billingCurrency}
             {totalPrice.toFixed(2)}
-          </p>
-        </div>
+          </dd>
+        </dl>
         <div className={classes["mini-cart__actions"]}>
           <Button
             customClass={[
