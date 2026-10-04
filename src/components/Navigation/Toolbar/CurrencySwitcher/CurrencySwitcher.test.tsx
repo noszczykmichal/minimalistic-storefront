@@ -10,8 +10,9 @@ import CurrencySwitcher from "@/components/Navigation/Toolbar/CurrencySwitcher/C
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { uiActions } from "@/store/uiSlice";
 import { productActions } from "@/store/productsSlice";
+import type { Currency } from "@/types/types";
 
-const testCurrencies = [
+const testCurrencies: Currency[] = [
   { label: "USD", symbol: "$" },
   { label: "GBP", symbol: "£" },
 ];
@@ -29,11 +30,11 @@ describe("CurrencySwitcher component", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    useAppDispatch.mockReturnValue(dispatch);
+    vi.mocked(useAppDispatch).mockReturnValue(dispatch);
   });
 
   it("should render CurrencySwitcher displaying chosen currency when isCurrencySwitcherOpen is false", () => {
-    useAppSelector.mockReturnValue({
+    vi.mocked(useAppSelector).mockReturnValue({
       isCurrencySwitcherOpen: false,
       billingCurrency: "$",
     });
@@ -46,7 +47,7 @@ describe("CurrencySwitcher component", () => {
   });
 
   it("should render CurrencySwitcher without currencies list when isCurrencySwitcherOpen is false", () => {
-    useAppSelector.mockReturnValue({
+    vi.mocked(useAppSelector).mockReturnValue({
       isCurrencySwitcherOpen: false,
       billingCurrency: "$",
     });
@@ -58,7 +59,7 @@ describe("CurrencySwitcher component", () => {
   });
 
   it("should render CurrencySwitcher with provided list of currencies when isCurrencySwitcherOpen is true", () => {
-    useAppSelector.mockReturnValue({
+    vi.mocked(useAppSelector).mockReturnValue({
       isCurrencySwitcherOpen: true,
       billingCurrency: "$",
     });
@@ -72,7 +73,7 @@ describe("CurrencySwitcher component", () => {
   });
 
   it("should dispatch 4 actions on button click", async () => {
-    useAppSelector.mockReturnValue({
+    vi.mocked(useAppSelector).mockReturnValue({
       isCurrencySwitcherOpen: true,
       billingCurrency: "$",
     });
@@ -89,7 +90,7 @@ describe("CurrencySwitcher component", () => {
   });
 
   it("should dispatch 3 actions on option click", async () => {
-    useAppSelector.mockReturnValue({
+    vi.mocked(useAppSelector).mockReturnValue({
       isCurrencySwitcherOpen: true,
       billingCurrency: "$",
     });
