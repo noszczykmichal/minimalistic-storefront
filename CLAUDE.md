@@ -78,6 +78,7 @@ Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.
 
 - Always run tests with `pnpm test --run`. Plain `pnpm test` starts watch mode and never exits.
 - After any code change, run `pnpm lint` and `pnpm test --run`. Don't call a task done if either fails.
-- New tests: `.test.jsx` next to the component, use `WithMockStoreAndRouter`, query by role/label (not class names or test IDs), and include an axe check.
+- Tests: write new tests as `.test.tsx` next to the component. Use `WithMockStoreAndRouter`, query by role/label (not class names or test IDs), and include an axe check (`toHaveNoViolations`).
+- Existing `.test.jsx` files: edit in place; only convert to `.tsx` when the task is a rewrite of that test or I ask for it.
 - Don't add or upgrade dependencies without asking first.
 - Don't run git commit or push. I review and commit myself.
