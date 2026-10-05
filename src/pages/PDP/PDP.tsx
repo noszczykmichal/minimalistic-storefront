@@ -6,7 +6,7 @@ import { Markup } from "interweave";
 
 import Button from "@/components/UI/Button/Button";
 import Modal from "@/components/UI/Modal/Modal";
-import { productActions } from "@/store/productsSlice";
+import { productActions } from "@/store/products";
 import { uiActions } from "@/store/uiSlice";
 import { ProductType } from "@/types/types";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";

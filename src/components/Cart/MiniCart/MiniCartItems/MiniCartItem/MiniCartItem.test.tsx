@@ -10,7 +10,7 @@ import { axe } from "vitest-axe";
 import MiniCartItem from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItem/MiniCartItem";
 import { testItemDetails } from "@/utils/testUtils";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { productActions } from "@/store/productsSlice";
+import { productActions } from "@/store/products";
 
 describe("MiniCartItem component", () => {
   const dispatch = vi.fn();

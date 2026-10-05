@@ -2,6 +2,7 @@
   font-weight: 500;
   font-size: 1.25rem;
   margin-top: 0;
+  margin-bottom: 1em; /* same as the former <p> */
 }
 
 .order-summary-list__cart-items {

@@ -10,7 +10,7 @@ import { axe } from "vitest-axe";
 import CurrencySwitcher from "@/components/Navigation/Toolbar/CurrencySwitcher/CurrencySwitcher";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { uiActions } from "@/store/uiSlice";
-import { productActions } from "@/store/productsSlice";
+import { productActions } from "@/store/products";
 import type { RootState } from "@/store/store";
 import type { Currency } from "@/types/types";
 

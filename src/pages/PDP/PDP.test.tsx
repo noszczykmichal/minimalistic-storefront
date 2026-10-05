@@ -5,7 +5,7 @@ import configureMockStore from "redux-mock-store";
 
 import PDP from "@/pages/PDP/PDP";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
-import { productActions } from "@/store/productsSlice";
+import { productActions } from "@/store/products";
 import { uiActions } from "@/store/uiSlice";
 import type { ProductType } from "@/types/types";
 

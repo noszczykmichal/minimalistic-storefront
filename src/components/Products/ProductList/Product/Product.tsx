@@ -1,9 +1,6 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+import { Link, useLocation } from "react-router";
 
-import { useLocation, useNavigate } from "react-router";
-
-import { productActions } from "@/store/productsSlice";
+import { productActions } from "@/store/products";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { ProductType } from "@/types/types";
 import classes from "@/components/Products/ProductList/Product/Product.module.css";
@@ -17,23 +14,19 @@ export default function Product({
   const { onCurrentPDPChange, addProductToCart } = productActions;
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
+  const productName = `${productDetails.brand} ${productDetails.name}`;
+
+  const currentPath = location.pathname;
+  const productPath =
+    currentPath === "/"
+      ? `${currentPath}all/${productDetails.id}`
+      : `${currentPath}/${productDetails.id}`;
 
   const onProductClick = () => {
-    const currentPath = location.pathname;
-    const newPath =
-      currentPath === "/"
-        ? `${currentPath}all/${productDetails.id}`
-        : `${currentPath}/${productDetails.id}`;
-
     dispatch(onCurrentPDPChange(productDetails));
-
-    navigate(newPath);
   };
 
-  const addProductWithDefaults = (event: React.MouseEvent) => {
-    event.stopPropagation();
-
+  const addProductWithDefaults = () => {
     const updatedAttributes = productDetails.attributes.map((attribute) => {
       const extensibleAttribItem = JSON.parse(
         JSON.stringify(attribute.items[0]),
@@ -57,11 +50,11 @@ export default function Product({
     (price) => price.currency.symbol === billingCurrency,
   );
   const addToCartButton = (
-    // eslint-disable-next-line jsx-a11y/control-has-associated-label
     <button
       type="button"
       className={classes["product-card__button--add-to-cart"]}
       onClick={addProductWithDefaults}
+      aria-label={`Add ${productName} to cart`}
     >
       <svg
         width="52"
@@ -91,15 +84,19 @@ export default function Product({
     <li className={classes["product-card"]}>
       <div
         style={{ backgroundImage: `url(${productDetails.gallery[0]})` }}
-        aria-label={productDetails.id}
         className={classes["product-card__image"]}
-        onClick={onProductClick}
       >
         {!productDetails.inStock ? (
           <div className={classes.image__overlay}>
             <p>OUT OF STOCK</p>
           </div>
         ) : null}
+        <Link
+          to={productPath}
+          onClick={onProductClick}
+          aria-label={productName}
+          className={classes["image__product-link"]}
+        />
         {productDetails.inStock ? addToCartButton : null}
       </div>
 

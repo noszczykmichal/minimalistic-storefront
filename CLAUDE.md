@@ -39,7 +39,7 @@ Only two queries exist, both written inline with `gql` (untyped; `@graphql-codeg
 Apollo data is **not** synced to Redux automatically. Components copy what they need into Redux:
 
 - **Product page:** clicking a product (`components/Products/ProductList/Product`) dispatches `onCurrentPDPChange(product)`. `PDP` renders from `state.products.currentPDP` and never queries the API itself. Opening a PDP URL with empty persisted state will fail.
-- **Cart totals:** `productsSlice` holds `cart`, `billingCurrency` (a currency _symbol_, e.g. `"$"`), and the derived `productsTotal`/`totalPrice`. Every cart or currency reducer recomputes those totals. Each product carries a `prices[]` array, and the price shown is the entry whose `currency.symbol === billingCurrency`.
+- **Cart totals:** the `products` slice (`src/store/products.ts`) holds `cart`, `billingCurrency` (a currency _symbol_, e.g. `"$"`), and the derived `productsTotal`/`totalPrice`. Every cart or currency reducer recomputes those totals. Each product carries a `prices[]` array, and the price shown is the entry whose `currency.symbol === billingCurrency`.
 - **Cart line identity:** a cart line is identified by `internalID` = product `id` + the concatenated selected attribute values, lowercased. The same product with different options becomes a separate line. Attribute selection is stored as `selected: true` on the chosen `attributes[].items[]` entry.
 
 ### Store (`src/store/`)
@@ -75,7 +75,7 @@ Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.
   - Exception: for bulk mechanical changes across many files (e.g. a dependency upgrade touching every test), ask before converting.
   - In your summary, list converted files separately from other changes so I can commit the conversions on their own.
 - Redux in tests uses `redux-mock-store`, not the real store:
-  - wrap components in `WithMockStoreAndRouter` (`src/utils/`), which supplies a `Provider` and a `MemoryRouter`
+  - wrap components in `WithMockStoreAndRouter` (`src/utils/`), which supplies a `Provider` and a `MemoryRouter`. Pass `customStore` for a mock store, and `initialPath` (default `"/"`) when the component depends on the current URL. Don't nest another router inside it.
   - `createTestStore()` (`src/utils/testUtils.ts`) returns a mock store with two cart items
   - to assert on dispatches, `vi.mock("@/hooks/useReduxHooks", ...)` and have `useAppDispatch` return a `vi.fn()` (because `vi.mock` is hoisted, test files place it above the imports; `import/first` is disabled for tests)
 - Test helper files must be listed in the ESLint `import/no-extraneous-dependencies` allowlist (`eslint.config.js`) before they can import devDependencies.

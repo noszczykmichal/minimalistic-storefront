@@ -54,7 +54,7 @@ export default function CartPageItem({
       {/* first column */}
       <div className={classes["column-wrapper"]}>
         <div className={classes["cart-item__product-details"]}>
-          <h3 className={classes["product-details__title"]}>
+          <h2 className={classes["product-details__title"]}>
             <span
               className={[classes.title__brand, classes.title__item].join(" ")}
             >
@@ -65,7 +65,7 @@ export default function CartPageItem({
             >
               {name}
             </span>
-          </h3>
+          </h2>
           <p className={classes["product-details__price"]}>
             {billingCurrency}
             {currentPrice.amount.toFixed(2)}

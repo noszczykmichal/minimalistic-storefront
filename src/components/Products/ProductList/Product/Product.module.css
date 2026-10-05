@@ -47,6 +47,11 @@
   color: #8d8f9a;
 }
 
+.image__product-link {
+  position: absolute;
+  inset: 0;
+}
+
 .product-details {
   margin-top: 1.5rem;
   width: 16rem;
@@ -82,7 +87,8 @@
     display: none;
   }
 
-  .product-card:hover .product-card__button--add-to-cart {
+  .product-card:hover .product-card__button--add-to-cart,
+  .product-card:focus-within .product-card__button--add-to-cart {
     display: block;
   }
 }
