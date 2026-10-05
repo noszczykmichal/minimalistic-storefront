@@ -28,7 +28,9 @@ describe("OrderSummary component", () => {
   it("should render the list of cart items", () => {
     renderOrderSummary();
 
-    expect(screen.getByText("Order Summary")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Order Summary" }),
+    ).toBeInTheDocument();
     const cartItems = within(screen.getByRole("list")).getAllByRole("listitem");
     expect(cartItems).toHaveLength(1);
     expect(

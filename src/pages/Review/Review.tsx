@@ -44,9 +44,8 @@ export default function Review() {
   const onBackButtonClick = () => navigate(-1);
   return (
     <section className={classes.section}>
-      <h1 className="visually-hidden">Order review</h1>
       <div className={classes.wrapper}>
-        <OrderSummaryList />
+        <OrderSummaryList headingLevel={1} />
         <Hr customClass={classes["hr--vertical"]} />
         <CostSummary />
       </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 import ShoppingBagIcon from "@/components/UI/ShoppingBagIcon/ShoppingBagIcon";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { productActions } from "@/store/productsSlice";
+import { productActions } from "@/store/products";
 import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment";
 import classes from "@/pages/Confirm/Confirm.module.css";
 

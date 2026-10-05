@@ -12,7 +12,7 @@ import {
 } from "redux-persist";
 
 import uiSlice from "@/store/uiSlice";
-import productsSlice from "@/store/productsSlice";
+import productsSlice from "@/store/products";
 import shippingAddressAndPayment from "@/store/shippingAddressAndPayment";
 
 const rootReducer = combineReducers({

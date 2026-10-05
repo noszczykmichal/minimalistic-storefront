@@ -52,18 +52,18 @@ describe("Review page", () => {
     vi.mocked(useNavigate).mockReturnValue(navigate);
   });
 
-  it("should render an 'Order review' page heading", () => {
+  it("should use the 'Order Summary' title as the page heading", () => {
     renderReview();
 
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(
-      screen.getByRole("heading", { level: 1, name: "Order review" }),
+      screen.getByRole("heading", { level: 1, name: "Order Summary" }),
     ).toBeInTheDocument();
   });
 
   it("should render the order summary with the cart items and costs", () => {
     renderReview();
 
-    expect(screen.getByText("Order Summary")).toBeInTheDocument();
     expect(
       screen.getByRole("img", { name: "Canada Goose Jacket" }),
     ).toBeInTheDocument();

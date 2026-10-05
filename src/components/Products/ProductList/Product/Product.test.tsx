@@ -11,7 +11,7 @@ import configureMockStore from "redux-mock-store";
 import Product from "@/components/Products/ProductList/Product/Product";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { productActions } from "@/store/productsSlice";
+import { productActions } from "@/store/products";
 import type { ProductType } from "@/types/types";
 
 const testProduct: ProductType = {

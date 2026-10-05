@@ -39,7 +39,7 @@ Only two queries exist, both written inline with `gql` (untyped; `@graphql-codeg
 Apollo data is **not** synced to Redux automatically. Components copy what they need into Redux:
 
 - **Product page:** clicking a product (`components/Products/ProductList/Product`) dispatches `onCurrentPDPChange(product)`. `PDP` renders from `state.products.currentPDP` and never queries the API itself. Opening a PDP URL with empty persisted state will fail.
-- **Cart totals:** `productsSlice` holds `cart`, `billingCurrency` (a currency _symbol_, e.g. `"$"`), and the derived `productsTotal`/`totalPrice`. Every cart or currency reducer recomputes those totals. Each product carries a `prices[]` array, and the price shown is the entry whose `currency.symbol === billingCurrency`.
+- **Cart totals:** the `products` slice (`src/store/products.ts`) holds `cart`, `billingCurrency` (a currency _symbol_, e.g. `"$"`), and the derived `productsTotal`/`totalPrice`. Every cart or currency reducer recomputes those totals. Each product carries a `prices[]` array, and the price shown is the entry whose `currency.symbol === billingCurrency`.
 - **Cart line identity:** a cart line is identified by `internalID` = product `id` + the concatenated selected attribute values, lowercased. The same product with different options becomes a separate line. Attribute selection is stored as `selected: true` on the chosen `attributes[].items[]` entry.
 
 ### Store (`src/store/`)

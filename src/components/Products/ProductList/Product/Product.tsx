@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router";
 
-import { productActions } from "@/store/productsSlice";
+import { productActions } from "@/store/products";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { ProductType } from "@/types/types";
 import classes from "@/components/Products/ProductList/Product/Product.module.css";

@@ -2,7 +2,7 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
-import { productActions } from "@/store/productsSlice";
+import { productActions } from "@/store/products";
 import { uiActions } from "@/store/uiSlice";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { Currency } from "@/types/types";
