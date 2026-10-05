@@ -44,6 +44,7 @@ export default function Review() {
   const onBackButtonClick = () => navigate(-1);
   return (
     <section className={classes.section}>
+      <h1 className="visually-hidden">Order review</h1>
       <div className={classes.wrapper}>
         <OrderSummaryList />
         <Hr customClass={classes["hr--vertical"]} />
@@ -52,7 +53,7 @@ export default function Review() {
       <Hr customClass={classes["hr--horizontal"]} />
       <div className={classes["order-details"]}>
         <div className={classes["order-detail"]}>
-          <h4 className={classes["order-detail__heading"]}>Shipping Address</h4>
+          <h2 className={classes["order-detail__heading"]}>Shipping Address</h2>
           <p className={classes["order-detail__value"]}>
             {firstName} {lastName}
             <br />
@@ -70,12 +71,13 @@ export default function Review() {
             type="button"
             className={classes["order-detail__button"]}
             onClick={redirectToAddressPage}
+            aria-label="Change shipping address"
           >
             Change
           </button>
         </div>
         <div className={classes["order-detail"]}>
-          <h4 className={classes["order-detail__heading"]}>Shipping Method</h4>
+          <h2 className={classes["order-detail__heading"]}>Shipping Method</h2>
           <p className={classes["order-detail__value"]}>
             <Markup content={chosenShippingMethod} />
           </p>
@@ -83,13 +85,14 @@ export default function Review() {
             type="button"
             className={classes["order-detail__button"]}
             onClick={redirectToShipAndPayPage}
+            aria-label="Change shipping method"
           >
             Change
           </button>
         </div>
 
         <div className={classes["order-detail"]}>
-          <h4 className={classes["order-detail__heading"]}>Payment Method</h4>
+          <h2 className={classes["order-detail__heading"]}>Payment Method</h2>
           <p className={classes["order-detail__value"]}>
             <Markup content={chosenPaymentMethod} />
           </p>
@@ -97,6 +100,7 @@ export default function Review() {
             type="button"
             className={classes["order-detail__button"]}
             onClick={redirectToShipAndPayPage}
+            aria-label="Change payment method"
           >
             Change
           </button>

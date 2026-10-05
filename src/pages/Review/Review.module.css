@@ -14,6 +14,9 @@
 
 .order-detail__heading {
   border-bottom: 1px solid #e5e5e5;
+  /* keep the size and spacing of the former h4 */
+  font-size: 1em;
+  margin: 1.33em 0;
 }
 
 .order-detail__value {

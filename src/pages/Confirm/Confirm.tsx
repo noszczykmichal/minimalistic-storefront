@@ -17,7 +17,9 @@ export default function Confirm() {
     dispatch(clearCart());
 
     dispatch(clearShippingAndPaymentData());
-    setTimeout(() => setShowCheckmark(true), 500);
+    const checkmarkTimer = setTimeout(() => setShowCheckmark(true), 500);
+
+    return () => clearTimeout(checkmarkTimer);
   }, [dispatch, clearCart, clearShippingAndPaymentData]);
 
   return (
