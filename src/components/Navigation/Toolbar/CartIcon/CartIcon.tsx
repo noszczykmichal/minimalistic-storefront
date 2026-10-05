@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 import { uiActions } from "@/store/uiSlice";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/Toolbar/CartIcon/CartIcon.module.css";
@@ -5,6 +7,9 @@ import classes from "@/components/Navigation/Toolbar/CartIcon/CartIcon.module.cs
 export default function CartIcon() {
   const dispatch = useAppDispatch();
   const { productsTotal } = useAppSelector((state) => state.products);
+  const { isMiniCartOpen } = useAppSelector((state) => state.ui);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const wasMiniCartOpen = useRef(isMiniCartOpen);
   const {
     backdropVisibilityToggle,
     backdropTypeToggle,
@@ -19,6 +24,13 @@ export default function CartIcon() {
     dispatch(currencySwitcherVisibToggle(false));
   };
 
+  useEffect(() => {
+    if (wasMiniCartOpen.current && !isMiniCartOpen) {
+      buttonRef.current?.focus();
+    }
+    wasMiniCartOpen.current = isMiniCartOpen;
+  }, [isMiniCartOpen]);
+
   const itemsCount = productsTotal || 0;
   const itemsLabel = itemsCount === 1 ? "item" : "items";
 
@@ -27,7 +39,10 @@ export default function CartIcon() {
       type="button"
       className={classes["cart-icon"]}
       onClick={minicartToggle}
+      ref={buttonRef}
       aria-label={`Cart: ${itemsCount} ${itemsLabel}`}
+      aria-expanded={!!isMiniCartOpen}
+      aria-controls="mini-cart"
       disabled={!itemsCount}
     >
       <svg

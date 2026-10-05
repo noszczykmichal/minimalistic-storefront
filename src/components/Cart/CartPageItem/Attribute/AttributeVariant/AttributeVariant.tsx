@@ -10,10 +10,10 @@ export default function AttributeVariant({
   variantType: string;
   inMiniView: boolean;
 }) {
-  const { selected, displayValue, value } = variantData;
+  const { selected, value } = variantData;
   let attachedClasses;
   let inlineStyles;
-  let buttonText = "";
+  let chipText = "";
 
   if (variantType === "Color") {
     if (inMiniView) {
@@ -51,18 +51,16 @@ export default function AttributeVariant({
         : [classes["product-attribute__value"]];
     }
 
-    buttonText = value;
+    chipText = value;
   }
 
   return (
-    <button
-      type="button"
-      key={displayValue}
+    <span
       className={attachedClasses.join(" ")}
       style={inlineStyles}
-      aria-label={displayValue}
+      aria-hidden="true"
     >
-      {buttonText}
-    </button>
+      {chipText}
+    </span>
   );
 }

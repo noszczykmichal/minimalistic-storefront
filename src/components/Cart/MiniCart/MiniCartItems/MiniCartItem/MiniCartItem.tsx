@@ -20,6 +20,13 @@ export default function MiniCartItem({
   const increaseQuantityHandler = useChangeQuantity(internalID, "addition");
   const decreaseQuantityHandler = useChangeQuantity(internalID, "subtraction");
 
+  const productName = `${itemDetails.brand} ${itemDetails.name}`;
+  // At quantity 1 the "-" button removes the item, so say so.
+  const decreaseLabel =
+    quantity > 1
+      ? `Decrease quantity of ${productName}`
+      : `Remove ${productName} from cart`;
+
   return (
     <li className={classes["cart-item"]}>
       <div className={classes["column-wrapper"]}>
@@ -50,14 +57,23 @@ export default function MiniCartItem({
           type="button"
           className={classes["cart-actions__button"]}
           onClick={increaseQuantityHandler}
+          aria-label={`Increase quantity of ${productName}`}
         >
           +
         </button>
-        <p className={classes["cart-actions__quantity"]}>{quantity}</p>
+        <p
+          className={classes["cart-actions__quantity"]}
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span className="visually-hidden">Quantity of {productName}: </span>
+          {quantity}
+        </p>
         <button
           type="button"
           className={classes["cart-actions__button"]}
           onClick={decreaseQuantityHandler}
+          aria-label={decreaseLabel}
         >
           -
         </button>

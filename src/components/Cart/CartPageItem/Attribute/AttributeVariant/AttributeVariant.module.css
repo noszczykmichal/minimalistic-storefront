@@ -1,6 +1,9 @@
 .product-attribute__value {
   height: 2.8rem;
   width: 3.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: transparent;
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 400;

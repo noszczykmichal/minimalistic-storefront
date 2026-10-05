@@ -1,13 +1,18 @@
 .mini-cart {
   width: 100%;
-  max-height: 42rem;
-  position: absolute;
+  max-height: min(42rem, calc(100vh - 5rem));
+  position: fixed;
   top: 5rem;
   left: 0;
+  z-index: 150;
   background-color: #fff;
   padding: 2rem 0.625rem;
   overflow-y: auto;
   scrollbar-width: thin;
+}
+
+.mini-cart:focus-visible {
+  outline: none;
 }
 
 .mini-cart--open {
@@ -55,15 +60,17 @@
 .mini-cart__total-price {
   display: flex;
   justify-content: space-between;
-  margin-top: 2.5rem;
+  margin: 2.5rem 0 0;
 }
 
 .total-price__text {
+  margin: 1em 0;
   font-weight: 500;
   font-family: "Roboto Condensed", sans-serif;
 }
 
 .total-price__price {
+  margin: 1em 0;
   font-weight: 700;
 }
 

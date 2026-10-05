@@ -70,9 +70,10 @@ Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.
 - Tests sit next to their components. Most include an axe accessibility check.
 - **Test files are migrating from `.test.jsx` to `.test.tsx`:**
   - New tests are always `.test.tsx`.
-  - When you edit an existing `.test.jsx` file for any reason, convert it to `.test.tsx` in the same change: rename it, add types (type mock state, props and mocks; no `any`), and keep the test logic unchanged.
-  - Don't convert test files you aren't otherwise editing. Changing a component does not by itself require converting its test.
-  - Keep a conversion to renaming plus typing, without restructuring, so git still detects the file as a rename and its history stays intact.
+  - When you change a component (`Name.tsx`) whose test is still `Name.test.jsx`, convert the test to `Name.test.tsx` as part of the same task, even if the test itself needs no other changes. The same applies when you edit a `.test.jsx` file directly.
+  - A conversion is renaming plus typing (type mock state, props and mocks; no `any`) with the test logic unchanged. If the task also needs substantial changes to that test, do the conversion first, then stop and tell me, so I can commit the rename before you continue.
+  - Exception: for bulk mechanical changes across many files (e.g. a dependency upgrade touching every test), ask before converting.
+  - In your summary, list converted files separately from other changes so I can commit the conversions on their own.
 - Redux in tests uses `redux-mock-store`, not the real store:
   - wrap components in `WithMockStoreAndRouter` (`src/utils/`), which supplies a `Provider` and a `MemoryRouter`
   - `createTestStore()` (`src/utils/testUtils.ts`) returns a mock store with two cart items
@@ -82,8 +83,8 @@ Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.
 ## Rules
 
 - Always run tests with `pnpm test --run`. Plain `pnpm test` starts watch mode and never exits.
-- After any code change, run `pnpm lint` and `pnpm test --run`. Don't call a task done if either fails.
+- After any code change, run `pnpm lint`, `pnpm test --run` and `pnpm exec tsc --noEmit`. Don't call a task done if any of them fails.
 - Tests: write new tests as `.test.tsx` next to the component. Use `WithMockStoreAndRouter`, query by role/label (not class names or test IDs), and include an axe check (`toHaveNoViolations`).
-- Existing `.test.jsx` files: edit in place; only convert to `.tsx` when the task is a rewrite of that test or I ask for it.
+- When you change a component whose test is still `.test.jsx`, convert that test to `.test.tsx` (see Testing).
 - Don't add or upgrade dependencies without asking first.
 - Don't run git commit or push. I review and commit myself.

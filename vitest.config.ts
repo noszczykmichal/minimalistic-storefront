@@ -14,6 +14,23 @@ export default mergeConfig(
         { find: /^.+\.css$/, replacement: "identity-obj-proxy" },
         { find: /^.+\.scss$/, replacement: "identity-obj-proxy" },
       ],
+      coverage: {
+        provider: "v8",
+        include: ["src/**/*.{ts,tsx,js,jsx}"],
+        exclude: [
+          "src/**/*.test.{ts,tsx,js,jsx}",
+          "src/**/*.d.ts",
+          "src/vitest.setup.js",
+          "src/utils/testUtils.ts",
+          "src/utils/WithMockStoreAndRouter.*",
+          "src/types/**",
+          "src/utils/form/constants.ts",
+          "src/utils/form/currencies.ts",
+          "src/utils/form/defaultValues.ts",
+          "src/index.tsx",
+        ],
+        reporter: ["text", "html"],
+      },
     },
   }),
 );

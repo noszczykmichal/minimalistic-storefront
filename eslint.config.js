@@ -1,3 +1,4 @@
+import { defineConfig } from "eslint/config";
 import js from "@eslint/js";
 import react from "eslint-plugin-react";
 import tseslint from "typescript-eslint";
@@ -19,7 +20,7 @@ const compat = new FlatCompat({
   resolvePluginsRelativeTo: __dirname,
 });
 
-export default tseslint.config(
+export default defineConfig(
   {
     ignores: [
       "build/",

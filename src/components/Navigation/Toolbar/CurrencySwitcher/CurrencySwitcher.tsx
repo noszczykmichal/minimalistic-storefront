@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useRef } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
 import { productActions } from "@/store/productsSlice";
@@ -14,10 +13,15 @@ export default function CurrencySwitcher({
 }: {
   currencies: Currency[];
 }) {
-  const switcherOptionsRef = useRef<HTMLUListElement>(null);
+  const switcherOptionsRef = useRef<HTMLDivElement>(null);
+  const switcherButtonRef = useRef<HTMLButtonElement>(null);
+  const selectedOptionRef = useRef<HTMLButtonElement>(null);
+  const [optionsLeft, setOptionsLeft] = useState<number>();
+  const optionsId = useId();
   const dispatch = useAppDispatch();
   const { isCurrencySwitcherOpen } = useAppSelector((state) => state.ui);
   const { billingCurrency } = useAppSelector((state) => state.products);
+  const wasCurrencySwitcherOpen = useRef(isCurrencySwitcherOpen);
   const { onCurrencyChange } = productActions;
   const {
     backdropVisibilityToggle,
@@ -26,6 +30,53 @@ export default function CurrencySwitcher({
     miniCartVisibilityToggle,
   } = uiActions;
 
+  // The options list is portaled out of the toolbar, so it is aligned with
+  // the switcher button explicitly.
+  useLayoutEffect(() => {
+    if (!isCurrencySwitcherOpen) {
+      return undefined;
+    }
+
+    const updateOptionsPosition = () =>
+      setOptionsLeft(switcherButtonRef.current?.getBoundingClientRect().left);
+
+    updateOptionsPosition();
+    window.addEventListener("resize", updateOptionsPosition);
+    return () => window.removeEventListener("resize", updateOptionsPosition);
+  }, [isCurrencySwitcherOpen]);
+
+  // Move focus into the dialog when it opens and back to the switcher button
+  // when it closes (option chosen, Escape or backdrop click).
+  useEffect(() => {
+    if (isCurrencySwitcherOpen) {
+      (selectedOptionRef.current ?? switcherOptionsRef.current)?.focus();
+    } else if (wasCurrencySwitcherOpen.current) {
+      switcherButtonRef.current?.focus();
+    }
+    wasCurrencySwitcherOpen.current = isCurrencySwitcherOpen;
+  }, [isCurrencySwitcherOpen]);
+
+  useEffect(() => {
+    if (!isCurrencySwitcherOpen) {
+      return undefined;
+    }
+
+    const onKeyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        dispatch(currencySwitcherVisibToggle(false));
+        dispatch(backdropVisibilityToggle(false));
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDownHandler);
+    return () => document.removeEventListener("keydown", onKeyDownHandler);
+  }, [
+    isCurrencySwitcherOpen,
+    dispatch,
+    currencySwitcherVisibToggle,
+    backdropVisibilityToggle,
+  ]);
+
   const currencySwitcherOpen = () => {
     dispatch(currencySwitcherVisibToggle(true));
     dispatch(backdropTypeToggle(true));
@@ -33,10 +84,9 @@ export default function CurrencySwitcher({
     dispatch(miniCartVisibilityToggle(false));
   };
 
-  const currencyChangeHandler = (event: React.MouseEvent) => {
-    const eventTarget = event.target as HTMLButtonElement;
+  const currencyChangeHandler = (symbol: string) => {
     dispatch(currencySwitcherVisibToggle(false));
-    dispatch(onCurrencyChange(eventTarget.getAttribute("aria-label")));
+    dispatch(onCurrencyChange(symbol));
     dispatch(backdropVisibilityToggle(false));
   };
 
@@ -53,6 +103,10 @@ export default function CurrencySwitcher({
         className={classes.switcher__button}
         onClick={currencySwitcherOpen}
         aria-label="Currencies Pane"
+        aria-haspopup="dialog"
+        aria-expanded={!!isCurrencySwitcherOpen}
+        aria-controls={optionsId}
+        ref={switcherButtonRef}
       >
         {billingCurrency}
         <svg
@@ -72,33 +126,58 @@ export default function CurrencySwitcher({
         </svg>
       </button>
 
-      <CSSTransition
-        in={isCurrencySwitcherOpen}
-        timeout={300}
-        classNames={{
-          enter: "",
-          enterActive: classes["switcher__options--open"],
-          exit: "",
-          exitActive: classes["switcher__options--closed"],
-        }}
-        nodeRef={switcherOptionsRef}
-        mountOnEnter
-        unmountOnExit
-      >
-        <ul className={classes.switcher__options} ref={switcherOptionsRef}>
-          {currencies.map((currency) => (
-            <li
-              key={currency.label}
-              aria-label={currency.symbol}
-              className={classes.switcher__option}
-              onClick={currencyChangeHandler}
-            >
-              <span className={classes.option__symbol}>{currency.symbol}</span>
-              <span className={classes.option__label}>{currency.label}</span>
-            </li>
-          ))}
-        </ul>
-      </CSSTransition>
+      {createPortal(
+        <CSSTransition
+          in={isCurrencySwitcherOpen}
+          timeout={300}
+          classNames={{
+            enter: "",
+            enterActive: classes["switcher__options--open"],
+            exit: "",
+            exitActive: classes["switcher__options--closed"],
+          }}
+          nodeRef={switcherOptionsRef}
+          mountOnEnter
+          unmountOnExit
+        >
+          <div
+            id={optionsId}
+            role="dialog"
+            aria-label="Currencies"
+            tabIndex={-1}
+            className={classes.switcher__options}
+            style={{ left: optionsLeft }}
+            ref={switcherOptionsRef}
+          >
+            <ul className={classes.options__list}>
+              {currencies.map((currency) => {
+                const isSelected = currency.symbol === billingCurrency;
+
+                return (
+                  <li key={currency.label}>
+                    <button
+                      type="button"
+                      aria-label={`${currency.symbol} ${currency.label}`}
+                      aria-pressed={isSelected}
+                      className={classes.switcher__option}
+                      onClick={() => currencyChangeHandler(currency.symbol)}
+                      ref={isSelected ? selectedOptionRef : undefined}
+                    >
+                      <span className={classes.option__symbol}>
+                        {currency.symbol}
+                      </span>
+                      <span className={classes.option__label}>
+                        {currency.label}
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </CSSTransition>,
+        document.getElementById("modals-root") as HTMLDivElement,
+      )}
     </div>
   );
 }
