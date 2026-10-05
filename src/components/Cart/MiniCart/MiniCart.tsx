@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef } from "react";
+import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
 import MiniCartItems from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItems";
@@ -41,7 +42,7 @@ export default function MiniCart() {
   const onProceedToCheckOutHandler = () =>
     redirect("/cart/shipping/address&payment");
 
-  return (
+  return createPortal(
     <CSSTransition
       in={isMiniCartOpen}
       timeout={300}
@@ -99,6 +100,7 @@ export default function MiniCart() {
           </Button>
         </div>
       </div>
-    </CSSTransition>
+    </CSSTransition>,
+    document.getElementById("modals-root") as HTMLDivElement,
   );
 }

@@ -14,7 +14,7 @@ describe("NavigationItem component", () => {
   const dispatch = vi.fn();
   beforeEach(() => {
     vi.clearAllMocks();
-    useAppDispatch.mockReturnValue(dispatch);
+    vi.mocked(useAppDispatch).mockReturnValue(dispatch);
   });
 
   test("should render a link with correct text and href attribute value", () => {
@@ -42,7 +42,7 @@ describe("NavigationItem component", () => {
 
     render(
       <MemoryRouter>
-        <NavigationItem />
+        <NavigationItem link="/some-link">Test content</NavigationItem>
       </MemoryRouter>,
     );
     const linkElement = screen.getByRole("link");

@@ -31,7 +31,7 @@ const shippingMethodAndPayment = z.object({
   ),
 
   paymentMethod: z
-    .string("Choose a shipping method.")
+    .string("Choose a payment method.")
     .pipe(z.enum(PAYMENT_METHODS, { error: "Choose a payment method." })),
 });
 

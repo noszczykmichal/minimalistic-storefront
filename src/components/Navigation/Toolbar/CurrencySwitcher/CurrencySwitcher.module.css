@@ -27,13 +27,11 @@
 }
 
 .switcher__options {
-  margin: 0;
-  padding: 0;
   position: fixed;
   top: 5rem;
   background-color: #fff;
   filter: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.19));
-  z-index: 200;
+  z-index: 150;
 }
 
 .switcher__options--open {
@@ -68,10 +66,24 @@
   }
 }
 
+.switcher__options:focus-visible {
+  outline: none;
+}
+
+.options__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .switcher__option {
+  width: 100%;
   display: flex;
   justify-content: center;
   padding: 0.75rem 1.8rem 0.75rem 1.2rem;
+  border: none;
+  background-color: transparent;
+  font: inherit;
   cursor: pointer;
 }
 

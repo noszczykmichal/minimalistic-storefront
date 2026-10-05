@@ -3,7 +3,7 @@ vi.mock("@/hooks/useReduxHooks", async (importActual) => {
   return { ...actual, useAppDispatch: vi.fn() };
 });
 vi.mock("@/hooks/useRedirect", () => ({ default: vi.fn() }));
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import configureMockStore from "redux-mock-store";
@@ -30,12 +30,27 @@ const renderMiniCart = (store = createTestStore()) =>
 describe("MiniCart component", () => {
   const dispatch = vi.fn();
   const redirect = vi.fn();
+  let modalsRoot: HTMLDivElement;
 
   beforeEach(() => {
     vi.clearAllMocks();
 
     vi.mocked(useAppDispatch).mockReturnValue(dispatch);
     vi.mocked(useRedirect).mockReturnValue(redirect);
+
+    modalsRoot = document.createElement("div");
+    modalsRoot.id = "modals-root";
+    document.body.appendChild(modalsRoot);
+  });
+
+  afterEach(() => {
+    modalsRoot.remove();
+  });
+
+  it("should render the dialog into #modals-root", () => {
+    renderMiniCart();
+
+    expect(within(modalsRoot).getByRole("dialog")).toBeInTheDocument();
   });
 
   it.each([
@@ -119,8 +134,8 @@ describe("MiniCart component", () => {
   });
 
   it("should have no accessibility violations", async () => {
-    const { container } = renderMiniCart();
+    const { baseElement } = renderMiniCart();
 
-    expect(await axe(container)).toHaveNoViolations();
+    expect(await axe(baseElement)).toHaveNoViolations();
   });
 });
