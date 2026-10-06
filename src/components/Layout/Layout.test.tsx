@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { axe } from "vitest-axe";
 
 import Layout from "@/components/Layout/Layout";
@@ -9,8 +9,23 @@ vi.mock("@/components/Navigation/Toolbar/Toolbar", () => ({
 vi.mock("@/components/Navigation/MobileNavigation/MobileNavigation", () => ({
   default: () => <nav aria-label="Mobile">Mobile navigation</nav>,
 }));
+vi.mock("@/components/UI/Backdrop/Backdrop", () => ({
+  default: () => <div>Backdrop</div>,
+}));
 
 describe("Layout component", () => {
+  let modalsRoot: HTMLDivElement;
+
+  beforeEach(() => {
+    modalsRoot = document.createElement("div");
+    modalsRoot.id = "modals-root";
+    document.body.appendChild(modalsRoot);
+  });
+
+  afterEach(() => {
+    modalsRoot.remove();
+  });
+
   it("renders children inside the main landmark", () => {
     render(
       <Layout>
@@ -21,6 +36,16 @@ describe("Layout component", () => {
     expect(screen.getByRole("main")).toContainElement(
       screen.getByText("Page content"),
     );
+  });
+
+  it("renders the backdrop into #modals-root", () => {
+    render(
+      <Layout>
+        <p>Page content</p>
+      </Layout>,
+    );
+
+    expect(within(modalsRoot).getByText("Backdrop")).toBeInTheDocument();
   });
 
   it("should have no accessibility violations", async () => {

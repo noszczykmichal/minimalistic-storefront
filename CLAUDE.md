@@ -44,7 +44,7 @@ Apollo data is **not** synced to Redux automatically. Components copy what they 
 
 ### Store (`src/store/`)
 
-Three slices are combined and wrapped in `redux-persist` (key `root`, localStorage). The **whole** state is persisted, so any new slice is persisted too.
+Three slices are combined and wrapped in `redux-persist` (key `root`, localStorage). `products` and `shippingAddressAndPayment` are persisted; `ui` is blacklisted so open/closed state resets on reload. A new slice is persisted unless you add it to the blacklist.
 
 - `ui`: categories/currencies, plus visibility flags for backdrop, mini-cart, currency switcher, modal and mobile nav
 - `products`: currency, current PDP, cart
@@ -54,7 +54,7 @@ Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.
 
 ### Checkout flow
 
-`/cart` → `/cart/shipping/address&payment` (`pages/ShippingForm`: a two-step react-hook-form form validated with zod schemas from `src/utils/form/schemas.ts`; values are saved with `saveDraft`) → `/cart/review` (reads the draft) → `/cart/confirm` (dispatches `clearCart` and `clearShippingAndPaymentData`).
+`/cart` → `/cart/shipping/address&payment` (`pages/ShippingForm`: a two-step react-hook-form form validated with zod schemas from `src/utils/shippingForm/schemas.ts`; values are saved with `saveDraft`) → `/cart/review` (reads the draft) → `/cart/confirm` (dispatches `clearCart` and `clearShippingAndPaymentData`).
 
 ### Conventions
 

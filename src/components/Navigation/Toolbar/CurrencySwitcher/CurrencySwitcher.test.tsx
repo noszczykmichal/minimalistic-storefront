@@ -181,7 +181,7 @@ describe("CurrencySwitcher component", () => {
 
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(true));
-    expect(dispatch).toHaveBeenCalledWith(backdropTypeToggle(true));
+    expect(dispatch).toHaveBeenCalledWith(backdropTypeToggle("light"));
     expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(true));
     expect(dispatch).toHaveBeenCalledWith(miniCartVisibilityToggle(false));
   });

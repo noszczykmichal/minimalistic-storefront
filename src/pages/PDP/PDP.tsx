@@ -1,16 +1,16 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useId, useState } from "react";
-import { createPortal } from "react-dom";
+
 import { Markup } from "interweave";
 
 import Button from "@/components/UI/Button/Button";
-import Modal from "@/components/UI/Modal/Modal";
 import { productActions } from "@/store/products";
 import { uiActions } from "@/store/uiSlice";
 import { ProductType } from "@/types/types";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/pages/PDP/PDP.module.css";
+import MissingAttributesModal from "@/components/UI/MissingAttributesModal/MissingAttributesModal";
 
 export default function PDP() {
   const dispatch = useAppDispatch();
@@ -70,7 +70,7 @@ export default function PDP() {
 
     if (notSelectedAttributes.length > 0) {
       dispatch(modalToggle(true));
-      dispatch(backdropTypeToggle(false));
+      dispatch(backdropTypeToggle("dark"));
       dispatch(backdropVisibilityToggle(true));
     } else {
       dispatch(addProductToCart(product));
@@ -83,10 +83,7 @@ export default function PDP() {
 
   return (
     <section className={classes.section}>
-      {createPortal(
-        <Modal notSelected={notSelected} />,
-        document.getElementById("modals-root") as HTMLDivElement,
-      )}
+      <MissingAttributesModal notSelected={notSelected} />
       {/* 1st column */}
       <div className={classes["thumbnails-wrapper"]}>
         {displayedProduct!.gallery.map((imageURL) => (

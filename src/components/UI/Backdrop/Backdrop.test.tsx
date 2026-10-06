@@ -12,12 +12,9 @@ import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { uiActions } from "@/store/uiSlice";
 import type { RootState } from "@/store/store";
 
-const mockBackdropState = (
-  isBackdropOpen: boolean,
-  isBackdropTransparent = false,
-) => {
+const mockBackdropState = (isBackdropOpen: boolean, backdropMode = "dark") => {
   const state = {
-    ui: { isBackdropOpen, isBackdropTransparent },
+    ui: { isBackdropOpen, backdropMode },
   } as unknown as RootState;
 
   vi.mocked(useAppSelector).mockImplementation((selector) => selector(state));
@@ -59,8 +56,8 @@ describe("Backdrop component", () => {
     expect(backdrop).toBeInTheDocument();
   });
 
-  it("should render Backdrop with the class 'backdrop' when 'isBackdropTransparent' is true", () => {
-    mockBackdropState(true, true);
+  it("should render Backdrop with the class 'backdrop' when backdropMode is 'light", () => {
+    mockBackdropState(true, "light");
 
     const { container } = render(<Backdrop />);
     const backdrop = container.firstChild;

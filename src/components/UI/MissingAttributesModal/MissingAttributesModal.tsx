@@ -1,12 +1,13 @@
 import { useRef } from "react";
+import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
 import Button from "@/components/UI/Button/Button";
 import { uiActions } from "@/store/uiSlice";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
-import classes from "@/components/UI/Modal/Modal.module.css";
+import classes from "@/components/UI/MissingAttributesModal/MissingAttributesModal.module.css";
 
-export default function Modal({
+export default function MissingAttributesModal({
   notSelected,
 }: {
   notSelected: (string | null)[];
@@ -21,22 +22,22 @@ export default function Modal({
     dispatch(backdropVisibilityToggle(false));
   };
 
-  return (
+  return createPortal(
     <CSSTransition
       nodeRef={modalRef}
       in={isModalOpen}
       timeout={500}
       classNames={{
         enter: "",
-        enterActive: classes["modal--open"],
+        enterActive: "modal--open",
         exit: "",
-        exitActive: classes["modal--closed"],
+        exitActive: "modal--closed",
       }}
       mountOnEnter
       unmountOnExit
     >
-      <div className={classes.modal} ref={modalRef}>
-        <h5 className={classes.modal__header}>Error</h5>
+      <div className="modal" ref={modalRef}>
+        <h5 className="modal__header">Error</h5>
         <p>Please select below options:</p>
         <ul className={classes.modal__attributes}>
           {notSelected.map((attribute) => (
@@ -49,6 +50,7 @@ export default function Modal({
           OK
         </Button>
       </div>
-    </CSSTransition>
+    </CSSTransition>,
+    document.getElementById("modals-root") as HTMLDivElement,
   );
 }

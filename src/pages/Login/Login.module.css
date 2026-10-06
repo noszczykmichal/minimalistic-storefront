@@ -1,9 +1,19 @@
-.actions-wrapper {
+.section__login {
+  height: 100vh;
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.actions-wrapper__button {
+.login-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  height: 60%;
+}
+
+.login-form__signin {
   width: 50%;
   background-color: var(--color-primary);
   border: 1px solid transparent;
@@ -18,15 +28,22 @@
   transition: all 0.25s;
 }
 
-.actions-wrapper__button:hover,
-.actions-wrapper__button:active {
+.login-form__signin:hover,
+.login-form__signin:active {
   border: 1px solid var(--color-primary);
   background-color: #fff;
   color: var(--color-primary);
 }
 
+.login-form__register {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 @media (min-width: 481px) {
-  .actions-wrapper__button {
+  .login-form__signin {
     font-size: 0.875rem;
   }
 }

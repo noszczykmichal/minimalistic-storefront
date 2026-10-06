@@ -30,8 +30,6 @@ export default function CurrencySwitcher({
     miniCartVisibilityToggle,
   } = uiActions;
 
-  // The options list is portaled out of the toolbar, so it is aligned with
-  // the switcher button explicitly.
   useLayoutEffect(() => {
     if (!isCurrencySwitcherOpen) {
       return undefined;
@@ -79,7 +77,7 @@ export default function CurrencySwitcher({
 
   const currencySwitcherOpen = () => {
     dispatch(currencySwitcherVisibToggle(true));
-    dispatch(backdropTypeToggle(true));
+    dispatch(backdropTypeToggle("light"));
     dispatch(backdropVisibilityToggle(true));
     dispatch(miniCartVisibilityToggle(false));
   };

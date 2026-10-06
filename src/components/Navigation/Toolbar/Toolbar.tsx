@@ -1,14 +1,13 @@
-import { createPortal } from "react-dom";
-
 import NavigationItems from "@/components/Navigation/NavigationItems/NavigationItems";
 import Logo from "@/components/Navigation/Toolbar/Logo/Logo";
 import CartIcon from "@/components/Navigation/Toolbar/CartIcon/CartIcon";
 import CurrencySwitcher from "@/components/Navigation/Toolbar/CurrencySwitcher/CurrencySwitcher";
-import Backdrop from "@/components/UI/Backdrop/Backdrop";
+
 import MiniCart from "@/components/Cart/MiniCart/MiniCart";
 import ToggleButton from "@/components/Navigation/MobileNavigation/ToggleButton/ToggleButton";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/Toolbar/Toolbar.module.css";
+import AccountIcon from "@/components/Navigation/Toolbar/AccountIcon/AccountIcon";
 
 export default function Toolbar() {
   const { categories, currencies } = useAppSelector((state) => state.ui);
@@ -29,15 +28,11 @@ export default function Toolbar() {
       <Logo />
       <div className={classes["cart-actions"]}>
         {currencySwitcher}
+        <AccountIcon />
         <CartIcon />
         <MiniCart />
         <ToggleButton />
       </div>
-
-      {createPortal(
-        <Backdrop />,
-        document.getElementById("modals-root") as HTMLDivElement,
-      )}
     </header>
   );
 }

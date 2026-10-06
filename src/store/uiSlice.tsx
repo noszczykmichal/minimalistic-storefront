@@ -1,25 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { Currency } from "@/types/types";
+import { Currency, BackdropMode } from "@/types/types";
 
 const initialState: {
   categories: string[];
   currencies: Currency[];
   isBackdropOpen: boolean;
-  isBackdropTransparent: boolean;
+  backdropMode: BackdropMode;
   isCurrencySwitcherOpen: boolean;
   isMiniCartOpen: boolean;
   isModalOpen: boolean;
   isMobileNavOpen: boolean;
+  isRegistrationModalOpen: boolean;
 } = {
   categories: [],
   currencies: [],
   isBackdropOpen: false,
-  isBackdropTransparent: false,
+  backdropMode: "dark",
   isCurrencySwitcherOpen: false,
   isMiniCartOpen: false,
   isModalOpen: false,
   isMobileNavOpen: false,
+  isRegistrationModalOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -39,8 +41,8 @@ const uiSlice = createSlice({
         isBackdropOpen: action.payload,
       };
     },
-    backdropTypeToggle(state, action) {
-      return { ...state, isBackdropTransparent: action.payload };
+    backdropTypeToggle(state, action: PayloadAction<BackdropMode>) {
+      return { ...state, backdropMode: action.payload };
     },
     currencySwitcherVisibToggle(state, action) {
       return { ...state, isCurrencySwitcherOpen: action.payload };
@@ -53,6 +55,12 @@ const uiSlice = createSlice({
     },
     mobileNavVisibilityToggle(state, action) {
       return { ...state, isMobileNavOpen: action.payload };
+    },
+    openRegistrationModal(state) {
+      return { ...state, isRegistrationModalOpen: true };
+    },
+    closeRegistrationModal(state) {
+      return { ...state, isRegistrationModalOpen: false };
     },
   },
 });

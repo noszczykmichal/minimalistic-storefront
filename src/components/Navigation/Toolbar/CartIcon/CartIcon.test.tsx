@@ -75,7 +75,7 @@ describe("CartIcon component", () => {
 
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(dispatch).toHaveBeenNthCalledWith(1, backdropVisibilityToggle(true));
-    expect(dispatch).toHaveBeenNthCalledWith(2, backdropTypeToggle(false));
+    expect(dispatch).toHaveBeenNthCalledWith(2, backdropTypeToggle("dark"));
     expect(dispatch).toHaveBeenNthCalledWith(3, miniCartVisibilityToggle(true));
     expect(dispatch).toHaveBeenNthCalledWith(
       4,

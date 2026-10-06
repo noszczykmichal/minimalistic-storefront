@@ -6,7 +6,10 @@ import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
 import Hr from "@/components/UI/Hr/Hr";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import { shippingOptions, paymentOptions } from "@/utils/form/constants";
+import {
+  shippingOptions,
+  paymentOptions,
+} from "@/utils/shippingForm/constants";
 import classes from "@/pages/Review/Review.module.css";
 
 export default function Review() {

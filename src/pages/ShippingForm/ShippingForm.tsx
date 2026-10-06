@@ -10,8 +10,8 @@ import {
   fullSchema,
   isFormFieldName,
   stepFieldNames,
-} from "@/utils/form/schemas";
-import defaultShippingAndPaymentData from "@/utils/form/defaultValues";
+} from "@/utils/shippingForm/schemas";
+import defaultShippingAndPaymentData from "@/utils/shippingForm/defaultValues";
 import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment";
 import classes from "@/pages/ShippingForm/ShippingForm.module.css";
 import Step1 from "@/pages/ShippingForm/Step1/Step1";

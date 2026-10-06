@@ -14,7 +14,7 @@ export default function ToggleButton() {
 
   const onToggleButtonClick = () => {
     dispatch(backdropVisibilityToggle(true));
-    dispatch(backdropTypeToggle(false));
+    dispatch(backdropTypeToggle("dark"));
     dispatch(miniCartVisibilityToggle(false));
     dispatch(mobileNavVisibilityToggle(true));
   };

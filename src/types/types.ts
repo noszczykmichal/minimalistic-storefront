@@ -2,7 +2,7 @@ import {
   SHIPPING_FORM,
   CURRENCY_LABELS,
   CURRENCY_SYMBOLS,
-} from "@/utils/form/currencies";
+} from "@/utils/shippingForm/currencies";
 
 export type AttributeItem = {
   displayValue: string;
@@ -80,3 +80,5 @@ export const isCurrency = (currency: {
 }): currency is Currency =>
   isCurrencyLabel(currency.label) &&
   CURRENCY_SYMBOLS[currency.label] === currency.symbol;
+
+export type BackdropMode = "light" | "dark";

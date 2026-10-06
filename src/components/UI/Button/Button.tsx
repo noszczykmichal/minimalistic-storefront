@@ -3,12 +3,12 @@ import { ReactNode, FormEvent } from "react";
 import classes from "@/components/UI/Button/Button.module.css";
 
 export default function Button({
-  customClass,
+  customClass = "",
   children,
   isDisabled = false,
   clicked = () => {},
 }: {
-  customClass: string;
+  customClass?: string;
   children: ReactNode;
   isDisabled?: boolean;
   clicked?: (event: FormEvent) => void;

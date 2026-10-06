@@ -26,9 +26,7 @@ export default function Backdrop() {
     dispatch(mobileNavVisibilityToggle(false));
   };
 
-  const { isBackdropTransparent, isBackdropOpen } = useAppSelector(
-    (state) => state.ui,
-  );
+  const { backdropMode, isBackdropOpen } = useAppSelector((state) => state.ui);
 
   return (
     <CSSTransition
@@ -46,9 +44,9 @@ export default function Backdrop() {
     >
       <div
         className={
-          isBackdropTransparent
-            ? classes.backdrop
-            : [classes.backdrop, classes["backdrop--grey"]].join(" ")
+          backdropMode === "dark"
+            ? [classes.backdrop, classes["backdrop--grey"]].join(" ")
+            : classes.backdrop
         }
         onClick={onBackdropClick}
         ref={backdropRef}

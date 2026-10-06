@@ -4,7 +4,7 @@ import classes from "@/components/Forms/Inputs/TextInput/TextInput.module.css";
 
 interface TextInputProps {
   label: string;
-  type: "text" | "tel" | "email";
+  type: "text" | "tel" | "email" | "password";
   autoComplete: string;
   registration: UseFormRegisterReturn;
   error?: string;

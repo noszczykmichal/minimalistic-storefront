@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AddressAndPaymentFormInput } from "@/utils/form/schemas";
+import { AddressAndPaymentFormInput } from "@/utils/shippingForm/schemas";
 
 const initialState: { draft: Partial<AddressAndPaymentFormInput> } = {
   draft: {},

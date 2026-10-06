@@ -30,7 +30,6 @@ export default mergeConfig(
           "src/index.tsx",
           "src/components/Cart/Icons/MinusIcon/MinusIcon.tsx",
           "src/components/Cart/Icons/PlusIcon/PlusIcon.tsx",
-          "src/components/Navigation/Toolbar/Logo/Logo.tsx",
         ],
         reporter: ["text", "html"],
       },

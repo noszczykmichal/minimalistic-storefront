@@ -19,7 +19,7 @@ export default function CartIcon() {
 
   const minicartToggle = () => {
     dispatch(backdropVisibilityToggle(true));
-    dispatch(backdropTypeToggle(false));
+    dispatch(backdropTypeToggle("dark"));
     dispatch(miniCartVisibilityToggle(true));
     dispatch(currencySwitcherVisibToggle(false));
   };

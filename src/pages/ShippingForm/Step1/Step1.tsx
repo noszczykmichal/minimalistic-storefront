@@ -1,8 +1,8 @@
 import { UseFormRegister, FieldErrors } from "react-hook-form";
 
-import { shippingAddressInputs } from "@/utils/form/constants";
+import { shippingAddressInputs } from "@/utils/shippingForm/constants";
 import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
-import { AddressAndPaymentFormInput } from "@/utils/form/schemas";
+import { AddressAndPaymentFormInput } from "@/utils/shippingForm/schemas";
 
 interface Step1Props {
   register: UseFormRegister<AddressAndPaymentFormInput>;

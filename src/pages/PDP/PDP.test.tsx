@@ -149,7 +149,7 @@ describe("PDP page", () => {
 
     expect(store.getActions()).toEqual([
       uiActions.modalToggle(true),
-      uiActions.backdropTypeToggle(false),
+      uiActions.backdropTypeToggle("dark"),
       uiActions.backdropVisibilityToggle(true),
     ]);
   });

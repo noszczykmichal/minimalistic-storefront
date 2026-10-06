@@ -37,7 +37,7 @@ describe("ToggleButton component", () => {
 
     expect(dispatch).toHaveBeenCalledTimes(4);
     expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(true));
-    expect(dispatch).toHaveBeenCalledWith(backdropTypeToggle(false));
+    expect(dispatch).toHaveBeenCalledWith(backdropTypeToggle("dark"));
     expect(dispatch).toHaveBeenCalledWith(miniCartVisibilityToggle(false));
     expect(dispatch).toHaveBeenCalledWith(mobileNavVisibilityToggle(true));
   });

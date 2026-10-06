@@ -34,7 +34,6 @@ describe("MiniCart component", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-
     vi.mocked(useAppDispatch).mockReturnValue(dispatch);
     vi.mocked(useRedirect).mockReturnValue(redirect);
 
