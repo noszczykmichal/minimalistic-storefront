@@ -80,5 +80,3 @@ export const isCurrency = (currency: {
 }): currency is Currency =>
   isCurrencyLabel(currency.label) &&
   CURRENCY_SYMBOLS[currency.label] === currency.symbol;
-
-export type BackdropMode = "light" | "dark";

@@ -1,18 +1,5 @@
-import * as z from "zod";
+import buildFormValidation from "@/utils/sharedValidation";
 
-const fullSchema = z.object({
-  email: z.string().trim().pipe(z.email("Please enter a valid email address.")),
-  password: z
-    .string()
-    .trim()
-    .min(6, {
-      error: "Password must be at least 6 characters.",
-      abort: true,
-    })
-    .regex(
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).*$/,
-      "Password must include an uppercase letter, a number and a special character.",
-    ),
-});
+const fullSchema = buildFormValidation(["email", "password"]);
 
 export default fullSchema;

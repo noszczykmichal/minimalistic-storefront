@@ -1,5 +1,5 @@
 import { Option, PaymentMethod, ShippingOptionName } from "@/types/types";
-import { AddressAndPaymentFormInput } from "./schemas";
+import { AddressAndPaymentFormInput } from "@/utils/shippingForm/schemas";
 
 interface ShippingAddressField {
   label: string;

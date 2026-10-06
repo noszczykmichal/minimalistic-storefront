@@ -10,7 +10,7 @@ import { uiActions } from "@/store/uiSlice";
 import { ProductType } from "@/types/types";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/pages/PDP/PDP.module.css";
-import MissingAttributesModal from "@/components/UI/MissingAttributesModal/MissingAttributesModal";
+import MissingAttributesModal from "@/pages/PDP/MissingAttributesModal/MissingAttributesModal";
 
 export default function PDP() {
   const dispatch = useAppDispatch();
@@ -19,8 +19,7 @@ export default function PDP() {
   );
 
   const { addProductToCart } = productActions;
-  const { backdropVisibilityToggle, backdropTypeToggle, modalToggle } =
-    uiActions;
+  const { modalToggle } = uiActions;
   const [mainUrl, setMainUrl] = useState(displayedProduct!.gallery[0]);
   const [product, setProduct] = useState(displayedProduct);
   const [notSelected, setNotSelected] = useState<(string | null)[]>([]);
@@ -70,8 +69,6 @@ export default function PDP() {
 
     if (notSelectedAttributes.length > 0) {
       dispatch(modalToggle(true));
-      dispatch(backdropTypeToggle("dark"));
-      dispatch(backdropVisibilityToggle(true));
     } else {
       dispatch(addProductToCart(product));
     }

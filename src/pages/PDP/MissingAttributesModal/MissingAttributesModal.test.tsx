@@ -10,7 +10,7 @@ import { axe } from "vitest-axe";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { uiActions } from "@/store/uiSlice";
 import type { RootState } from "@/store/store";
-import MissingAttributesModal from "@/components/UI/MissingAttributesModal/MissingAttributesModal";
+import MissingAttributesModal from "@/pages/PDP/MissingAttributesModal/MissingAttributesModal";
 
 const mockModalState = (isModalOpen: boolean) => {
   const state = { ui: { isModalOpen } } as unknown as RootState;

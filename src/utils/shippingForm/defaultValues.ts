@@ -1,4 +1,4 @@
-import { AddressAndPaymentFormInput } from "./schemas";
+import type { AddressAndPaymentFormInput } from "@/utils/shippingForm/schemas";
 
 const defaultShippingAndPaymentData = {
   firstName: "",

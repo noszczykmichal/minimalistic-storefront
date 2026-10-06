@@ -1,27 +1,19 @@
 import { z } from "zod";
 import { PAYMENT_METHODS } from "@/types/types";
 import { SHIPPING_FORM } from "./currencies";
+import buildFormValidation from "../sharedValidation";
 
-const required = "This field is required.";
-
-export const shippingAddressSchema = z.object({
-  firstName: z.string().trim().min(1, required),
-  lastName: z.string().trim().min(1, required),
-  addressLine1: z.string().trim().min(3, "Please enter at least 3 characters."),
-  addressLine2: z.string().trim().optional(),
-  city: z.string().trim().min(2, "Please enter at least 2 characters."),
-  postalCode: z
-    .string()
-    .trim()
-    .min(3, "Please enter a valid postal code.")
-    .max(10, "Please enter a valid postal code."),
-  country: z.string().min(1, "Please enter a country."),
-  phone: z
-    .string()
-    .trim()
-    .regex(/^\+?[0-9\s-]{7,13}$/, "Please enter a valid phone number."),
-  email: z.string().trim().pipe(z.email("Please enter a valid email address.")),
-});
+export const shippingAddressSchema = buildFormValidation([
+  "firstName",
+  "lastName",
+  "addressLine1",
+  "addressLine2",
+  "city",
+  "postalCode",
+  "country",
+  "phone",
+  "email",
+]);
 
 const shippingMethodAndPayment = z.object({
   shippingOption: z.string("Choose a shipping method.").pipe(

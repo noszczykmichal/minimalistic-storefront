@@ -1,0 +1,8 @@
+.signup-modal {
+  height: fit-content;
+  max-height: fit-content;
+}
+
+.modal__form {
+  padding: 2rem 0 0 0;
+}

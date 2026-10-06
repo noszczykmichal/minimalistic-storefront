@@ -4,18 +4,14 @@ import { useForm } from "react-hook-form";
 import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
 import fullSchema from "@/utils/loginForm/schemas";
 import Button from "@/components/UI/Button/Button";
-import RegisterModal from "@/components/Register/RegisterModal/RegisterModal";
+import SignUpModal from "@/components/Login/SignUpModal/SignUpModal";
 import { uiActions } from "@/store/uiSlice";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import classes from "@/pages/Login/Login.module.css";
 
 export default function Login() {
   const dispatch = useAppDispatch();
-  const {
-    backdropVisibilityToggle,
-    backdropTypeToggle,
-    openRegistrationModal,
-  } = uiActions;
+  const { modalToggle } = uiActions;
 
   const loginFormDefaultValues = {
     email: "",
@@ -29,9 +25,7 @@ export default function Login() {
   });
 
   const onRegister = () => {
-    dispatch(backdropVisibilityToggle(true));
-    dispatch(backdropTypeToggle("dark"));
-    dispatch(openRegistrationModal());
+    dispatch(modalToggle(true));
   };
 
   return (
@@ -64,7 +58,7 @@ export default function Login() {
         </p>
       </div>
 
-      <RegisterModal />
+      <SignUpModal />
     </section>
   );
 }
