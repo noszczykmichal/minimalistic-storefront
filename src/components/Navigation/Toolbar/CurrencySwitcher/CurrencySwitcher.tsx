@@ -24,12 +24,7 @@ export default function CurrencySwitcher({
   const { billingCurrency } = useAppSelector((state) => state.products);
   const wasCurrencySwitcherOpen = useRef(isCurrencySwitcherOpen);
   const { onCurrencyChange } = productActions;
-  const {
-    // backdropVisibilityToggle,
-    // backdropTypeToggle,
-    currencySwitcherVisibToggle,
-    miniCartVisibilityToggle,
-  } = uiActions;
+  const { currencySwitcherVisibToggle, miniCartVisibilityToggle } = uiActions;
 
   useLayoutEffect(() => {
     if (!isCurrencySwitcherOpen) {

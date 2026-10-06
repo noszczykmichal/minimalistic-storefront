@@ -32,9 +32,8 @@ describe("NavigationItem component", () => {
     expect(linkElement).toHaveAttribute("href", testHref);
   });
 
-  test("should dispatch 4 actions on a Navlink click", async () => {
+  test("should dispatch 3 actions on a Navlink click", async () => {
     const {
-      backdropVisibilityToggle,
       currencySwitcherVisibToggle,
       miniCartVisibilityToggle,
       mobileNavVisibilityToggle,
@@ -48,8 +47,7 @@ describe("NavigationItem component", () => {
     const linkElement = screen.getByRole("link");
     await userEvent.click(linkElement);
 
-    expect(dispatch).toHaveBeenCalledTimes(4);
-    expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(false));
+    expect(dispatch).toHaveBeenCalledTimes(3);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(false));
     expect(dispatch).toHaveBeenCalledWith(miniCartVisibilityToggle(false));
     expect(dispatch).toHaveBeenCalledWith(mobileNavVisibilityToggle(false));

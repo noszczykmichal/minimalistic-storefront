@@ -2,8 +2,22 @@ vi.mock("@/hooks/useReduxHooks", () => ({
   useAppDispatch: vi.fn(),
   useAppSelector: vi.fn(),
 }));
+vi.mock("@/components/UI/Backdrop/Backdrop", () => ({
+  default: ({
+    isBackdropOpen,
+    onClose,
+  }: {
+    isBackdropOpen: boolean;
+    onClose: () => void;
+  }) =>
+    isBackdropOpen ? (
+      <button type="button" onClick={onClose}>
+        Close mini cart
+      </button>
+    ) : null,
+}));
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 
@@ -23,16 +37,20 @@ const mockCartIconState = (productsTotal?: number, isMiniCartOpen = false) => {
 
 describe("CartIcon component", () => {
   const dispatch = vi.fn();
-  const {
-    backdropVisibilityToggle,
-    backdropTypeToggle,
-    miniCartVisibilityToggle,
-    currencySwitcherVisibToggle,
-  } = uiActions;
+  const { miniCartVisibilityToggle, currencySwitcherVisibToggle } = uiActions;
+  let modalsRoot: HTMLDivElement;
 
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(useAppDispatch).mockReturnValue(dispatch);
+
+    modalsRoot = document.createElement("div");
+    modalsRoot.id = "modals-root";
+    document.body.appendChild(modalsRoot);
+  });
+
+  afterEach(() => {
+    modalsRoot.remove();
   });
 
   it.each([
@@ -73,14 +91,44 @@ describe("CartIcon component", () => {
     render(<CartIcon />);
     await userEvent.click(screen.getByRole("button", { name: "Cart: 1 item" }));
 
-    expect(dispatch).toHaveBeenCalledTimes(4);
-    expect(dispatch).toHaveBeenNthCalledWith(1, backdropVisibilityToggle(true));
-    expect(dispatch).toHaveBeenNthCalledWith(2, backdropTypeToggle("dark"));
-    expect(dispatch).toHaveBeenNthCalledWith(3, miniCartVisibilityToggle(true));
+    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenNthCalledWith(1, miniCartVisibilityToggle(true));
     expect(dispatch).toHaveBeenNthCalledWith(
-      4,
+      2,
       currencySwitcherVisibToggle(false),
     );
+  });
+
+  it("should render the backdrop into #modals-root when the mini cart is open", () => {
+    mockCartIconState(1, true);
+
+    render(<CartIcon />);
+
+    expect(
+      within(modalsRoot).getByRole("button", { name: "Close mini cart" }),
+    ).toBeInTheDocument();
+  });
+
+  it("should not render the backdrop when the mini cart is closed", () => {
+    mockCartIconState(1, false);
+
+    render(<CartIcon />);
+
+    expect(
+      screen.queryByRole("button", { name: "Close mini cart" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("should close the mini cart when the backdrop is clicked", async () => {
+    mockCartIconState(1, true);
+
+    render(<CartIcon />);
+    await userEvent.click(
+      screen.getByRole("button", { name: "Close mini cart" }),
+    );
+
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith(miniCartVisibilityToggle(false));
   });
 
   it("should not dispatch any actions when the cart is empty and the button is clicked", async () => {

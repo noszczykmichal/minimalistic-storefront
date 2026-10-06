@@ -20,7 +20,7 @@ const mockModalState = (isModalOpen: boolean) => {
 
 describe("MissingAttributesModal component", () => {
   const dispatch = vi.fn();
-  const { modalToggle, backdropVisibilityToggle } = uiActions;
+  const { modalToggle } = uiActions;
   const testNotSelected = ["size", "colour"];
   let modalsRoot: HTMLDivElement;
 
@@ -70,17 +70,13 @@ describe("MissingAttributesModal component", () => {
     ).toBeInTheDocument();
   });
 
-  it("should dispatch 2 actions after button click", async () => {
+  it("should close the modal after button click", async () => {
     render(<MissingAttributesModal notSelected={testNotSelected} />);
 
     await userEvent.click(screen.getByRole("button", { name: "OK" }));
 
-    expect(dispatch).toHaveBeenCalledTimes(2);
-    expect(dispatch).toHaveBeenNthCalledWith(1, modalToggle(false));
-    expect(dispatch).toHaveBeenNthCalledWith(
-      2,
-      backdropVisibilityToggle(false),
-    );
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith(modalToggle(false));
   });
 
   it("should have no accessibility violations", async () => {
