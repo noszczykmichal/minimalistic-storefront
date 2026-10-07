@@ -7,7 +7,7 @@ import MiniCart from "@/components/Cart/MiniCart/MiniCart";
 import ToggleButton from "@/components/Navigation/MobileNavigation/ToggleButton/ToggleButton";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/Toolbar/Toolbar.module.css";
-import AccountIcon from "@/components/Navigation/Toolbar/AccountIcon/AccountIcon";
+// import AccountIcon from "@/components/Navigation/Toolbar/AccountIcon/AccountIcon";
 
 export default function Toolbar() {
   const { categories, currencies } = useAppSelector((state) => state.ui);
@@ -28,7 +28,7 @@ export default function Toolbar() {
       <Logo />
       <div className={classes["cart-actions"]}>
         {currencySwitcher}
-        <AccountIcon />
+        {/* <AccountIcon /> */}
         <CartIcon />
         <MiniCart />
         <ToggleButton />

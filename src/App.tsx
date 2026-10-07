@@ -13,7 +13,7 @@ const Cart = lazy(() => import("@/pages/Cart/Cart"));
 const ShippingForm = lazy(() => import("@/pages/ShippingForm/ShippingForm"));
 const Review = lazy(() => import("@/pages/Review/Review"));
 const Confirm = lazy(() => import("@/pages/Confirm/Confirm"));
-const Login = lazy(() => import("@/pages/Login/Login"));
+// const Login = lazy(() => import("@/pages/Login/Login"));
 
 export default function App({
   categories,
@@ -38,7 +38,7 @@ export default function App({
               element={<PLP />}
             />
           ))}
-          <Route path="/login" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route
             path="/cart/shipping/address&payment"
