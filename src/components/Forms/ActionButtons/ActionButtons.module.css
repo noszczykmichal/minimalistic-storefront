@@ -5,7 +5,7 @@
 
 .actions-wrapper__button {
   width: 50%;
-  background-color: #5ece7b;
+  background-color: var(--color-primary);
   border: 1px solid transparent;
   color: #fff;
   margin-top: 1.5rem;
@@ -20,9 +20,9 @@
 
 .actions-wrapper__button:hover,
 .actions-wrapper__button:active {
-  border: 1px solid #5ece7b;
+  border: 1px solid var(--color-primary);
   background-color: #fff;
-  color: #5ece7b;
+  color: var(--color-primary);
 }
 
 @media (min-width: 481px) {

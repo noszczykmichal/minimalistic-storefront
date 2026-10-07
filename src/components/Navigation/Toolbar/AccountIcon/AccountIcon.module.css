@@ -1,0 +1,11 @@
+.account-icon {
+  display: flex;
+  align-items: center;
+  color: #1d1f22;
+  transition: color 0.2s ease;
+}
+
+.account-icon:hover,
+.account-icon:focus-visible {
+  color: #5ece7b;
+}

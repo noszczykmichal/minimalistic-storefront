@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import { Currency } from "@/types/types";
 
 const initialState: {
   categories: string[];
   currencies: Currency[];
-  isBackdropOpen: boolean;
-  isBackdropTransparent: boolean;
+
   isCurrencySwitcherOpen: boolean;
   isMiniCartOpen: boolean;
   isModalOpen: boolean;
@@ -14,8 +12,6 @@ const initialState: {
 } = {
   categories: [],
   currencies: [],
-  isBackdropOpen: false,
-  isBackdropTransparent: false,
   isCurrencySwitcherOpen: false,
   isMiniCartOpen: false,
   isModalOpen: false,
@@ -33,15 +29,7 @@ const uiSlice = createSlice({
         currencies: action.payload.currencies,
       };
     },
-    backdropVisibilityToggle(state, action) {
-      return {
-        ...state,
-        isBackdropOpen: action.payload,
-      };
-    },
-    backdropTypeToggle(state, action) {
-      return { ...state, isBackdropTransparent: action.payload };
-    },
+
     currencySwitcherVisibToggle(state, action) {
       return { ...state, isCurrencySwitcherOpen: action.payload };
     },

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router";
 import Review from "@/pages/Review/Review";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 import { testItemDetails } from "@/utils/testUtils";
-import type { AddressAndPaymentFormInput } from "@/utils/form/schemas";
+import type { AddressAndPaymentFormInput } from "@/utils/shippingForm/schemas";
 
 const testDraft: Partial<AddressAndPaymentFormInput> = {
   firstName: "Jane",

@@ -147,11 +147,7 @@ describe("PDP page", () => {
     await userEvent.click(screen.getByRole("button", { name: "40" }));
     await userEvent.click(screen.getByRole("button", { name: "Add to cart" }));
 
-    expect(store.getActions()).toEqual([
-      uiActions.modalToggle(true),
-      uiActions.backdropTypeToggle(false),
-      uiActions.backdropVisibilityToggle(true),
-    ]);
+    expect(store.getActions()).toEqual([uiActions.modalToggle(true)]);
   });
 
   it("should have no accessibility violations after a selection", async () => {

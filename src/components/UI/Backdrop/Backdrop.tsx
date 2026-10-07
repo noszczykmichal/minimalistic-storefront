@@ -3,32 +3,22 @@
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-import { uiActions } from "@/store/uiSlice";
-import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import classes from "@/components/UI/Backdrop/Backdrop.module.css";
 
-export default function Backdrop() {
+type BackdropMode = "light" | "dark";
+
+interface BackdropProps {
+  isBackdropOpen: boolean;
+  backdropMode?: BackdropMode;
+  onClose: () => void;
+}
+
+export default function Backdrop({
+  isBackdropOpen,
+  backdropMode = "dark",
+  onClose,
+}: BackdropProps) {
   const backdropRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
-  const {
-    currencySwitcherVisibToggle,
-    backdropVisibilityToggle,
-    miniCartVisibilityToggle,
-    modalToggle,
-    mobileNavVisibilityToggle,
-  } = uiActions;
-
-  const onBackdropClick = () => {
-    dispatch(currencySwitcherVisibToggle(false));
-    dispatch(backdropVisibilityToggle(false));
-    dispatch(miniCartVisibilityToggle(false));
-    dispatch(modalToggle(false));
-    dispatch(mobileNavVisibilityToggle(false));
-  };
-
-  const { isBackdropTransparent, isBackdropOpen } = useAppSelector(
-    (state) => state.ui,
-  );
 
   return (
     <CSSTransition
@@ -46,11 +36,11 @@ export default function Backdrop() {
     >
       <div
         className={
-          isBackdropTransparent
-            ? classes.backdrop
-            : [classes.backdrop, classes["backdrop--grey"]].join(" ")
+          backdropMode === "dark"
+            ? [classes.backdrop, classes["backdrop--grey"]].join(" ")
+            : classes.backdrop
         }
-        onClick={onBackdropClick}
+        onClick={onClose}
         ref={backdropRef}
       />
     </CSSTransition>

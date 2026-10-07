@@ -14,14 +14,12 @@ export default function NavigationItem({
 }) {
   const dispatch = useAppDispatch();
   const {
-    backdropVisibilityToggle,
     currencySwitcherVisibToggle,
     miniCartVisibilityToggle,
     mobileNavVisibilityToggle,
   } = uiActions;
 
   const onNavLinkClickHandler = () => {
-    dispatch(backdropVisibilityToggle(false));
     dispatch(currencySwitcherVisibToggle(false));
     dispatch(miniCartVisibilityToggle(false));
     dispatch(mobileNavVisibilityToggle(false));

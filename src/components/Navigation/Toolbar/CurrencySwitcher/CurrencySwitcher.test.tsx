@@ -33,12 +33,7 @@ const mockSwitcherState = (
 
 describe("CurrencySwitcher component", () => {
   const dispatch = vi.fn();
-  const {
-    backdropVisibilityToggle,
-    backdropTypeToggle,
-    currencySwitcherVisibToggle,
-    miniCartVisibilityToggle,
-  } = uiActions;
+  const { currencySwitcherVisibToggle, miniCartVisibilityToggle } = uiActions;
 
   const { onCurrencyChange } = productActions;
 
@@ -171,7 +166,7 @@ describe("CurrencySwitcher component", () => {
     ).toHaveFocus();
   });
 
-  it("should dispatch 4 actions when the switcher button is clicked", async () => {
+  it("should dispatch 2 actions when the switcher button is clicked", async () => {
     mockSwitcherState(false);
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
@@ -179,23 +174,20 @@ describe("CurrencySwitcher component", () => {
       screen.getByRole("button", { name: "Currencies Pane" }),
     );
 
-    expect(dispatch).toHaveBeenCalledTimes(4);
+    expect(dispatch).toHaveBeenCalledTimes(2);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(true));
-    expect(dispatch).toHaveBeenCalledWith(backdropTypeToggle(true));
-    expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(true));
     expect(dispatch).toHaveBeenCalledWith(miniCartVisibilityToggle(false));
   });
 
-  it("should dispatch 3 actions with the chosen currency when an option is clicked", async () => {
+  it("should dispatch 2 actions with the chosen currency when an option is clicked", async () => {
     mockSwitcherState(true);
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
     await userEvent.click(screen.getByRole("button", { name: "£ GBP" }));
 
-    expect(dispatch).toHaveBeenCalledTimes(3);
+    expect(dispatch).toHaveBeenCalledTimes(2);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(false));
     expect(dispatch).toHaveBeenCalledWith(onCurrencyChange("£"));
-    expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(false));
   });
 
   it("should close when Escape is pressed", async () => {
@@ -204,9 +196,8 @@ describe("CurrencySwitcher component", () => {
     render(<CurrencySwitcher currencies={testCurrencies} />);
     await userEvent.keyboard("{Escape}");
 
-    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(false));
-    expect(dispatch).toHaveBeenCalledWith(backdropVisibilityToggle(false));
   });
 
   it("should not react to Escape when isCurrencySwitcherOpen is false", async () => {

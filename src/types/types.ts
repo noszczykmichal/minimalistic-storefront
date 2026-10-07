@@ -2,7 +2,7 @@ import {
   SHIPPING_FORM,
   CURRENCY_LABELS,
   CURRENCY_SYMBOLS,
-} from "@/utils/form/currencies";
+} from "@/utils/shippingForm/currencies";
 
 export type AttributeItem = {
   displayValue: string;

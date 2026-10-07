@@ -1,5 +1,8 @@
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import { shippingOptions, paymentOptions } from "@/utils/form/constants";
+import {
+  shippingOptions,
+  paymentOptions,
+} from "@/utils/shippingForm/constants";
 import classes from "@/components/OrderSummary/CostSummary/CostSummary.module.css";
 import { Option } from "@/types/types";
 
