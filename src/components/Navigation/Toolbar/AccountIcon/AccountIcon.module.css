@@ -6,9 +6,13 @@
   transition: color 0.2s ease;
 }
 
+.account-icon * {
+  color: inherit;
+}
+
 .account-icon:hover,
 .account-icon:focus-visible {
-  color: #5ece7b;
+  color: var(--color-primary);
 }
 
 .account-icon--checking,

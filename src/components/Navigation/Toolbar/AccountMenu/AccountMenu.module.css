@@ -4,8 +4,20 @@
   padding: 0;
   border: none;
   background-color: transparent;
-  color: #5ece7b;
+  color: var(--color-primary);
   cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+/* The global `* { color }` rule would otherwise pin the icon to the default
+   text colour instead of following the button's colour. */
+.account-button * {
+  color: inherit;
+}
+
+.account-button:hover,
+.account-button:focus-visible {
+  color: var(--green-100);
 }
 
 .account-button__icon {
@@ -22,7 +34,7 @@
   width: 0.45rem;
   height: 0.45rem;
   border-radius: 50%;
-  background-color: #5ece7b;
+  background-color: var(--color-primary);
   box-shadow: 0 0 0 2px #fff;
 }
 
@@ -31,7 +43,7 @@
   top: 5rem;
   min-width: 15rem;
   background-color: #fff;
-  filter: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.19));
+  filter: var(--drop-shadow);
   z-index: 150;
 }
 
@@ -75,7 +87,7 @@
   gap: 0.25rem;
   margin: 0;
   padding: 1.25rem 1.25rem 0.75rem;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--grey-25);
 }
 
 .user__label {
@@ -100,5 +112,5 @@
 
 .account-menu__logout:hover,
 .account-menu__logout:focus-visible {
-  background-color: #eeeeee;
+  background-color: var(--grey-25);
 }
