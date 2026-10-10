@@ -12,7 +12,7 @@ import {
   stepFieldNames,
 } from "@/utils/shippingForm/schemas";
 import defaultShippingAndPaymentData from "@/utils/shippingForm/defaultValues";
-import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment";
+import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment/shippingAddressAndPayment";
 import classes from "@/pages/ShippingForm/ShippingForm.module.css";
 import Step1 from "@/pages/ShippingForm/Step1/Step1";
 import Step2 from "@/pages/ShippingForm/Step2/Step2";

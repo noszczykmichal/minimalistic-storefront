@@ -1,6 +1,8 @@
 import * as z from "zod";
 
 const required = "This field is required.";
+// eslint-disable-next-line no-useless-escape
+const SYMBOLS = /[-#!$@£%^&*()_+|~=`{}\[\]:";'<>?,.\/\\ ]/;
 
 const sharedValidation = {
   firstName: z.string().trim().min(1, required),
@@ -21,13 +23,10 @@ const sharedValidation = {
   email: z.string().trim().pipe(z.email("Please enter a valid email address.")),
   password: z
     .string()
-    .trim()
-    .min(6, {
-      error: "Password must be at least 6 characters.",
-      abort: true,
-    })
-    .regex(
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).*$/,
+    .min(6, { error: "Password must be at least 6 characters.", abort: true })
+    .max(72, { error: "Password must be at most 72 characters.", abort: true })
+    .refine(
+      (v) => /[A-Z]/.test(v) && /\d/.test(v) && SYMBOLS.test(v),
       "Password must include an uppercase letter, a number and a special character.",
     ),
 } as const;

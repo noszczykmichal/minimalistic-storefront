@@ -8,8 +8,8 @@ import { axe } from "vitest-axe";
 import Confirm from "@/pages/Confirm/Confirm";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { productActions } from "@/store/products";
-import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment";
+import { productActions } from "@/store/products/products";
+import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment/shippingAddressAndPayment";
 
 const renderConfirm = () =>
   render(

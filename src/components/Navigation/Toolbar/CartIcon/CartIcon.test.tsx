@@ -23,7 +23,7 @@ import { axe } from "vitest-axe";
 
 import CartIcon from "@/components/Navigation/Toolbar/CartIcon/CartIcon";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { uiActions } from "@/store/uiSlice";
+import { uiActions } from "@/store/ui/ui";
 import type { RootState } from "@/store/store";
 
 const mockCartIconState = (productsTotal?: number, isMiniCartOpen = false) => {

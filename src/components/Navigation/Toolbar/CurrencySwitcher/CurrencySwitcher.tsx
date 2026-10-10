@@ -2,8 +2,8 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
-import { productActions } from "@/store/products";
-import { uiActions } from "@/store/uiSlice";
+import { productActions } from "@/store/products/products";
+import { uiActions } from "@/store/ui/ui";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { Currency } from "@/types/types";
 import classes from "@/components/Navigation/Toolbar/CurrencySwitcher/CurrencySwitcher.module.css";

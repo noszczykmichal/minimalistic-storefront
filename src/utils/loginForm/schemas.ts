@@ -1,5 +1,7 @@
+import * as z from "zod";
+
 import buildFormValidation from "@/utils/sharedValidation";
 
-const fullSchema = buildFormValidation(["email", "password"]);
+export const fullSchema = buildFormValidation(["email", "password"]);
 
-export default fullSchema;
+export type LoginFormOutput = z.output<typeof fullSchema>;

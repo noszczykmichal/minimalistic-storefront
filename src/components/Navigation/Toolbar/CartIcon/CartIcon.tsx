@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import Backdrop from "@/components/UI/Backdrop/Backdrop";
-import { uiActions } from "@/store/uiSlice";
+import { uiActions } from "@/store/ui/ui";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/Toolbar/CartIcon/CartIcon.module.css";
 

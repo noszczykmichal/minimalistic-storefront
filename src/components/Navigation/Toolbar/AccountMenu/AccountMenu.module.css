@@ -1,0 +1,104 @@
+.account-button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: #5ece7b;
+  cursor: pointer;
+}
+
+.account-button__icon {
+  position: relative;
+  display: flex;
+}
+
+/* "Signed in" status dot */
+.account-button__icon::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -2px;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background-color: #5ece7b;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.account-menu {
+  position: fixed;
+  top: 5rem;
+  min-width: 15rem;
+  background-color: #fff;
+  filter: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.19));
+  z-index: 150;
+}
+
+.account-menu:focus-visible {
+  outline: none;
+}
+
+.account-menu--open {
+  animation: accountMenuOpen 0.3s ease-out forwards;
+}
+
+.account-menu--closed {
+  animation: accountMenuClosed 0.3s ease-out forwards;
+}
+
+@keyframes accountMenuOpen {
+  0% {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes accountMenuClosed {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+}
+
+.account-menu__user {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 1.25rem 1.25rem 0.75rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.user__label {
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+.user__email {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.account-menu__logout {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: none;
+  background-color: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.account-menu__logout:hover,
+.account-menu__logout:focus-visible {
+  background-color: #eeeeee;
+}

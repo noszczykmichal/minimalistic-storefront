@@ -1,4 +1,4 @@
-import productsSlice, { productActions } from "@/store/products";
+import productsSlice, { productActions } from "@/store/products/products";
 import type { CartItem, ProductType } from "@/types/types";
 
 type ProductsState = ReturnType<typeof productsSlice.reducer>;

@@ -1,4 +1,4 @@
-import { productActions } from "@/store/products";
+import { productActions } from "@/store/products/products";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import { ChangeQuantityVariants } from "@/types/types";
 

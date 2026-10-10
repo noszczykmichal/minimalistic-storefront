@@ -71,6 +71,11 @@ export interface AttributeVariantInterface {
   value: string;
 }
 
+export interface User {
+  firstName: string;
+  email: string;
+}
+
 const isCurrencyLabel = (label: string): label is CurrencyLabel =>
   (CURRENCY_LABELS as readonly string[]).includes(label);
 

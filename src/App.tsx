@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 
 import Layout from "@/components/Layout/Layout";
 import Loader from "@/components/UI/Loader/Loader";
-import { uiActions } from "@/store/uiSlice";
+import GuestOnlyRoute from "@/components/Routing/GuestOnlyRoute/GuestOnlyRoute";
+import { uiActions } from "@/store/ui/ui";
 import PLP from "@/pages/PLP/PLP";
 import { Currency } from "@/types/types";
 
@@ -13,7 +14,7 @@ const Cart = lazy(() => import("@/pages/Cart/Cart"));
 const ShippingForm = lazy(() => import("@/pages/ShippingForm/ShippingForm"));
 const Review = lazy(() => import("@/pages/Review/Review"));
 const Confirm = lazy(() => import("@/pages/Confirm/Confirm"));
-// const Login = lazy(() => import("@/pages/Login/Login"));
+const Login = lazy(() => import("@/pages/Login/Login"));
 
 export default function App({
   categories,
@@ -38,7 +39,9 @@ export default function App({
               element={<PLP />}
             />
           ))}
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route element={<GuestOnlyRoute />}>
+            <Route path="/login" element={<Login />} />
+          </Route>
           <Route path="/cart" element={<Cart />} />
           <Route
             path="/cart/shipping/address&payment"

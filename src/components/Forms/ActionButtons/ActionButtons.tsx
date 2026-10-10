@@ -7,6 +7,7 @@ interface ActionButtonsProps {
   backButtonHandler: () => void;
   customClass?: string;
   nextBttnCustomText?: string;
+  backBttnCustomText?: string;
 }
 
 export default function ActionButtons({
@@ -15,6 +16,7 @@ export default function ActionButtons({
   backButtonHandler,
   customClass = "",
   nextBttnCustomText = "Next",
+  backBttnCustomText = "Back",
 }: ActionButtonsProps) {
   const attachedClasses = [classes["actions-wrapper"], customClass].join(" ");
 
@@ -24,7 +26,7 @@ export default function ActionButtons({
         customClass={classes["actions-wrapper__button"]}
         clicked={backButtonHandler}
       >
-        Back
+        {backBttnCustomText}
       </Button>
       <Button
         customClass={classes["actions-wrapper__button"]}

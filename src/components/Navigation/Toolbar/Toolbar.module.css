@@ -33,7 +33,7 @@
   }
 
   .cart-actions {
-    width: 13rem;
+    min-width: 13rem;
     padding-right: 6rem;
   }
 }

@@ -5,8 +5,8 @@ import { useId, useState } from "react";
 import { Markup } from "interweave";
 
 import Button from "@/components/UI/Button/Button";
-import { productActions } from "@/store/products";
-import { uiActions } from "@/store/uiSlice";
+import { productActions } from "@/store/products/products";
+import { uiActions } from "@/store/ui/ui";
 import { ProductType } from "@/types/types";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/pages/PDP/PDP.module.css";
