@@ -24,7 +24,7 @@ export default function AccountMenu({ user }: { user: User }) {
     currencySwitcherVisibToggle,
     miniCartVisibilityToggle,
   } = uiActions;
-  const { clearCredentials } = authActions;
+  const { clearSessionData } = authActions;
 
   // Align the menu's right edge with the account button.
   useLayoutEffect(() => {
@@ -90,7 +90,7 @@ export default function AccountMenu({ user }: { user: User }) {
       // Log out locally even if the server couldn't end the session.
     }
 
-    dispatch(clearCredentials());
+    dispatch(clearSessionData());
   };
 
   return (

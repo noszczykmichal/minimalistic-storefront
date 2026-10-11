@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import Button from "@/components/UI/Button/Button";
 import classes from "@/components/Forms/ActionButtons/ActionButtons.module.css";
 
@@ -18,18 +20,20 @@ export default function ActionButtons({
   nextBttnCustomText = "Next",
   backBttnCustomText = "Back",
 }: ActionButtonsProps) {
-  const attachedClasses = [classes["actions-wrapper"], customClass].join(" ");
-
   return (
-    <div className={attachedClasses} data-testid="actionButtonsWrapper">
+    <div
+      className={clsx(classes["actions-wrapper"], customClass)}
+      data-testid="actionButtonsWrapper"
+    >
       <Button
-        customClass={classes["actions-wrapper__button"]}
+        customClass={classes["actions__button--outline"]}
+
         clicked={backButtonHandler}
       >
         {backBttnCustomText}
       </Button>
       <Button
-        customClass={classes["actions-wrapper__button"]}
+        customClass={classes["actions__button--filled"]}
         isDisabled={isNextBttnDisabled}
         clicked={nextButtonHandler}
       >

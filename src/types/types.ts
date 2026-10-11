@@ -76,6 +76,12 @@ export interface User {
   email: string;
 }
 
+export interface StartSessionResponse {
+  accessToken: string;
+  user: User;
+  accessTokenExpiresAt: number;
+}
+
 const isCurrencyLabel = (label: string): label is CurrencyLabel =>
   (CURRENCY_LABELS as readonly string[]).includes(label);
 

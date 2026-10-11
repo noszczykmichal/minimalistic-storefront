@@ -14,7 +14,7 @@ import classes from "@/pages/Login/Login.module.css";
 export default function Login() {
   const dispatch = useAppDispatch();
   const { modalToggle } = uiActions;
-  const { saveCredentials } = authActions;
+  const { saveSessionData } = authActions;
 
   const loginFormDefaultValues = {
     email: "",
@@ -41,9 +41,7 @@ export default function Login() {
       const { data } = await signIn(values);
       // Marks the user as authenticated; GuestOnlyRoute, which wraps this page
       // in App.tsx, then redirects away from /login.
-      dispatch(
-        saveCredentials({ accessToken: data.accessToken, user: data.user }),
-      );
+      dispatch(saveSessionData(data));
     } catch {
       setError("root", { message: "Invalid email or password" });
     }

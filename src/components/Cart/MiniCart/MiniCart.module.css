@@ -74,42 +74,6 @@
   font-weight: 700;
 }
 
-.mini-cart__actions {
-  display: flex;
-  justify-content: space-between;
-}
-
-.actions__button {
-  display: flex;
-  align-items: center;
-  height: 2.5rem;
-  font-size: 0.875rem;
-}
-
-.actions__button--transparent {
-  border: 1px solid #1d1f22;
-  color: #1d1f22;
-  background-color: transparent;
-}
-
-.actions__button--transparent:hover {
-  color: #fff;
-  background-color: #1d1f22;
-  border: 1px solid transparent;
-}
-
-.actions__button--green {
-  color: #fff;
-  background-color: #5ece7b;
-  border: 1px solid transparent;
-}
-
-.actions__button--green:hover {
-  background-color: transparent;
-  color: #5ece7b;
-  border: 1px solid #5ece7b;
-}
-
 @media (min-width: 360px) {
   .mini-cart {
     width: 21rem;

@@ -3,9 +3,9 @@ import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
 import MiniCartItems from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItems";
-import Button from "@/components/UI/Button/Button";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import useRedirect from "@/hooks/useRedirect";
+import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 import classes from "@/components/Cart/MiniCart/MiniCart.module.css";
 
 export default function MiniCart() {
@@ -79,26 +79,12 @@ export default function MiniCart() {
             {totalPrice.toFixed(2)}
           </dd>
         </dl>
-        <div className={classes["mini-cart__actions"]}>
-          <Button
-            customClass={[
-              classes.actions__button,
-              classes["actions__button--transparent"],
-            ].join(" ")}
-            clicked={onProceedToCartHandler}
-          >
-            View Bag
-          </Button>
-          <Button
-            customClass={[
-              classes.actions__button,
-              classes["actions__button--green"],
-            ].join(" ")}
-            clicked={onProceedToCheckOutHandler}
-          >
-            Check out
-          </Button>
-        </div>
+        <ActionButtons
+          backButtonHandler={onProceedToCartHandler}
+          backBttnCustomText="View Bag"
+          nextButtonHandler={onProceedToCheckOutHandler}
+          nextBttnCustomText="Check out"
+        />
       </div>
     </CSSTransition>,
     document.getElementById("modals-root") as HTMLDivElement,
