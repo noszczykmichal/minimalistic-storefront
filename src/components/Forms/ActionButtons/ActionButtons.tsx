@@ -26,16 +26,16 @@ export default function ActionButtons({
       data-testid="actionButtonsWrapper"
     >
       <Button
-        customClass={classes["actions__button--outline"]}
+        className={classes["actions__button--outline"]}
 
-        clicked={backButtonHandler}
+        onClick={backButtonHandler}
       >
         {backBttnCustomText}
       </Button>
       <Button
-        customClass={classes["actions__button--filled"]}
-        isDisabled={isNextBttnDisabled}
-        clicked={nextButtonHandler}
+        className={classes["actions__button--filled"]}
+        disabled={isNextBttnDisabled}
+        onClick={nextButtonHandler}
       >
         {nextBttnCustomText}
       </Button>

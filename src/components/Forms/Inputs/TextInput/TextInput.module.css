@@ -1,6 +1,6 @@
 .form-control {
-  width: 50%;
   min-width: 200px;
+  max-width: 250px;
   padding: 0.25rem 0;
 }
 
@@ -11,7 +11,6 @@
   margin-top: 0.25rem;
   border: 1px solid var(--grey-100);
   font-family: "Roboto Condensed", sans-serif;
-  max-width: 250px;
 }
 
 .form-control__input:focus {

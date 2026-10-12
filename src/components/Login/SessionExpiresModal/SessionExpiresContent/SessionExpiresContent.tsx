@@ -1,13 +1,16 @@
 import clsx from "clsx";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { restoreSession, authActions } from "@/store/auth/auth";
+import {
+  restoreSession,
+  logOutThunk,
+  WARNING_SECONDS,
+} from "@/store/auth/auth";
 import useSecondsLeft from "@/hooks/useSecondsLeft";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 import classes from "@/components/Login/SessionExpiresModal/SessionExpiresContent/SessionExpiresContent.module.css";
 
-const WARNING_SECONDS = 30;
 const DANGER_SECONDS = 10;
 
 export default function SessionExpiresContent({
@@ -15,24 +18,25 @@ export default function SessionExpiresContent({
 }: {
   expiresAt: number;
 }) {
-  const [userWantsLogout, setUserWantsLogout] = useState(false);
   const dispatch = useAppDispatch();
-  const { setIsAccessTokenExpiring } = authActions;
   const secondsLeft = useSecondsLeft(expiresAt);
-  const percent = Math.min(100, (secondsLeft / WARNING_SECONDS) * 100);
+  const percent = Math.min(100, ((secondsLeft - 1) / WARNING_SECONDS) * 100);
   const isDanger = secondsLeft <= DANGER_SECONDS;
   const timeFinished = secondsLeft === 0;
 
   const restoreSessionHandler = () => {
     dispatch(restoreSession());
-    dispatch(setIsAccessTokenExpiring(false));
   };
 
-  const requestLogout = () => {
-    setUserWantsLogout(true);
-  };
+  const logoutHandler = useCallback(() => {
+    dispatch(logOutThunk());
+  }, [dispatch]);
 
-  useEffect(() => {}, [timeFinished, userWantsLogout]);
+  useEffect(() => {
+    if (timeFinished) {
+      logoutHandler();
+    }
+  }, [timeFinished, logoutHandler]);
 
   return (
     <div
@@ -75,7 +79,7 @@ export default function SessionExpiresContent({
       </div>
 
       <ActionButtons
-        backButtonHandler={requestLogout}
+        backButtonHandler={logoutHandler}
         backBttnCustomText="Log out"
         nextButtonHandler={restoreSessionHandler}
         nextBttnCustomText="Stay logged in"

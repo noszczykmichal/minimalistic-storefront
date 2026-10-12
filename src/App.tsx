@@ -6,7 +6,7 @@ import Layout from "@/components/Layout/Layout";
 import Loader from "@/components/UI/Loader/Loader";
 import GuestOnlyRoute from "@/components/Routing/GuestOnlyRoute/GuestOnlyRoute";
 import { uiActions } from "@/store/ui/ui";
-import { authActions } from "@/store/auth/auth";
+import { authActions, WARNING_SECONDS } from "@/store/auth/auth";
 import PLP from "@/pages/PLP/PLP";
 import { Currency } from "@/types/types";
 
@@ -27,20 +27,28 @@ export default function App({
   const dispatch = useAppDispatch();
   const { saveCategoriesAndCurrencies } = uiActions;
   const { setIsAccessTokenExpiring } = authActions;
+  const status = useAppSelector((state) => state.auth.status);
   const accessTokenExpiresAt = useAppSelector(
     (state) => state.auth.accessTokenExpiresAt,
   );
 
   useEffect(() => {
+    if (status !== "authenticated" || !accessTokenExpiresAt) {
+      return undefined;
+    }
+
+    const msUntilWarning =
+      accessTokenExpiresAt - Date.now() - WARNING_SECONDS * 1000;
+
     const accessTokenExpireTracker = setTimeout(
       () => {
         dispatch(setIsAccessTokenExpiring(true));
       },
-      accessTokenExpiresAt - Date.now() - 30 * 1000,
+      Math.max(0, msUntilWarning),
     );
 
     return () => clearTimeout(accessTokenExpireTracker);
-  }, [accessTokenExpiresAt, dispatch, setIsAccessTokenExpiring]);
+  }, [accessTokenExpiresAt, dispatch, setIsAccessTokenExpiring, status]);
 
   useEffect(() => {
     dispatch(saveCategoriesAndCurrencies({ categories, currencies }));

@@ -1,5 +1,5 @@
 .section__login {
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,12 +9,25 @@
 .login-form-wrapper {
   display: flex;
   flex-direction: column;
+  justify-items: center;
+  align-items: center;
   gap: 3rem;
-  height: 60%;
+  width: 100%;
+  max-width: 22rem;
+  padding: 0 1.5rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: stretch;
+  width: 100%;
+  /* padding: 0 3rem; */
 }
 
 .login-form__signin {
-  width: 50%;
+  width: 100%;
   background-color: var(--color-primary);
   border: 1px solid transparent;
   color: #fff;

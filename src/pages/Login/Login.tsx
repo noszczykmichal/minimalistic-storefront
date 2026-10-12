@@ -50,7 +50,11 @@ export default function Login() {
   return (
     <section className={classes.section__login}>
       <div className={classes["login-form-wrapper"]}>
-        <form action="" noValidate className={classes["login-form"]}>
+        <form
+          noValidate
+          className={classes["login-form"]}
+          onSubmit={handleSubmit(onSignIn)}
+        >
           <TextInput
             label="E-mail:"
             type="email"
@@ -72,10 +76,7 @@ export default function Login() {
             </p>
           )}
 
-          <Button
-            customClass={classes["login-form__signin"]}
-            clicked={handleSubmit(onSignIn)}
-          >
+          <Button className={classes["login-form__signin"]} type="submit">
             Sign in
           </Button>
         </form>

@@ -183,9 +183,9 @@ export default function PDP() {
           </div>
         </div>
         <Button
-          isDisabled={!displayedProduct!.inStock}
-          clicked={onAddProductToCart}
-          customClass={classes["cart-actions__button"]}
+          disabled={!displayedProduct!.inStock}
+          onClick={onAddProductToCart}
+          className={classes["cart-actions__button"]}
         >
           Add to cart
         </Button>

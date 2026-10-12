@@ -21,8 +21,6 @@ export default function AccountIcon() {
     );
   }
 
-  // While the session is being restored, show a neutral icon so the toolbar
-  // doesn't flash "Sign in" for a user who is already logged in.
   return (
     <span
       className={[

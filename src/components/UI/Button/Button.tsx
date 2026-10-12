@@ -1,26 +1,17 @@
-import { ReactNode, FormEvent } from "react";
-
+import { ComponentPropsWithoutRef } from "react";
+import clsx from "clsx";
 import classes from "@/components/UI/Button/Button.module.css";
 
 export default function Button({
-  customClass = "",
-  children,
-  isDisabled = false,
-  clicked = () => {},
-}: {
-  customClass?: string;
-  children: ReactNode;
-  isDisabled?: boolean;
-  clicked?: (event: FormEvent) => void;
-}) {
+  className,
+  type = "button",
+  ...rest
+}: ComponentPropsWithoutRef<"button">) {
   return (
     <button
-      type="button"
-      className={[classes.button, customClass].join(" ")}
-      onClick={clicked}
-      disabled={isDisabled}
-    >
-      {children}
-    </button>
+      {...rest}
+      type={type === "submit" ? "submit" : "button"}
+      className={clsx(classes.button, className)}
+    />
   );
 }

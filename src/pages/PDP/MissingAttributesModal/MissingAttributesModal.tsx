@@ -26,7 +26,7 @@ export default function MissingAttributesModal({
           </li>
         ))}
       </ul>
-      <Button customClass={classes.modal__button} clicked={modalHandler}>
+      <Button className={classes.modal__button} onClick={modalHandler}>
         OK
       </Button>
     </Modal>

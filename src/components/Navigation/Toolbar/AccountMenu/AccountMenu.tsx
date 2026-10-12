@@ -4,8 +4,7 @@ import { CSSTransition } from "react-transition-group";
 
 import Backdrop from "@/components/UI/Backdrop/Backdrop";
 import PersonIcon from "@/components/UI/PersonIcon/PersonIcon";
-import { logOut } from "@/api/client";
-import { authActions } from "@/store/auth/auth";
+import { logOutThunk } from "@/store/auth/auth";
 import { uiActions } from "@/store/ui/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { User } from "@/types/types";
@@ -24,7 +23,6 @@ export default function AccountMenu({ user }: { user: User }) {
     currencySwitcherVisibToggle,
     miniCartVisibilityToggle,
   } = uiActions;
-  const { clearSessionData } = authActions;
 
   // Align the menu's right edge with the account button.
   useLayoutEffect(() => {
@@ -81,16 +79,9 @@ export default function AccountMenu({ user }: { user: User }) {
     dispatch(accountMenuVisibilityToggle(false));
   };
 
-  const onLogOut = async () => {
+  const onLogOut = () => {
     dispatch(accountMenuVisibilityToggle(false));
-
-    try {
-      await logOut();
-    } catch {
-      // Log out locally even if the server couldn't end the session.
-    }
-
-    dispatch(clearSessionData());
+    dispatch(logOutThunk());
   };
 
   return (
