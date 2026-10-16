@@ -20,14 +20,12 @@ const singUpFormConfig = [
     type: "text",
     autoComplete: "family-name",
   },
-
   {
     label: "E-mail:",
     name: "email",
     type: "email",
     autoComplete: "email",
   },
-
   {
     label: "Password:",
     name: "password",
@@ -35,10 +33,10 @@ const singUpFormConfig = [
     autoComplete: "new-passord",
   },
   {
-    label: "ConfirmPassword:",
+    label: "Confirm Password:",
     name: "confirmPassword",
     type: "password",
-    autoComplete: "newPassword",
+    autoComplete: "new-password",
   },
 ] satisfies SignUpFormField[];
 

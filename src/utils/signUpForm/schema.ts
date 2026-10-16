@@ -16,7 +16,5 @@ export const fullSchema = baseSchema.refine(
   { path: ["confirmPassword"], message: "Passwords don't match." },
 );
 
-export const signUpFormFieldNames = [baseSchema.keyof().options];
-
 export type SignUpFormInput = z.input<typeof fullSchema>;
 export type SignUpFormOutput = z.output<typeof fullSchema>;

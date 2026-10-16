@@ -71,7 +71,7 @@ export default function Login() {
             label="Password"
             type="password"
             registration={register("password", { onChange: clearServerError })}
-            autoComplete="off"
+            autoComplete="current-password"
             error={errors.password?.message}
           />
 
