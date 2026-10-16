@@ -12,6 +12,9 @@ vi.mock("@/components/Navigation/MobileNavigation/MobileNavigation", () => ({
 vi.mock("@/components/UI/Toast/Toast", () => ({
   default: () => null,
 }));
+vi.mock("@/components/Login/SessionExpiresModal/SessionExpiresModal", () => ({
+  default: () => null,
+}));
 
 describe("Layout component", () => {
   it("renders children inside the main landmark", () => {

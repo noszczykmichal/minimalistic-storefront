@@ -19,7 +19,6 @@ export default function SessionExpiresModal() {
       <CSSTransition
         nodeRef={modalRef}
         in={isOpen ?? false}
-        // in={false}
         timeout={500}
         classNames={{
           enter: "",
@@ -34,11 +33,7 @@ export default function SessionExpiresModal() {
           <SessionExpiresContent expiresAt={expiresAt} />
         </div>
       </CSSTransition>
-      <Backdrop
-        isBackdropOpen={isOpen ?? false}
-        // isBackdropOpen={false}
-        onClose={() => {}}
-      />
+      <Backdrop isBackdropOpen={isOpen ?? false} onClose={() => {}} />
     </>,
     document.getElementById("modals-root") as HTMLDivElement,
   );

@@ -41,4 +41,4 @@ const buildFormValidation = <K extends SharedField>(fields: readonly K[]) => {
   return z.object(shape);
 };
 
-export default buildFormValidation;
+export { required, buildFormValidation };

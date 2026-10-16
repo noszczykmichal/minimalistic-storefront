@@ -3,6 +3,7 @@ vi.mock("@/hooks/useReduxHooks", async (importActual) => {
   return { ...actual, useAppDispatch: vi.fn() };
 });
 vi.mock("@/api/client", () => ({ logOut: vi.fn() }));
+vi.mock("@/api/sessionHint", () => ({ clearSessionHint: vi.fn() }));
 
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -12,7 +13,7 @@ import configureMockStore from "redux-mock-store";
 import AccountMenu from "@/components/Navigation/Toolbar/AccountMenu/AccountMenu";
 import { logOut } from "@/api/client";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { authActions } from "@/store/auth/auth";
+import { logOutThunk } from "@/store/auth/auth";
 import { uiActions } from "@/store/ui/ui";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 import type { User } from "@/types/types";
@@ -35,11 +36,19 @@ describe("AccountMenu component", () => {
     currencySwitcherVisibToggle,
     miniCartVisibilityToggle,
   } = uiActions;
-  const { clearCredentials } = authActions;
+  const logOutFulfilled = expect.objectContaining({
+    type: logOutThunk.fulfilled.type,
+  });
   let modalsRoot: HTMLDivElement;
 
   beforeEach(() => {
     vi.clearAllMocks();
+    // Run dispatched thunks so their resulting actions reach the mock too.
+    dispatch.mockImplementation((action: unknown) =>
+      typeof action === "function"
+        ? action(dispatch, () => ({}), undefined)
+        : action,
+    );
     vi.mocked(useAppDispatch).mockReturnValue(dispatch);
 
     modalsRoot = document.createElement("div");
@@ -114,7 +123,7 @@ describe("AccountMenu component", () => {
     expect(dispatch).toHaveBeenCalledWith(accountMenuVisibilityToggle(false));
   });
 
-  it("should end the session and clear the credentials on Log out", async () => {
+  it("should close the menu and log the user out on Log out", async () => {
     vi.mocked(logOut).mockResolvedValue({ message: "Logout" });
     renderAccountMenu(true);
 
@@ -122,20 +131,16 @@ describe("AccountMenu component", () => {
 
     expect(dispatch).toHaveBeenCalledWith(accountMenuVisibilityToggle(false));
     expect(logOut).toHaveBeenCalledTimes(1);
-    await waitFor(() =>
-      expect(dispatch).toHaveBeenCalledWith(clearCredentials()),
-    );
+    await waitFor(() => expect(dispatch).toHaveBeenCalledWith(logOutFulfilled));
   });
 
-  it("should clear the credentials even when the logout request fails", async () => {
+  it("should log the user out even when the logout request fails", async () => {
     vi.mocked(logOut).mockRejectedValue(new Error("Network Error"));
     renderAccountMenu(true);
 
     await userEvent.click(screen.getByRole("button", { name: "Log out" }));
 
-    await waitFor(() =>
-      expect(dispatch).toHaveBeenCalledWith(clearCredentials()),
-    );
+    await waitFor(() => expect(dispatch).toHaveBeenCalledWith(logOutFulfilled));
   });
 
   it("should have no accessibility violations when open", async () => {

@@ -51,7 +51,7 @@ export default function SignUpForm() {
 
   return (
     <>
-      <form action="" className={classes.modal__form} noValidate>
+      <form className={classes.modal__form} noValidate>
         {singUpFormConfig.map((input) => (
           <TextInput
             key={input.name}
@@ -64,7 +64,7 @@ export default function SignUpForm() {
         ))}
       </form>
       {errors.root && (
-        <p role="alert" className="form-error">
+        <p role="alert" className={classes["form-error"]}>
           {errors.root.message}
         </p>
       )}

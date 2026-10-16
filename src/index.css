@@ -72,12 +72,3 @@ body {
   white-space: nowrap;
   border: 0;
 }
-
-/* app-wide form errors */
-
-.form-error {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-align: justify;
-  color: red;
-}

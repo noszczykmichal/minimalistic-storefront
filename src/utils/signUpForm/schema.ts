@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-import buildFormValidation from "@/utils/sharedValidation";
+import { buildFormValidation } from "@/utils/sharedValidation";
 
 export const baseSchema = buildFormValidation([
   "firstName",

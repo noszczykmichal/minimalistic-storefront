@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
-import { fullSchema, LoginFormOutput } from "@/utils/loginForm/schemas";
+import { loginSchema, type LoginFormOutput } from "@/utils/loginForm/schemas";
 import Button from "@/components/UI/Button/Button";
 import SignUpModal from "@/components/Login/SignUpModal/SignUpModal";
 import { uiActions } from "@/store/ui/ui";
@@ -25,9 +25,10 @@ export default function Login() {
     register,
     handleSubmit,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(fullSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: { ...loginFormDefaultValues },
     mode: "onTouched",
   });
@@ -47,6 +48,10 @@ export default function Login() {
     }
   };
 
+  const clearServerError = () => {
+    if (errors.root) clearErrors("root");
+  };
+
   return (
     <section className={classes.section__login}>
       <div className={classes["login-form-wrapper"]}>
@@ -58,20 +63,20 @@ export default function Login() {
           <TextInput
             label="E-mail:"
             type="email"
-            registration={register("email")}
+            registration={register("email", { onChange: clearServerError })}
             autoComplete="email"
             error={errors.email?.message}
           />
           <TextInput
             label="Password"
             type="password"
-            registration={register("password")}
+            registration={register("password", { onChange: clearServerError })}
             autoComplete="off"
             error={errors.password?.message}
           />
 
           {errors.root && (
-            <p role="alert" className="form-error">
+            <p role="alert" className={classes["form-error"]}>
               {errors.root.message}
             </p>
           )}

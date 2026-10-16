@@ -1,7 +1,9 @@
 import * as z from "zod";
 
-import buildFormValidation from "@/utils/sharedValidation";
+import { buildFormValidation, required } from "@/utils/sharedValidation";
 
-export const fullSchema = buildFormValidation(["email", "password"]);
+export const loginSchema = buildFormValidation(["email"]).extend({
+  password: z.string().min(1, required),
+});
 
-export type LoginFormOutput = z.output<typeof fullSchema>;
+export type LoginFormOutput = z.output<typeof loginSchema>;
