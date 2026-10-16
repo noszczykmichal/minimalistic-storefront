@@ -11,10 +11,11 @@
 
 @media (min-width: 768px) {
   .navigation-items {
-    padding-left: 7rem;
+    padding-left: 0;
     flex-direction: row;
     justify-content: unset;
     align-items: center;
+    gap: 1rem;
     height: 100%;
   }
 }

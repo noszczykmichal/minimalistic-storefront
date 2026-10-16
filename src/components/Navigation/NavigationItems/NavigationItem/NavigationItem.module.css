@@ -35,9 +35,9 @@
 }
 
 @media (min-width: 768px) {
-  .navigation-item {
+  /* .navigation-item {
     margin-left: 1rem;
-  }
+  } */
 
   .navigation-item a {
     width: 5rem;

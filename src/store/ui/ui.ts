@@ -1,24 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Currency } from "@/types/types";
 
-const initialState: {
+interface UIInterface {
   categories: string[];
   currencies: Currency[];
-
   isCurrencySwitcherOpen: boolean;
   isMiniCartOpen: boolean;
   isModalOpen: boolean;
   isMobileNavOpen: boolean;
-} = {
+  isToastOpen: boolean;
+  isAccountMenuOpen: boolean;
+}
+
+const initialState: UIInterface = {
   categories: [],
   currencies: [],
   isCurrencySwitcherOpen: false,
   isMiniCartOpen: false,
   isModalOpen: false,
   isMobileNavOpen: false,
+  isToastOpen: false,
+  isAccountMenuOpen: false,
 };
 
-const uiSlice = createSlice({
+const ui = createSlice({
   name: "ui",
   initialState,
   reducers: {
@@ -42,9 +47,15 @@ const uiSlice = createSlice({
     mobileNavVisibilityToggle(state, action) {
       return { ...state, isMobileNavOpen: action.payload };
     },
+    toastVisibilityToggle(state, action) {
+      return { ...state, isToastOpen: action.payload };
+    },
+    accountMenuVisibilityToggle(state, action) {
+      return { ...state, isAccountMenuOpen: action.payload };
+    },
   },
 });
 
-export const uiActions = uiSlice.actions;
+export const uiActions = ui.actions;
 
-export default uiSlice;
+export default ui;

@@ -2,10 +2,46 @@
   display: flex;
   align-items: center;
   color: #1d1f22;
+  text-decoration: none;
   transition: color 0.2s ease;
+}
+
+.account-icon * {
+  color: inherit;
 }
 
 .account-icon:hover,
 .account-icon:focus-visible {
-  color: #5ece7b;
+  color: var(--color-primary);
+}
+
+.account-icon--checking,
+.account-icon--checking:hover {
+  color: #a6a6a6;
+}
+
+/* Visually hidden on mobile, where only the icon fits, but always kept as the
+   link's accessible name. */
+.account-icon__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (min-width: 768px) {
+  .account-icon__label {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0 0 0 0.5rem;
+    overflow: visible;
+    clip: auto;
+    font-size: 0.95rem;
+  }
 }

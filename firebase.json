@@ -4,6 +4,10 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
+        "source": "/api/**",
+        "run": { "serviceId": "storefront-api", "region": "europe-west1" }
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

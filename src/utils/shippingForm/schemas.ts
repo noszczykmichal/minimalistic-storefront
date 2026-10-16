@@ -1,7 +1,7 @@
-import { z } from "zod";
+import * as z from "zod";
 import { PAYMENT_METHODS } from "@/types/types";
-import { SHIPPING_FORM } from "./currencies";
-import buildFormValidation from "../sharedValidation";
+import { SHIPPING_FORM } from "@/utils/shippingForm/currencies";
+import { buildFormValidation } from "@/utils/sharedValidation";
 
 export const shippingAddressSchema = buildFormValidation([
   "firstName",

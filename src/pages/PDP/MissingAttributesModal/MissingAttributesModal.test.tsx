@@ -8,7 +8,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { uiActions } from "@/store/uiSlice";
+import { uiActions } from "@/store/ui/ui";
 import type { RootState } from "@/store/store";
 import MissingAttributesModal from "@/pages/PDP/MissingAttributesModal/MissingAttributesModal";
 

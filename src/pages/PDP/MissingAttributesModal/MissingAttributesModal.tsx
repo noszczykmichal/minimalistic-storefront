@@ -1,5 +1,5 @@
 import Button from "@/components/UI/Button/Button";
-import { uiActions } from "@/store/uiSlice";
+import { uiActions } from "@/store/ui/ui";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import Modal from "@/components/UI/Modal/Modal";
 import classes from "@/pages/PDP/MissingAttributesModal/MissingAttributesModal.module.css";
@@ -26,7 +26,7 @@ export default function MissingAttributesModal({
           </li>
         ))}
       </ul>
-      <Button customClass={classes.modal__button} clicked={modalHandler}>
+      <Button className={classes.modal__button} onClick={modalHandler}>
         OK
       </Button>
     </Modal>

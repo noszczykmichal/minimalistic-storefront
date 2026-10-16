@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import clsx from "clsx";
 
-import { uiActions } from "@/store/uiSlice";
+import { uiActions } from "@/store/ui/ui";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import Backdrop from "@/components/UI/Backdrop/Backdrop";
 import classes from "@/components/UI/Modal/Modal.module.css";

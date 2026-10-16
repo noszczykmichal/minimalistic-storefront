@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 
-import { uiActions } from "@/store/uiSlice";
+import { uiActions } from "@/store/ui/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import Backdrop from "@/components/UI/Backdrop/Backdrop";
 import classes from "@/components/Navigation/MobileNavigation/ToggleButton/ToggleButton.module.css";

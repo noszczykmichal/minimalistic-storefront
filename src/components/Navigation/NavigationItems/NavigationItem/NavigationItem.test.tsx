@@ -8,7 +8,7 @@ import { MemoryRouter } from "react-router";
 
 import NavigationItem from "@/components/Navigation/NavigationItems/NavigationItem/NavigationItem";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { uiActions } from "@/store/uiSlice";
+import { uiActions } from "@/store/ui/ui";
 
 describe("NavigationItem component", () => {
   const dispatch = vi.fn();

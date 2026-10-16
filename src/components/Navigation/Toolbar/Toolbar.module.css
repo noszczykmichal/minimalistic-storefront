@@ -1,5 +1,6 @@
 .toolbar {
   width: 100%;
+  margin: 0 auto;
   height: 5rem;
   position: sticky;
   top: 0;
@@ -25,15 +26,12 @@
 
 @media (min-width: 768px) {
   .toolbar {
+    width: 85%;
+    max-width: 1300px;
     padding: 0;
   }
   .toolbar__desktop-nav {
     display: unset;
     height: 100%;
-  }
-
-  .cart-actions {
-    width: 13rem;
-    padding-right: 6rem;
   }
 }

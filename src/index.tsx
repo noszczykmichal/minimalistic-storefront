@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import { Query } from "@apollo/client/react/components";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/store/store";
+import { restoreSession } from "@/store/auth/auth";
 
 import App from "@/App";
 import Loader from "@/components/UI/Loader/Loader";
@@ -55,6 +56,10 @@ const categoriesAndCurrenciesQuery = gql`
     }
   }
 `;
+
+// Dispatched once, outside React, so StrictMode's double-invoked effects
+// can't send two refresh requests that invalidate each other.
+store.dispatch(restoreSession());
 
 root.render(
   <React.StrictMode>

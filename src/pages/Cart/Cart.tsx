@@ -47,7 +47,7 @@ export default function Cart() {
           </p>
         </div>
       </div>
-      <Button customClass={classes.summary__button} clicked={onOrderHandler}>
+      <Button className={classes.summary__button} onClick={onOrderHandler}>
         Order
       </Button>
     </section>

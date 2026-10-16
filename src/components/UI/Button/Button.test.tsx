@@ -8,11 +8,7 @@ import Button from "@/components/UI/Button/Button";
 type ButtonProps = ComponentProps<typeof Button>;
 
 const renderButton = (props: Partial<ButtonProps> = {}) =>
-  render(
-    <Button customClass="" {...props}>
-      {props.children ?? "Click me"}
-    </Button>,
-  );
+  render(<Button {...props}>{props.children ?? "Click me"}</Button>);
 
 describe("Button component", () => {
   test("should render a button with text 'Click me'", () => {
@@ -23,9 +19,9 @@ describe("Button component", () => {
     expect(outputElement).toBeInTheDocument();
   });
 
-  test("should apply a specific class when customClass prop is non-empty string", () => {
+  test("should apply the class passed in className", () => {
     const testClass = "foo";
-    renderButton({ customClass: testClass });
+    renderButton({ className: testClass });
 
     const outputElement = screen.getByRole("button", { name: "Click me" });
 
@@ -40,17 +36,17 @@ describe("Button component", () => {
     expect(outputElement).not.toBeDisabled();
   });
 
-  test("should render a disabled button when isDisabled prop has value true", () => {
-    renderButton({ isDisabled: true });
+  test("should render a disabled button when disabled is true", () => {
+    renderButton({ disabled: true });
 
     const outputElement = screen.getByRole("button", { name: "Click me" });
 
     expect(outputElement).toBeDisabled();
   });
 
-  test("should call clicked handler once when button is clicked", async () => {
+  test("should call the onClick handler once when button is clicked", async () => {
     const clickHandler = vi.fn();
-    renderButton({ clicked: clickHandler });
+    renderButton({ onClick: clickHandler });
 
     await userEvent.click(screen.getByRole("button", { name: "Click me" }));
 
@@ -60,16 +56,16 @@ describe("Button component", () => {
     );
   });
 
-  test("should not call clicked handler when button is disabled", async () => {
+  test("should not call the onClick handler when button is disabled", async () => {
     const clickHandler = vi.fn();
-    renderButton({ clicked: clickHandler, isDisabled: true });
+    renderButton({ onClick: clickHandler, disabled: true });
 
     await userEvent.click(screen.getByRole("button", { name: "Click me" }));
 
     expect(clickHandler).not.toHaveBeenCalled();
   });
 
-  test("should not throw when clicked without a clicked handler", () => {
+  test("should not throw when clicked without an onClick handler", () => {
     renderButton();
 
     expect(() =>
