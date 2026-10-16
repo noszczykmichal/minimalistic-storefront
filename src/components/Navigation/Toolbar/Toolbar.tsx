@@ -2,7 +2,6 @@ import NavigationItems from "@/components/Navigation/NavigationItems/NavigationI
 import Logo from "@/components/Navigation/Toolbar/Logo/Logo";
 import CartIcon from "@/components/Navigation/Toolbar/CartIcon/CartIcon";
 import CurrencySwitcher from "@/components/Navigation/Toolbar/CurrencySwitcher/CurrencySwitcher";
-
 import MiniCart from "@/components/Cart/MiniCart/MiniCart";
 import ToggleButton from "@/components/Navigation/MobileNavigation/ToggleButton/ToggleButton";
 import { useAppSelector } from "@/hooks/useReduxHooks";
