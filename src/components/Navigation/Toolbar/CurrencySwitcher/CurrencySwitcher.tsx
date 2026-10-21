@@ -20,8 +20,12 @@ export default function CurrencySwitcher({
   const [optionsLeft, setOptionsLeft] = useState<number>();
   const optionsId = useId();
   const dispatch = useAppDispatch();
-  const { isCurrencySwitcherOpen } = useAppSelector((state) => state.ui);
-  const { billingCurrency } = useAppSelector((state) => state.products);
+  const isCurrencySwitcherOpen = useAppSelector(
+    (state) => state.ui.isCurrencySwitcherOpen,
+  );
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
+  );
   const wasCurrencySwitcherOpen = useRef(isCurrencySwitcherOpen);
   const { onCurrencyChange } = productActions;
   const { currencySwitcherVisibToggle, miniCartVisibilityToggle } = uiActions;

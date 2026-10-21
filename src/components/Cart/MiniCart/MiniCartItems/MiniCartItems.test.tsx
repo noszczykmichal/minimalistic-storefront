@@ -7,19 +7,21 @@ import { render, screen } from "@testing-library/react";
 import MiniCartItems from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItems";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import { testItemDetails } from "@/utils/testUtils";
+import type { RootState } from "@/store/store";
 
 describe("MiniCartItems component", () => {
+  const cart = [testItemDetails];
+
   beforeEach(() => {
     vi.clearAllMocks();
-    useAppSelector.mockReturnValue({
-      billingCurrency: "$",
-      cart: [testItemDetails],
-    });
+    const state = {
+      products: { billingCurrency: "$", cart },
+    } as unknown as RootState;
+
+    vi.mocked(useAppSelector).mockImplementation((selector) => selector(state));
   });
 
   it("should render one MiniCartItem", () => {
-    const { cart } = useAppSelector();
-
     render(<MiniCartItems />);
     const miniCartItems = screen.getAllByRole("listitem");
 

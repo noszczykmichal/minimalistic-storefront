@@ -39,16 +39,25 @@ Only two queries exist, both written inline with `gql` (untyped; `@graphql-codeg
 Apollo data is **not** synced to Redux automatically. Components copy what they need into Redux:
 
 - **Product page:** clicking a product (`components/Products/ProductList/Product`) dispatches `onCurrentPDPChange(product)`. `PDP` renders from `state.products.currentPDP` and never queries the API itself. Opening a PDP URL with empty persisted state will fail.
-- **Cart totals:** the `products` slice (`src/store/products.ts`) holds `cart`, `billingCurrency` (a currency _symbol_, e.g. `"$"`), and the derived `productsTotal`/`totalPrice`. Every cart or currency reducer recomputes those totals. Each product carries a `prices[]` array, and the price shown is the entry whose `currency.symbol === billingCurrency`.
+- **Cart totals:** the `products` slice (`src/store/products/products.ts`) holds `cart`, `billingCurrency` (a currency _symbol_, e.g. `"$"`), and the derived `productsTotal`/`totalPrice`. Every cart or currency reducer recomputes those totals. Each product carries a `prices[]` array, and the price shown is the entry whose `currency.symbol === billingCurrency`.
 - **Cart line identity:** a cart line is identified by `internalID` = product `id` + the concatenated selected attribute values, lowercased. The same product with different options becomes a separate line. Attribute selection is stored as `selected: true` on the chosen `attributes[].items[]` entry.
+
+### Backend API (`src/api/`)
+
+Accounts and auth come from a separate NestJS backend repo, `minimalistic-storefront-be` (checked out next to this one as `../minimalistic-storefront-be`; it has its own CLAUDE.md). All its routes are `POST /api/auth/{signup,login,refresh,logout}`.
+
+- `src/api/client.ts` is an axios instance with `baseURL: import.meta.env.VITE_API_URL` (`/api` in both `.env` and `.env.production`) and `withCredentials`. Keep calls on relative `/api` paths so they stay same-origin.
+- Dev: Vite proxies `/api` to `http://localhost:8000` (backend `pnpm start:dev`). Prod: `firebase.json` rewrites `/api/**` to Cloud Run service `storefront-api` (`europe-west1`). Firebase only forwards a cookie named `__session`, which is why the backend uses that name.
+- The access token (5 min) lives in the `auth` slice (`src/store/auth/auth.ts`). The refresh token is an httpOnly cookie rotated on every `/auth/refresh`, so `refreshSession` shares one in-flight request. `src/api/sessionHint.ts` keeps a localStorage flag so anonymous visitors skip the startup refresh.
 
 ### Store (`src/store/`)
 
-Three slices are combined and wrapped in `redux-persist` (key `root`, localStorage). `products` and `shippingAddressAndPayment` are persisted; `ui` is blacklisted so open/closed state resets on reload. A new slice is persisted unless you add it to the blacklist.
+Four slices are combined and wrapped in `redux-persist` (key `root`, localStorage). `products` and `shippingAddressAndPayment` are persisted. `ui` is blacklisted so open/closed state resets on reload, and `auth` is blacklisted so the access token never reaches storage (it is restored from the cookie instead). A new slice is persisted unless you add it to the blacklist.
 
 - `ui`: categories/currencies, plus visibility flags for backdrop, mini-cart, currency switcher, modal and mobile nav
 - `products`: currency, current PDP, cart
 - `shippingAddressAndPayment`: `draft` holding the checkout form values
+- `auth`: access token, user, `status` (`checking`/`authenticated`/`anonymous`) and token-expiry tracking
 
 Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.ts`.
 
@@ -76,6 +85,7 @@ Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.
   - In your summary, list converted files separately from other changes so I can commit the conversions on their own.
 - Redux in tests uses `redux-mock-store`, not the real store:
   - wrap components in `WithMockStoreAndRouter` (`src/utils/`), which supplies a `Provider` and a `MemoryRouter`. Pass `customStore` for a mock store, and `initialPath` (default `"/"`) when the component depends on the current URL. Don't nest another router inside it.
+  - import it as `import { legacy_configureStore as configureMockStore } from "redux-mock-store"`. The default export is the same function but is marked `@deprecated` in its typings, so the editor shows a warning.
   - `createTestStore()` (`src/utils/testUtils.ts`) returns a mock store with two cart items
   - to assert on dispatches, `vi.mock("@/hooks/useReduxHooks", ...)` and have `useAppDispatch` return a `vi.fn()` (because `vi.mock` is hoisted, test files place it above the imports; `import/first` is disabled for tests)
 - Test helper files must be listed in the ESLint `import/no-extraneous-dependencies` allowlist (`eslint.config.js`) before they can import devDependencies.

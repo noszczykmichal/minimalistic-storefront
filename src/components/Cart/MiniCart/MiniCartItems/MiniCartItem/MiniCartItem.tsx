@@ -10,7 +10,9 @@ export default function MiniCartItem({
   itemDetails: CartItem;
 }) {
   const { internalID, quantity, gallery } = itemDetails;
-  const { billingCurrency } = useAppSelector((state) => state.products);
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
+  );
 
   const filteredPrices = itemDetails.prices.filter(
     (price) => price.currency.symbol === billingCurrency,

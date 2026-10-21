@@ -3,7 +3,7 @@ import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItems.module.css";
 
 export default function MiniCartItems() {
-  const { cart } = useAppSelector((state) => state.products);
+  const cart = useAppSelector((state) => state.products.cart);
 
   return (
     <ul className={classes["cart-items"]}>

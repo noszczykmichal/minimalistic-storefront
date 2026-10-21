@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { axe } from "vitest-axe";
-import configureMockStore from "redux-mock-store";
+import { legacy_configureStore as configureMockStore } from "redux-mock-store";
 
 import ProductList from "@/components/Products/ProductList/ProductList";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";

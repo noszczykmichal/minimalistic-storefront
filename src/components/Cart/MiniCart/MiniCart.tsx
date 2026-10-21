@@ -11,10 +11,12 @@ import classes from "@/components/Cart/MiniCart/MiniCart.module.css";
 export default function MiniCart() {
   const miniCartRef = useRef<HTMLDivElement>(null);
   const redirect = useRedirect();
-  const { productsTotal, totalPrice, billingCurrency } = useAppSelector(
-    (state) => state.products,
+  const productsTotal = useAppSelector((state) => state.products.productsTotal);
+  const totalPrice = useAppSelector((state) => state.products.totalPrice);
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
   );
-  const { isMiniCartOpen } = useAppSelector((state) => state.ui);
+  const isMiniCartOpen = useAppSelector((state) => state.ui.isMiniCartOpen);
   const headingId = useId();
 
   useEffect(() => {
@@ -35,6 +37,7 @@ export default function MiniCart() {
     };
 
     document.addEventListener("keydown", onKeyDownHandler);
+
     return () => document.removeEventListener("keydown", onKeyDownHandler);
   }, [isMiniCartOpen, redirect]);
 
