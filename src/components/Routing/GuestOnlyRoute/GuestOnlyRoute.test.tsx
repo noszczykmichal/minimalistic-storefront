@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { Route, Routes } from "react-router";
-import configureMockStore from "redux-mock-store";
+import { legacy_configureStore as configureMockStore } from "redux-mock-store";
 
 import GuestOnlyRoute from "@/components/Routing/GuestOnlyRoute/GuestOnlyRoute";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";

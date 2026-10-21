@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
-import configureMockStore from "redux-mock-store";
+import { legacy_configureStore as configureMockStore } from "redux-mock-store";
 
 import AccountIcon from "@/components/Navigation/Toolbar/AccountIcon/AccountIcon";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";

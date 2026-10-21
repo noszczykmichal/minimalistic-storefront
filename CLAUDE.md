@@ -85,6 +85,7 @@ Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.
   - In your summary, list converted files separately from other changes so I can commit the conversions on their own.
 - Redux in tests uses `redux-mock-store`, not the real store:
   - wrap components in `WithMockStoreAndRouter` (`src/utils/`), which supplies a `Provider` and a `MemoryRouter`. Pass `customStore` for a mock store, and `initialPath` (default `"/"`) when the component depends on the current URL. Don't nest another router inside it.
+  - import it as `import { legacy_configureStore as configureMockStore } from "redux-mock-store"`. The default export is the same function but is marked `@deprecated` in its typings, so the editor shows a warning.
   - `createTestStore()` (`src/utils/testUtils.ts`) returns a mock store with two cart items
   - to assert on dispatches, `vi.mock("@/hooks/useReduxHooks", ...)` and have `useAppDispatch` return a `vi.fn()` (because `vi.mock` is hoisted, test files place it above the imports; `import/first` is disabled for tests)
 - Test helper files must be listed in the ESLint `import/no-extraneous-dependencies` allowlist (`eslint.config.js`) before they can import devDependencies.

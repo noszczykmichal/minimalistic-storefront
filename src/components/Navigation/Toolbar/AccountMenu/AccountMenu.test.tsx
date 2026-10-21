@@ -8,7 +8,7 @@ vi.mock("@/api/sessionHint", () => ({ clearSessionHint: vi.fn() }));
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
-import configureMockStore from "redux-mock-store";
+import { legacy_configureStore as configureMockStore } from "redux-mock-store";
 
 import AccountMenu from "@/components/Navigation/Toolbar/AccountMenu/AccountMenu";
 import { logOut } from "@/api/client";

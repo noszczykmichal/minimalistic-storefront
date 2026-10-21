@@ -1,4 +1,4 @@
-import configureStore from "redux-mock-store";
+import { legacy_configureStore as configureStore } from "redux-mock-store";
 
 import { CartItem } from "@/types/types";
 
