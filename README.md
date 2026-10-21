@@ -3,6 +3,8 @@
 > A mock-up page of an imaginary online shop, fetching data from the GraphQL endpoint, with user accounts served by its own [backend](https://github.com/noszczykmichal/minimalistic-storefront-be).  
 > You can check live demo [_here_](https://minimalistic-storefront.web.app/).
 
+![Home page with the product listing](./img/home.png)
+
 ## Table of Contents
 
 - [General Info](#general-information)
@@ -22,7 +24,7 @@
   - Cart page
   - Checkout (shipping address, payment and delivery)
 - Users can sign up, log in and log out. Accounts and sessions are handled by the [backend](#backend).
-- More info on the project and screenshots can be found in [Features](#features).
+- The full list of what the shop can do is in [Features](#features).
 
 ## Backend
 
@@ -47,20 +49,13 @@ The REST API for user accounts and authentication lives in a separate repository
 
 ## Features
 
-- Browse our store to choose from a vast variety of products - whether you're into tech or clothes, you can be sure to find something that catches your eye.
-  ![Example screenshot](./img/plp.png)
-- Easily switch between a range of accepted currencies.
-  ![Example screenshot](./img/currency-switcher.png)
-- Check what's in your cart with one click.
-  ![Example screenshot](./img/cart-overlay.png)
-- Visit a product page to learn more about the product and configure it to your needs.
-  ![Example screenshot](./img/pdp.png)
-- Proceed to the cart to see a summary of your current order.
-  ![Example screenshot](./img/cart.png)
-- Fill in your shipping address.
-  ![Example screenshot](./img/shipping-form-address.png)
-- Choose your preferred payment and delivery method.
-  ![Example screenshot](./img/shipping-form-payment-delivery.png)
+- Browse products by category (all, clothes, tech).
+- Switch between currencies.
+- Cart overlay and cart page.
+- Product page with attribute selection.
+- Checkout: shipping address, payment and delivery, order review and confirmation.
+- Sign up, log in and log out, with an account menu in the toolbar.
+- A session-expiry warning, plus routes that only logged-out visitors can open, such as `/login`.
 
 ## Setup
 
