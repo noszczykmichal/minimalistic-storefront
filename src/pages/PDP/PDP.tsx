@@ -14,8 +14,9 @@ import MissingAttributesModal from "@/pages/PDP/MissingAttributesModal/MissingAt
 
 export default function PDP() {
   const dispatch = useAppDispatch();
-  const { currentPDP: displayedProduct, billingCurrency } = useAppSelector(
-    (state) => state.products,
+  const displayedProduct = useAppSelector((state) => state.products.currentPDP);
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
   );
 
   const { addProductToCart } = productActions;

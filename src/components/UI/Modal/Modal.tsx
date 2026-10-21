@@ -19,7 +19,7 @@ export default function Modal({
 }) {
   const modalRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const { isModalOpen } = useAppSelector((state) => state.ui);
+  const isModalOpen = useAppSelector((state) => state.ui.isModalOpen);
   const { modalToggle } = uiActions;
 
   const modalHandler = () => {

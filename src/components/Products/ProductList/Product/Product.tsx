@@ -10,7 +10,9 @@ export default function Product({
 }: {
   productDetails: ProductType;
 }) {
-  const { billingCurrency } = useAppSelector((state) => state.products);
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
+  );
   const { onCurrentPDPChange, addProductToCart } = productActions;
   const dispatch = useAppDispatch();
   const location = useLocation();
