@@ -1,9 +1,20 @@
-# Minimalistic-storefront
+<div align="center">
+  <img alt="Logo" src="https://raw.githubusercontent.com/noszczykmichal/minimalistic-storefront/main/public/android-chrome-192x192.png" width="100" />
+</div>
+<h1 align="center">
+Minimalistic-storefront
+</h1>
+<p align="center">
+A mock-up page of an imaginary online shop, developed with <a href="https://react.dev/" target="_blank">React</a>, fetching data from the GraphQL endpoint, with user accounts served by its own [backend](https://github.com/noszczykmichal/minimalistic-storefront-be).  
+</p>
 
-> A mock-up page of an imaginary online shop, fetching data from the GraphQL endpoint, with user accounts served by its own [backend](https://github.com/noszczykmichal/minimalistic-storefront-be).  
-> You can check live demo [_here_](https://minimalistic-storefront.web.app/).
+<p align="center">
+  <a href="https://minimalistic-storefront.web.app/" target="_blank">Live demo</a>
+</p>
 
-![Home page with the product listing](./img/home.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/noszczykmichal/minimalistic-storefront/main/img/home.png" width="700" alt="demo" />
+</p>
 
 ## Table of Contents
 
