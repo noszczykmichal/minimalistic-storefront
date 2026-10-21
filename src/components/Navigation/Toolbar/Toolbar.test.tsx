@@ -9,20 +9,28 @@ import { MemoryRouter } from "react-router";
 
 import Toolbar from "@/components/Navigation/Toolbar/Toolbar";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
+import type { Currency } from "@/types/types";
+
+type MockSelectorValue = {
+  categories: string[];
+  currencies: Currency[];
+  billingCurrency: string;
+  totalPrice: number;
+};
 
 describe("Toolbar component", () => {
   const dispatch = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
-    useAppDispatch.mockReturnValue(dispatch);
+    vi.mocked(useAppDispatch).mockReturnValue(dispatch);
   });
 
   it("should render NavigationItems and CurrencySwitcher when props categories and currencies are non empty arrays", () => {
     const modalRoot = document.createElement("div");
     modalRoot.setAttribute("id", "modals-root");
 
-    useAppSelector.mockReturnValue({
+    vi.mocked(useAppSelector).mockReturnValue({
       categories: ["testString", "testString2"],
       currencies: [
         { label: "USD", symbol: "$" },
@@ -39,8 +47,8 @@ describe("Toolbar component", () => {
       { container: document.body.appendChild(modalRoot) },
     );
 
-    const { categories, billingCurrency } =
-      useAppSelector.mock.results[0].value;
+    const { categories, billingCurrency } = vi.mocked(useAppSelector).mock
+      .results[0].value as MockSelectorValue;
     const listElement = screen.getByRole("list");
     const navigationItems = screen.getAllByRole("listitem");
     const currencySwitcher = screen.getByText(billingCurrency);
@@ -54,7 +62,7 @@ describe("Toolbar component", () => {
     const modalRoot = document.createElement("div");
     modalRoot.setAttribute("id", "modals-root");
 
-    useAppSelector.mockReturnValue({
+    vi.mocked(useAppSelector).mockReturnValue({
       categories: [],
       currencies: [],
       billingCurrency: "$",
@@ -69,7 +77,8 @@ describe("Toolbar component", () => {
     );
 
     const navigationItemsList = screen.queryByTestId("navigation-items");
-    const { billingCurrency } = useAppSelector.mock.results[0].value;
+    const { billingCurrency } = vi.mocked(useAppSelector).mock.results[0]
+      .value as MockSelectorValue;
     const currencySwitcher = screen.queryByText(billingCurrency);
 
     expect(navigationItemsList).toBeNull();
@@ -80,7 +89,7 @@ describe("Toolbar component", () => {
     const modalRoot = document.createElement("div");
     modalRoot.setAttribute("id", "modals-root");
 
-    useAppSelector.mockReturnValue({
+    vi.mocked(useAppSelector).mockReturnValue({
       categories: ["testString", "testString2"],
       currencies: [
         { label: "USD", symbol: "$" },

@@ -11,13 +11,18 @@ import MiniCartItem from "@/components/Cart/MiniCart/MiniCartItems/MiniCartItem/
 import { testItemDetails } from "@/utils/testUtils";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { productActions } from "@/store/products/products";
+import type { RootState } from "@/store/store";
 
 describe("MiniCartItem component", () => {
   const dispatch = vi.fn();
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(useAppDispatch).mockReturnValue(dispatch);
-    vi.mocked(useAppSelector).mockReturnValue({ billingCurrency: "$" });
+    const state = {
+      products: { billingCurrency: "$" },
+    } as unknown as RootState;
+
+    vi.mocked(useAppSelector).mockImplementation((selector) => selector(state));
   });
 
   it("should render MiniCartItem with accurate product description", () => {

@@ -9,7 +9,8 @@ import classes from "@/components/Navigation/Toolbar/Toolbar.module.css";
 import AccountIcon from "@/components/Navigation/Toolbar/AccountIcon/AccountIcon";
 
 export default function Toolbar() {
-  const { categories, currencies } = useAppSelector((state) => state.ui);
+  const categories = useAppSelector((state) => state.ui.categories);
+  const currencies = useAppSelector((state) => state.ui.currencies);
 
   let navigationItems;
   let currencySwitcher;
