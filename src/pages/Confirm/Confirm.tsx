@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 
-import ShoppingBagIcon from "@/components/UI/ShoppingBagIcon/ShoppingBagIcon";
+import ShoppingBagIcon from "@/components/UI/Icons/ShoppingBagIcon/ShoppingBagIcon";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import { productActions } from "@/store/products/products";
 import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment/shippingAddressAndPayment";

@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 
 import AccountMenu from "@/components/Navigation/Toolbar/AccountMenu/AccountMenu";
-import PersonIcon from "@/components/UI/PersonIcon/PersonIcon";
+import PersonIcon from "@/components/UI/Icons/PersonIcon/PersonIcon";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/Navigation/Toolbar/AccountIcon/AccountIcon.module.css";
 

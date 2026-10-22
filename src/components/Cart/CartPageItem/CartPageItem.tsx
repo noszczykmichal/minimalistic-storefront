@@ -4,8 +4,8 @@ import ThumbnailArrow from "@/components/UI/ThumbnailArrow/ThumbnailArrow";
 import useChangeQuantity from "@/hooks/useChangeQuantity";
 import { CartItem } from "@/types/types";
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import PlusIcon from "@/components/Cart/Icons/PlusIcon/PlusIcon";
-import MinusIcon from "@/components/Cart/Icons/MinusIcon/MinusIcon";
+import PlusIcon from "@/components/UI/Icons/PlusIcon/PlusIcon";
+import MinusIcon from "@/components/UI/Icons/MinusIcon/MinusIcon";
 import Attribute from "@/components/Cart/CartPageItem/Attribute/Attribute";
 import classes from "@/components/Cart/CartPageItem/CartPageItem.module.css";
 

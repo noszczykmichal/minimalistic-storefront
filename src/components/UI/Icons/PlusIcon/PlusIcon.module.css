@@ -1,0 +1,8 @@
+.button__svg-y-axis {
+  position: absolute;
+}
+
+.button__svg-x-axis path,
+.button__svg-y-axis path {
+  stroke: var(--black-100);
+}

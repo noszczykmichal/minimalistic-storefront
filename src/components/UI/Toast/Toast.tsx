@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
-import CheckMark from "@/components/UI/CheckMark/CheckMark";
+import CheckMarkIcon from "@/components/UI/Icons/CheckMarkIcon/CheckMarkIcon";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/UI/Toast/Toast.module.css";
 
@@ -25,7 +25,7 @@ export default function Toast() {
       unmountOnExit
     >
       <div className={classes.toast} ref={toastRef}>
-        <CheckMark className={classes["icon--success"]} />
+        <CheckMarkIcon className={classes["icon--success"]} />
         <p className={classes.toast__message}>Account has been created</p>
       </div>
     </CSSTransition>,

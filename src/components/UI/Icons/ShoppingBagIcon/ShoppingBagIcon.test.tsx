@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 
-import ShoppingBagIcon from "@/components/UI/ShoppingBagIcon/ShoppingBagIcon";
+import ShoppingBagIcon from "@/components/UI/Icons/ShoppingBagIcon/ShoppingBagIcon";
 
 describe("ShoppingBagIcon component", () => {
   test("should render the shopping bag icon", () => {

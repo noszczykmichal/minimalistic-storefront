@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-import classes from "@/components/UI/ShoppingBagIcon/ShoppingBagIcon.module.css";
+import classes from "@/components/UI/Icons/ShoppingBagIcon/ShoppingBagIcon.module.css";
 
 export default function ShoppingBagIcon({
   animateCheckmark,

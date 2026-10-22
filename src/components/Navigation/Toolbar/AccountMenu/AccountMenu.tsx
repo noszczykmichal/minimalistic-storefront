@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
 import Backdrop from "@/components/UI/Backdrop/Backdrop";
-import PersonIcon from "@/components/UI/PersonIcon/PersonIcon";
+import PersonIcon from "@/components/UI/Icons/PersonIcon/PersonIcon";
 import { logOutThunk } from "@/store/auth/auth";
 import { uiActions } from "@/store/ui/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
