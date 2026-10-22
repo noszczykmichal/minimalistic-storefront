@@ -13,6 +13,11 @@ A mock-up page of an imaginary online shop, developed with <a href="https://reac
 </p>
 
 <p align="center">
+  To log in without signing up, use the test account:<br />
+  email: <code>test@example.com</code> · password: <code>Test123!</code>
+</p>
+
+<p align="center">
   <img src="https://raw.githubusercontent.com/noszczykmichal/minimalistic-storefront/main/img/home.png" width="700" alt="demo" />
 </p>
 
