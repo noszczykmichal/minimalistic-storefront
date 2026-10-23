@@ -1,4 +1,4 @@
-.cart-icon {
+.cart-button {
   position: relative;
   border: none;
   background-color: transparent;
@@ -9,7 +9,11 @@
   justify-content: center;
 }
 
-.cart-icon:disabled {
+.cart-button svg path {
+  fill: var(--black-75);
+}
+
+.cart-button:disabled {
   cursor: unset;
 }
 
