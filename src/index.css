@@ -24,14 +24,15 @@ html {
   --color-primary: var(--green-75);
 
   --black-100: #1d1f22;
+  --black-75: #43464e;
   --green-100: #3fa75c;
   --green-75: #5ece7b;
   --grey-100: #767676;
   --grey-25: #e5e5e5;
   --red-100: #d64545;
 
-  --drop-shadow: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.19));
-
+  --drop-shadow: drop-shadow(var(--box-shadow));
+  --box-shadow: 0px 4px 20px rgba(168, 172, 176, 0.5);
   --radius-primary: 0.5rem;
 }
 

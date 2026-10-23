@@ -1,3 +1,5 @@
+import classes from "@/components/UI/Icons/MinusIcon/Minus.module.css";
+
 export default function MinusIcon() {
   return (
     <svg
@@ -6,13 +8,9 @@ export default function MinusIcon() {
       viewBox="0 0 17 1"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={classes.icon}
     >
-      <path
-        d="M1 0.5H16"
-        stroke="#1D1F22"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M1 0.5H16" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

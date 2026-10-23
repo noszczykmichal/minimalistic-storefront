@@ -9,6 +9,7 @@ import {
 } from "@/store/auth/auth";
 import useSecondsLeft from "@/hooks/useSecondsLeft";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
+import ClockIcon from "@/components/UI/Icons/ClockIcon/ClockIcon";
 import classes from "@/components/Login/SessionExpiresModal/SessionExpiresContent/SessionExpiresContent.module.css";
 
 const DANGER_SECONDS = 10;
@@ -44,18 +45,7 @@ export default function SessionExpiresContent({
     >
       <div className={classes.modal__head}>
         <span className={classes.modal__icon} aria-hidden="true">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          >
-            <circle cx="12" cy="12" r="9" />
-            <path d="M12 7v5l3 2" />
-          </svg>
+          <ClockIcon />
         </span>
         <h5 id="session-modal-title" className={classes.modal__title}>
           Your session is about to expire

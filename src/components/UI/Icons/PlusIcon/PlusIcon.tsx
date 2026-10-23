@@ -1,4 +1,4 @@
-import classes from "@/components/Cart/Icons/PlusIcon/PlusIcon.module.css";
+import classes from "@/components/UI/Icons/PlusIcon/PlusIcon.module.css";
 
 export default function PlusIcon() {
   return (
@@ -9,13 +9,9 @@ export default function PlusIcon() {
         viewBox="0 0 15 1"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className={classes["button__svg-x-axis"]}
       >
-        <path
-          d="M1 0.5H16"
-          stroke="#1D1F22"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M1 0.5H16" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       <svg
         className={classes["button__svg-y-axis"]}
@@ -25,12 +21,7 @@ export default function PlusIcon() {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path
-          d="M0.5 1V16"
-          stroke="#1D1F22"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M0.5 1V16" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </>
   );
