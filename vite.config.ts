@@ -36,5 +36,6 @@ export default defineConfig({
         },
       },
     },
+    sourcemap: process.env.SOURCEMAP === "true",
   },
 });

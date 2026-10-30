@@ -28,6 +28,9 @@ export default function Review() {
     paymentMethod,
   } = useAppSelector((state) => state.shippingAddressAndPayment.draft);
 
+  const authenticationStatus = useAppSelector((state) => state.auth.status);
+  const isAuthenticated = authenticationStatus === "authenticated";
+
   const chosenShippingMethod = shippingOptions.find(
     (option) => option.name === shippingOption,
   )?.label;
@@ -42,7 +45,13 @@ export default function Review() {
   const redirectToShipAndPayPage = () =>
     navigate("/cart/shipping/address&payment?step=2");
 
-  const onNextButtonClick = () => navigate("/cart/confirm");
+  const onNextButtonClick = () => {
+    if (isAuthenticated) {
+      console.log("blabla");
+    }
+
+    navigate("/cart/confirm");
+  };
 
   const onBackButtonClick = () => navigate(-1);
   return (

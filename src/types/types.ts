@@ -82,6 +82,8 @@ export interface StartSessionResponse {
   accessTokenExpiresAt: number;
 }
 
+export type AuthStatus = "checking" | "authenticated" | "anonymous";
+
 const isCurrencyLabel = (label: string): label is CurrencyLabel =>
   (CURRENCY_LABELS as readonly string[]).includes(label);
 
