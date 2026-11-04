@@ -19,7 +19,7 @@ export default function CartPageItem({
   const { billingCurrency } = useAppSelector((state) => state.products);
 
   const filteredPrices = itemDetails.prices.filter(
-    (price) => price.currency.symbol === billingCurrency,
+    (price) => price.currency.symbol === billingCurrency.symbol,
   );
   const [currentPrice] = filteredPrices;
 
@@ -67,7 +67,7 @@ export default function CartPageItem({
             </span>
           </h2>
           <p className={classes["product-details__price"]}>
-            {billingCurrency}
+            {billingCurrency.symbol}
             {currentPrice.amount.toFixed(2)}
           </p>
         </div>

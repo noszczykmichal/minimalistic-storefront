@@ -124,7 +124,7 @@ export function createTestStore(
       cart: [testItemDetails, testNikeAir],
       productsTotal: productsTotalVal,
       totalPrice: 144.69,
-      billingCurrency: "$",
+      billingCurrency: { label: "USD", symbol: "$" },
     },
     shippingPaymentOptions: shippingPaymentOptionsValue,
   });

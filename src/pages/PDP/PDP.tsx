@@ -76,7 +76,7 @@ export default function PDP() {
   };
 
   const currentPrice = [...displayedProduct!.prices].filter(
-    (price) => price.currency.symbol === billingCurrency,
+    (price) => price.currency.symbol === billingCurrency.symbol,
   );
 
   return (

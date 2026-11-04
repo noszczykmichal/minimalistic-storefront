@@ -15,7 +15,7 @@ export const shippingAddressSchema = buildFormValidation([
   "email",
 ]);
 
-const shippingMethodAndPayment = z.object({
+export const shippingMethodAndPayment = z.object({
   shippingOption: z.string("Choose a shipping method.").pipe(
     z.enum(SHIPPING_FORM, {
       error: "Choose a shipping method.",
@@ -37,6 +37,7 @@ export const stepFieldNames = [
   shippingMethodAndPayment.keyof().options,
 ] as const;
 
+export type ShippingAddress = z.output<typeof shippingAddressSchema>;
 export type AddressAndPaymentFormInput = z.input<typeof fullSchema>;
 export type AddressAndPaymentFormValues = z.output<typeof fullSchema>;
 

@@ -1,15 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { CartItem, Price, ProductType, ProductAttribute } from "@/types/types";
+import type {
+  CartItem,
+  Price,
+  ProductType,
+  ProductAttribute,
+  Currency,
+} from "@/types/types";
 
 const initialState: {
-  billingCurrency: string;
+  billingCurrency: Currency;
   currentPDP: null | ProductType;
   cart: CartItem[];
   productsTotal: number;
   totalPrice: number;
 } = {
-  billingCurrency: "$",
+  billingCurrency: {
+    label: "USD",
+    symbol: "$",
+  },
   currentPDP: null,
   cart: [],
   productsTotal: 0,
@@ -24,7 +33,7 @@ const productsSlice = createSlice({
       const { cart } = state;
       const updatedTotalPrice = Object.keys(cart).reduce((acc, index) => {
         const filteredPrices = cart[+index].prices.filter(
-          (price) => price.currency.symbol === action.payload,
+          (price) => price.currency.symbol === action.payload.symbol,
         );
         const [currentPrice] = filteredPrices;
         return acc + cart[+index].quantity * currentPrice.amount;
@@ -79,7 +88,8 @@ const productsSlice = createSlice({
 
       updatedTotalPrice = Object.keys(updatedCart).reduce((acc, index) => {
         const filteredPrices = updatedCart[+index].prices.filter(
-          (price: Price) => price.currency.symbol === state.billingCurrency,
+          (price: Price) =>
+            price.currency.symbol === state.billingCurrency.symbol,
         );
         const [currentPrice] = filteredPrices;
         return acc + updatedCart[+index].quantity * currentPrice.amount;
@@ -117,7 +127,8 @@ const productsSlice = createSlice({
       const updatedTotalPrice = Object.keys(updatedCart).reduce(
         (acc, index) => {
           const filteredPrices = updatedCart[index].prices.filter(
-            (price: Price) => price.currency.symbol === state.billingCurrency,
+            (price: Price) =>
+              price.currency.symbol === state.billingCurrency.symbol,
           );
           const [currentPrice] = filteredPrices;
           return acc + updatedCart[index].quantity * currentPrice.amount;

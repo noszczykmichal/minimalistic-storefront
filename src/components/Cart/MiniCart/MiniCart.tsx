@@ -78,7 +78,7 @@ export default function MiniCart() {
         <dl className={classes["mini-cart__total-price"]}>
           <dt className={classes["total-price__text"]}>Total</dt>
           <dd className={classes["total-price__price"]}>
-            {billingCurrency}
+            {billingCurrency.symbol}
             {totalPrice.toFixed(2)}
           </dd>
         </dl>

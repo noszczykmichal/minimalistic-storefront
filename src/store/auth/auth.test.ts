@@ -1,4 +1,7 @@
-vi.mock("@/api/client", () => ({ refreshSession: vi.fn(), logOut: vi.fn() }));
+vi.mock("@/api/auth/auth", () => ({
+  refreshSession: vi.fn(),
+  logOut: vi.fn(),
+}));
 vi.mock("@/api/sessionHint", () => ({
   hasSessionHint: vi.fn(),
   clearSessionHint: vi.fn(),
@@ -6,7 +9,7 @@ vi.mock("@/api/sessionHint", () => ({
 
 import { configureStore } from "@reduxjs/toolkit";
 
-import { logOut, refreshSession } from "@/api/client";
+import { logOut, refreshSession } from "@/api/auth/auth";
 import { clearSessionHint, hasSessionHint } from "@/api/sessionHint";
 import authSlice, {
   authActions,

@@ -15,7 +15,7 @@ export default function MiniCartItem({
   );
 
   const filteredPrices = itemDetails.prices.filter(
-    (price) => price.currency.symbol === billingCurrency,
+    (price) => price.currency.symbol === billingCurrency.symbol,
   );
   const [currentPrice] = filteredPrices;
 
@@ -38,7 +38,7 @@ export default function MiniCartItem({
             <span className={classes.title__item}>{itemDetails.name}</span>
           </h3>
           <p className={classes["product-details__price"]}>
-            {billingCurrency}
+            {billingCurrency.symbol}
             {currentPrice.amount.toFixed(2)}
           </p>
         </div>

@@ -10,7 +10,10 @@ import {
   shippingOptions,
   paymentOptions,
 } from "@/utils/shippingForm/constants";
+import placeOrder from "@/api/orders/orders";
 import classes from "@/pages/Review/Review.module.css";
+import { shippingAddressSchema } from "@/utils/shippingForm/schemas";
+import buildOrderObject from "@/utils/orders/ordersUtils";
 
 export default function Review() {
   const navigate = useNavigate();
@@ -24,20 +27,25 @@ export default function Review() {
     country,
     phone,
     email,
-    shippingOption,
-    paymentMethod,
   } = useAppSelector((state) => state.shippingAddressAndPayment.draft);
+  const { shippingOption, paymentMethod, ...addressFields } = useAppSelector(
+    (state) => state.shippingAddressAndPayment.draft,
+  );
 
   const authenticationStatus = useAppSelector((state) => state.auth.status);
   const isAuthenticated = authenticationStatus === "authenticated";
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
+  );
+  const cart = useAppSelector((state) => state.products.cart);
 
   const chosenShippingMethod = shippingOptions.find(
     (option) => option.name === shippingOption,
-  )?.label;
+  );
 
   const chosenPaymentMethod = paymentOptions.find(
     (option) => option.name === paymentMethod,
-  )?.label;
+  );
 
   const redirectToAddressPage = () =>
     navigate("/cart/shipping/address&payment?step=1");
@@ -45,9 +53,27 @@ export default function Review() {
   const redirectToShipAndPayPage = () =>
     navigate("/cart/shipping/address&payment?step=2");
 
-  const onNextButtonClick = () => {
+  const onNextButtonClick = async () => {
+    const address = shippingAddressSchema.safeParse(addressFields);
+
+    if (!address.success || !chosenShippingMethod || !chosenPaymentMethod) {
+      return;
+    }
+
     if (isAuthenticated) {
-      console.log("blabla");
+      const order = buildOrderObject({
+        cart,
+        billingCurrency,
+        address: address.data,
+        shippingMethod: chosenShippingMethod?.name,
+        paymentMethod: chosenPaymentMethod?.name,
+      });
+
+      console.log("order", order);
+
+      await placeOrder(order);
+
+      return;
     }
 
     navigate("/cart/confirm");
@@ -90,7 +116,7 @@ export default function Review() {
         <div className={classes["order-detail"]}>
           <h2 className={classes["order-detail__heading"]}>Shipping Method</h2>
           <p className={classes["order-detail__value"]}>
-            <Markup content={chosenShippingMethod} />
+            <Markup content={chosenShippingMethod?.label} />
           </p>
           <button
             type="button"
@@ -105,7 +131,7 @@ export default function Review() {
         <div className={classes["order-detail"]}>
           <h2 className={classes["order-detail__heading"]}>Payment Method</h2>
           <p className={classes["order-detail__value"]}>
-            <Markup content={chosenPaymentMethod} />
+            <Markup content={chosenPaymentMethod?.label} />
           </p>
           <button
             type="button"

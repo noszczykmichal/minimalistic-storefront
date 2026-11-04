@@ -35,9 +35,10 @@ const renderReview = () =>
         products: {
           cart: [testItemDetails],
           totalPrice: 518.47,
-          billingCurrency: "$",
+          billingCurrency: { label: "USD", symbol: "$" },
         },
         shippingAddressAndPayment: { draft: testDraft },
+        auth: { status: "anonymous" },
       })}
     >
       <Review />

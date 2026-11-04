@@ -4,12 +4,12 @@ import {
   paymentOptions,
 } from "@/utils/shippingForm/constants";
 import classes from "@/components/OrderSummary/CostSummary/CostSummary.module.css";
-import { Option } from "@/types/types";
+import { Currency, Option } from "@/types/types";
 
 const calculateOptionPrice = <T extends string>(
   optionsArray: Option<T>[],
   selectedOption: string | null | undefined,
-  currency: string,
+  currency: Currency,
 ) => {
   if (!selectedOption) {
     return 0;
@@ -19,7 +19,7 @@ const calculateOptionPrice = <T extends string>(
   )?.costs;
 
   const optionPrice = chosenOption?.find(
-    (price) => price.currency.symbol === currency,
+    (price) => price.currency.symbol === currency.symbol,
   );
 
   return optionPrice?.amount ?? 0;
@@ -88,28 +88,28 @@ export default function CostSummary() {
       </div>
       <div className={classes["cost-summary__values"]}>
         <p className={classes.values__item}>
-          {billingCurrency}
+          {billingCurrency.symbol}
           {(totalPrice * 0.21).toFixed(2)}
         </p>
 
         <p className={classes.values__item}>
-          {billingCurrency}
+          {billingCurrency.symbol}
           {totalPrice.toFixed(2)}
         </p>
         {isShippingPriceSet && (
           <p className={classes.values__item}>
-            {billingCurrency}
+            {billingCurrency.symbol}
             {shippingPrice.toFixed(2)}
           </p>
         )}
         {!!paymentPrice && (
           <p className={classes.values__item}>
-            {billingCurrency}
+            {billingCurrency.symbol}
             {paymentPrice.toFixed(2)}
           </p>
         )}
         <p className={classes.values__item}>
-          {billingCurrency}
+          {billingCurrency.symbol}
           {totalPriceAndOtherCosts}
         </p>
       </div>

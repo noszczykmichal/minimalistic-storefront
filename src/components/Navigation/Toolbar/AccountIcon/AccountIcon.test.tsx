@@ -4,8 +4,7 @@ import { legacy_configureStore as configureMockStore } from "redux-mock-store";
 
 import AccountIcon from "@/components/Navigation/Toolbar/AccountIcon/AccountIcon";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
-import type { AuthStatus } from "@/store/auth/auth";
-import type { User } from "@/types/types";
+import type { AuthStatus, User } from "@/types/types";
 
 const user: User = { firstName: "Jane", email: "jane@example.com" };
 

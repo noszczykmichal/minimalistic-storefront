@@ -21,7 +21,7 @@ const testCurrencies: Currency[] = [
 
 const mockSwitcherState = (
   isCurrencySwitcherOpen: boolean,
-  billingCurrency = "$",
+  billingCurrency = testCurrencies[1],
 ) => {
   const state = {
     ui: { isCurrencySwitcherOpen },
@@ -77,7 +77,7 @@ describe("CurrencySwitcher component", () => {
   });
 
   it("should display the billing currency on the switcher button", () => {
-    mockSwitcherState(false, "£");
+    mockSwitcherState(false, testCurrencies[1]);
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
 
@@ -130,7 +130,7 @@ describe("CurrencySwitcher component", () => {
   });
 
   it("should mark only the billing currency as pressed", () => {
-    mockSwitcherState(true, "£");
+    mockSwitcherState(true, testCurrencies[1]);
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
 
@@ -145,7 +145,7 @@ describe("CurrencySwitcher component", () => {
   });
 
   it("should move focus to the billing currency option when opened", () => {
-    mockSwitcherState(true, "£");
+    mockSwitcherState(true, testCurrencies[1]);
 
     render(<CurrencySwitcher currencies={testCurrencies} />);
 
@@ -187,7 +187,7 @@ describe("CurrencySwitcher component", () => {
 
     expect(dispatch).toHaveBeenCalledTimes(2);
     expect(dispatch).toHaveBeenCalledWith(currencySwitcherVisibToggle(false));
-    expect(dispatch).toHaveBeenCalledWith(onCurrencyChange("£"));
+    expect(dispatch).toHaveBeenCalledWith(onCurrencyChange(testCurrencies[1]));
   });
 
   it("should close when Escape is pressed", async () => {

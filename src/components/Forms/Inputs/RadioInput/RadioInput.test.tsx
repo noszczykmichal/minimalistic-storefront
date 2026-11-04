@@ -4,12 +4,14 @@ import { vi } from "vitest";
 
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import RadioInput from "@/components/Forms/Inputs/RadioInput/RadioInput";
+import type { RootState } from "@/store/store";
+import type { Currency, Option } from "@/types/types";
 
 vi.mock("@/hooks/useReduxHooks", () => ({
   useAppSelector: vi.fn(),
 }));
 
-const testOption = {
+const testOption: Option<string> = {
   label: "Cash on collection",
   name: "cash_on_collection",
   costs: [
@@ -26,10 +28,13 @@ const createRegistration = (name = "paymentMethod") => ({
 });
 
 describe("RadioInput component", () => {
-  let registration;
+  let registration: ReturnType<typeof createRegistration>;
 
-  const renderRadioInput = (billingCurrency = "$") => {
-    useAppSelector.mockReturnValue({ billingCurrency });
+  const renderRadioInput = (
+    billingCurrency: Currency = { label: "USD", symbol: "$" },
+  ) => {
+    const state = { products: { billingCurrency } } as unknown as RootState;
+    vi.mocked(useAppSelector).mockImplementation((selector) => selector(state));
 
     return render(
       <RadioInput inputDetails={testOption} registration={registration} />,
@@ -52,7 +57,10 @@ describe("RadioInput component", () => {
   });
 
   it("should show the option price in the billing currency", () => {
-    renderRadioInput("$");
+    renderRadioInput({
+      label: "USD",
+      symbol: "$",
+    });
 
     expect(
       screen.getByLabelText("Cash on collection - $1.99"),
@@ -60,7 +68,10 @@ describe("RadioInput component", () => {
   });
 
   it("should show the option price in a different billing currency", () => {
-    renderRadioInput("£");
+    renderRadioInput({
+      label: "GBP",
+      symbol: "£",
+    });
 
     expect(
       screen.getByLabelText("Cash on collection - £1.49"),
@@ -68,7 +79,10 @@ describe("RadioInput component", () => {
   });
 
   it("should show a price of 0.00 when there is no price for the billing currency", () => {
-    renderRadioInput("¥");
+    renderRadioInput({
+      label: "JPY",
+      symbol: "¥",
+    });
 
     expect(
       screen.getByLabelText("Cash on collection - ¥0.00"),

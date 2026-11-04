@@ -36,10 +36,13 @@ const testProduct: ProductType = {
   ],
 };
 
-const createStore = (billingCurrency = "$") =>
+const createStore = (billingCurrency = { label: "USD", symbol: "$" }) =>
   configureMockStore([])({ products: { billingCurrency } });
 
-const renderProduct = (product = testProduct, billingCurrency = "$") =>
+const renderProduct = (
+  product = testProduct,
+  billingCurrency = { label: "USD", symbol: "$" },
+) =>
   render(
     <WithMockStoreAndRouter customStore={createStore(billingCurrency)}>
       <ul>
@@ -58,7 +61,7 @@ describe("Product component", () => {
   });
 
   it("should render the product name and its price in the billing currency", () => {
-    renderProduct(testProduct, "£");
+    renderProduct(testProduct, { label: "GBP", symbol: "£" });
 
     const productCard = screen.getByRole("listitem");
 

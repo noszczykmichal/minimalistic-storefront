@@ -8,7 +8,7 @@ import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
 import singUpFormConfig from "@/utils/signUpForm/constants";
 import defaultValues from "@/utils/signUpForm/defaultValues";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
-import { signUp } from "@/api/client";
+import { signUp } from "@/api/auth/auth";
 import classes from "@/components/Login/SignUpForm/SignUpForm.module.css";
 
 export default function SignUpForm() {

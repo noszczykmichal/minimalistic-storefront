@@ -11,7 +11,10 @@ export type AttributeItem = {
 };
 
 export type Currency = {
-  [L in CurrencyLabel]: { label: L; symbol: (typeof CURRENCY_SYMBOLS)[L] };
+  [L in CurrencyLabel]: {
+    label: L;
+    symbol: (typeof CURRENCY_SYMBOLS)[L];
+  };
 }[CurrencyLabel];
 
 export type Price = {

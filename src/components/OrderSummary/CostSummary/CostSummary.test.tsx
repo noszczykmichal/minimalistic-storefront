@@ -1,20 +1,28 @@
 import { render, screen } from "@testing-library/react";
-import configureStore from "redux-mock-store";
+import { legacy_configureStore as configureMockStore } from "redux-mock-store";
 
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
+import type { RootState } from "@/store/store";
+import type { Currency } from "@/types/types";
 
-const mockStore = configureStore([]);
+const mockStore = configureMockStore<RootState>([]);
+
+interface RenderOptions {
+  draft?: { shippingOption?: string | null; paymentMethod?: string };
+  billingCurrency?: Currency;
+  totalPrice?: number;
+}
 
 const renderCostSummary = ({
   draft = {},
-  billingCurrency = "$",
+  billingCurrency = { label: "USD", symbol: "$" },
   totalPrice = 100,
-} = {}) => {
+}: RenderOptions = {}) => {
   const store = mockStore({
     products: { billingCurrency, totalPrice },
     shippingAddressAndPayment: { draft },
-  });
+  } as unknown as RootState);
 
   return render(
     <WithMockStoreAndRouter customStore={store}>
@@ -84,7 +92,7 @@ describe("CostSummary component", () => {
 
   it("should use prices in the selected billing currency", () => {
     renderCostSummary({
-      billingCurrency: "£",
+      billingCurrency: { label: "GBP", symbol: "£" },
       draft: { shippingOption: "bestWay", paymentMethod: "cash_on_collection" },
     });
 

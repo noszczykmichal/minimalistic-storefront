@@ -17,7 +17,12 @@ import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 const createEmptyCartStore = (isMiniCartOpen: boolean, totalPrice = 0) =>
   configureMockStore([])({
     ui: { isMiniCartOpen },
-    products: { cart: [], productsTotal: 0, totalPrice, billingCurrency: "$" },
+    products: {
+      cart: [],
+      productsTotal: 0,
+      totalPrice,
+      billingCurrency: { label: "USD", symbol: "$" },
+    },
   });
 
 const renderMiniCart = (store = createTestStore()) =>

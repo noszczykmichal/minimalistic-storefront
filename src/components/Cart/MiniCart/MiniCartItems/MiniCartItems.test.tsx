@@ -15,7 +15,7 @@ describe("MiniCartItems component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     const state = {
-      products: { billingCurrency: "$", cart },
+      products: { billingCurrency: { label: "USD", symbol: "$" }, cart },
     } as unknown as RootState;
 
     vi.mocked(useAppSelector).mockImplementation((selector) => selector(state));

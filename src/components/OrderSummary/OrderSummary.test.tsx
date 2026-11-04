@@ -12,7 +12,7 @@ const renderOrderSummary = () => {
     products: {
       cart: [testItemDetails],
       totalPrice: 518.47,
-      billingCurrency: "$",
+      billingCurrency: { label: "USD", symbol: "$" },
     },
     shippingAddressAndPayment: { draft: { shippingOption: "bestWay" } },
   } as unknown as RootState;

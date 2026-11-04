@@ -18,6 +18,7 @@ export default function Toolbar() {
   if (categories.length) {
     navigationItems = <NavigationItems categories={categories} />;
   }
+
   if (currencies.length) {
     currencySwitcher = <CurrencySwitcher currencies={currencies} />;
   }

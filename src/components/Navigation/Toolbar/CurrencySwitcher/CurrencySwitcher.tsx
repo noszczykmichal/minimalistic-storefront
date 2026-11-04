@@ -74,9 +74,9 @@ export default function CurrencySwitcher({
     dispatch(miniCartVisibilityToggle(false));
   };
 
-  const currencyChangeHandler = (symbol: string) => {
+  const currencyChangeHandler = (currency: Currency) => {
     dispatch(currencySwitcherVisibToggle(false));
-    dispatch(onCurrencyChange(symbol));
+    dispatch(onCurrencyChange(currency));
   };
 
   const onClose = () => {
@@ -102,7 +102,7 @@ export default function CurrencySwitcher({
           aria-controls={optionsId}
           ref={switcherButtonRef}
         >
-          {billingCurrency}
+          {billingCurrency.symbol}
           <svg
             width="8"
             height="4"
@@ -145,7 +145,7 @@ export default function CurrencySwitcher({
             >
               <ul className={classes.options__list}>
                 {currencies.map((currency) => {
-                  const isSelected = currency.symbol === billingCurrency;
+                  const isSelected = currency.symbol === billingCurrency.symbol;
 
                   return (
                     <li key={currency.label}>
@@ -154,7 +154,7 @@ export default function CurrencySwitcher({
                         aria-label={`${currency.symbol} ${currency.label}`}
                         aria-pressed={isSelected}
                         className={classes.switcher__option}
-                        onClick={() => currencyChangeHandler(currency.symbol)}
+                        onClick={() => currencyChangeHandler(currency)}
                         ref={isSelected ? selectedOptionRef : undefined}
                       >
                         <span className={classes.option__symbol}>

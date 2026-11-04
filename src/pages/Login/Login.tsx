@@ -8,7 +8,7 @@ import SignUpModal from "@/components/Login/SignUpModal/SignUpModal";
 import { uiActions } from "@/store/ui/ui";
 import { authActions } from "@/store/auth/auth";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { signIn } from "@/api/client";
+import { signIn } from "@/api/auth/auth";
 import classes from "@/pages/Login/Login.module.css";
 
 export default function Login() {
@@ -39,7 +39,7 @@ export default function Login() {
 
   const onSignIn = async (values: LoginFormOutput) => {
     try {
-      const { data } = await signIn(values);
+      const data = await signIn(values);
       // Marks the user as authenticated; GuestOnlyRoute, which wraps this page
       // in App.tsx, then redirects away from /login.
       dispatch(saveSessionData(data));

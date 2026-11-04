@@ -37,7 +37,10 @@ const testProduct: ProductType = {
 
 const renderPDP = () => {
   const store = configureMockStore([])({
-    products: { currentPDP: testProduct, billingCurrency: "$" },
+    products: {
+      currentPDP: testProduct,
+      billingCurrency: { label: "USD", symbol: "$" },
+    },
     ui: { isModalOpen: false },
   });
 

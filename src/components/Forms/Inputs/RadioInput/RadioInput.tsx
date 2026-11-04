@@ -13,14 +13,15 @@ export default function RadioInput<T extends string>({
   registration: UseFormRegisterReturn;
 }) {
   const { label, name, costs } = inputDetails;
-  const { billingCurrency } = useAppSelector((state) => state.products);
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
+  );
 
   const optionPrice =
-    costs.find((cost: Cost) => cost.currency.symbol === billingCurrency)
+    costs.find((cost: Cost) => cost.currency.symbol === billingCurrency.symbol)
       ?.amount ?? 0;
-
   const updatedLabel = `${label}<b> - ${
-    billingCurrency + optionPrice.toFixed(2)
+    billingCurrency.symbol + optionPrice.toFixed(2)
   }</b>`;
 
   const id = `${registration.name}-${name}`;

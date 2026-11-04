@@ -37,7 +37,10 @@ const createRegistration = (name = "shippingOption") => ({
 describe("Fieldset component", () => {
   let registration;
 
-  const renderFieldset = ({ billingCurrency = "$", ...props } = {}) => {
+  const renderFieldset = ({
+    billingCurrency = { label: "USD", symbol: "$" },
+    ...props
+  } = {}) => {
     const store = mockStore({ products: { billingCurrency } });
 
     return render(
@@ -84,7 +87,7 @@ describe("Fieldset component", () => {
   });
 
   it("should show option prices in a different billing currency", () => {
-    renderFieldset({ billingCurrency: "£" });
+    renderFieldset({ billingCurrency: { label: "GBP", symbol: "£" } });
 
     expect(screen.getByLabelText(/Flat Rate - £3\.59/)).toBeInTheDocument();
     expect(screen.getByLabelText(/Best Way - £7\.19/)).toBeInTheDocument();

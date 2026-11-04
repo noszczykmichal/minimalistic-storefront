@@ -37,12 +37,12 @@ export default function Cart() {
         </div>
         <div className={classes["summary-wrapper__values"]}>
           <p className={classes.values__item}>
-            {billingCurrency}
+            {billingCurrency.symbol}
             {(totalPrice * 0.21).toFixed(2)}
           </p>
           <p className={classes.values__item}>{productsTotal}</p>
           <p className={classes.values__item}>
-            {billingCurrency}
+            {billingCurrency.symbol}
             {totalPrice.toFixed(2)}
           </p>
         </div>
