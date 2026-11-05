@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,9 +13,17 @@ import {
 } from "@/utils/shippingForm/schemas";
 import defaultShippingAndPaymentData from "@/utils/shippingForm/defaultValues";
 import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment/shippingAddressAndPayment";
+import { uiActions } from "@/store/ui/ui";
 import classes from "@/pages/ShippingForm/ShippingForm.module.css";
 import Step1 from "@/pages/ShippingForm/Step1/Step1";
 import Step2 from "@/pages/ShippingForm/Step2/Step2";
+import getShippingAndPaymentCosts from "@/api/checkout/checkout";
+import {
+  shippingOptionsLabels,
+  paymentOptionsLabels,
+} from "@/utils/shippingForm/constants";
+import { isRequestCanceled } from "@/api/client";
+import Skeleton from "./Step2/Skeleton/Skeleton";
 
 const LAST_STEP = stepFieldNames.length;
 
@@ -26,8 +34,11 @@ const parseStep = (value: string | null) => {
 
 export default function ShippingForm() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [hasError, setHasError] = useState<boolean | null>(null);
+  const [attempt, setAttempt] = useState(0);
   const step = parseStep(searchParams.get("step"));
   const navigate = useNavigate();
+  const { saveShippingAndPaymentOptions } = uiActions;
   const draft = useAppSelector(
     (state) => state.shippingAddressAndPayment.draft,
   );
@@ -68,6 +79,41 @@ export default function ShippingForm() {
     return unsubscribe;
   }, [subscribe, dispatch, getFieldState, trigger]);
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function fetchOptions() {
+      try {
+        const fetchedOptions = await getShippingAndPaymentCosts({
+          config: { signal: controller.signal },
+        });
+        const { shippingOptions, paymentOptions } = fetchedOptions;
+        const shippingOptionsWithCost = shippingOptions.map((option) => ({
+          ...option,
+          label: shippingOptionsLabels[option.name],
+        }));
+        const paymentOptionsWithCost = paymentOptions.map((option) => ({
+          ...option,
+          label: paymentOptionsLabels[option.name],
+        }));
+
+        dispatch(
+          saveShippingAndPaymentOptions({
+            shipping: shippingOptionsWithCost,
+            payment: paymentOptionsWithCost,
+          }),
+        );
+      } catch (err) {
+        if (isRequestCanceled(err)) return;
+        setHasError(true);
+      }
+    }
+
+    fetchOptions();
+
+    return () => controller.abort();
+  }, [dispatch, saveShippingAndPaymentOptions, attempt]);
+
   const goNext = async () => {
     const fields = stepFieldNames[step - 1];
     const isStepValid = await trigger(fields, { shouldFocus: true });
@@ -91,6 +137,11 @@ export default function ShippingForm() {
     }
   };
 
+  const retryFetchOptions = () => {
+    setHasError(null);
+    setAttempt((prevState) => prevState + 1);
+  };
+
   return (
     <section className={classes.section}>
       <div className={classes.form__wrapper}>
@@ -100,7 +151,10 @@ export default function ShippingForm() {
         )}
         <form className={classes.form} noValidate>
           {step === 1 && <Step1 register={register} errors={errors} />}
-          {step === 2 && <Step2 register={register} errors={errors} />}
+          {step === 2 && !hasError && (
+            <Step2 register={register} errors={errors} />
+          )}
+          {step === 2 && hasError && <Skeleton retry={retryFetchOptions} />}
         </form>
         <ActionButtons backButtonHandler={goBack} nextButtonHandler={goNext} />
       </div>

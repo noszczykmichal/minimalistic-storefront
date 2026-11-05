@@ -1,11 +1,8 @@
 import { UseFormRegister, FieldErrors } from "react-hook-form";
 
-import {
-  shippingOptions,
-  paymentOptions,
-} from "@/utils/shippingForm/constants";
 import Fieldset from "@/components/Forms/Fieldset/Fieldset";
 import { AddressAndPaymentFormInput } from "@/utils/shippingForm/schemas";
+import { useAppSelector } from "@/hooks/useReduxHooks";
 
 interface Step2Props {
   register: UseFormRegister<AddressAndPaymentFormInput>;
@@ -13,6 +10,9 @@ interface Step2Props {
 }
 
 export default function Step2({ register, errors }: Step2Props) {
+  const shippingOptions = useAppSelector((state) => state.ui.shippingOptions);
+  const paymentOptions = useAppSelector((state) => state.ui.paymentOptions);
+
   return (
     <>
       <Fieldset

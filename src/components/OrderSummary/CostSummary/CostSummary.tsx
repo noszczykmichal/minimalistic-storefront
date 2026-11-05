@@ -1,48 +1,40 @@
+import clsx from "clsx";
+
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import {
-  shippingOptions,
-  paymentOptions,
-} from "@/utils/shippingForm/constants";
 import classes from "@/components/OrderSummary/CostSummary/CostSummary.module.css";
-import { Currency, Option } from "@/types/types";
-
-const calculateOptionPrice = <T extends string>(
-  optionsArray: Option<T>[],
-  selectedOption: string | null | undefined,
-  currency: Currency,
-) => {
-  if (!selectedOption) {
-    return 0;
-  }
-  const chosenOption = optionsArray.find(
-    (option) => option.name === selectedOption,
-  )?.costs;
-
-  const optionPrice = chosenOption?.find(
-    (price) => price.currency.symbol === currency.symbol,
-  );
-
-  return optionPrice?.amount ?? 0;
-};
+import calculateOptionPrice from "@/utils/shippingForm/calculateOptionPrice";
 
 export default function CostSummary() {
-  const { billingCurrency, totalPrice } = useAppSelector(
-    (state) => state.products,
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
   );
 
-  const { shippingOption, paymentMethod } = useAppSelector(
-    (state) => state.shippingAddressAndPayment.draft,
+  const totalPrice = useAppSelector((state) => state.products.totalPrice);
+
+  const chosenShippingOption = useAppSelector(
+    (state) => state.shippingAddressAndPayment.draft.shippingOption,
+  );
+
+  const chosenPaymentMethod = useAppSelector(
+    (state) => state.shippingAddressAndPayment.draft.paymentMethod,
+  );
+
+  const availableShippingOptions = useAppSelector(
+    (state) => state.ui.shippingOptions,
+  );
+  const availablePaymentOptions = useAppSelector(
+    (state) => state.ui.paymentOptions,
   );
 
   const shippingPrice = calculateOptionPrice(
-    shippingOptions,
-    shippingOption,
+    availableShippingOptions,
+    chosenShippingOption,
     billingCurrency,
   );
-  const isShippingPriceSet = Boolean(shippingOption);
+  const isShippingPriceSet = Boolean(chosenShippingOption);
   const paymentPrice = calculateOptionPrice(
-    paymentOptions,
-    paymentMethod,
+    availablePaymentOptions,
+    chosenPaymentMethod,
     billingCurrency,
   );
   const totalPriceAndOtherCosts = (
@@ -56,19 +48,19 @@ export default function CostSummary() {
         <p className={classes["cost-summary__label"]}>Tax 21%: </p>
 
         <p
-          className={[
+          className={clsx(
             classes["cost-summary__label"],
             classes["cost-summary__label--bold"],
-          ].join(" ")}
+          )}
         >
           Order Total:
         </p>
         {isShippingPriceSet && (
           <p
-            className={[
+            className={clsx(
               classes["cost-summary__label"],
               classes["cost-summary__label--bold"],
-            ].join(" ")}
+            )}
           >
             Shipping:
           </p>
@@ -76,10 +68,10 @@ export default function CostSummary() {
 
         {!!paymentPrice && (
           <p
-            className={[
+            className={clsx(
               classes["cost-summary__label"],
               classes["cost-summary__label--bold"],
-            ].join(" ")}
+            )}
           >
             Other:
           </p>

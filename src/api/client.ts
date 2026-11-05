@@ -36,4 +36,18 @@ const post = async <TPayload, TResponse>({
   return data;
 };
 
-export { injectStore, post };
+const get = async <TResponse>({
+  url,
+  config,
+}: {
+  url: string;
+  config?: AxiosRequestConfig;
+}): Promise<TResponse> => {
+  const { data } = await apiClient.get<TResponse>(url, config);
+
+  return data;
+};
+
+const isRequestCanceled = axios.isCancel;
+
+export { injectStore, post, get, isRequestCanceled };

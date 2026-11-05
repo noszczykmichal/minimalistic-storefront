@@ -35,14 +35,14 @@ export const PAYMENT_METHODS = [
 
 export type ShippingOptionName = (typeof SHIPPING_FORM)[number];
 export type CurrencyLabel = (typeof CURRENCY_LABELS)[number];
-export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+export type PaymentMethodName = (typeof PAYMENT_METHODS)[number];
 
 export interface Cost {
   amount: number;
   currency: Currency;
 }
 
-export interface Option<T> {
+export interface FieldOption<T> {
   label: string;
   name: T;
   costs: Cost[];

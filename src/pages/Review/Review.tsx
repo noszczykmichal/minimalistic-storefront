@@ -6,10 +6,6 @@ import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
 import Hr from "@/components/UI/Hr/Hr";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import {
-  shippingOptions,
-  paymentOptions,
-} from "@/utils/shippingForm/constants";
 import placeOrder from "@/api/orders/orders";
 import classes from "@/pages/Review/Review.module.css";
 import { shippingAddressSchema } from "@/utils/shippingForm/schemas";
@@ -38,12 +34,18 @@ export default function Review() {
     (state) => state.products.billingCurrency,
   );
   const cart = useAppSelector((state) => state.products.cart);
+  const availableShippingOptions = useAppSelector(
+    (state) => state.ui.shippingOptions,
+  );
+  const availablePaymentOptions = useAppSelector(
+    (state) => state.ui.paymentOptions,
+  );
 
-  const chosenShippingMethod = shippingOptions.find(
+  const chosenShippingMethod = availableShippingOptions.find(
     (option) => option.name === shippingOption,
   );
 
-  const chosenPaymentMethod = paymentOptions.find(
+  const chosenPaymentMethod = availablePaymentOptions.find(
     (option) => option.name === paymentMethod,
   );
 

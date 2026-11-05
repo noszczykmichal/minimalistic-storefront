@@ -1,9 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { Currency } from "@/types/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type {
+  Currency,
+  FieldOption,
+  PaymentMethodName,
+  ShippingOptionName,
+} from "@/types/types";
 
 interface UIInterface {
   categories: string[];
   currencies: Currency[];
+  shippingOptions: FieldOption<ShippingOptionName>[];
+  paymentOptions: FieldOption<PaymentMethodName>[];
   isCurrencySwitcherOpen: boolean;
   isMiniCartOpen: boolean;
   isModalOpen: boolean;
@@ -12,9 +19,16 @@ interface UIInterface {
   isAccountMenuOpen: boolean;
 }
 
+interface FieldOptions {
+  shipping: FieldOption<ShippingOptionName>[];
+  payment: FieldOption<PaymentMethodName>[];
+}
+
 const initialState: UIInterface = {
   categories: [],
   currencies: [],
+  shippingOptions: [],
+  paymentOptions: [],
   isCurrencySwitcherOpen: false,
   isMiniCartOpen: false,
   isModalOpen: false,
@@ -34,7 +48,11 @@ const ui = createSlice({
         currencies: action.payload.currencies,
       };
     },
+    saveShippingAndPaymentOptions(state, action: PayloadAction<FieldOptions>) {
+      const { payment, shipping } = action.payload;
 
+      return { ...state, shippingOptions: shipping, paymentOptions: payment };
+    },
     currencySwitcherVisibToggle(state, action) {
       return { ...state, isCurrencySwitcherOpen: action.payload };
     },
