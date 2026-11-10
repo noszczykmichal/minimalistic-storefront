@@ -6,12 +6,62 @@ import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
 import Hr from "@/components/UI/Hr/Hr";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import placeOrder from "@/api/orders/orders";
+import { placeOrder, type Order } from "@/api/orders/orders";
 import classes from "@/pages/Review/Review.module.css";
 import { shippingAddressSchema } from "@/utils/shippingForm/schemas";
 import buildOrderObject from "@/utils/orders/ordersUtils";
+import { useState } from "react";
+import { isAxiosError } from "axios";
+
+const ERROR_CODES = [
+  "PRODUCT_NOT_AVAILABLE",
+  "OUT_OF_STOCK",
+  "NOT_ALLOWED_OPTIONS",
+  "UNAVAILABLE_BILLING_CURRENCY",
+] as const;
+
+type ApiErrorCode = (typeof ERROR_CODES)[number];
+
+interface ApiErrorResponse {
+  code?: ApiErrorCode;
+  message?: string | string[];
+  productIds?: string[];
+  error?: string;
+  statusCode?: number;
+}
+
+const fakeData: Order = {
+  products: [
+    {
+      productId: "huarache-x-stussy",
+      quantity: 1,
+      attributes: [
+        {
+          name: "Size",
+          value: "40",
+        },
+      ],
+    },
+  ],
+  billingCurrency: "pln",
+  address: {
+    firstName: "Michał",
+    lastName: "Noszczyk",
+    addressLine1: "Międzyborska 11",
+    addressLine2: "30",
+    city: "Warszawa",
+    postalCode: "04-041",
+    country: "Polska",
+    phone: "+48889321692",
+    email: "noszczykmichal@wp.pl",
+  },
+  shippingMethod: "in-store/online_payment",
+  paymentMethod: "bank_transfer",
+};
 
 export default function Review() {
+  const [errorMessage, setErrorMessage] = useState();
+  const [productsWithError, setProductsWIthError] = useState([]);
   const navigate = useNavigate();
   const {
     firstName,
@@ -65,17 +115,39 @@ export default function Review() {
     if (isAuthenticated) {
       const order = buildOrderObject({
         cart,
-        billingCurrency,
         address: address.data,
-        shippingMethod: chosenShippingMethod?.name,
+        billingCurrency,
         paymentMethod: chosenPaymentMethod?.name,
+        shippingMethod: chosenShippingMethod?.name,
       });
 
-      console.log("order", order);
+      // console.log("order", order);
+      try {
+        await placeOrder(fakeData);
+      } catch (error) {
+        if (isAxiosError<ApiErrorResponse>(error)) {
+          const { message, code, productIds } = error;
 
-      await placeOrder(order);
+          if (Array.isArray(message)) {
+            setErrorMessage(message[0]);
+            return;
+          }
 
-      return;
+          if (ERROR_CODES.includes(code)) {
+            setErrorMessage(message);
+            setProductsWIthError(productIds);
+          }
+        }
+
+        // if (error instanceof Error) {
+
+        //   switch(error?.code)
+
+        // };
+        // set
+        console.log(error);
+        return;
+      }
     }
 
     navigate("/cart/confirm");

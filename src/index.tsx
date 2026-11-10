@@ -87,7 +87,18 @@ root.render(
                 }
 
                 if (error) {
-                  content = <ErrorModal errorDetails={error} />;
+                  content = (
+                    <ErrorModal>
+                      <p className="error">
+                        Trying to fetch from the endpoint failed with message:
+                        <br />
+                        <span className="error__details">{error.message}.</span>
+                        <br />
+                        Make sure you are connected to the Internet and try
+                        again later.
+                      </p>
+                    </ErrorModal>
+                  );
                 }
                 return content;
               }}

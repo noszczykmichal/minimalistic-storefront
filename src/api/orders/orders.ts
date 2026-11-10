@@ -1,5 +1,5 @@
 import { post } from "@/api/client";
-import type { Currency } from "@/types/types";
+import type { CurrencyLabel } from "@/types/types";
 import type {
   AddressAndPaymentFormValues,
   ShippingAddress,
@@ -8,23 +8,17 @@ import type {
 interface OrderedProduct {
   productId: string;
   quantity: number;
+  attributes: { name: string; value: string }[];
 }
 
-interface Order {
+export interface Order {
   products: OrderedProduct[];
-  billingCurrency: Currency;
+  billingCurrency: string;
   address: ShippingAddress;
   shippingMethod: AddressAndPaymentFormValues["shippingOption"];
   paymentMethod: AddressAndPaymentFormValues["paymentMethod"];
 }
 
-const placeOrder = async (payload: Order) => {
-  try {
-    const data = await post<unknown, unknown>({ url: "/orders", payload });
-    console.log(data);
-  } catch (err) {
-    console.log(err);
-  }
+export const placeOrder = async (payload: Order) => {
+  return post<unknown, unknown>({ url: "/orders", payload });
 };
-
-export default placeOrder;

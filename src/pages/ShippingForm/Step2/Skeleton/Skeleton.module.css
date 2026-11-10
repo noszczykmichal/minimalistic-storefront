@@ -1,13 +1,5 @@
-/* .fieldset {
-  border: none;
-  padding: 0;
-  margin: 0;
-} */
-
 .fieldset__legend {
-  font-size: 1.2rem;
   margin-bottom: 0.625rem;
-  padding-bottom: 20px;
   height: 23px;
 }
 
@@ -30,16 +22,8 @@
 }
 
 .field-wrapper {
-  padding-bottom: 10px;
   height: 48px;
   margin-bottom: 10px;
-}
-
-.fieldset__error {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-align: justify;
-  color: red;
 }
 
 @keyframes shimmer {
@@ -63,10 +47,10 @@
   gap: 0.5rem;
   align-items: flex-start;
   padding: 0.75rem 1rem;
-  border: 1px solid #f7c1c1;
+  border: 1px solid color-mix(in srgb, var(--red-100) 30%, white);
   border-radius: var(--radius-primary);
-  background-color: #fcebeb;
-  color: #a32d2d;
+  background-color: color-mix(in srgb, var(--red-100) 10%, white);
+  color: var(--red-100);
 }
 
 .banner__icon {
@@ -74,7 +58,7 @@
   width: 20px;
   height: 20px;
   fill: none;
-  stroke: currentColor;
+  stroke: var(--red-100);
   stroke-width: 2;
   stroke-linecap: round;
 }

@@ -37,7 +37,7 @@ const buildOrderObject = ({
 
   return {
     products: orderedProducts,
-    billingCurrency,
+    billingCurrency: billingCurrency.label,
     address,
     shippingMethod,
     paymentMethod,
