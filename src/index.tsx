@@ -12,22 +12,18 @@ import {
 import { Provider } from "react-redux";
 import { Query } from "@apollo/client/react/components";
 import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "@/store/store";
-import { restoreSession } from "@/store/auth/auth";
 
 import App from "@/App";
 import Loader from "@/components/UI/Loader/Loader";
-import ErrorModal from "@/components/UI/ErrorModal/ErrorModal";
+import { isCurrency, type Currency } from "@/types/types";
+import { persistor, store } from "@/store/store";
+import { restoreSession } from "@/store/auth/auth";
+import Modal from "./components/UI/Modal/Modal";
+import { injectStore } from "./api/client";
 import "@/index.css";
-import { isCurrency } from "./types/types";
 
 interface Category {
   name: string;
-}
-
-interface Currency {
-  label: string;
-  symbol: string;
 }
 
 interface StoreData {
@@ -56,6 +52,7 @@ const categoriesAndCurrenciesQuery = gql`
     }
   }
 `;
+injectStore(store);
 
 // Dispatched once, outside React, so StrictMode's double-invoked effects
 // can't send two refresh requests that invalidate each other.
@@ -90,7 +87,18 @@ root.render(
                 }
 
                 if (error) {
-                  content = <ErrorModal errorDetails={error} />;
+                  content = (
+                    <Modal className="error__header" isOpen>
+                      <p className="error__message">
+                        Trying to fetch from the endpoint failed with message:
+                        <br />
+                        <span className="error__details">{error.message}.</span>
+                        <br />
+                        Make sure you are connected to the Internet and try
+                        again later.
+                      </p>
+                    </Modal>
+                  );
                 }
                 return content;
               }}

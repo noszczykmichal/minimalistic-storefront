@@ -3,7 +3,9 @@ import { useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/components/OrderSummary/OrderSummaryList/OrderSummaryItem/OrderSummaryItem.module.css";
 
 export default function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
-  const { billingCurrency } = useAppSelector((state) => state.products);
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
+  );
   const { quantity, gallery, brand, name } = cartItem;
 
   const chosenAttributes = cartItem.attributes.map((attribute) => (
@@ -18,7 +20,7 @@ export default function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
 
   const currentPrice = cartItem.prices
     .map((price) =>
-      price.currency.symbol === billingCurrency
+      price.currency.symbol === billingCurrency.symbol
         ? price.amount.toFixed(2)
         : null,
     )
@@ -45,7 +47,7 @@ export default function OrderSummaryItem({ cartItem }: { cartItem: CartItem }) {
         </p>
       </div>
       <p className={classes["order-summary-item__price-tag"]}>
-        {billingCurrency + currentPrice}
+        {billingCurrency.symbol + currentPrice}
       </p>
     </li>
   );

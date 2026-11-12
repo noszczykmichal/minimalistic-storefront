@@ -11,7 +11,10 @@ export type AttributeItem = {
 };
 
 export type Currency = {
-  [L in CurrencyLabel]: { label: L; symbol: (typeof CURRENCY_SYMBOLS)[L] };
+  [L in CurrencyLabel]: {
+    label: L;
+    symbol: (typeof CURRENCY_SYMBOLS)[L];
+  };
 }[CurrencyLabel];
 
 export type Price = {
@@ -32,14 +35,14 @@ export const PAYMENT_METHODS = [
 
 export type ShippingOptionName = (typeof SHIPPING_FORM)[number];
 export type CurrencyLabel = (typeof CURRENCY_LABELS)[number];
-export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+export type PaymentMethodName = (typeof PAYMENT_METHODS)[number];
 
 export interface Cost {
   amount: number;
   currency: Currency;
 }
 
-export interface Option<T> {
+export interface FieldOption<T> {
   label: string;
   name: T;
   costs: Cost[];
@@ -81,6 +84,8 @@ export interface StartSessionResponse {
   user: User;
   accessTokenExpiresAt: number;
 }
+
+export type AuthStatus = "checking" | "authenticated" | "anonymous";
 
 const isCurrencyLabel = (label: string): label is CurrencyLabel =>
   (CURRENCY_LABELS as readonly string[]).includes(label);

@@ -1,33 +1,16 @@
-vi.mock("@/hooks/useReduxHooks", () => ({
-  useAppDispatch: vi.fn(),
-  useAppSelector: vi.fn(),
-}));
-
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { uiActions } from "@/store/ui/ui";
-import type { RootState } from "@/store/store";
 import MissingAttributesModal from "@/pages/PDP/MissingAttributesModal/MissingAttributesModal";
 
-const mockModalState = (isModalOpen: boolean) => {
-  const state = { ui: { isModalOpen } } as unknown as RootState;
-
-  vi.mocked(useAppSelector).mockImplementation((selector) => selector(state));
-};
-
 describe("MissingAttributesModal component", () => {
-  const dispatch = vi.fn();
-  const { modalToggle } = uiActions;
   const testNotSelected = ["size", "colour"];
   let modalsRoot: HTMLDivElement;
+  const onCloseModalMock = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(useAppDispatch).mockReturnValue(dispatch);
-    mockModalState(true);
 
     modalsRoot = document.createElement("div");
     modalsRoot.id = "modals-root";
@@ -38,10 +21,14 @@ describe("MissingAttributesModal component", () => {
     modalsRoot.remove();
   });
 
-  it("should not render Modal when isModalOpen is false", () => {
-    mockModalState(false);
-
-    render(<MissingAttributesModal notSelected={testNotSelected} />);
+  it("should not render Modal when isOpen is false", () => {
+    render(
+      <MissingAttributesModal
+        notSelected={testNotSelected}
+        isOpen={false}
+        onCloseModal={onCloseModalMock}
+      />,
+    );
 
     expect(screen.queryByRole("list")).not.toBeInTheDocument();
     expect(
@@ -49,8 +36,14 @@ describe("MissingAttributesModal component", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("should render a list item for every not selected attribute when isModalOpen is true", () => {
-    render(<MissingAttributesModal notSelected={testNotSelected} />);
+  it("should render a list item for every not selected attribute when isOpen is true", () => {
+    render(
+      <MissingAttributesModal
+        notSelected={testNotSelected}
+        isOpen
+        onCloseModal={onCloseModalMock}
+      />,
+    );
 
     const listItems = screen.getAllByRole("listitem");
 
@@ -60,31 +53,46 @@ describe("MissingAttributesModal component", () => {
   });
 
   it("should render the error header and instructions", () => {
-    render(<MissingAttributesModal notSelected={testNotSelected} />);
+    render(
+      <MissingAttributesModal
+        notSelected={testNotSelected}
+        isOpen
+        onCloseModal={onCloseModalMock}
+      />,
+    );
 
     expect(
-      screen.getByRole("heading", { level: 5, name: "Error" }),
+      screen.getByRole("heading", { level: 5, name: "Missing Attributes" }),
     ).toBeInTheDocument();
     expect(
       screen.getByText("Please select below options:"),
     ).toBeInTheDocument();
   });
 
-  it("should close the modal after button click", async () => {
-    render(<MissingAttributesModal notSelected={testNotSelected} />);
+  it("should call onCloseModal when OK is clicked", async () => {
+    render(
+      <MissingAttributesModal
+        notSelected={testNotSelected}
+        isOpen
+        onCloseModal={onCloseModalMock}
+      />,
+    );
 
     await userEvent.click(screen.getByRole("button", { name: "OK" }));
 
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith(modalToggle(false));
+    expect(onCloseModalMock).toHaveBeenCalledTimes(1);
   });
 
   it("should have no accessibility violations", async () => {
-    const { container } = render(
-      <MissingAttributesModal notSelected={testNotSelected} />,
+    render(
+      <MissingAttributesModal
+        notSelected={testNotSelected}
+        isOpen
+        onCloseModal={onCloseModalMock}
+      />,
     );
 
-    const result = await axe(container);
+    const result = await axe(modalsRoot);
 
     expect(result).toHaveNoViolations();
   });

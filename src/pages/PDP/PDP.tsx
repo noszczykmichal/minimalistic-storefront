@@ -1,18 +1,17 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useId, useState } from "react";
-
 import { Markup } from "interweave";
 
 import Button from "@/components/UI/Button/Button";
 import { productActions } from "@/store/products/products";
-import { uiActions } from "@/store/ui/ui";
 import { ProductType } from "@/types/types";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import classes from "@/pages/PDP/PDP.module.css";
 import MissingAttributesModal from "@/pages/PDP/MissingAttributesModal/MissingAttributesModal";
 
 export default function PDP() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const displayedProduct = useAppSelector((state) => state.products.currentPDP);
   const billingCurrency = useAppSelector(
@@ -20,10 +19,9 @@ export default function PDP() {
   );
 
   const { addProductToCart } = productActions;
-  const { modalToggle } = uiActions;
   const [mainUrl, setMainUrl] = useState(displayedProduct!.gallery[0]);
   const [product, setProduct] = useState(displayedProduct);
-  const [notSelected, setNotSelected] = useState<(string | null)[]>([]);
+  const [notSelected, setNotSelected] = useState<string[]>([]);
   const attributeIdPrefix = useId();
 
   const imageToggle = (imageURL: string) => {
@@ -69,19 +67,27 @@ export default function PDP() {
     setNotSelected(notSelectedAttributes);
 
     if (notSelectedAttributes.length > 0) {
-      dispatch(modalToggle(true));
+      setIsModalOpen(true);
     } else {
       dispatch(addProductToCart(product));
     }
   };
 
   const currentPrice = [...displayedProduct!.prices].filter(
-    (price) => price.currency.symbol === billingCurrency,
+    (price) => price.currency.symbol === billingCurrency.symbol,
   );
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <section className={classes.section}>
-      <MissingAttributesModal notSelected={notSelected} />
+      <MissingAttributesModal
+        notSelected={notSelected}
+        onCloseModal={closeModal}
+        isOpen={isModalOpen}
+      />
       {/* 1st column */}
       <div className={classes["thumbnails-wrapper"]}>
         {displayedProduct!.gallery.map((imageURL) => (

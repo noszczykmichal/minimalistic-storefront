@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { refreshSession, logOut } from "@/api/client";
+import { refreshSession, logOut } from "@/api/auth/auth";
 import { hasSessionHint, clearSessionHint } from "@/api/sessionHint";
-import type { User, StartSessionResponse } from "@/types/types";
+import type { User, StartSessionResponse, AuthStatus } from "@/types/types";
 
-export type AuthStatus = "checking" | "authenticated" | "anonymous";
 export const WARNING_SECONDS = 30;
 
 interface AuthState {

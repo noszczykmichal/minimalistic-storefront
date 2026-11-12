@@ -1,7 +1,11 @@
-import axios from "axios";
+import axios, { type AxiosRequestConfig } from "axios";
+import type { AppStore } from "@/store/store";
 
-import { clearSessionHint, setSessionHint } from "@/api/sessionHint";
-import type { StartSessionResponse } from "@/types/types";
+let store: AppStore | undefined;
+
+const injectStore = (s: AppStore) => {
+  store = s;
+};
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -10,66 +14,40 @@ const apiClient = axios.create({
   withCredentials: true,
 });
 
-interface LoginPayload {
-  email: string;
-  password: string;
-}
-
-interface SignUpPayload extends LoginPayload {
-  firstName: string;
-  lastName: string;
-}
-
-type SignUpResponse = { message: string };
-
-type LogoutResponse = { message: string };
-
-const signUp = async (payload: SignUpPayload) => {
-  const { data } = await apiClient.post<SignUpResponse>(
-    "/auth/signup",
-    payload,
-  );
-
-  return data;
-};
-
-const signIn = async (payload: LoginPayload) => {
-  const data = await apiClient.post<StartSessionResponse>(
-    "/auth/login",
-    payload,
-  );
-  setSessionHint();
-
-  return data;
-};
-
-const logOut = async () => {
-  try {
-    const { data } = await apiClient.post<LogoutResponse>("/auth/logout");
-
-    return data;
-  } finally {
-    clearSessionHint();
+apiClient.interceptors.request.use((config) => {
+  const token = store?.getState().auth.token;
+  if (token) {
+    config.headers.set("Authorization", `Bearer ${token}`);
   }
+  return config;
+});
+
+const post = async <TPayload, TResponse>({
+  url,
+  payload,
+  config,
+}: {
+  url: string;
+  payload?: TPayload;
+  config?: AxiosRequestConfig;
+}): Promise<TResponse> => {
+  const { data } = await apiClient.post<TResponse>(url, payload, config);
+
+  return data;
 };
 
-let refreshPromise: Promise<StartSessionResponse> | null = null;
+const get = async <TResponse>({
+  url,
+  config,
+}: {
+  url: string;
+  config?: AxiosRequestConfig;
+}): Promise<TResponse> => {
+  const { data } = await apiClient.get<TResponse>(url, config);
 
-// The backend rotates the session cookie on every refresh, so concurrent
-// calls would invalidate each other. Share one in-flight request.
-const refreshSession = () => {
-  refreshPromise ??= apiClient
-    .post<StartSessionResponse>("/auth/refresh")
-    .then(({ data }) => data)
-    .catch((error: unknown) => {
-      clearSessionHint();
-      throw error;
-    })
-    .finally(() => {
-      refreshPromise = null;
-    });
-
-  return refreshPromise;
+  return data;
 };
 
-export { signUp, signIn, logOut, refreshSession };
+const isRequestCanceled = axios.isCancel;
+
+export { injectStore, post, get, isRequestCanceled };

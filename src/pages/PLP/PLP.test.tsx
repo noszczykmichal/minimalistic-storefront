@@ -70,7 +70,7 @@ const renderPLP = (mocks: MockedResponse[], initialPath = "/") =>
     <MockedProvider mocks={mocks}>
       <WithMockStoreAndRouter
         customStore={configureMockStore([])({
-          products: { billingCurrency: "$" },
+          products: { billingCurrency: { label: "USD", symbol: "$" } },
         })}
         initialPath={initialPath}
       >

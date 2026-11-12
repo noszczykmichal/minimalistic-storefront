@@ -10,7 +10,7 @@ const currencies = [
   { label: "USD", symbol: "$" },
   { label: "GBP", symbol: "£" },
 ];
-const billingCurrency = "$";
+const billingCurrency = { label: "USD", symbol: "$" };
 
 const renderToolbar = (
   categoriesList = categories,
@@ -49,7 +49,7 @@ describe("Toolbar component", () => {
 
     const listElement = screen.getByRole("list");
     const navigationItems = screen.getAllByRole("listitem");
-    const currencySwitcher = screen.getByText(billingCurrency);
+    const currencySwitcher = screen.getByText(billingCurrency.symbol);
 
     expect(listElement).toBeInTheDocument();
     expect(navigationItems).toHaveLength(categories.length);
@@ -60,7 +60,7 @@ describe("Toolbar component", () => {
     renderToolbar([], []);
 
     const navigationItemsList = screen.queryByRole("list");
-    const currencySwitcher = screen.queryByText(billingCurrency);
+    const currencySwitcher = screen.queryByText(billingCurrency.symbol);
 
     expect(navigationItemsList).toBeNull();
     expect(currencySwitcher).toBeNull();

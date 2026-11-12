@@ -1,13 +1,15 @@
 const { post } = vi.hoisted(() => ({ post: vi.fn() }));
 
 vi.mock("axios", () => ({
-  default: { create: () => ({ post }) },
+  default: {
+    create: () => ({ post, interceptors: { request: { use: vi.fn() } } }),
+  },
 }));
 
-import { logOut, refreshSession, signIn } from "@/api/client";
+import { logOut, refreshSession, signIn } from "@/api/auth/auth";
 import { hasSessionHint, setSessionHint } from "@/api/sessionHint";
 
-describe("api client", () => {
+describe("auth api", () => {
   const session = {
     accessToken: "fresh-token",
     user: { firstName: "Jane", email: "jane@example.com" },
@@ -44,7 +46,7 @@ describe("api client", () => {
 
       await logOut();
 
-      expect(post).toHaveBeenCalledWith("/auth/logout");
+      expect(post).toHaveBeenCalledWith("/auth/logout", undefined, undefined);
     });
 
     it("should return the response body", async () => {
@@ -74,7 +76,7 @@ describe("api client", () => {
       post.mockResolvedValue({ data: session });
 
       expect(await refreshSession()).toEqual(session);
-      expect(post).toHaveBeenCalledWith("/auth/refresh");
+      expect(post).toHaveBeenCalledWith("/auth/refresh", undefined, undefined);
     });
 
     it("should share one request between concurrent calls", async () => {

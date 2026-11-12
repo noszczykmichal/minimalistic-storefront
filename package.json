@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:profile": "tsc && cross-env SOURCEMAP=true vite build",
+    "profile": "pnpm build:profile && vite preview",
     "preview": "vite preview",
     "test": "vitest",
     "coverage": "vitest --coverage",
@@ -50,6 +52,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/coverage-v8": "^5.0.3",
     "@vitest/ui": "^4.0.16",
+    "cross-env": "^10.1.0",
     "eslint": "^9.10.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",

@@ -16,7 +16,7 @@ const createEmptyCartStore = () =>
       cart: [],
       productsTotal: 0,
       totalPrice: 0,
-      billingCurrency: "$",
+      billingCurrency: { label: "USD", symbol: "$" },
     },
   });
 
@@ -60,7 +60,7 @@ describe("Cart page", () => {
           cart: [{ ...testItemDetails, quantity: 2 }],
           productsTotal: 2,
           totalPrice: 1036.94,
-          billingCurrency: "$",
+          billingCurrency: { label: "USD", symbol: "$" },
         },
       }),
     );

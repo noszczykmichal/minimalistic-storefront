@@ -39,7 +39,7 @@ const renderProductList = (products: ProductType[] = testProducts) =>
   render(
     <WithMockStoreAndRouter
       customStore={configureMockStore([])({
-        products: { billingCurrency: "$" },
+        products: { billingCurrency: { label: "USD", symbol: "$" } },
       })}
     >
       <ProductList products={products} />

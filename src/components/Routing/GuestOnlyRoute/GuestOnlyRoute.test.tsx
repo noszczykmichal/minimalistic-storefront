@@ -5,7 +5,7 @@ import { legacy_configureStore as configureMockStore } from "redux-mock-store";
 
 import GuestOnlyRoute from "@/components/Routing/GuestOnlyRoute/GuestOnlyRoute";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
-import type { AuthStatus } from "@/store/auth/auth";
+import type { AuthStatus } from "@/types/types";
 
 const renderLoginRoute = (status: AuthStatus) =>
   render(

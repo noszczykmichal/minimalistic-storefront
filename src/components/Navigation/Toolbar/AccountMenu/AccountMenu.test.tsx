@@ -2,7 +2,7 @@ vi.mock("@/hooks/useReduxHooks", async (importActual) => {
   const actual = await importActual<typeof import("@/hooks/useReduxHooks")>();
   return { ...actual, useAppDispatch: vi.fn() };
 });
-vi.mock("@/api/client", () => ({ logOut: vi.fn() }));
+vi.mock("@/api/auth/auth", () => ({ logOut: vi.fn() }));
 vi.mock("@/api/sessionHint", () => ({ clearSessionHint: vi.fn() }));
 
 import { render, screen, waitFor, within } from "@testing-library/react";
@@ -11,7 +11,7 @@ import { axe } from "vitest-axe";
 import { legacy_configureStore as configureMockStore } from "redux-mock-store";
 
 import AccountMenu from "@/components/Navigation/Toolbar/AccountMenu/AccountMenu";
-import { logOut } from "@/api/client";
+import { logOut } from "@/api/auth/auth";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import { logOutThunk } from "@/store/auth/auth";
 import { uiActions } from "@/store/ui/ui";

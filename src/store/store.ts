@@ -23,6 +23,9 @@ const rootReducer = combineReducers({
   auth: auth.reducer,
 });
 
+export const setupStore = (preloadedState?: Partial<RootState>) =>
+  configureStore({ reducer: rootReducer, preloadedState });
+
 const persistConfig = {
   key: "root",
   storage,
@@ -44,5 +47,8 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+type RootState = ReturnType<typeof rootReducer>;
+type AppDispatch = typeof store.dispatch;
+type AppStore = ReturnType<typeof setupStore>;
+
+export type { RootState, AppDispatch, AppStore };

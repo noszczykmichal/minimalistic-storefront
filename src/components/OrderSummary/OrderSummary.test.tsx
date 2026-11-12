@@ -1,27 +1,29 @@
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { axe } from "vitest-axe";
-import { legacy_configureStore as configureMockStore } from "redux-mock-store";
 
 import OrderSummary from "@/components/OrderSummary/OrderSummary";
-import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
-import { testItemDetails } from "@/utils/testUtils";
-import type { RootState } from "@/store/store";
+import {
+  renderWithProviders,
+  shippingOptions,
+  paymentOptions,
+  testItemDetails,
+} from "@/utils/testUtils";
+import productsSlice from "@/store/products/products";
+import uiSlice from "@/store/ui/ui";
 
 const renderOrderSummary = () => {
-  const state = {
-    products: {
-      cart: [testItemDetails],
-      totalPrice: 518.47,
-      billingCurrency: "$",
+  return renderWithProviders(<OrderSummary />, {
+    preloadedState: {
+      products: {
+        ...productsSlice.getInitialState(),
+        cart: [testItemDetails],
+        totalPrice: 518.47,
+        billingCurrency: { label: "USD", symbol: "$" },
+      },
+      shippingAddressAndPayment: { draft: { shippingOption: "bestWay" } },
+      ui: { ...uiSlice.getInitialState(), shippingOptions, paymentOptions },
     },
-    shippingAddressAndPayment: { draft: { shippingOption: "bestWay" } },
-  } as unknown as RootState;
-
-  return render(
-    <WithMockStoreAndRouter customStore={configureMockStore([])(state)}>
-      <OrderSummary />
-    </WithMockStoreAndRouter>,
-  );
+  });
 };
 
 describe("OrderSummary component", () => {

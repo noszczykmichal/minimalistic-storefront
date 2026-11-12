@@ -16,6 +16,8 @@ import { shippingAndPaymentActions } from "@/store/shippingAddressAndPayment/shi
 import classes from "@/pages/ShippingForm/ShippingForm.module.css";
 import Step1 from "@/pages/ShippingForm/Step1/Step1";
 import Step2 from "@/pages/ShippingForm/Step2/Step2";
+import useOptions from "@/hooks/useOptions";
+import Skeleton from "@/pages/ShippingForm/Step2/Skeleton/Skeleton";
 
 const LAST_STEP = stepFieldNames.length;
 
@@ -28,6 +30,8 @@ export default function ShippingForm() {
   const [searchParams, setSearchParams] = useSearchParams();
   const step = parseStep(searchParams.get("step"));
   const navigate = useNavigate();
+  const { hasError, retryFetchOptions } = useOptions();
+
   const draft = useAppSelector(
     (state) => state.shippingAddressAndPayment.draft,
   );
@@ -100,7 +104,10 @@ export default function ShippingForm() {
         )}
         <form className={classes.form} noValidate>
           {step === 1 && <Step1 register={register} errors={errors} />}
-          {step === 2 && <Step2 register={register} errors={errors} />}
+          {step === 2 && !hasError && (
+            <Step2 register={register} errors={errors} />
+          )}
+          {step === 2 && hasError && <Skeleton retry={retryFetchOptions} />}
         </form>
         <ActionButtons backButtonHandler={goBack} nextButtonHandler={goNext} />
       </div>

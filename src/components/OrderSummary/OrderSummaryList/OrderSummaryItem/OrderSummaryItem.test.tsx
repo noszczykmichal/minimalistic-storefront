@@ -7,11 +7,18 @@ import { render, screen } from "@testing-library/react";
 import OrderSummaryItem from "@/components/OrderSummary/OrderSummaryList/OrderSummaryItem/OrderSummaryItem";
 import { testItemDetails } from "@/utils/testUtils";
 import { useAppSelector } from "@/hooks/useReduxHooks";
+import type { RootState } from "@/store/store";
+import type { Currency } from "@/types/types";
+
+const mockBillingCurrency = (billingCurrency: Currency) => {
+  const state = { products: { billingCurrency } } as unknown as RootState;
+  vi.mocked(useAppSelector).mockImplementation((selector) => selector(state));
+};
 
 describe("OrderSummaryItem component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    useAppSelector.mockReturnValue({ billingCurrency: "$" });
+    mockBillingCurrency({ label: "USD", symbol: "$" });
   });
 
   it("should render OrderSummaryItem with correct number of products", () => {
@@ -50,15 +57,17 @@ describe("OrderSummaryItem component", () => {
   });
 
   it("should update price of the product when billingCurrency changes", () => {
-    const currency = useAppSelector().billingCurrency;
+    const currency: Currency = { label: "USD", symbol: "$" };
 
     const currentPrice = testItemDetails.prices
       .map((price) =>
-        price.currency.symbol === currency ? price.amount.toFixed(2) : null,
+        price.currency.symbol === currency.symbol
+          ? price.amount.toFixed(2)
+          : null,
       )
       .find((price) => price !== null);
 
-    const priceTag = currency + currentPrice;
+    const priceTag = currency.symbol + currentPrice;
 
     const { rerender } = render(
       <OrderSummaryItem cartItem={testItemDetails} />,
@@ -68,19 +77,19 @@ describe("OrderSummaryItem component", () => {
 
     expect(priceTagElement).toBeInTheDocument();
 
-    useAppSelector.mockReturnValue({ billingCurrency: "£" });
-    const updatedCurrency = useAppSelector().billingCurrency;
+    const updatedCurrency: Currency = { label: "GBP", symbol: "£" };
+    mockBillingCurrency(updatedCurrency);
 
     const updatedPrice = testItemDetails.prices
       .map((price) =>
-        price.currency.symbol === updatedCurrency
+        price.currency.symbol === updatedCurrency.symbol
           ? price.amount.toFixed(2)
           : null,
       )
       .find((price) => price !== null);
 
     rerender(<OrderSummaryItem cartItem={testItemDetails} />);
-    const updatedPriceTag = updatedCurrency + updatedPrice;
+    const updatedPriceTag = updatedCurrency.symbol + updatedPrice;
     const updatedPriceTagElement = screen.getByText(updatedPriceTag);
 
     expect(updatedPriceTagElement).toBeInTheDocument();

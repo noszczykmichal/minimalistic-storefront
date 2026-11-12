@@ -51,7 +51,17 @@ export default function App({
   }, [accessTokenExpiresAt, dispatch, setIsAccessTokenExpiring, status]);
 
   useEffect(() => {
-    dispatch(saveCategoriesAndCurrencies({ categories, currencies }));
+    const currenciesWithoutTypename = currencies.map(({ label, symbol }) => ({
+      label,
+      symbol,
+    }));
+
+    dispatch(
+      saveCategoriesAndCurrencies({
+        categories,
+        currencies: currenciesWithoutTypename,
+      }),
+    );
   }, [categories, dispatch, currencies, saveCategoriesAndCurrencies]);
 
   return (

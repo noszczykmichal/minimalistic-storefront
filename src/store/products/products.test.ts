@@ -75,7 +75,7 @@ const createState = (
 describe("products slice", () => {
   it("should start with an empty cart, '$' as the billing currency and no current PDP", () => {
     expect(reducer(undefined, { type: "@@INIT" })).toEqual({
-      billingCurrency: "$",
+      billingCurrency: { label: "USD", symbol: "$" },
       currentPDP: null,
       cart: [],
       productsTotal: 0,
@@ -137,7 +137,7 @@ describe("products slice", () => {
 
     it("should price the cart in the current billing currency", () => {
       const state = reducer(
-        createState({ billingCurrency: "£" }),
+        createState({ billingCurrency: { label: "GBP", symbol: "£" } }),
         addProductToCart(airTag),
       );
 
@@ -240,18 +240,21 @@ describe("products slice", () => {
           productsTotal: 3,
           totalPrice: 1157.51,
         }),
-        onCurrencyChange("£"),
+        onCurrencyChange({ label: "GBP", symbol: "£" }),
       );
 
-      expect(state.billingCurrency).toBe("£");
+      expect(state.billingCurrency.symbol).toBe("£");
       expect(state.totalPrice).toBeCloseTo(2 * 372.67 + 86.6);
       expect(state.productsTotal).toBe(3);
     });
 
     it("should set a total of 0 when the cart is empty", () => {
-      const state = reducer(createState(), onCurrencyChange("£"));
+      const state = reducer(
+        createState(),
+        onCurrencyChange({ label: "GBP", symbol: "£" }),
+      );
 
-      expect(state.billingCurrency).toBe("£");
+      expect(state.billingCurrency.symbol).toBe("£");
       expect(state.totalPrice).toBe(0);
     });
   });
@@ -260,7 +263,7 @@ describe("products slice", () => {
     it("should empty the cart and reset the totals but keep the currency and the current PDP", () => {
       const state = reducer(
         createState({
-          billingCurrency: "£",
+          billingCurrency: { label: "GBP", symbol: "£" },
           currentPDP: jacket,
           cart: [toCartItem(jacket, 2, "jacket-canada-gooseem")],
           productsTotal: 2,
@@ -270,7 +273,7 @@ describe("products slice", () => {
       );
 
       expect(state).toEqual({
-        billingCurrency: "£",
+        billingCurrency: { label: "GBP", symbol: "£" },
         currentPDP: jacket,
         cart: [],
         productsTotal: 0,

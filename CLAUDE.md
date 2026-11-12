@@ -83,18 +83,23 @@ Use the typed `useAppDispatch` / `useAppSelector` from `src/hooks/useReduxHooks.
   - A conversion is renaming plus typing (type mock state, props and mocks; no `any`) with the test logic unchanged. If the task also needs substantial changes to that test, do the conversion first, then stop and tell me, so I can commit the rename before you continue.
   - Exception: for bulk mechanical changes across many files (e.g. a dependency upgrade touching every test), ask before converting.
   - In your summary, list converted files separately from other changes so I can commit the conversions on their own.
-- Redux in tests uses `redux-mock-store`, not the real store:
-  - wrap components in `WithMockStoreAndRouter` (`src/utils/`), which supplies a `Provider` and a `MemoryRouter`. Pass `customStore` for a mock store, and `initialPath` (default `"/"`) when the component depends on the current URL. Don't nest another router inside it.
-  - import it as `import { legacy_configureStore as configureMockStore } from "redux-mock-store"`. The default export is the same function but is marked `@deprecated` in its typings, so the editor shows a warning.
-  - `createTestStore()` (`src/utils/testUtils.ts`) returns a mock store with two cart items
-  - to assert on dispatches, `vi.mock("@/hooks/useReduxHooks", ...)` and have `useAppDispatch` return a `vi.fn()` (because `vi.mock` is hoisted, test files place it above the imports; `import/first` is disabled for tests)
+- **Redux in tests is migrating from `redux-mock-store` to the real store.** New tests always use the real store:
+  - render with `renderWithProviders(ui, { preloadedState, store, initialPath })` (`src/utils/testUtils.tsx`). It builds a real store with `setupStore()` (`src/store/store.ts`; no redux-persist) and wraps the component in a `Provider` and a `MemoryRouter`. Pass `initialPath` (default `"/"`) when the component depends on the current URL. Don't nest another router inside it.
+  - build `preloadedState` from each slice's real initial state and override only what the test needs, e.g. `products: { ...productsSlice.getInitialState(), totalPrice: 100 }`. Keep it consistent with what the reducers would produce, and no `as unknown as RootState` casts. Shared fixtures (`shippingOptions`, `paymentOptions`, `testItemDetails`) live in `testUtils.tsx`.
+  - assert on the result (rendered output or `store.getState()`), not on dispatched actions.
+  - see `CostSummary.test.tsx` and `OrderSummary.test.tsx` for the pattern.
+- The legacy mock-store approach is still in older tests:
+  - `WithMockStoreAndRouter` (`src/utils/`) with `customStore` from `import { legacy_configureStore as configureMockStore } from "redux-mock-store"`, or `createTestStore()` (`testUtils.tsx`, a mock store with two cart items)
+  - dispatch assertions via `vi.mock("@/hooks/useReduxHooks", ...)` with `useAppDispatch` returning a `vi.fn()` (because `vi.mock` is hoisted, test files place it above the imports; `import/first` is disabled for tests)
+- **When you touch a test file that still uses the mock store** (`redux-mock-store`, `WithMockStoreAndRouter`, `createTestStore` or a mocked `useAppDispatch`), propose converting it to `renderWithProviders` with the real store. Ask before converting. Don't do it silently as part of another change. If the file also needs a `.jsx` → `.tsx` conversion, do that first (see above).
 - Test helper files must be listed in the ESLint `import/no-extraneous-dependencies` allowlist (`eslint.config.js`) before they can import devDependencies.
 
 ## Rules
 
 - Always run tests with `pnpm test --run`. Plain `pnpm test` starts watch mode and never exits.
 - After any code change, run `pnpm lint`, `pnpm test --run` and `pnpm exec tsc --noEmit`. Don't call a task done if any of them fails.
-- Tests: write new tests as `.test.tsx` next to the component. Use `WithMockStoreAndRouter`, query by role/label (not class names or test IDs), and include an axe check (`toHaveNoViolations`).
+- Tests: write new tests as `.test.tsx` next to the component. Use `renderWithProviders` with the real store, query by role/label (not class names or test IDs), and include an axe check (`toHaveNoViolations`).
 - When you change a component whose test is still `.test.jsx`, convert that test to `.test.tsx` (see Testing).
+- When you touch a test that still uses the mock store, propose moving it to `renderWithProviders` and the real store (see Testing).
 - Don't add or upgrade dependencies without asking first.
 - Don't run git commit or push. I review and commit myself.

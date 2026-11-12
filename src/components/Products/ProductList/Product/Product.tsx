@@ -50,7 +50,7 @@ export default function Product({
   };
 
   const currentPrice = [...productDetails.prices].filter(
-    (price) => price.currency.symbol === billingCurrency,
+    (price) => price.currency.symbol === billingCurrency.symbol,
   );
   const addToCartButton = (
     <button

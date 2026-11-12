@@ -2,25 +2,26 @@ import { Markup } from "interweave";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import type { Cost, Option } from "@/types/types";
+import type { Cost, FieldOption } from "@/types/types";
 import classes from "@/components/Forms/Inputs/RadioInput/RadioInput.module.css";
 
 export default function RadioInput<T extends string>({
   inputDetails,
   registration,
 }: {
-  inputDetails: Option<T>;
+  inputDetails: FieldOption<T>;
   registration: UseFormRegisterReturn;
 }) {
   const { label, name, costs } = inputDetails;
-  const { billingCurrency } = useAppSelector((state) => state.products);
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
+  );
 
   const optionPrice =
-    costs.find((cost: Cost) => cost.currency.symbol === billingCurrency)
+    costs.find((cost: Cost) => cost.currency.symbol === billingCurrency.symbol)
       ?.amount ?? 0;
-
   const updatedLabel = `${label}<b> - ${
-    billingCurrency + optionPrice.toFixed(2)
+    billingCurrency.symbol + optionPrice.toFixed(2)
   }</b>`;
 
   const id = `${registration.name}-${name}`;

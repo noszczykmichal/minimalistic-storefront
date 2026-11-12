@@ -8,12 +8,12 @@ import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
 import singUpFormConfig from "@/utils/signUpForm/constants";
 import defaultValues from "@/utils/signUpForm/defaultValues";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
-import { signUp } from "@/api/client";
+import { signUp } from "@/api/auth/auth";
 import classes from "@/components/Login/SignUpForm/SignUpForm.module.css";
 
-export default function SignUpForm() {
+export default function SignUpForm({ onClose }: { onClose: () => void }) {
   const dispatch = useAppDispatch();
-  const { modalToggle, toastVisibilityToggle } = uiActions;
+  const { toastVisibilityToggle } = uiActions;
 
   const {
     register,
@@ -26,10 +26,6 @@ export default function SignUpForm() {
     mode: "onTouched",
   });
 
-  const closeModal = () => {
-    dispatch(modalToggle(false));
-  };
-
   const handleToast = () => {
     setTimeout(() => dispatch(toastVisibilityToggle(true)), 500);
     setTimeout(() => dispatch(toastVisibilityToggle(false)), 5500);
@@ -40,7 +36,7 @@ export default function SignUpForm() {
 
     try {
       await signUp(payload);
-      closeModal();
+      onClose();
       handleToast();
     } catch {
       setError("root", {
@@ -71,7 +67,7 @@ export default function SignUpForm() {
       <ActionButtons
         backBttnCustomText="Cancel"
         nextBttnCustomText="Sign up"
-        backButtonHandler={closeModal}
+        backButtonHandler={onClose}
         nextButtonHandler={handleSubmit(onSingUp)}
       />
     </>

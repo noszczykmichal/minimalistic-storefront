@@ -6,14 +6,37 @@ import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
 import Hr from "@/components/UI/Hr/Hr";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import {
-  shippingOptions,
-  paymentOptions,
-} from "@/utils/shippingForm/constants";
+import { placeOrder } from "@/api/orders/orders";
 import classes from "@/pages/Review/Review.module.css";
+import { shippingAddressSchema } from "@/utils/shippingForm/schemas";
+import buildOrderObject from "@/utils/orders/ordersUtils";
+import { useState } from "react";
+import { isAxiosError } from "axios";
+import Modal from "@/components/UI/Modal/Modal";
+import useOptions from "@/hooks/useOptions";
+
+const ERROR_CODES = [
+  "PRODUCT_NOT_AVAILABLE",
+  "OUT_OF_STOCK",
+  "NOT_ALLOWED_OPTIONS",
+  "UNAVAILABLE_BILLING_CURRENCY",
+] as const;
+
+type ApiErrorCode = (typeof ERROR_CODES)[number];
+
+interface ApiErrorResponse {
+  code?: ApiErrorCode;
+  message?: string | string[];
+  productIds?: string[];
+  error?: string;
+  statusCode?: number;
+}
 
 export default function Review() {
+  const [errorMessage, setErrorMessage] = useState("");
+  const [productsWithError, setProductsWIthError] = useState<string[]>([]);
   const navigate = useNavigate();
+  useOptions();
   const {
     firstName,
     lastName,
@@ -24,17 +47,31 @@ export default function Review() {
     country,
     phone,
     email,
-    shippingOption,
-    paymentMethod,
   } = useAppSelector((state) => state.shippingAddressAndPayment.draft);
+  const { shippingOption, paymentMethod, ...addressFields } = useAppSelector(
+    (state) => state.shippingAddressAndPayment.draft,
+  );
 
-  const chosenShippingMethod = shippingOptions.find(
+  const authenticationStatus = useAppSelector((state) => state.auth.status);
+  const isAuthenticated = authenticationStatus === "authenticated";
+  const billingCurrency = useAppSelector(
+    (state) => state.products.billingCurrency,
+  );
+  const cart = useAppSelector((state) => state.products.cart);
+  const availableShippingOptions = useAppSelector(
+    (state) => state.ui.shippingOptions,
+  );
+  const availablePaymentOptions = useAppSelector(
+    (state) => state.ui.paymentOptions,
+  );
+
+  const chosenShippingMethod = availableShippingOptions.find(
     (option) => option.name === shippingOption,
-  )?.label;
+  );
 
-  const chosenPaymentMethod = paymentOptions.find(
+  const chosenPaymentMethod = availablePaymentOptions.find(
     (option) => option.name === paymentMethod,
-  )?.label;
+  );
 
   const redirectToAddressPage = () =>
     navigate("/cart/shipping/address&payment?step=1");
@@ -42,7 +79,47 @@ export default function Review() {
   const redirectToShipAndPayPage = () =>
     navigate("/cart/shipping/address&payment?step=2");
 
-  const onNextButtonClick = () => navigate("/cart/confirm");
+  const onNextButtonClick = async () => {
+    const address = shippingAddressSchema.safeParse(addressFields);
+
+    if (!address.success || !chosenShippingMethod || !chosenPaymentMethod) {
+      return;
+    }
+
+    if (isAuthenticated) {
+      const order = buildOrderObject({
+        cart,
+        address: address.data,
+        billingCurrency,
+        paymentMethod: chosenPaymentMethod?.name,
+        shippingMethod: chosenShippingMethod?.name,
+      });
+
+      try {
+        setErrorMessage("");
+        setProductsWIthError([]);
+        await placeOrder(order);
+      } catch (error) {
+        if (isAxiosError<ApiErrorResponse>(error) && error.response) {
+          const { message, code, productIds } = error.response.data;
+
+          setErrorMessage(
+            Array.isArray(message)
+              ? message[0]
+              : (message ?? "Something went wrong"),
+          );
+
+          if (code && ERROR_CODES.includes(code)) {
+            setProductsWIthError(productIds ?? []);
+          }
+        }
+
+        return;
+      }
+    }
+
+    navigate("/cart/confirm");
+  };
 
   const onBackButtonClick = () => navigate(-1);
   return (
@@ -81,7 +158,7 @@ export default function Review() {
         <div className={classes["order-detail"]}>
           <h2 className={classes["order-detail__heading"]}>Shipping Method</h2>
           <p className={classes["order-detail__value"]}>
-            <Markup content={chosenShippingMethod} />
+            <Markup content={chosenShippingMethod?.label} />
           </p>
           <button
             type="button"
@@ -96,7 +173,7 @@ export default function Review() {
         <div className={classes["order-detail"]}>
           <h2 className={classes["order-detail__heading"]}>Payment Method</h2>
           <p className={classes["order-detail__value"]}>
-            <Markup content={chosenPaymentMethod} />
+            <Markup content={chosenPaymentMethod?.label} />
           </p>
           <button
             type="button"
@@ -114,6 +191,20 @@ export default function Review() {
         customClass={classes.actionButtons}
         nextBttnCustomText="Confirm & Order"
       />
+
+      <Modal isOpen={Boolean(errorMessage)} onClose={() => setErrorMessage("")}>
+        <div>
+          <p>{errorMessage}</p>
+          {productsWithError.length > 0 && (
+            <ul>
+              {productsWithError.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          )}
+          <p>Review your order and try again!</p>
+        </div>
+      </Modal>
     </section>
   );
 }
