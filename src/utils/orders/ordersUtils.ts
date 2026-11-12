@@ -28,6 +28,10 @@ const buildOrderObject = ({
         (attributeItem) => attributeItem.selected === true,
       );
 
+      if (!selectedAttribute) {
+        throw new Error(`Missing selected ${attribute.name} for product ${id}`);
+      }
+
       return {
         name: attributeName,
         value: selectedAttribute?.value,

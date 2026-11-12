@@ -36,9 +36,16 @@ html {
   --radius-primary: 0.5rem;
 }
 
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
 body {
   margin: 0;
   font-family: "Raleway", sans-serif;
+  height: 100vh;
 }
 
 @keyframes focus-shrink {
@@ -76,20 +83,18 @@ body {
 
 /* Error Modal */
 
-.error {
-  position: fixed;
-  top: 20%;
-  border: 1px solid color-mix(in srgb, var(--red-100) 30%, white);
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+.error__header {
+  background-color: var(--red-100);
+}
+
+.error__message {
   padding: 1rem;
   margin: 1rem 0;
   text-align: center;
-  background-color: color-mix(in srgb, var(--red-100) 10%, white);
   line-height: 1.5;
 }
 
-.error,
+.error__message,
 .error__details {
   color: color-mix(in srgb, var(--red-100) 62%, black);
 }

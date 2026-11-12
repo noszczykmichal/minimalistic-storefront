@@ -3,34 +3,29 @@ import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import clsx from "clsx";
 
-import { uiActions } from "@/store/ui/ui";
-import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import Backdrop from "@/components/UI/Backdrop/Backdrop";
 import classes from "@/components/UI/Modal/Modal.module.css";
 
 export default function Modal({
   children,
-  header,
+  isOpen,
+  header = "Error",
   className,
+  onClose = () => {},
 }: {
   children: ReactNode;
-  header: string;
+  header?: string;
   className?: string;
+  isOpen: boolean;
+  onClose?: () => void;
 }) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
-  const isModalOpen = useAppSelector((state) => state.ui.isModalOpen);
-  const { modalToggle } = uiActions;
-
-  const modalHandler = () => {
-    dispatch(modalToggle(false));
-  };
 
   return createPortal(
     <>
       <CSSTransition
         nodeRef={modalRef}
-        in={isModalOpen}
+        in={isOpen}
         timeout={500}
         classNames={{
           enter: "",
@@ -41,12 +36,12 @@ export default function Modal({
         mountOnEnter
         unmountOnExit
       >
-        <div className={clsx(classes.modal, className)} ref={modalRef}>
-          <h5 className={classes.modal__header}>{header}</h5>
-          {children}
+        <div className={clsx(classes.modal)} ref={modalRef}>
+          <h5 className={clsx(classes.modal__header, className)}>{header}</h5>
+          <div className={classes.modal__body}>{children}</div>
         </div>
       </CSSTransition>
-      <Backdrop isBackdropOpen={isModalOpen} onClose={modalHandler} />
+      <Backdrop isBackdropOpen={isOpen} onClose={onClose} />
     </>,
     document.getElementById("modals-root") as HTMLDivElement,
   );

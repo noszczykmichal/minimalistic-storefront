@@ -5,13 +5,13 @@ import { vi } from "vitest";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import RadioInput from "@/components/Forms/Inputs/RadioInput/RadioInput";
 import type { RootState } from "@/store/store";
-import type { Currency, Option } from "@/types/types";
+import type { Currency, FieldOption } from "@/types/types";
 
 vi.mock("@/hooks/useReduxHooks", () => ({
   useAppSelector: vi.fn(),
 }));
 
-const testOption: Option<string> = {
+const testOption: FieldOption<string> = {
   label: "Cash on collection",
   name: "cash_on_collection",
   costs: [

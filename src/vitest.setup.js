@@ -10,10 +10,18 @@ import { expect } from "vitest";
 
 expect.extend(axeMatchers);
 
-// jsdom does no layout or painting, so axe can't compute real colour contrast.
-// The rule also draws on a <canvas> to detect icon ligatures, which jsdom
-// doesn't implement ("Not implemented: HTMLCanvasElement's getContext()").
-// Disabling it globally configures the axe-core instance every test shares.
+// Rules that can't run in jsdom, disabled for the axe-core instance every test
+// shares:
+// - color-contrast: jsdom does no layout or painting (and CSS modules aren't
+//   loaded), so there are no real colours to compare.
+// - label-content-name-mismatch: draws text on a <canvas> to detect icon-font
+//   ligatures. jsdom has no canvas ("Not implemented: HTMLCanvasElement's
+//   getContext()"), so the check errors out and never evaluates anyway.
 configureAxe({
-  globalOptions: { rules: [{ id: "color-contrast", enabled: false }] },
+  globalOptions: {
+    rules: [
+      { id: "color-contrast", enabled: false },
+      { id: "label-content-name-mismatch", enabled: false },
+    ],
+  },
 });

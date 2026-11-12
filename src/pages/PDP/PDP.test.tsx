@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { legacy_configureStore as configureMockStore } from "redux-mock-store";
@@ -6,34 +6,8 @@ import { legacy_configureStore as configureMockStore } from "redux-mock-store";
 import PDP from "@/pages/PDP/PDP";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 import { productActions } from "@/store/products/products";
-import { uiActions } from "@/store/ui/ui";
-import type { ProductType } from "@/types/types";
 
-const testProduct: ProductType = {
-  id: "test-sneakers",
-  name: "Sneakers",
-  brand: "Test Brand",
-  description: "<p>Comfortable shoes</p>",
-  inStock: true,
-  gallery: ["https://example.com/sneakers-1.jpg"],
-  attributes: [
-    {
-      name: "Size",
-      items: [
-        { displayValue: "40", value: "40" },
-        { displayValue: "41", value: "41" },
-      ],
-    },
-    {
-      name: "Color",
-      items: [
-        { displayValue: "Green", value: "#44FF03" },
-        { displayValue: "White", value: "#FFFFFF" },
-      ],
-    },
-  ],
-  prices: [{ currency: { label: "USD", symbol: "$" }, amount: 99.99 }],
-};
+import { testProduct } from "@/utils/testUtils";
 
 const renderPDP = () => {
   const store = configureMockStore([])({
@@ -41,7 +15,6 @@ const renderPDP = () => {
       currentPDP: testProduct,
       billingCurrency: { label: "USD", symbol: "$" },
     },
-    ui: { isModalOpen: false },
   });
 
   const utils = render(
@@ -144,13 +117,35 @@ describe("PDP page", () => {
     ]);
   });
 
-  it("should open the modal instead of adding to cart when an attribute is not selected", async () => {
+  it("should open the modal listing missing attributes instead of adding to cart", async () => {
     const { store } = renderPDP();
+
+    expect(
+      screen.queryByRole("heading", { name: "Missing Attributes" }),
+    ).not.toBeInTheDocument();
 
     await userEvent.click(screen.getByRole("button", { name: "40" }));
     await userEvent.click(screen.getByRole("button", { name: "Add to cart" }));
 
-    expect(store.getActions()).toEqual([uiActions.modalToggle(true)]);
+    expect(
+      screen.getByRole("heading", { name: "Missing Attributes" }),
+    ).toBeInTheDocument();
+    const missing = within(screen.getByRole("list")).getAllByRole("listitem");
+    expect(missing.map((item) => item.textContent)).toEqual(["Color"]);
+    expect(store.getActions()).toEqual([]);
+  });
+
+  it("should close the modal when OK is clicked", async () => {
+    renderPDP();
+
+    await userEvent.click(screen.getByRole("button", { name: "Add to cart" }));
+    await userEvent.click(screen.getByRole("button", { name: "OK" }));
+
+    await waitFor(() =>
+      expect(
+        screen.queryByRole("heading", { name: "Missing Attributes" }),
+      ).not.toBeInTheDocument(),
+    );
   });
 
   it("should have no accessibility violations after a selection", async () => {

@@ -13,7 +13,6 @@ interface UIInterface {
   paymentOptions: FieldOption<PaymentMethodName>[];
   isCurrencySwitcherOpen: boolean;
   isMiniCartOpen: boolean;
-  isModalOpen: boolean;
   isMobileNavOpen: boolean;
   isToastOpen: boolean;
   isAccountMenuOpen: boolean;
@@ -31,7 +30,6 @@ const initialState: UIInterface = {
   paymentOptions: [],
   isCurrencySwitcherOpen: false,
   isMiniCartOpen: false,
-  isModalOpen: false,
   isMobileNavOpen: false,
   isToastOpen: false,
   isAccountMenuOpen: false,
@@ -58,9 +56,6 @@ const ui = createSlice({
     },
     miniCartVisibilityToggle(state, action) {
       return { ...state, isMiniCartOpen: action.payload };
-    },
-    modalToggle(state, action) {
-      return { ...state, isModalOpen: action.payload };
     },
     mobileNavVisibilityToggle(state, action) {
       return { ...state, isMobileNavOpen: action.payload };

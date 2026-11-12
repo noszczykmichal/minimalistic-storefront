@@ -6,12 +6,14 @@ import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
 import Hr from "@/components/UI/Hr/Hr";
 import ActionButtons from "@/components/Forms/ActionButtons/ActionButtons";
 import { useAppSelector } from "@/hooks/useReduxHooks";
-import { placeOrder, type Order } from "@/api/orders/orders";
+import { placeOrder } from "@/api/orders/orders";
 import classes from "@/pages/Review/Review.module.css";
 import { shippingAddressSchema } from "@/utils/shippingForm/schemas";
 import buildOrderObject from "@/utils/orders/ordersUtils";
 import { useState } from "react";
 import { isAxiosError } from "axios";
+import Modal from "@/components/UI/Modal/Modal";
+import useOptions from "@/hooks/useOptions";
 
 const ERROR_CODES = [
   "PRODUCT_NOT_AVAILABLE",
@@ -30,39 +32,11 @@ interface ApiErrorResponse {
   statusCode?: number;
 }
 
-const fakeData: Order = {
-  products: [
-    {
-      productId: "huarache-x-stussy",
-      quantity: 1,
-      attributes: [
-        {
-          name: "Size",
-          value: "40",
-        },
-      ],
-    },
-  ],
-  billingCurrency: "pln",
-  address: {
-    firstName: "Michał",
-    lastName: "Noszczyk",
-    addressLine1: "Międzyborska 11",
-    addressLine2: "30",
-    city: "Warszawa",
-    postalCode: "04-041",
-    country: "Polska",
-    phone: "+48889321692",
-    email: "noszczykmichal@wp.pl",
-  },
-  shippingMethod: "in-store/online_payment",
-  paymentMethod: "bank_transfer",
-};
-
 export default function Review() {
-  const [errorMessage, setErrorMessage] = useState();
-  const [productsWithError, setProductsWIthError] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [productsWithError, setProductsWIthError] = useState<string[]>([]);
   const navigate = useNavigate();
+  useOptions();
   const {
     firstName,
     lastName,
@@ -121,31 +95,25 @@ export default function Review() {
         shippingMethod: chosenShippingMethod?.name,
       });
 
-      // console.log("order", order);
       try {
-        await placeOrder(fakeData);
+        setErrorMessage("");
+        setProductsWIthError([]);
+        await placeOrder(order);
       } catch (error) {
-        if (isAxiosError<ApiErrorResponse>(error)) {
-          const { message, code, productIds } = error;
+        if (isAxiosError<ApiErrorResponse>(error) && error.response) {
+          const { message, code, productIds } = error.response.data;
 
-          if (Array.isArray(message)) {
-            setErrorMessage(message[0]);
-            return;
-          }
+          setErrorMessage(
+            Array.isArray(message)
+              ? message[0]
+              : (message ?? "Something went wrong"),
+          );
 
-          if (ERROR_CODES.includes(code)) {
-            setErrorMessage(message);
-            setProductsWIthError(productIds);
+          if (code && ERROR_CODES.includes(code)) {
+            setProductsWIthError(productIds ?? []);
           }
         }
 
-        // if (error instanceof Error) {
-
-        //   switch(error?.code)
-
-        // };
-        // set
-        console.log(error);
         return;
       }
     }
@@ -223,6 +191,20 @@ export default function Review() {
         customClass={classes.actionButtons}
         nextBttnCustomText="Confirm & Order"
       />
+
+      <Modal isOpen={Boolean(errorMessage)} onClose={() => setErrorMessage("")}>
+        <div>
+          <p>{errorMessage}</p>
+          {productsWithError.length > 0 && (
+            <ul>
+              {productsWithError.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          )}
+          <p>Review your order and try again!</p>
+        </div>
+      </Modal>
     </section>
   );
 }

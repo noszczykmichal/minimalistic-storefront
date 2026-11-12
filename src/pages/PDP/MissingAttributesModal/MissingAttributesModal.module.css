@@ -1,3 +1,8 @@
+.modal__body {
+  display: flex;
+  flex-direction: column;
+}
+
 .modal__attributes {
   margin: 0;
   text-align: left;

@@ -13,7 +13,7 @@ interface OrderedProduct {
 
 export interface Order {
   products: OrderedProduct[];
-  billingCurrency: string;
+  billingCurrency: CurrencyLabel;
   address: ShippingAddress;
   shippingMethod: AddressAndPaymentFormValues["shippingOption"];
   paymentMethod: AddressAndPaymentFormValues["paymentMethod"];

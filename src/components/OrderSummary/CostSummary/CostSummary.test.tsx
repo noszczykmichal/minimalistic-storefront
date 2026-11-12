@@ -1,15 +1,18 @@
-import { render, screen } from "@testing-library/react";
-import { legacy_configureStore as configureMockStore } from "redux-mock-store";
+import { screen } from "@testing-library/react";
 
-import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 import CostSummary from "@/components/OrderSummary/CostSummary/CostSummary";
-import type { RootState } from "@/store/store";
+import productsSlice from "@/store/products/products";
+import uiSlice from "@/store/ui/ui";
+import type { AddressAndPaymentFormInput } from "@/utils/shippingForm/schemas";
 import type { Currency } from "@/types/types";
-
-const mockStore = configureMockStore<RootState>([]);
+import {
+  renderWithProviders,
+  shippingOptions,
+  paymentOptions,
+} from "@/utils/testUtils";
 
 interface RenderOptions {
-  draft?: { shippingOption?: string | null; paymentMethod?: string };
+  draft?: Partial<AddressAndPaymentFormInput>;
   billingCurrency?: Currency;
   totalPrice?: number;
 }
@@ -18,18 +21,18 @@ const renderCostSummary = ({
   draft = {},
   billingCurrency = { label: "USD", symbol: "$" },
   totalPrice = 100,
-}: RenderOptions = {}) => {
-  const store = mockStore({
-    products: { billingCurrency, totalPrice },
-    shippingAddressAndPayment: { draft },
-  } as unknown as RootState);
-
-  return render(
-    <WithMockStoreAndRouter customStore={store}>
-      <CostSummary />
-    </WithMockStoreAndRouter>,
-  );
-};
+}: RenderOptions = {}) =>
+  renderWithProviders(<CostSummary />, {
+    preloadedState: {
+      products: {
+        ...productsSlice.getInitialState(),
+        billingCurrency,
+        totalPrice,
+      },
+      shippingAddressAndPayment: { draft },
+      ui: { ...uiSlice.getInitialState(), shippingOptions, paymentOptions },
+    },
+  });
 
 describe("CostSummary component", () => {
   it("should render tax, order total and total based on the cart price", () => {
@@ -47,8 +50,8 @@ describe("CostSummary component", () => {
     expect(screen.queryByText("Other:")).not.toBeInTheDocument();
   });
 
-  it("should not render 'Shipping' when the shipping option is null", () => {
-    renderCostSummary({ draft: { shippingOption: null } });
+  it("should not render 'Shipping' when the draft has no shipping option", () => {
+    renderCostSummary({ draft: {} });
 
     expect(screen.queryByText("Shipping:")).not.toBeInTheDocument();
   });

@@ -15,10 +15,10 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import App from "@/App";
 import Loader from "@/components/UI/Loader/Loader";
-import ErrorModal from "@/components/UI/ErrorModal/ErrorModal";
 import { isCurrency, type Currency } from "@/types/types";
 import { persistor, store } from "@/store/store";
 import { restoreSession } from "@/store/auth/auth";
+import Modal from "./components/UI/Modal/Modal";
 import { injectStore } from "./api/client";
 import "@/index.css";
 
@@ -88,8 +88,8 @@ root.render(
 
                 if (error) {
                   content = (
-                    <ErrorModal>
-                      <p className="error">
+                    <Modal className="error__header" isOpen>
+                      <p className="error__message">
                         Trying to fetch from the endpoint failed with message:
                         <br />
                         <span className="error__details">{error.message}.</span>
@@ -97,7 +97,7 @@ root.render(
                         Make sure you are connected to the Internet and try
                         again later.
                       </p>
-                    </ErrorModal>
+                    </Modal>
                   );
                 }
                 return content;

@@ -12,29 +12,7 @@ import Product from "@/components/Products/ProductList/Product/Product";
 import WithMockStoreAndRouter from "@/utils/WithMockStoreAndRouter";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import { productActions } from "@/store/products/products";
-import type { ProductType } from "@/types/types";
-
-const testProduct: ProductType = {
-  id: "jacket-canada-goosee",
-  name: "Jacket",
-  brand: "Canada Goose",
-  description: "<p>Awesome winter jacket</p>",
-  inStock: true,
-  gallery: ["https://example.com/jacket.jpg"],
-  attributes: [
-    {
-      name: "Size",
-      items: [
-        { displayValue: "Small", value: "S" },
-        { displayValue: "Medium", value: "M" },
-      ],
-    },
-  ],
-  prices: [
-    { currency: { label: "USD", symbol: "$" }, amount: 518.47 },
-    { currency: { label: "GBP", symbol: "£" }, amount: 372.67 },
-  ],
-};
+import { testProduct } from "@/utils/testUtils";
 
 const createStore = (billingCurrency = { label: "USD", symbol: "$" }) =>
   configureMockStore([])({ products: { billingCurrency } });
@@ -65,16 +43,16 @@ describe("Product component", () => {
 
     const productCard = screen.getByRole("listitem");
 
-    expect(productCard).toHaveTextContent("Canada Goose Jacket");
-    expect(productCard).toHaveTextContent("£372.67");
+    expect(productCard).toHaveTextContent("Test Brand Sneakers");
+    expect(productCard).toHaveTextContent("£69.99");
   });
 
   it("should link to the product page under /all when on the home page", () => {
     renderProduct();
 
     expect(
-      screen.getByRole("link", { name: "Canada Goose Jacket" }),
-    ).toHaveAttribute("href", "/all/jacket-canada-goosee");
+      screen.getByRole("link", { name: "Test Brand Sneakers" }),
+    ).toHaveAttribute("href", "/all/test-sneakers");
   });
 
   it("should link to the product page under the current category", () => {
@@ -90,15 +68,15 @@ describe("Product component", () => {
     );
 
     expect(
-      screen.getByRole("link", { name: "Canada Goose Jacket" }),
-    ).toHaveAttribute("href", "/clothes/jacket-canada-goosee");
+      screen.getByRole("link", { name: "Test Brand Sneakers" }),
+    ).toHaveAttribute("href", "/clothes/test-sneakers");
   });
 
   it("should save the product as the current PDP when its link is clicked", async () => {
     renderProduct();
 
     await userEvent.click(
-      screen.getByRole("link", { name: "Canada Goose Jacket" }),
+      screen.getByRole("link", { name: "Test Brand Sneakers" }),
     );
 
     expect(dispatch).toHaveBeenCalledTimes(1);
@@ -109,7 +87,7 @@ describe("Product component", () => {
     renderProduct();
 
     await userEvent.click(
-      screen.getByRole("button", { name: "Add Canada Goose Jacket to cart" }),
+      screen.getByRole("button", { name: "Add Test Brand Sneakers to cart" }),
     );
 
     expect(dispatch).toHaveBeenCalledTimes(1);
@@ -120,8 +98,15 @@ describe("Product component", () => {
           {
             name: "Size",
             items: [
-              { displayValue: "Small", value: "S", selected: true },
-              { displayValue: "Medium", value: "M" },
+              { displayValue: "40", value: "40", selected: true },
+              { displayValue: "41", value: "41" },
+            ],
+          },
+          {
+            name: "Color",
+            items: [
+              { displayValue: "Green", value: "#44FF03", selected: true },
+              { displayValue: "White", value: "#FFFFFF" },
             ],
           },
         ],

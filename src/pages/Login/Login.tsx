@@ -1,11 +1,12 @@
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import TextInput from "@/components/Forms/Inputs/TextInput/TextInput";
 import { loginSchema, type LoginFormOutput } from "@/utils/loginForm/schemas";
 import Button from "@/components/UI/Button/Button";
-import SignUpModal from "@/components/Login/SignUpModal/SignUpModal";
-import { uiActions } from "@/store/ui/ui";
+import Modal from "@/components/UI/Modal/Modal";
+import SignUpForm from "@/components/Login/SignUpForm/SignUpForm";
 import { authActions } from "@/store/auth/auth";
 import { useAppDispatch } from "@/hooks/useReduxHooks";
 import { signIn } from "@/api/auth/auth";
@@ -13,8 +14,8 @@ import classes from "@/pages/Login/Login.module.css";
 
 export default function Login() {
   const dispatch = useAppDispatch();
-  const { modalToggle } = uiActions;
   const { saveSessionData } = authActions;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loginFormDefaultValues = {
     email: "",
@@ -34,7 +35,11 @@ export default function Login() {
   });
 
   const onRegister = () => {
-    dispatch(modalToggle(true));
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const onSignIn = async (values: LoginFormOutput) => {
@@ -98,7 +103,13 @@ export default function Login() {
         </p>
       </div>
 
-      <SignUpModal />
+      <Modal
+        header="Sign up"
+        className={classes["signup-modal"]}
+        isOpen={isModalOpen}
+      >
+        <SignUpForm onClose={closeModal} />
+      </Modal>
     </section>
   );
 }
